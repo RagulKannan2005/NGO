@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Training Programs | PeaceForge</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#2563eb;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#111827;
+  --muted:#6b7280;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",sans-serif;}
+
+body{background:var(--bg);color:var(--text);}
+
+.container{max-width:1200px;margin:auto;padding:0 20px;}
+
+.section{padding:80px 0;}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#1e3a8a,#111827);
+  color:white;
+  padding:140px 0 90px;
+  text-align:center;
+}
+.hero h1{font-size:2.8rem;margin-bottom:20px;}
+.hero p{max-width:700px;margin:auto;color:#cbd5e1;}
+.hero .btn{margin-top:25px;}
+
+.btn{
+  padding:10px 20px;
+  border-radius:8px;
+  text-decoration:none;
+  display:inline-block;
+  cursor:pointer;
+  border:none;
+}
+.btn-primary{background:var(--primary);color:white;}
+.btn-outline{border:1px solid white;color:white;background:transparent;}
+.btn-light{border:1px solid var(--border);background:white;color:var(--text);}
+
+/* FILTER */
+.filter-bar{
+  margin-top:-40px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.filter-bar input,.filter-bar select{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+}
+
+/* CARD GRID */
+.training-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+  margin-top:60px;
+}
+
+.training-card{
+  background:var(--card);
+  border-radius:14px;
+  border:1px solid var(--border);
+  padding:25px;
+  transition:0.3s ease;
+  opacity:0;
+  transform:translateY(30px);
+}
+.training-card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.training-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:0.75rem;
+  margin-right:5px;
+  background:#dbeafe;
+  color:var(--primary);
+}
+
+.training-meta{
+  font-size:0.9rem;
+  color:var(--muted);
+  margin:12px 0;
+}
+
+.card-buttons{
+  display:flex;
+  gap:10px;
+}
+
+/* CALENDAR */
+.calendar-section{
+  display:none;
+}
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.calendar-card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+/* CTA */
+.cta{
+  background:var(--primary);
+  color:white;
+  text-align:center;
+  padding:80px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Conflict Resolution Training Programs</h1>
+    <p>Practical, field-tested programs designed specifically for NGOs and community leaders.</p>
+    <button class="btn btn-primary" onclick="toggleCalendar()">Toggle Calendar View</button>
+  </div>
+</section>
+
+<!-- FILTER -->
+<section class="section">
+  <div class="container">
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search training...">
+      <select id="levelFilter">
+        <option value="">All Levels</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+      </select>
+      <select id="modeFilter">
+        <option value="">All Modes</option>
+        <option value="Online">Online</option>
+        <option value="Hybrid">Hybrid</option>
+      </select>
+    </div>
+
+    <!-- TRAINING GRID -->
+    <div class="training-grid" id="trainingGrid">
+
+      <div class="training-card" data-level="Beginner" data-mode="Online">
+        <h3>Conflict Resolution Fundamentals</h3>
+        <p>Core mediation skills for NGO field staff.</p>
+        <span class="badge">Beginner</span>
+        <span class="badge">Online</span>
+        <div class="training-meta">2 Weeks • March 25</div>
+        <div class="card-buttons">
+          <button class="btn btn-light">Details</button>
+          <button class="btn btn-primary">Enroll</button>
+        </div>
+      </div>
+
+      <div class="training-card" data-level="Advanced" data-mode="Hybrid">
+        <h3>Advanced Mediation</h3>
+        <p>High-level negotiation strategies for leaders.</p>
+        <span class="badge">Advanced</span>
+        <span class="badge">Hybrid</span>
+        <div class="training-meta">4 Weeks • April 10</div>
+        <div class="card-buttons">
+          <button class="btn btn-light">Details</button>
+          <button class="btn btn-primary">Enroll</button>
+        </div>
+      </div>
+
+      <div class="training-card" data-level="Intermediate" data-mode="Online">
+        <h3>Youth Conflict Mediation</h3>
+        <p>Specialized youth and gender conflict training.</p>
+        <span class="badge">Intermediate</span>
+        <span class="badge">Online</span>
+        <div class="training-meta">3 Weeks • May 5</div>
+        <div class="card-buttons">
+          <button class="btn btn-light">Details</button>
+          <button class="btn btn-primary">Enroll</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CALENDAR VIEW -->
+    <div class="calendar-section" id="calendarSection">
+      <div class="calendar-grid">
+        <div class="calendar-card">
+          <h4>March 25</h4>
+          <p>Conflict Resolution Fundamentals</p>
+        </div>
+        <div class="calendar-card">
+          <h4>April 10</h4>
+          <p>Advanced Mediation</p>
+        </div>
+        <div class="calendar-card">
+          <h4>May 5</h4>
+          <p>Youth Conflict Mediation</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <h2>Strengthen Your Organization’s Conflict Response Capacity</h2>
+    <button class="btn btn-light">Enroll Your Team</button>
+  </div>
+</section>
+
+<script>
+
+/* FILTER FUNCTION */
+const searchInput=document.getElementById("searchInput");
+const levelFilter=document.getElementById("levelFilter");
+const modeFilter=document.getElementById("modeFilter");
+const cards=document.querySelectorAll(".training-card");
+
+function filterCards(){
+  const search=searchInput.value.toLowerCase();
+  const level=levelFilter.value;
+  const mode=modeFilter.value;
+
+  cards.forEach(card=>{
+    const text=card.innerText.toLowerCase();
+    const matchSearch=text.includes(search);
+    const matchLevel=!level || card.dataset.level===level;
+    const matchMode=!mode || card.dataset.mode===mode;
+
+    if(matchSearch && matchLevel && matchMode){
+      card.style.display="block";
+    }else{
+      card.style.display="none";
+    }
+  });
+}
+
+searchInput.addEventListener("input",filterCards);
+levelFilter.addEventListener("change",filterCards);
+modeFilter.addEventListener("change",filterCards);
+
+/* ANIMATION ON LOAD */
+window.addEventListener("load",()=>{
+  cards.forEach((card,index)=>{
+    setTimeout(()=>card.classList.add("show"),index*150);
+  });
+});
+
+/* TOGGLE CALENDAR */
+function toggleCalendar(){
+  const grid=document.getElementById("trainingGrid");
+  const cal=document.getElementById("calendarSection");
+  if(cal.style.display==="block"){
+    cal.style.display="none";
+    grid.style.display="grid";
+  }else{
+    cal.style.display="block";
+    grid.style.display="none";
+  }
+}
+
+</script>
+
+</body>
+</html>

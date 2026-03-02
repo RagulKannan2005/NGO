@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NGO Training Platform</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --card: rgba(255, 255, 255, 0.05);
+      --nav: rgba(15, 23, 42, 0.7);
+      --primary: #38bdf8;
+      --secondary: #6366f1;
+      --muted: #94a3b8;
+    }
+
+    body.light {
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --card: rgba(0, 0, 0, 0.04);
+      --nav: rgba(255, 255, 255, 0.9);
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --muted: #475569;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s ease;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(14px);
+      background: var(--nav);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 1000;
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .navbar-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .navbar-menu {
+      list-style: none;
+      display: flex;
+      gap: 1.6rem;
+      align-items: center;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .navbar-link::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: 0.3s ease;
+    }
+
+    .navbar-link:hover::after {
+      width: 100%;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 140%;
+      left: 0;
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border-radius: 10px;
+      min-width: 180px;
+      padding: 0.4rem 0;
+      display: none;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .btn-donate {
+      cursor: pointer;
+      padding: 0.6rem 1.2rem;
+      min-height: 38px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      transition: 0.6s;
+      background-size: 280% auto;
+      background-image: linear-gradient(325deg, #2563eb 0%, #38bdf8 55%, #2563eb 90%);
+      box-shadow:
+        0 0 14px rgba(71, 184, 255, 0.4),
+        inset 2px 2px 6px rgba(175, 230, 255, 0.4),
+        inset -2px -2px 6px rgba(19, 95, 216, 0.35);
+    }
+
+    .btn-donate:hover {
+      background-position: right top;
+    }
+
+    /* HERO SPLIT */
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 2rem 3rem;
+      background: radial-gradient(circle at 20% 20%, #1e3a8a, transparent 40%),
+        radial-gradient(circle at 80% 30%, #0ea5e9, transparent 40%),
+        var(--bg);
+    }
+
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .hero-left h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      margin: 1rem 0;
+    }
+
+    .hero-left span {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-left p {
+      max-width: 520px;
+      color: var(--muted);
+      margin: 1rem 0 2rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--secondary);
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-outline {
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .hero-users {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .avatars span {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 0.8rem;
+      margin-right: -8px;
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-card img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 14px;
+      display: block;
+    }
+
+    /* STAT CARD BASE */
+    .stat {
+      position: absolute;
+      padding: 10px 14px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      text-align: left;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat small {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .stat i {
+      width: 18px;
+      height: 18px;
+      color: var(--primary);
+    }
+
+    /* POSITIONING */
+    .stat-top {
+      top: -20px;
+      left: -40px;
+    }
+
+    .stat-mid {
+      right: -30px;
+      top: 40%;
+    }
+
+    .stat-bottom {
+      bottom: -20px;
+      left: 30%;
+    }
+
+    /* FLOATING ANIMATIONS */
+    @keyframes floatSlow {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes floatMedium {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes floatFast {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-16px);
+      }
+    }
+
+    .float-slow {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .float-medium {
+      animation: floatMedium 5s ease-in-out infinite;
+    }
+
+    .float-fast {
+      animation: floatFast 4s ease-in-out infinite;
+    }
+
+    @media(max-width:900px) {
+      .hero-split {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-left p {
+        margin: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-users {
+        justify-content: center;
+      }
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 2rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 1.8rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card h3 {
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* TOGGLE (unchanged) */
+    .switch-3d-cyan {
+      --w: 90px;
+      --h: 34px;
+      --knob-size: 18px;
+      --offset: 8px;
+      --cyan: #00ffff;
+      --bg-off: #1a2a2a;
+      --bg-on: #0f0f1a;
+      --half-size: calc(var(--knob-size)/2);
+      position: relative;
+      display: inline-block;
+      width: var(--w);
+      height: var(--h);
+      cursor: pointer;
+    }
+
+    .switch-input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-off);
+      border-radius: 50px;
+      border: 1px solid #444;
+    }
+
+    .track-text {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      transition: .3s;
+    }
+
+    .text-3d {
+      left: 30px;
+      top: 8px;
+    }
+
+    .text-2d {
+      left: 10px;
+      top: 8px;
+      opacity: 0;
+    }
+
+    .switch-knob {
+      position: absolute;
+      top: var(--offset);
+      left: var(--offset);
+      width: var(--knob-size);
+      height: var(--knob-size);
+      perspective: 1000px;
+      transition: .5s;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: spin 3s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid var(--cyan);
+    }
+
+    .front {
+      transform: translateZ(var(--half-size));
+    }
+
+    .back {
+      transform: rotateY(180deg) translateZ(var(--half-size));
+    }
+
+    .right {
+      transform: rotateY(90deg) translateZ(var(--half-size));
+    }
+
+    .left {
+      transform: rotateY(-90deg) translateZ(var(--half-size));
+    }
+
+    .top {
+      transform: rotateX(90deg) translateZ(var(--half-size));
+    }
+
+    .bottom {
+      transform: rotateX(-90deg) translateZ(var(--half-size));
+    }
+
+    .switch-input:checked~.switch-track .switch-knob {
+      transform: translateX(calc(var(--w) - var(--knob-size) - (var(--offset) * 2)));
+    }
+
+    .switch-input:checked~.switch-track .text-3d {
+      opacity: 0;
+    }
+
+    .switch-input:checked~.switch-track .text-2d {
+      opacity: 1;
+    }
+
+    .switch-input:checked~.switch-track {
+      background: var(--bg-on);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotateX(0) rotateY(0);
+      }
+
+      to {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="navbar-logo">🌍 NGO Training</a>
+
+      <ul class="navbar-menu">
+        <li><a href="#" class="navbar-link">Home</a></li>
+        <li><a href="../Pages/TrainingPage.html" class="navbar-link" >Trainings</a></li>
+        <li><a href="#" class="navbar-link">Resources</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="navbar-link">Dashboard ▾</a>
+          <div class="dropdown-menu">
+            <a href="#">User Dashboard</a>
+            <a href="#">Admin Dashboard</a>
+          </div>
+        </li>
+
+        <li><a href="#" class="navbar-link">Community</a></li>
+        <li><a href="#" class="navbar-link">Impact</a></li>
+        <li><a href="#" class="navbar-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-donate" onclick="window.location.href='../login.html'">Get Started</button>
+
+        <label class="switch-3d-cyan">
+          <input type="checkbox" class="switch-input" id="themeSwitch" />
+          <div class="switch-track">
+            <span class="track-text text-3d">Dark</span>
+            <span class="track-text text-2d">Light</span>
+            <div class="switch-knob">
+              <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SPLIT HERO -->
+  <section class="hero">
+    <div class="hero-split">
+      <div class="hero-left">
+        <div class="hero-badge">Trusted by 500+ NGOs worldwide</div>
+
+        <h1>Empower NGOs <br><span>Transform Communities</span></h1>
+
+        <p>
+          A modern platform to train NGOs in conflict resolution, leadership, and
+          community impact. Empower teams with practical tools and measurable outcomes.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-donate">Start Training</button>
+          <button class="btn-outline">Explore Programs</button>
+        </div>
+
+        <div class="hero-users">
+          <div class="avatars">
+            <span>A</span><span>M</span><span>R</span><span>J</span>
+          </div>
+          <p><strong>1,200+</strong> organizations already onboard</p>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Add Lucide CDN in <head> if not added -->
+        <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
+
+        <div class="hero-card">
+          <img src="../assets/Images/hero-image.png" alt="NGO Training">
+
+          <div class="stat stat-top float-slow">
+            <i data-lucide="trending-up"></i>
+            <div>+24%<br><small>Training Growth</small></div>
+          </div>
+
+          <div class="stat stat-mid float-medium">
+            <i data-lucide="users"></i>
+            <div>500+<br><small>Active NGOs</small></div>
+          </div>
+
+          <div class="stat stat-bottom float-fast">
+            <i data-lucide="check-circle"></i>
+            <div>99%<br><small>Completion Rate</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>🎓 Smart Training Paths</h3>
+      <p>AI-guided learning paths for NGO teams.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Impact Dashboard</h3>
+      <p>Track training effectiveness and outcomes.</p>
+    </div>
+    <div class="card">
+      <h3>🤝 Collaboration Hub</h3>
+      <p>Connect and collaborate with NGOs globally.</p>
+    </div>
+    <div class="card">
+      <h3>📅 Live Workshops</h3>
+      <p>Interactive real-time expert sessions.</p>
+    </div>
+  </section>
+
+  <script>
+    const switchInput = document.getElementById("themeSwitch");
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light");
+      switchInput.checked = true;
+    }
+    switchInput.addEventListener("change", () => {
+      document.body.classList.toggle("light");
+      localStorage.setItem("theme",
+        document.body.classList.contains("light") ? "light" : "dark");
+    });
+    // lucide.createIcons();
+  </script>
+  
+</body>
+
+</html>
