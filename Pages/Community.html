@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Hub - NGO Training</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* COMMUNITY PAGE SPECIFIC STYLES */
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background-image:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.08) 0%,
+            transparent 50%
+          );
+        background-attachment: fixed;
+      }
+
+      .dash-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      /* FLOATING SIDEBAR */
+      .floating-sidebar {
+        width: 100px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 100;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      html.dark .floating-sidebar {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+
+      .floating-sidebar:hover {
+        width: 280px;
+        align-items: flex-start;
+      }
+
+      .nav-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+        transition: 0.4s;
+        font-weight: 700;
+        font-size: 1.3rem;
+      }
+
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
+
+      .nav-items {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
+        flex-grow: 1;
+      }
+
+      .nav-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .floating-sidebar:hover .nav-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 12px;
+      }
+
+      .nav-btn:hover {
+        background: rgba(37, 99, 235, 0.15);
+        color: var(--primary);
+      }
+
+      .nav-btn.active {
+        background: rgba(37, 99, 235, 0.25);
+        color: var(--primary);
+      }
+
+      .nav-label {
+        display: none;
+        margin-left: 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .floating-sidebar:hover .nav-label {
+        display: block;
+      }
+
+      .nav-spacer {
+        flex-grow: 1;
+      }
+
+      .theme-toggle {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+
+      .floating-sidebar:hover .theme-toggle {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 12px;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(37, 99, 235, 0.15);
+      }
+
+      /* MAIN CONTENT AREA */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .content-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn-create {
+        padding: 10px 20px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+      }
+
+      .btn-create:hover {
+        background: var(--secondary);
+      }
+
+      /* SCROLLABLE CONTENT */
+      .content-scroll {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .content-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .content-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .content-scroll::-webkit-scrollbar-thumb {
+        background: rgba(128, 128, 128, 0.4);
+        border-radius: 4px;
+      }
+
+      .content-scroll::-webkit-scrollbar-thumb:hover {
+        background: rgba(128, 128, 128, 0.6);
+      }
+
+      /* SECTION LAYOUT */
+      .community-section {
+        margin-bottom: 50px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      /* FILTER TABS */
+      .filter-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .filter-tab {
+        padding: 8px 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .filter-tab:hover {
+        border-color: var(--primary);
+      }
+
+      .filter-tab.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      /* DISCUSSION CARDS */
+      .discussion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+      }
+
+      .discussion-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .discussion-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+      }
+
+      .card-category {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(37, 99, 235, 0.15);
+        color: var(--primary);
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      .card-author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .author-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+
+      .card-stats {
+        display: flex;
+        gap: 16px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .card-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .action-btn {
+        flex: 1;
+        padding: 8px;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--text);
+        font-size: 0.85rem;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .action-btn:hover {
+        background: rgba(37, 99, 235, 0.1);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* EXPERT SECTION */
+      .expert-container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 30px;
+      }
+
+      .expert-faq {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+
+      .faq-item {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .faq-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .faq-item:hover {
+        color: var(--primary);
+      }
+
+      .faq-question {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .faq-meta {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .expert-answer {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+      }
+
+      .expert-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .expert-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .expert-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .expert-info h4 {
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+
+      .expert-info p {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .expert-answer-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .answer-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      /* BADGES SECTION */
+      .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 16px;
+        margin-bottom: 30px;
+      }
+
+      .badge-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: 0.3s;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .badge-card:hover {
+        background: rgba(37, 99, 235, 0.05);
+        border-color: var(--primary);
+        transform: translateY(-4px);
+      }
+
+      .badge-earned {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 24px;
+        height: 24px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+      }
+
+      .badge-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 12px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      .badge-name {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+
+      .badge-description {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      /* LEADERBOARD */
+      .leaderboard-container {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        overflow-x: auto;
+      }
+
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .leaderboard-table th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid var(--border);
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .leaderboard-table td {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .leaderboard-table tr:hover {
+        background: rgba(37, 99, 235, 0.05);
+      }
+
+      .rank-badge {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      .rank-1 {
+        background: linear-gradient(135deg, #fbbf24, #f97316);
+      }
+
+      .rank-2 {
+        background: linear-gradient(135deg, #c0cfe4, #a0afc0);
+      }
+
+      .rank-3 {
+        background: linear-gradient(135deg, #d2691e, #a0522d);
+      }
+
+      .member-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .member-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* MODALS */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .modal-header h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        background: rgba(37, 99, 235, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text);
+        font-family: inherit;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .form-actions button {
+        flex: 1;
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .btn-submit {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-submit:hover {
+        background: var(--secondary);
+      }
+
+      .btn-cancel {
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      .btn-cancel:hover {
+        background: rgba(37, 99, 235, 0.05);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1200px) {
+        .expert-container {
+          grid-template-columns: 1fr;
+        }
+
+        .discussion-grid {
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .dash-wrapper {
+          padding: 12px;
+          gap: 12px;
+        }
+
+        .floating-sidebar {
+          width: 60px;
+          padding: 20px 0;
+        }
+
+        .floating-sidebar:hover {
+          width: 200px;
+        }
+
+        .content-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+
+        .header-actions {
+          width: 100%;
+        }
+
+        .btn-create {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .discussion-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .badges-grid {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PAGE LOADER -->
+    <div id="page-loader" style="display: none;"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="dash-wrapper">
+      <!-- FLOATING SIDEBAR -->
+      <aside class="floating-sidebar">
+        <div class="nav-logo" onclick="window.location.href='index.html'">C</div>
+        <div class="nav-items">
+          <button class="nav-btn active" data-section="forum" title="Forum">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="nav-label">Forum</span>
+          </button>
+          <button class="nav-btn" data-section="expert" title="Ask Expert">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+            <span class="nav-label">Ask Expert</span>
+          </button>
+          <button class="nav-btn" data-section="badges" title="Badges">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9V2h12v7M6 9a6 6 0 0 0 12 0M6 9h12"></path>
+            </svg>
+            <span class="nav-label">Badges</span>
+          </button>
+        </div>
+        <div class="nav-spacer"></div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <span class="nav-label">Theme</span>
+        </button>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>Community Hub</h1>
+          <div class="header-actions">
+            <button class="btn-create" id="btnCreateDiscussion">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              New Topic
+            </button>
+          </div>
+        </div>
+
+        <div class="content-scroll">
+          <!-- DISCUSSION FORUM SECTION -->
+          <section class="community-section" id="forumSection">
+            <div class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Discussion Forum
+            </div>
+            <p class="section-subtitle">Connect with the community, share ideas, and find solutions to challenges</p>
+            
+            <div class="filter-tabs" id="categoryFilters"></div>
+            <div class="discussion-grid" id="discussionGrid"></div>
+          </section>
+
+          <!-- ASK AN EXPERT SECTION -->
+          <section class="community-section" id="expertSection" style="display: none;">
+            <div class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+              Ask an Expert
+            </div>
+            <p class="section-subtitle">Get verified answers from certified trainers and experienced professionals</p>
+            
+            <button class="btn-create" id="btnAskQuestion" style="margin-bottom: 20px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Ask Question
+            </button>
+
+            <div class="expert-container">
+              <div class="expert-faq" id="expertFAQ"></div>
+              <div class="expert-answer" id="expertAnswer"></div>
+            </div>
+          </section>
+
+          <!-- BADGES & RECOGNITION SECTION -->
+          <section class="community-section" id="badgesSection" style="display: none;">
+            <div class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9V2h12v7M6 9a6 6 0 0 0 12 0M6 9h12"></path>
+              </svg>
+              Recognition & Badges
+            </div>
+            <p class="section-subtitle">Earn badges for your contributions and see community recognition</p>
+
+            <h3 style="margin: 20px 0 15px; font-weight: 700;">Available Badges</h3>
+            <div class="badges-grid" id="badgesGrid"></div>
+
+            <h3 style="margin: 30px 0 15px; font-weight: 700;">Community Leaderboard</h3>
+            <div class="leaderboard-container">
+              <table class="leaderboard-table" id="leaderboard"></table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal" id="discussionModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Create Discussion Topic</h2>
+          <button class="modal-close" onclick="closeModal('discussionModal')">×</button>
+        </div>
+        <form id="discussionForm">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="topicTitle" placeholder="Enter topic title" required />
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="topicCategory" required>
+              <option value="">Select a category</option>
+              <option value="Community Conflicts">Community Conflicts</option>
+              <option value="Gender-Based Issues">Gender-Based Issues</option>
+              <option value="Youth & School Mediation">Youth & School Mediation</option>
+              <option value="Workplace Disputes">Workplace Disputes</option>
+              <option value="Peacebuilding Strategies">Peacebuilding Strategies</option>
+              <option value="Legal & Policy Questions">Legal & Policy Questions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="topicDescription" placeholder="Describe your question or topic..." required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Post Topic</button>
+            <button type="button" class="btn-cancel" onclick="closeModal('discussionModal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="questionModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Ask an Expert</h2>
+          <button class="modal-close" onclick="closeModal('questionModal')">×</button>
+        </div>
+        <form id="questionForm">
+          <div class="form-group">
+            <label>Question</label>
+            <input type="text" id="expertQuestion" placeholder="What is your question?" required />
+          </div>
+          <div class="form-group">
+            <label>Topic</label>
+            <select id="expertTopic" required>
+              <option value="">Select a topic</option>
+              <option value="Conflict Resolution">Conflict Resolution</option>
+              <option value="Mediation">Mediation</option>
+              <option value="Gender Issues">Gender Issues</option>
+              <option value="Youth Programs">Youth Programs</option>
+              <option value="Peacebuilding">Peacebuilding</option>
+              <option value="Policy">Policy</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="expertDescription" placeholder="Provide more details..." required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Submit Question</button>
+            <button type="button" class="btn-cancel" onclick="closeModal('questionModal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- THEME SCRIPT -->
+    <script src="../assets/js/theme.js"></script>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+      // ============================================
+      // MOCK DATA
+      // ============================================
+      
+      const discussionTopics = [
+        {
+          id: 1,
+          title: "How to resolve conflicts between NGOs with different priorities?",
+          author: "Priya Sharma",
+          ngoName: "Peace Trust India",
+          category: "Community Conflicts",
+          replies: 12,
+          views: 245,
+          lastActivity: "2 hours ago",
+          content: "We're struggling with coordination when organizations have overlapping but different goals...",
+          authorInitial: "PS"
+        },
+        {
+          id: 2,
+          title: "Gender-sensitive mediation techniques for rural communities",
+          author: "Aisha Mohammed",
+          ngoName: "Women's Voice Foundation",
+          category: "Gender-Based Issues",
+          replies: 8,
+          views: 156,
+          lastActivity: "4 hours ago",
+          content: "Looking for best practices for training mediators who work with rural women...",
+          authorInitial: "AM"
+        },
+        {
+          id: 3,
+          title: "Youth engagement in peacebuilding programs",
+          author: "Raj Patel",
+          ngoName: "Youth Leaders Initiative",
+          category: "Youth & School Mediation",
+          replies: 15,
+          views: 398,
+          lastActivity: "1 hour ago",
+          content: "What strategies have worked best for you to engage school-going youth?",
+          authorInitial: "RP"
+        },
+        {
+          id: 4,
+          title: "Workplace mediation: When employees refuse to participate",
+          author: "Michael Chen",
+          ngoName: "Corporate Peace Solutions",
+          category: "Workplace Disputes",
+          replies: 5,
+          views: 89,
+          lastActivity: "6 hours ago",
+          content: "How do we handle situations where key employees won't attend mediation sessions?",
+          authorInitial: "MC"
+        },
+        {
+          id: 5,
+          title: "Building sustainable peace initiatives at grassroots level",
+          author: "Dr. Emily Watson",
+          ngoName: "Global Peace Network",
+          category: "Peacebuilding Strategies",
+          replies: 22,
+          views: 567,
+          lastActivity: "30 min ago",
+          content: "What are the key factors for long-term success in grassroots peacebuilding?",
+          authorInitial: "EW"
+        },
+        {
+          id: 6,
+          title: "Understanding the new mediation policy framework",
+          author: "Sarah Johnson",
+          ngoName: "Policy & Law Center",
+          category: "Legal & Policy Questions",
+          replies: 9,
+          views: 201,
+          lastActivity: "3 hours ago",
+          content: "Can someone explain the implications of the new mediation certification requirements?",
+          authorInitial: "SJ"
+        }
+      ];
+
+      const expertAnswers = [
+        {
+          id: 1,
+          questionId: 1,
+          question: "How to resolve conflicts between NGOs with different priorities?",
+          expert: "Dr. Sarah Jenkins",
+          credentials: "PhD in Conflict Resolution, 15+ years experience",
+          response: "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.",
+          verified: true,
+          upvotes: 45,
+          authorInitial: "SJ"
+        },
+        {
+          id: 2,
+          questionId: 2,
+          question: "Gender-sensitive mediation techniques for rural communities",
+          expert: "Elena Rodriguez",
+          credentials: "Certified Gender Mediator, Award-winning Trainer",
+          response: "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.",
+          verified: true,
+          upvotes: 67,
+          authorInitial: "ER"
+        }
+      ];
+
+      const communityBadges = [
+        {
+          id: 1,
+          name: "Active Contributor",
+          icon: "✨",
+          description: "Posted 10+ discussion topics",
+          earned: true,
+          earnedDate: "Mar 1, 2026"
+        },
+        {
+          id: 2,
+          name: "Peace Champion",
+          icon: "🕊️",
+          description: "100+ community contributions",
+          earned: true,
+          earnedDate: "Feb 15, 2026"
+        },
+        {
+          id: 3,
+          name: "Expert Mentor",
+          icon: "🎓",
+          description: "Helped 20+ members find solutions",
+          earned: false,
+          earnedDate: null
+        },
+        {
+          id: 4,
+          name: "Case Study Contributor",
+          icon: "📖",
+          description: "Shared 5+ detailed case studies",
+          earned: false,
+          earnedDate: null
+        },
+        {
+          id: 5,
+          name: "Top Mediator",
+          icon: "⚖️",
+          description: "Rated helpful by 50+ members",
+          earned: true,
+          earnedDate: "Jan 28, 2026"
+        },
+        {
+          id: 6,
+          name: "Network Builder",
+          icon: "🤝",
+          description: "Connected 15+ community members",
+          earned: false,
+          earnedDate: null
+        }
+      ];
+
+      const communityLeaderboard = [
+        { rank: 1, name: "Dr. Sarah Jenkins", organization: "Peace Institute", points: 2450, badge: "Expert Mentor" },
+        { rank: 2, name: "Priya Sharma", organization: "Peace Trust India", points: 1890, badge: "Peace Champion" },
+        { rank: 3, name: "Elena Rodriguez", organization: "Gender Mediation Center", points: 1567, badge: "Top Mediator" },
+        { rank: 4, name: "Michael Chen", organization: "Corporate Peace Solutions", points: 1234, badge: "Active Contributor" },
+        { rank: 5, name: "Raj Patel", organization: "Youth Leaders Initiative", points: 1045, badge: "Network Builder" }
+      ];
+
+      // ============================================
+      // INITIALIZATION
+      // ============================================
+
+      document.addEventListener("DOMContentLoaded", function() {
+        initializeCategoryFilters();
+        renderDiscussionCards();
+        renderExpertFAQ();
+        renderBadges();
+        renderLeaderboard();
+        setupEventListeners();
+      });
+
+      // ============================================
+      // RENDER FUNCTIONS
+      // ============================================
+
+      function initializeCategoryFilters() {
+        const categories = ["All", "Community Conflicts", "Gender-Based Issues", "Youth & School Mediation", "Workplace Disputes", "Peacebuilding Strategies", "Legal & Policy Questions"];
+        const filterContainer = document.getElementById("categoryFilters");
+        
+        categories.forEach(category => {
+          const tab = document.createElement("button");
+          tab.className = `filter-tab ${category === "All" ? "active" : ""}`;
+          tab.textContent = category;
+          tab.onclick = () => filterDiscussions(category);
+          filterContainer.appendChild(tab);
+        });
+      }
+
+      function renderDiscussionCards(filter = "All") {
+        const grid = document.getElementById("discussionGrid");
+        grid.innerHTML = "";
+
+        const filtered = filter === "All" 
+          ? discussionTopics 
+          : discussionTopics.filter(t => t.category === filter);
+
+        filtered.forEach(topic => {
+          const card = document.createElement("div");
+          card.className = "discussion-card";
+          card.innerHTML = `
+            <div class="card-category">${topic.category}</div>
+            <h3 class="card-title">${topic.title}</h3>
+            <div class="card-author">
+              <div class="author-avatar">${topic.authorInitial}</div>
+              <div>
+                <strong>${topic.author}</strong><br>
+                <span style="font-size: 0.75rem; color: var(--muted);">${topic.ngoName}</span>
+              </div>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                ${topic.replies} replies
+              </div>
+              <div class="stat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                ${topic.views} views
+              </div>
+              <div class="stat-item">${topic.lastActivity}</div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 21 14 15"></polyline>
+                  <circle cx="10" cy="11" r="8"></circle>
+                </svg>
+                Reply
+              </button>
+              <button class="action-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                Upvote
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      function renderExpertFAQ() {
+        const faqContainer = document.getElementById("expertFAQ");
+        faqContainer.innerHTML = "";
+
+        expertAnswers.forEach((answer, index) => {
+          const item = document.createElement("div");
+          item.className = "faq-item";
+          item.innerHTML = `
+            <div class="faq-question">${answer.question}</div>
+            <div class="faq-meta">By ${answer.expert}</div>
+          `;
+          item.onclick = () => showExpertAnswer(answer);
+          faqContainer.appendChild(item);
+        });
+      }
+
+      function showExpertAnswer(answer) {
+        const answerContainer = document.getElementById("expertAnswer");
+        answerContainer.innerHTML = `
+          <div class="expert-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
+            </svg>
+            Expert Verified
+          </div>
+          <div class="expert-profile">
+            <div class="expert-avatar">${answer.expert.split(' ').map(n => n[0]).join('')}</div>
+            <div class="expert-info">
+              <h4>${answer.expert}</h4>
+              <p>${answer.credentials}</p>
+            </div>
+          </div>
+          <div class="expert-answer-text">${answer.response}</div>
+          <div class="answer-actions">
+            <button class="action-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              ${answer.upvotes} Helpful
+            </button>
+            <button class="action-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Reply
+            </button>
+          </div>
+        `;
+      }
+
+      function renderBadges() {
+        const badgesGrid = document.getElementById("badgesGrid");
+        badgesGrid.innerHTML = "";
+
+        communityBadges.forEach(badge => {
+          const card = document.createElement("div");
+          card.className = "badge-card";
+          card.innerHTML = `
+            ${badge.earned ? `<div class="badge-earned">✓</div>` : ''}
+            <div class="badge-icon">${badge.icon}</div>
+            <div class="badge-name">${badge.name}</div>
+            <div class="badge-description">${badge.description}</div>
+          `;
+          badgesGrid.appendChild(card);
+        });
+      }
+
+      function renderLeaderboard() {
+        const table = document.getElementById("leaderboard");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th style="width: 60px;">Rank</th>
+              <th>Member</th>
+              <th>Organization</th>
+              <th style="width: 80px;">Points</th>
+              <th>Top Badge</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${communityLeaderboard.map(member => `
+              <tr>
+                <td>
+                  <div class="rank-badge rank-${member.rank}">${member.rank}</div>
+                </td>
+                <td>
+                  <div class="member-info">
+                    <div class="member-avatar">${member.name.split(' ').map(n => n[0]).join('')}</div>
+                    <span>${member.name}</span>
+                  </div>
+                </td>
+                <td>${member.organization}</td>
+                <td><strong>${member.points}</strong></td>
+                <td>
+                  <span style="padding: 4px 8px; background: rgba(37, 99, 235, 0.15); color: var(--primary); border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                    ${member.badge}
+                  </span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        `;
+      }
+
+      // ============================================
+      // EVENT LISTENERS & INTERACTIONS
+      // ============================================
+
+      function setupEventListeners() {
+        // Section navigation
+        document.querySelectorAll(".nav-btn").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const section = this.dataset.section;
+            switchSection(section);
+            
+            // Update active button
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+
+        // Create discussion
+        document.getElementById("btnCreateDiscussion").addEventListener("click", () => {
+          openModal("discussionModal");
+        });
+
+        // Create question
+        document.getElementById("btnAskQuestion").addEventListener("click", () => {
+          openModal("questionModal");
+        });
+
+        // Discussion form submit
+        document.getElementById("discussionForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          const newTopic = {
+            id: discussionTopics.length + 1,
+            title: document.getElementById("topicTitle").value,
+            author: "You",
+            ngoName: "Your Organization",
+            category: document.getElementById("topicCategory").value,
+            replies: 0,
+            views: 0,
+            lastActivity: "just now",
+            content: document.getElementById("topicDescription").value,
+            authorInitial: "Y"
+          };
+          discussionTopics.unshift(newTopic);
+          renderDiscussionCards();
+          closeModal("discussionModal");
+          this.reset();
+          alert("Discussion topic posted successfully!");
+        });
+
+        // Question form submit
+        document.getElementById("questionForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          closeModal("questionModal");
+          this.reset();
+          alert("Question submitted! An expert will review and respond soon.");
+        });
+
+        // Theme toggle
+        document.getElementById("themeToggle").addEventListener("click", function() {
+          document.documentElement.classList.toggle("dark");
+          localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+        });
+      }
+
+      function switchSection(section) {
+        document.getElementById("forumSection").style.display = section === "forum" ? "block" : "none";
+        document.getElementById("expertSection").style.display = section === "expert" ? "block" : "none";
+        document.getElementById("badgesSection").style.display = section === "badges" ? "block" : "none";
+        
+        // Scroll to top
+        document.querySelector(".content-scroll").scrollTop = 0;
+      }
+
+      function filterDiscussions(category) {
+        // Update active tab
+        document.querySelectorAll(".filter-tab").forEach(tab => {
+          tab.classList.remove("active");
+          if (tab.textContent === category) tab.classList.add("active");
+        });
+        
+        renderDiscussionCards(category);
+      }
+
+      function openModal(modalId) {
+        document.getElementById(modalId).classList.add("active");
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove("active");
+      }
+
+      // Close modal on outside click
+      document.querySelectorAll(".modal").forEach(modal => {
+        modal.addEventListener("click", function(e) {
+          if (e.target === this) {
+            this.classList.remove("active");
+          }
+        });
+      });
+
+      // Initialize first expert answer on page load
+      window.addEventListener("load", function() {
+        if (expertAnswers.length > 0) {
+          showExpertAnswer(expertAnswers[0]);
+        }
+      });
+    </script>
+  </body>
+</html>
+
+

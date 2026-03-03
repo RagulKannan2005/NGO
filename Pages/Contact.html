@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | NGO Training</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+
+    <style>
+      .contact-hero {
+        padding: 120px 0 40px;
+        background: var(--bg);
+      }
+
+      .contact-hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
+        gap: 2rem;
+        align-items: flex-start;
+      }
+
+      .contact-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.12);
+        color: var(--muted);
+        font-size: 0.8rem;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        margin-bottom: 0.8rem;
+      }
+
+      .contact-meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        max-width: 520px;
+      }
+
+      .contact-info-card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 1.3rem 1.5rem;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .contact-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .contact-info-item h4 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.25rem;
+      }
+
+      .contact-info-item p {
+        font-size: 0.9rem;
+        color: #cbd5f5;
+      }
+
+      .contact-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+      }
+
+      .contact-hint {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-bottom: 0.3rem;
+      }
+
+      .contact-form {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 1.5rem 1.6rem;
+        border: 1px solid var(--border);
+      }
+
+      .contact-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 1.2rem;
+        margin-top: 0.6rem;
+      }
+
+      .contact-form-grid .full {
+        grid-column: 1 / -1;
+      }
+
+      .contact-input,
+      .contact-select,
+      .contact-textarea {
+        width: 100%;
+        padding: 0.7rem 0.8rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font-size: 0.9rem;
+        outline: none;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .contact-input:focus,
+      .contact-select:focus,
+      .contact-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+      }
+
+      .contact-textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .contact-consent {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0.6rem 0 0.4rem;
+      }
+
+      .contact-consent input {
+        margin-top: 0.15rem;
+      }
+
+      .contact-footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 0.8rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .contact-support {
+        max-width: 1100px;
+        margin: 0 auto 3rem;
+        padding: 0 2rem 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr);
+        gap: 2rem;
+      }
+
+      .faq-list {
+        list-style: none;
+        padding: 0;
+        margin: 0.8rem 0 0;
+      }
+
+      .faq-item {
+        padding: 0.6rem 0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+      }
+
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+
+      .faq-q {
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .faq-a {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: 0.1rem;
+      }
+
+      .contact-shortcuts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.8rem;
+        margin-top: 0.8rem;
+      }
+
+      .contact-shortcut-card {
+        background: var(--card);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        padding: 0.9rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .contact-shortcut-card h4 {
+        margin-bottom: 0.2rem;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 960px) {
+        .contact-hero-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-support {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .contact-hero-inner,
+        .contact-support {
+          padding-inline: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
+
+        <ul class="navbar-menu">
+          <li><a href="index.html" class="navbar-link">Home</a></li>
+          <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
+          <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
+
+          <li class="dropdown">
+            <a href="UserDashboard.html" class="navbar-link">Dashboard ▾</a>
+            <div class="dropdown-menu">
+              <a href="UserDashboard.html">User Dashboard</a>
+              <a href="#">Admin Dashboard</a>
+            </div>
+          </li>
+
+          <li><a href="Community.html" class="navbar-link">Community</a></li>
+          <li><a href="Impact.html" class="navbar-link">Impact</a></li>
+          <li><a href="Contact.html" class="navbar-link active">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button
+            class="btn-donate"
+            onclick="window.location.href = 'login.html'"
+          >
+            Get Started
+          </button>
+
+          <label class="switch-3d-cyan">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="switch-track">
+              <span class="track-text text-3d">Dark</span>
+              <span class="track-text text-2d">Light</span>
+              <div class="switch-knob">
+                <div class="cube">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO + FORM -->
+    <section class="contact-hero">
+      <div class="contact-hero-inner">
+        <div>
+          <div class="contact-badge">
+            <span>We typically reply within 24–48 hours</span>
+          </div>
+          <h1 class="section-title" style="margin-bottom: 0.75rem">
+            Let’s talk about your team’s training needs
+          </h1>
+          <p class="contact-meta">
+            Whether you’re onboarding dozens of staff or piloting a single
+            cohort, our team can help you design the right training journey and
+            answer platform questions.
+          </p>
+
+          <div class="contact-info-card" style="margin-top: 1.4rem">
+            <h3 style="margin-bottom: 0.4rem">Contact details</h3>
+            <p style="font-size: 0.85rem">
+              Reach us directly, or use the form to route your message to the
+              right team.
+            </p>
+
+            <div class="contact-info-grid">
+              <div class="contact-info-item">
+                <h4>Email</h4>
+                <p>support@ngotraining.org</p>
+              </div>
+              <div class="contact-info-item">
+                <h4>Partnerships</h4>
+                <p>partners@ngotraining.org</p>
+              </div>
+              <div class="contact-info-item">
+                <h4>Office hours</h4>
+                <p>Mon–Fri, 09:00–18:00 (CET)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="contact-form">
+            <h3>Send us a message</h3>
+            <p class="contact-hint">
+              Share a few details so we can connect you with the right person.
+            </p>
+
+            <form
+              onsubmit="event.preventDefault(); alert('Thank you for reaching out! We will get back to you shortly.');"
+            >
+              <div class="contact-form-grid">
+                <div>
+                  <label class="contact-label" for="contactName">Full name</label>
+                  <input
+                    id="contactName"
+                    type="text"
+                    class="contact-input"
+                    placeholder="Jane Doe"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="contact-label" for="contactEmail">Work email</label>
+                  <input
+                    id="contactEmail"
+                    type="email"
+                    class="contact-input"
+                    placeholder="you@organization.org"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="contact-label" for="contactOrg">Organization</label>
+                  <input
+                    id="contactOrg"
+                    type="text"
+                    class="contact-input"
+                    placeholder="Your NGO / network"
+                  />
+                </div>
+                <div>
+                  <label class="contact-label" for="contactTopic">Topic</label>
+                  <select id="contactTopic" class="contact-select">
+                    <option value="training">Training programs</option>
+                    <option value="partnerships">Partnerships</option>
+                    <option value="pricing">Pricing & cohorts</option>
+                    <option value="technical">Technical support</option>
+                    <option value="media">Media / speaking</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div class="full">
+                  <label class="contact-label" for="contactMessage">How can we help?</label>
+                  <textarea
+                    id="contactMessage"
+                    class="contact-textarea"
+                    placeholder="Share a bit about your context, timeline, and what a successful training outcome would look like."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="contact-consent">
+                <input id="contactConsent" type="checkbox" required />
+                <label for="contactConsent">
+                  I agree that NGO Training may store my details for the purpose
+                  of responding to this inquiry.
+                </label>
+              </div>
+
+              <div class="contact-footer-row">
+                <span>We never share your details with third parties.</span>
+                <button type="submit" class="btn btn-primary">
+                  Submit message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT & SHORTCUTS -->
+    <section class="contact-support">
+      <div>
+        <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem">
+          Common questions
+        </h2>
+        <p style="color: var(--muted); font-size: 0.9rem">
+          Quick answers to the things NGO teams ask us most often.
+        </p>
+        <ul class="faq-list">
+          <li class="faq-item">
+            <div class="faq-q">Can you onboard our whole staff at once?</div>
+            <div class="faq-a">
+              Yes. We can coordinate cohort-based onboarding for multiple teams
+              and regions at the same time.
+            </div>
+          </li>
+          <li class="faq-item">
+            <div class="faq-q">Do you offer custom training pathways?</div>
+            <div class="faq-a">
+              We can combine modules from different programs to match your
+              context and existing initiatives.
+            </div>
+          </li>
+          <li class="faq-item">
+            <div class="faq-q">Will our team receive certificates?</div>
+            <div class="faq-a">
+              Learners who complete all modules in a program will receive a
+              shareable certificate.
+            </div>
+          </li>
+          <li class="faq-item">
+            <div class="faq-q">Can we access trainings offline?</div>
+            <div class="faq-a">
+              Some resources can be downloaded for offline facilitation. Reach
+              out to discuss your connectivity constraints.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="section-title" style="font-size: 1.4rem; margin-bottom: 0.4rem">
+          Shortcuts
+        </h2>
+        <p style="color: var(--muted); font-size: 0.9rem">
+          Jump directly to the part of the platform that matches what you want
+          to do next.
+        </p>
+
+        <div class="contact-shortcuts">
+          <div class="contact-shortcut-card">
+            <h4>Explore all programs</h4>
+            <p>Browse every training track we offer.</p>
+            <button
+              class="btn btn-light"
+              style="margin-top: 0.5rem"
+              onclick="window.location.href = 'TrainingPage.html'"
+            >
+              Go to trainings
+            </button>
+          </div>
+          <div class="contact-shortcut-card">
+            <h4>Check impact stories</h4>
+            <p>See how other NGOs use the platform.</p>
+            <button
+              class="btn btn-light"
+              style="margin-top: 0.5rem"
+              onclick="window.location.href = 'Impact.html'"
+            >
+              View impact
+            </button>
+          </div>
+          <div class="contact-shortcut-card">
+            <h4>Join the community</h4>
+            <p>Connect with other practitioners and share lessons.</p>
+            <button
+              class="btn btn-light"
+              style="margin-top: 0.5rem"
+              onclick="window.location.href = 'Community.html'"
+            >
+              Visit community
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: var(--primary); font-size: 1.5rem">
+            🌍 NGO Training
+          </h4>
+          <p>
+            Equipping global non-profits with the skills needed to resolve
+            conflict and build sustainable, lasting peace in vulnerable
+            communities.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="TrainingPage.html">All Programs</a></li>
+            <li><a href="wishlist.html">My Wishlist</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="login.html">Login / Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="CommunityForums.html">Community Forum</a></li>
+            <li><a href="#">Instructor Guidelines</a></li>
+            <li><a href="#">API Documentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> NGO Training Platform. All rights
+        reserved.
+      </div>
+    </footer>
+
+    <script src="../assets/js/theme.js"></script>
+    <script>
+      document.getElementById("year").innerText = new Date().getFullYear();
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Impact | NGO Training</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+
+    <style>
+      .impact-hero {
+        padding: 120px 0 60px;
+        background: radial-gradient(circle at 0% 0%, #1d4ed8, transparent 55%),
+          radial-gradient(circle at 100% 100%, #0ea5e9, transparent 55%),
+          var(--bg);
+      }
+
+      .impact-hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .impact-kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.9rem;
+        margin-top: 1.5rem;
+      }
+
+      .impact-kpi-card {
+        background: rgba(15, 23, 42, 0.84);
+        border-radius: 16px;
+        padding: 0.9rem 1rem;
+        color: #e5e7eb;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      .impact-kpi-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.15rem;
+      }
+
+      .impact-kpi-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #cbd5f5;
+      }
+
+      .impact-kpi-trend {
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        color: #4ade80;
+      }
+
+      .impact-meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border-radius: 999px;
+        padding: 0.3rem 0.75rem;
+        background: rgba(15, 23, 42, 0.6);
+        color: #cbd5f5;
+        font-size: 0.8rem;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        margin-bottom: 0.75rem;
+      }
+
+      .impact-hero-right {
+        background: var(--card);
+        border-radius: 20px;
+        padding: 1.4rem 1.6rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+      }
+
+      .impact-hero-right h3 {
+        margin-bottom: 0.6rem;
+      }
+
+      .impact-hero-right ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0 0 1rem;
+      }
+
+      .impact-hero-right li {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 0.25rem;
+      }
+
+      .impact-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+        gap: 2.5rem;
+      }
+
+      .impact-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .impact-stat-card {
+        border-radius: 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 1.2rem 1.3rem;
+      }
+
+      .impact-stat-card .label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin-bottom: 0.35rem;
+      }
+
+      .impact-stat-card .value {
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      .impact-stat-card .change {
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        color: #22c55e;
+      }
+
+      .impact-stat-card .description {
+        margin-top: 0.45rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .impact-timeline {
+        border-radius: 18px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 1.4rem 1.5rem;
+      }
+
+      .impact-years {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 0.8rem;
+      }
+
+      .impact-year-row {
+        display: grid;
+        grid-template-columns: 70px 1fr 80px;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .impact-year-label {
+        color: var(--muted);
+      }
+
+      .impact-bar {
+        position: relative;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.25);
+        overflow: hidden;
+      }
+
+      .impact-bar-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform-origin: left;
+      }
+
+      .impact-year-value {
+        text-align: right;
+        font-weight: 600;
+      }
+
+      .impact-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem 3rem;
+      }
+
+      .impact-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .impact-section-header p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        max-width: 520px;
+      }
+
+      .impact-stories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.6rem;
+      }
+
+      .impact-story-card {
+        border-radius: 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 1.4rem 1.5rem;
+      }
+
+      .impact-story-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 0.4rem;
+      }
+
+      .impact-story-program {
+        font-size: 0.8rem;
+        color: var(--primary);
+      }
+
+      .impact-story-quote {
+        font-size: 0.9rem;
+        margin-top: 0.4rem;
+        color: var(--muted);
+      }
+
+      .impact-regions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.4rem;
+      }
+
+      .impact-region-card {
+        border-radius: 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 1.2rem 1.3rem;
+      }
+
+      .impact-region-meta {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin: 0.4rem 0;
+      }
+
+      .impact-pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .impact-pill {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(37, 99, 235, 0.08);
+        color: var(--primary);
+      }
+
+      .impact-sdg {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .impact-sdg-tag {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.8rem;
+        border-radius: 999px;
+        border: 1px dashed var(--border);
+      }
+
+      .impact-partners {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      .impact-partner-badge {
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.03);
+        border: 1px solid var(--border);
+      }
+
+      .impact-cta {
+        max-width: 900px;
+        margin: 0 auto 3rem;
+        padding: 2.2rem 2.4rem;
+        border-radius: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #f9fafb;
+        text-align: center;
+        box-shadow: 0 32px 80px rgba(15, 23, 42, 0.45);
+      }
+
+      .impact-cta p {
+        margin: 0.7rem 0 1.5rem;
+        color: rgba(241, 245, 249, 0.9);
+      }
+
+      .impact-cta .btn {
+        min-width: 180px;
+        font-weight: 600;
+      }
+
+      @media (max-width: 960px) {
+        .impact-hero-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .impact-hero-right {
+          order: -1;
+        }
+
+        .impact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .impact-hero-inner,
+        .impact-grid,
+        .impact-section {
+          padding-inline: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
+
+        <ul class="navbar-menu">
+          <li><a href="index.html" class="navbar-link">Home</a></li>
+          <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
+          <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
+
+          <li class="dropdown">
+            <a href="UserDashboard.html" class="navbar-link">Dashboard ▾</a>
+            <div class="dropdown-menu">
+              <a href="UserDashboard.html">User Dashboard</a>
+              <a href="#">Admin Dashboard</a>
+            </div>
+          </li>
+
+          <li><a href="Community.html" class="navbar-link">Community</a></li>
+          <li><a href="Impact.html" class="navbar-link active">Impact</a></li>
+          <li><a href="Contact.html" class="navbar-link">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button
+            class="btn-donate"
+            onclick="window.location.href = 'login.html'"
+          >
+            Get Started
+          </button>
+
+          <label class="switch-3d-cyan">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="switch-track">
+              <span class="track-text text-3d">Dark</span>
+              <span class="track-text text-2d">Light</span>
+              <div class="switch-knob">
+                <div class="cube">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="impact-hero">
+      <div class="impact-hero-inner">
+        <div>
+          <div class="impact-meta-chip">
+            <span>Impact dashboard for NGOs</span>
+          </div>
+          <h1 class="section-title" style="margin-bottom: 0.75rem">
+            Measuring change beyond the classroom
+          </h1>
+          <p style="color: var(--muted); max-width: 520px">
+            See how training journeys translate into real conflict prevention,
+            stronger teams, and resilient communities across the globe.
+          </p>
+
+          <div id="impactKpiGrid" class="impact-kpis">
+            <!-- KPI cards from JS -->
+          </div>
+        </div>
+
+        <div class="impact-hero-right">
+          <h3>What we track on this page</h3>
+          <ul>
+            <li>How many NGOs and learners actively use the platform</li>
+            <li>Completion and application of conflict resolution skills</li>
+            <li>Stories from the field that show practical outcomes</li>
+            <li>Where in the world our trainings have the most reach</li>
+          </ul>
+          <button
+            class="btn btn-primary"
+            style="margin-top: 0.75rem"
+            onclick="window.location.href = 'TrainingPage.html'"
+          >
+            Explore training programs
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS + TIMELINE -->
+    <section class="impact-grid">
+      <div>
+        <h2 class="section-title">Impact at a glance</h2>
+        <p class="section-subtitle">
+          High-level indicators that summarize how organizations use our
+          conflict resolution curriculum.
+        </p>
+        <div id="impactStatsGrid" class="impact-stats-grid">
+          <!-- stat cards via JS -->
+        </div>
+      </div>
+
+      <div class="impact-timeline">
+        <h3 style="margin-bottom: 0.3rem">Growth over time</h3>
+        <p style="color: var(--muted); font-size: 0.85rem">
+          Each bar represents the number of learners completing at least one
+          program per year.
+        </p>
+        <div id="impactTimelineYears" class="impact-years">
+          <!-- timeline rows via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- STORIES & REGIONS -->
+    <section class="impact-section">
+      <div class="impact-section-header">
+        <div>
+          <h2 class="section-title">Stories from the field</h2>
+          <p>
+            Short case studies from partner organizations that used our courses
+            to change how they respond to tension and crisis.
+          </p>
+        </div>
+      </div>
+
+      <div id="impactStoriesGrid" class="impact-stories-grid">
+        <!-- case studies via JS -->
+      </div>
+    </section>
+
+    <section class="impact-section">
+      <div class="impact-section-header">
+        <div>
+          <h2 class="section-title">Where we work</h2>
+          <p>
+            A snapshot of regions where NGOs actively deploy graduates from the
+            platform inside communities.
+          </p>
+        </div>
+      </div>
+
+      <div id="impactRegionsGrid" class="impact-regions-grid">
+        <!-- regions via JS -->
+      </div>
+    </section>
+
+    <!-- THEMES, PARTNERS, CTA -->
+    <section class="impact-section">
+      <div class="impact-section-header">
+        <div>
+          <h2 class="section-title">What kind of impact?</h2>
+          <p>
+            Our curriculum is designed around real peacebuilding work, aligned
+            with themes that front-line teams care about most.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: grid; gap: 1.5rem; grid-template-columns: 2fr 1.4fr">
+        <div>
+          <div class="impact-sdg">
+            <span class="impact-sdg-tag">Conflict prevention & early warning</span>
+            <span class="impact-sdg-tag">Community mediation</span>
+            <span class="impact-sdg-tag">Youth leadership</span>
+            <span class="impact-sdg-tag">Gender-responsive programming</span>
+            <span class="impact-sdg-tag">Crisis communication</span>
+            <span class="impact-sdg-tag">Staff wellbeing & burnout</span>
+          </div>
+        </div>
+
+        <div>
+          <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.7rem">
+            Organizations that invest in structured conflict resolution training
+            report fewer escalations, smoother partnerships, and safer staff.
+          </p>
+          <div class="impact-partners">
+            <span class="impact-partner-badge">Global Peace Initiative</span>
+            <span class="impact-partner-badge">HelpNet Alliance</span>
+            <span class="impact-partner-badge">Action Aid Collective</span>
+            <span class="impact-partner-badge">Youth Mediation Network</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="impact-cta">
+      <h2>Ready to measure your own impact?</h2>
+      <p>
+        Join NGOs around the world using the platform to upskill staff,
+        standardize responses to conflict, and demonstrate results to donors.
+      </p>
+      <button
+        class="btn btn-light"
+        style="color: var(--primary)"
+        onclick="window.location.href = 'login.html'"
+      >
+        Get started with a team
+      </button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: var(--primary); font-size: 1.5rem">
+            🌍 NGO Training
+          </h4>
+          <p>
+            Equipping global non-profits with the skills needed to resolve
+            conflict and build sustainable, lasting peace in vulnerable
+            communities.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="TrainingPage.html">All Programs</a></li>
+            <li><a href="wishlist.html">My Wishlist</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="login.html">Login / Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="CommunityForums.html">Community Forum</a></li>
+            <li><a href="#">Instructor Guidelines</a></li>
+            <li><a href="#">API Documentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> NGO Training Platform. All rights
+        reserved.
+      </div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script>
+      document.getElementById("year").innerText = new Date().getFullYear();
+
+      const kpiGrid = document.getElementById("impactKpiGrid");
+      const statsGrid = document.getElementById("impactStatsGrid");
+      const storiesGrid = document.getElementById("impactStoriesGrid");
+      const regionsGrid = document.getElementById("impactRegionsGrid");
+      const yearsContainer = document.getElementById("impactTimelineYears");
+
+      const programById =
+        typeof programs !== "undefined"
+          ? programs.reduce((acc, p) => {
+              acc[p.id] = p;
+              return acc;
+            }, {})
+          : {};
+
+      if (kpiGrid && Array.isArray(impactStats)) {
+        impactStats.slice(0, 4).forEach((stat) => {
+          const card = document.createElement("div");
+          card.className = "impact-kpi-card";
+          card.innerHTML = `
+            <div class="impact-kpi-label">${stat.label}</div>
+            <h3>${stat.value}</h3>
+            <div class="impact-kpi-trend">${stat.change}</div>
+          `;
+          kpiGrid.appendChild(card);
+        });
+      }
+
+      if (statsGrid && Array.isArray(impactStats)) {
+        impactStats.forEach((stat) => {
+          const card = document.createElement("div");
+          card.className = "impact-stat-card";
+          card.innerHTML = `
+            <div class="label">${stat.label}</div>
+            <div class="value">${stat.value}</div>
+            <div class="change">${stat.change}</div>
+            <div class="description">${stat.description}</div>
+          `;
+          statsGrid.appendChild(card);
+        });
+      }
+
+      if (yearsContainer && Array.isArray(impactTimeline)) {
+        const maxValue = Math.max(...impactTimeline.map((y) => y.learners));
+        impactTimeline.forEach((year) => {
+          const row = document.createElement("div");
+          row.className = "impact-year-row";
+          const width = maxValue ? (year.learners / maxValue) * 100 : 0;
+          row.innerHTML = `
+            <div class="impact-year-label">${year.year}</div>
+            <div class="impact-bar">
+              <div class="impact-bar-fill" style="width: ${width}%"></div>
+            </div>
+            <div class="impact-year-value">${year.learners.toLocaleString()}</div>
+          `;
+          yearsContainer.appendChild(row);
+        });
+      }
+
+      if (storiesGrid && Array.isArray(impactStories)) {
+        impactStories.forEach((story) => {
+          const program = programById[story.programId];
+          const programTitle = program ? program.title : "Conflict program";
+          const card = document.createElement("div");
+          card.className = "impact-story-card";
+          card.innerHTML = `
+            <div class="impact-story-meta">
+              <span>${story.orgName} · ${story.country}</span>
+              <span class="impact-story-program">${programTitle}</span>
+            </div>
+            <h3 style="margin-bottom: 0.3rem">${story.headline}</h3>
+            <p style="font-size: 0.9rem">${story.summary}</p>
+            <p class="impact-story-quote">"${story.quote}"</p>
+          `;
+          storiesGrid.appendChild(card);
+        });
+      }
+
+      if (regionsGrid && Array.isArray(regionalImpact)) {
+        regionalImpact.forEach((region) => {
+          const card = document.createElement("div");
+          card.className = "impact-region-card";
+          card.innerHTML = `
+            <h3>${region.region}</h3>
+            <div class="impact-region-meta">
+              ${region.ngos.toLocaleString()} NGOs ·
+              ${region.learners.toLocaleString()} learners
+            </div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">
+              ${region.highlight}
+            </p>
+            <div class="impact-pill-row">
+              ${region.focusAreas
+                .map((tag) => `<span class="impact-pill">${tag}</span>`)
+                .join("")}
+            </div>
+          `;
+          regionsGrid.appendChild(card);
+        });
+      }
+    </script>
+  </body>
+</html>
+
