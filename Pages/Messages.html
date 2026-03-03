@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messages - NGO Training</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* DASHBOARD BASE STYLES */
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background-image:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.08) 0%,
+            transparent 50%
+          );
+        background-attachment: fixed;
+      }
+      .dash-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      /* SIDEBAR */
+      .floating-sidebar {
+        width: 100px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 100;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+      html.dark .floating-sidebar {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+      .floating-sidebar:hover {
+        width: 280px;
+        align-items: flex-start;
+      }
+
+      .nav-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+        transition: 0.4s;
+      }
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
+
+      .nav-items {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+      .nav-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .nav-btn i {
+        min-width: 24px;
+        transition: 0.3s transform;
+      }
+      .nav-btn span {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .floating-sidebar:hover .nav-btn span {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .nav-btn:hover {
+        color: var(--text);
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .nav-btn:hover i {
+        transform: scale(1.1);
+      }
+      .nav-btn.active {
+        color: var(--primary);
+        background: rgba(37, 99, 235, 0.1);
+      }
+      html.dark .nav-btn.active {
+        background: rgba(37, 99, 235, 0.15);
+      }
+
+      /* MAIN CONTENT */
+      .dash-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border-radius: 32px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
+        overflow: hidden;
+      }
+      html.dark .dash-main {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* SPLIT PANE INBOX LAYOUT */
+      .inbox-container {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+      }
+
+      /* INBOX LIST (LEFT) */
+      .inbox-list {
+        width: 350px;
+        border-right: 1px solid rgba(128, 128, 128, 0.1);
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      html.dark .inbox-list {
+        background: rgba(15, 23, 42, 0.2);
+      }
+
+      .inbox-header {
+        padding: 30px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .inbox-header h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      .thread-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+      }
+      .thread-item {
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        border: 1px solid transparent;
+      }
+      .thread-item:hover {
+        background: rgba(128, 128, 128, 0.05);
+      }
+      .thread-item.active {
+        background: var(--card);
+        border-color: rgba(128, 128, 128, 0.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+      }
+
+      .thread-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        align-items: center;
+      }
+      .thread-sender {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+      .thread-time {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .thread-subject {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        color: var(--text);
+      }
+      .thread-preview {
+        font-size: 0.85rem;
+        color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .unread-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+      }
+
+      /* MESSAGE DETAIL (RIGHT) */
+      .inbox-detail {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+      }
+
+      .detail-header {
+        padding: 30px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .detail-subject {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+      .sender-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .sender-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--border);
+        background-size: cover;
+        background-position: center;
+      }
+      .sender-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: block;
+      }
+      .sender-email {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .detail-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px;
+      }
+      .msg-bubble {
+        background: var(--card);
+        padding: 30px;
+        border-radius: 0 24px 24px 24px;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        max-width: 80%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .msg-bubble p {
+        margin-bottom: 15px;
+      }
+      .msg-bubble p:last-child {
+        margin-bottom: 0;
+      }
+
+      .detail-reply {
+        padding: 30px;
+        border-top: 1px solid rgba(128, 128, 128, 0.1);
+        background: rgba(128, 128, 128, 0.02);
+      }
+      .reply-box {
+        width: 100%;
+        min-height: 120px;
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+        resize: none;
+        margin-bottom: 15px;
+        transition: 0.3s;
+      }
+      .reply-box:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+      }
+
+      @media (max-width: 1024px) {
+        .inbox-list {
+          width: 300px;
+        }
+      }
+      @media (max-width: 768px) {
+        .dash-wrapper {
+          padding: 10px;
+          flex-direction: column;
+        }
+        .floating-sidebar {
+          width: 100%;
+          flex-direction: row;
+          padding: 15px;
+          border-radius: 20px;
+          height: auto;
+        }
+        .nav-logo {
+          margin-bottom: 0;
+          margin-right: 20px;
+        }
+        .nav-items {
+          flex-direction: row;
+          padding: 0;
+          overflow-x: auto;
+        }
+        .nav-btn span {
+          display: none;
+        }
+        .inbox-container {
+          flex-direction: column;
+        }
+        .inbox-list {
+          width: 100%;
+          height: 300px;
+          border-right: none;
+          border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+
+    <div class="dash-wrapper">
+      <!-- FLOATING SIDEBAR -->
+      <aside class="floating-sidebar">
+        <div class="nav-logo"><i data-lucide="shield"></i></div>
+        <div class="nav-items">
+          <a href="UserDashboard.html" class="nav-btn"
+            ><i data-lucide="layout-grid"></i> <span>Dashboard</span></a
+          >
+          <a href="TrainingPage.html" class="nav-btn"
+            ><i data-lucide="compass"></i> <span>Explore Programs</span></a
+          >
+          <a href="wishlist.html" class="nav-btn"
+            ><i data-lucide="bookmark"></i> <span>Saved Training</span></a
+          >
+          <a href="MyCertificates.html" class="nav-btn"
+            ><i data-lucide="award"></i> <span>My Certificates</span></a
+          >
+          <a href="LearningStats.html" class="nav-btn"
+            ><i data-lucide="bar-chart-2"></i> <span>Learning Stats</span></a
+          >
+          <a href="CommunityForums.html" class="nav-btn"
+            ><i data-lucide="users"></i> <span>Community Forums</span></a
+          >
+          <a href="Messages.html" class="nav-btn active">
+            <i data-lucide="mail"></i>
+            <span
+              >Messages
+              <span
+                class="badge"
+                style="
+                  background: var(--danger);
+                  color: white;
+                  border-radius: 50%;
+                  font-size: 0.65rem;
+                  padding: 2px 6px;
+                  position: absolute;
+                  right: 15px;
+                  top: 10px;
+                "
+                >3</span
+              ></span
+            >
+          </a>
+          <a href="Settings.html" class="nav-btn"
+            ><i data-lucide="settings"></i> <span>Account Settings</span></a
+          >
+          <a href="#" class="nav-btn"
+            ><i data-lucide="help-circle"></i> <span>Help & Support</span></a
+          >
+          <div style="flex: 1"></div>
+          <a
+            href="index.html"
+            class="nav-btn"
+            style="color: #ef4444; margin-top: auto"
+            ><i data-lucide="log-out"></i> <span>Logout</span></a
+          >
+        </div>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <main class="dash-main">
+        <div class="inbox-container">
+          <!-- LEFT LIST -->
+          <div class="inbox-list">
+            <div class="inbox-header">
+              <h3>Inbox</h3>
+              <button
+                class="btn btn-outline"
+                style="padding: 8px; border-radius: 12px"
+              >
+                <i data-lucide="edit-3" size="18"></i>
+              </button>
+            </div>
+            <div class="thread-list">
+              <!-- Thread 1 -->
+              <div class="thread-item active">
+                <div class="thread-top">
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>Dr. Marcus Webb</span
+                  >
+                  <span class="thread-time">10:42 AM</span>
+                </div>
+                <div class="thread-subject">Feedback on your Assignment</div>
+                <div class="thread-preview">
+                  Hi Sarah, Excellent work on the case study analysis...
+                </div>
+              </div>
+
+              <!-- Thread 2 -->
+              <div class="thread-item">
+                <div class="thread-top">
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>System Admin</span
+                  >
+                  <span class="thread-time">Yesterday</span>
+                </div>
+                <div class="thread-subject">Certificate Issued!</div>
+                <div class="thread-preview">
+                  Congratulations, you have successfully earned the...
+                </div>
+              </div>
+
+              <!-- Thread 3 -->
+              <div class="thread-item">
+                <div class="thread-top">
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>Community Team</span
+                  >
+                  <span class="thread-time">Tuesday</span>
+                </div>
+                <div class="thread-subject">Webinar Link for Friday</div>
+                <div class="thread-preview">
+                  Don't forget to join us this Friday at 3PM EST...
+                </div>
+              </div>
+
+              <!-- Thread 4 -->
+              <div class="thread-item">
+                <div class="thread-top">
+                  <span class="thread-sender">Support Desk</span>
+                  <span class="thread-time">Oct 12</span>
+                </div>
+                <div class="thread-subject" style="font-weight: 400">
+                  Re: Password Reset Request
+                </div>
+                <div class="thread-preview">
+                  We have processed your request. Please click...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT DETAIL OVERVIEW -->
+          <div class="inbox-detail">
+            <div class="detail-header">
+              <div>
+                <h2 class="detail-subject">
+                  Feedback on your Assignment: Crisis Comms
+                </h2>
+                <div class="sender-info">
+                  <div
+                    class="sender-avatar"
+                    style="
+                      background-image: url(&quot;https://ui-avatars.com/api/?name=Marcus+Webb&background=10b981&color=fff&quot;);
+                    "
+                  ></div>
+                  <div>
+                    <span class="sender-name">Dr. Marcus Webb</span>
+                    <span class="sender-email"
+                      >marcus.webb@ngo-training.edu • Oct 26, 10:42 AM</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div style="display: flex; gap: 10px">
+                <!-- Theme toggle injected here for accessibility in Dashboard header -->
+                <label
+                  class="switch-3d-cyan"
+                  style="transform: scale(0.6); margin: 0; margin-right: 15px"
+                >
+                  <input
+                    type="checkbox"
+                    class="switch-input"
+                    id="themeSwitch"
+                  />
+                  <div class="switch-track">
+                    <span class="track-text text-3d">Dark</span>
+                    <span class="track-text text-2d">Light</span>
+                    <div class="switch-knob">
+                      <div class="cube">
+                        <div class="face front"></div>
+                        <div class="face back"></div>
+                        <div class="face right"></div>
+                        <div class="face left"></div>
+                        <div class="face top"></div>
+                        <div class="face bottom"></div>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <button
+                  class="btn btn-outline"
+                  style="padding: 10px; border-radius: 12px"
+                >
+                  <i data-lucide="star" size="18"></i>
+                </button>
+                <button
+                  class="btn btn-outline"
+                  style="padding: 10px; border-radius: 12px"
+                >
+                  <i data-lucide="trash-2" size="18" color="var(--danger)"></i>
+                </button>
+                <button
+                  class="btn btn-primary"
+                  style="padding: 10px 20px; border-radius: 12px"
+                >
+                  <i
+                    data-lucide="reply"
+                    size="18"
+                    style="
+                      margin-right: 8px;
+                      display: inline-block;
+                      vertical-align: text-bottom;
+                    "
+                  ></i>
+                  Reply
+                </button>
+              </div>
+            </div>
+
+            <!-- Message Body -->
+            <div class="detail-body">
+              <div class="msg-bubble">
+                <p>Hi Sarah,</p>
+                <p>
+                  Excellent work on the latest case study analysis for Module 4.
+                  Your understanding of de-escalation tactics in high-stress
+                  field scenarios was clearly demonstrated in your responses.
+                </p>
+                <p>
+                  I particularly liked how you applied the "Listen, Acknowledge,
+                  Ask" framework to the border conflict scenario. It showed a
+                  lot of practical insight.
+                </p>
+                <p>
+                  I have graded your assignment. You are well on your way to
+                  earning the master certificate!
+                </p>
+                <p>Best Regards,<br /><strong>Dr. Marcus Webb</strong></p>
+              </div>
+            </div>
+
+            <!-- Reply Area -->
+            <div class="detail-reply">
+              <textarea
+                class="reply-box"
+                placeholder="Type your reply here..."
+              ></textarea>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div style="color: var(--muted); cursor: pointer">
+                  <i data-lucide="paperclip" style="margin-right: 15px"></i>
+                  <i data-lucide="image"></i>
+                </div>
+                <button
+                  class="btn btn-primary"
+                  style="border-radius: 12px; padding: 10px 30px"
+                >
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

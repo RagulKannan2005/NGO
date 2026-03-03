@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Stats - NGO Training</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* DASHBOARD BASE STYLES REUSED FROM UserDashboard.html */
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background-image:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.08) 0%,
+            transparent 50%
+          );
+        background-attachment: fixed;
+      }
+
+      .dash-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      /* SIDEBAR */
+      .floating-sidebar {
+        width: 100px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 100;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+      html.dark .floating-sidebar {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+      .floating-sidebar:hover {
+        width: 280px;
+        align-items: flex-start;
+      }
+
+      .nav-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+        transition: 0.4s;
+      }
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
+
+      .nav-items {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+      .nav-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .nav-btn i {
+        min-width: 24px;
+        transition: 0.3s transform;
+      }
+      .nav-btn span {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .floating-sidebar:hover .nav-btn span {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .nav-btn:hover {
+        color: var(--text);
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .nav-btn:hover i {
+        transform: scale(1.1);
+      }
+      .nav-btn.active {
+        color: var(--primary);
+        background: rgba(37, 99, 235, 0.1);
+      }
+      html.dark .nav-btn.active {
+        background: rgba(37, 99, 235, 0.15);
+      }
+
+      /* MAIN CONTENT */
+      .dash-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border-radius: 32px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
+        overflow: hidden;
+      }
+      html.dark .dash-main {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* HEADER */
+      .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 40px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+      }
+      .greeting h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.5px;
+      }
+      .greeting p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 400;
+      }
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .profile-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 16px 6px 6px;
+        background: var(--card);
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .profile-pill:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
+          center/cover;
+      }
+
+      /* BENTO GRID (STATS SPECIFIC) */
+      .bento-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px;
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      @media (max-width: 1200px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .bento-grid {
+          grid-template-columns: 1fr;
+        }
+        .dash-wrapper {
+          padding: 10px;
+          flex-direction: column;
+        }
+        .floating-sidebar {
+          width: 100%;
+          flex-direction: row;
+          padding: 15px;
+          border-radius: 20px;
+          height: auto;
+        }
+        .nav-logo {
+          margin-bottom: 0;
+          margin-right: 20px;
+        }
+        .nav-items {
+          flex-direction: row;
+          padding: 0;
+          overflow-x: auto;
+        }
+        .nav-btn span {
+          display: none;
+        }
+        .floating-sidebar:hover {
+          width: 100%;
+          align-items: center;
+        }
+      }
+
+      /* BENTO CARDS */
+      .bento-card {
+        background: var(--card);
+        border-radius: 32px;
+        padding: 30px;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* METRIC CONTENT */
+      .bento-mini {
+        grid-column: span 1;
+      }
+      .metric-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .metric-icon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: inherit;
+        filter: blur(10px);
+        opacity: 0.4;
+        z-index: -1;
+      }
+      .metric-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -1px;
+        margin-bottom: 5px;
+      }
+      .metric-label {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .icon-amber {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+      .icon-green {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .icon-rose {
+        background: rgba(244, 63, 94, 0.1);
+        color: #f43f5e;
+      }
+
+      /* TIMELINE BENTO (Span 4) */
+      .timeline-bento {
+        grid-column: span 4;
+        padding: 40px;
+      }
+      .timeline-bento h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+      }
+
+      .timeline {
+        display: flex;
+        align-items: center;
+        max-width: 100%;
+        overflow-x: auto;
+        padding-bottom: 20px;
+      }
+      .tl-node {
+        flex: 1;
+        min-width: 150px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tl-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 4px solid var(--bg);
+        background: var(--primary);
+        z-index: 2;
+      }
+      .tl-dot.empty {
+        background: var(--muted);
+        opacity: 0.3;
+      }
+      /* Line connecting nodes */
+      .tl-node:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        width: 100%;
+        height: 2px;
+        background: rgba(128, 128, 128, 0.2);
+        z-index: 1;
+      }
+      .tl-node.active:not(:last-child)::after {
+        background: var(--primary);
+      }
+
+      .tl-label {
+        margin-top: 15px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .tl-desc {
+        margin-top: 5px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      /* TOP SKILLS (Span 2) */
+      .list-bento {
+        grid-column: span 2;
+      }
+      .list-bento h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .skill-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
+      }
+      .skill-item:last-child {
+        border-bottom: none;
+      }
+      .s-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .s-master {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .s-adv {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+      }
+      .s-int {
+        background: rgba(124, 58, 237, 0.1);
+        color: var(--secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+
+    <div class="dash-wrapper">
+      <!-- FLOATING SIDEBAR -->
+      <aside class="floating-sidebar">
+        <div class="nav-logo">
+          <i data-lucide="shield"></i>
+        </div>
+
+        <div class="nav-items">
+          <a href="UserDashboard.html" class="nav-btn">
+            <i data-lucide="layout-grid"></i> <span>Dashboard</span>
+          </a>
+          <a href="TrainingPage.html" class="nav-btn">
+            <i data-lucide="compass"></i> <span>Explore Programs</span>
+          </a>
+          <a href="wishlist.html" class="nav-btn">
+            <i data-lucide="bookmark"></i> <span>Saved Training</span>
+          </a>
+          <a href="MyCertificates.html" class="nav-btn">
+            <i data-lucide="award"></i> <span>My Certificates</span>
+          </a>
+          <a href="LearningStats.html" class="nav-btn active">
+            <i data-lucide="bar-chart-2"></i> <span>Learning Stats</span>
+          </a>
+          <a href="CommunityForums.html" class="nav-btn">
+            <i data-lucide="users"></i> <span>Community Forums</span>
+          </a>
+          <a href="Messages.html" class="nav-btn">
+            <i data-lucide="mail"></i>
+            <span
+              >Messages
+              <span
+                class="badge"
+                style="
+                  background: var(--danger);
+                  color: white;
+                  border-radius: 50%;
+                  font-size: 0.65rem;
+                  padding: 2px 6px;
+                  position: absolute;
+                  right: 15px;
+                  top: 10px;
+                "
+                >3</span
+              ></span
+            >
+          </a>
+          <a href="Settings.html" class="nav-btn">
+            <i data-lucide="settings"></i> <span>Account Settings</span>
+          </a>
+          <a href="#" class="nav-btn">
+            <i data-lucide="help-circle"></i> <span>Help & Support</span>
+          </a>
+          <div style="flex: 1"></div>
+          <a
+            href="index.html"
+            class="nav-btn"
+            style="color: #ef4444; margin-top: auto"
+          >
+            <i data-lucide="log-out"></i> <span>Logout</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <main class="dash-main">
+        <!-- HEADER -->
+        <header class="top-nav">
+          <div class="greeting">
+            <h2>Learning Analytics</h2>
+            <p>Track your engagement and training milestones.</p>
+          </div>
+
+          <div class="top-actions">
+            <label
+              class="switch-3d-cyan"
+              style="transform: scale(0.6); margin: 0"
+            >
+              <input type="checkbox" class="switch-input" id="themeSwitch" />
+              <div class="switch-track">
+                <span class="track-text text-3d">Dark</span>
+                <span class="track-text text-2d">Light</span>
+                <div class="switch-knob">
+                  <div class="cube">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <div class="profile-pill">
+              <div class="avatar"></div>
+              <span style="font-weight: 600; font-size: 0.95rem"
+                >Sarah Jenkins</span
+              >
+              <i
+                data-lucide="chevron-down"
+                style="width: 18px; color: var(--muted)"
+              ></i>
+            </div>
+          </div>
+        </header>
+
+        <!-- BENTO SCROLL AREA -->
+        <div class="bento-scroll">
+          <div class="bento-grid">
+            <!-- MINI METRICS row -->
+            <div class="bento-card bento-mini">
+              <div class="metric-icon icon-amber">
+                <i data-lucide="help-circle"></i>
+              </div>
+              <div class="metric-value">42</div>
+              <div class="metric-label">Quizzes Passed</div>
+            </div>
+
+            <div class="bento-card bento-mini">
+              <div class="metric-icon icon-green">
+                <i data-lucide="target"></i>
+              </div>
+              <div class="metric-value">94%</div>
+              <div class="metric-label">Avg. Test Score</div>
+            </div>
+
+            <div class="bento-card bento-mini">
+              <div class="metric-icon icon-rose">
+                <i data-lucide="book-open"></i>
+              </div>
+              <div class="metric-value">12</div>
+              <div class="metric-label">Modules Finished</div>
+            </div>
+
+            <div class="bento-card bento-mini">
+              <div
+                class="metric-icon"
+                style="
+                  background: rgba(124, 58, 237, 0.1);
+                  color: var(--secondary);
+                "
+              >
+                <i data-lucide="calendar"></i>
+              </div>
+              <div class="metric-value">14</div>
+              <div class="metric-label">Day Streak!</div>
+            </div>
+
+            <!-- TIMELINE BENTO (Span 4) -->
+            <div class="bento-card timeline-bento">
+              <h3>Your 2026 Milestone Journey</h3>
+              <div class="timeline">
+                <div class="tl-node active">
+                  <div class="tl-dot"></div>
+                  <div class="tl-label">Jan</div>
+                  <div class="tl-desc">Joined Platform</div>
+                </div>
+                <div class="tl-node active">
+                  <div class="tl-dot"></div>
+                  <div class="tl-label">Feb</div>
+                  <div class="tl-desc">Stress Mgmt.<br />Completed</div>
+                </div>
+                <div class="tl-node active">
+                  <div class="tl-dot"></div>
+                  <div class="tl-label">Mar</div>
+                  <div class="tl-desc">Current Track:<br />Conflict Res.</div>
+                </div>
+                <div class="tl-node">
+                  <div class="tl-dot empty"></div>
+                  <div class="tl-label">Apr</div>
+                  <div class="tl-desc">Target:<br />Fundraising 101</div>
+                </div>
+                <div class="tl-node">
+                  <div class="tl-dot empty"></div>
+                  <div class="tl-label">May</div>
+                  <div class="tl-desc">Target:<br />Leadership Cert</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TOP SKILLS ACQUIRED (Span 2) -->
+            <div class="bento-card list-bento">
+              <h3>Top Skills Acquired</h3>
+
+              <div class="skill-item">
+                <div>
+                  <span style="font-weight: 600; display: block"
+                    >Active Listening</span
+                  >
+                  <span style="font-size: 0.85rem; color: var(--muted)"
+                    >From: Conflict Resolution</span
+                  >
+                </div>
+                <span class="s-badge s-master">Mastered</span>
+              </div>
+
+              <div class="skill-item">
+                <div>
+                  <span style="font-weight: 600; display: block"
+                    >De-escalation Strategies</span
+                  >
+                  <span style="font-size: 0.85rem; color: var(--muted)"
+                    >From: Negotiation Tactics</span
+                  >
+                </div>
+                <span class="s-badge s-adv">Advanced</span>
+              </div>
+
+              <div class="skill-item">
+                <div>
+                  <span style="font-weight: 600; display: block"
+                    >Fundraising Basics</span
+                  >
+                  <span style="font-size: 0.85rem; color: var(--muted)"
+                    >From: Intro Workshop</span
+                  >
+                </div>
+                <span class="s-badge s-int">Intermediate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

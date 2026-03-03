@@ -1,220 +1,256 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Login | NGO Training</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | NGO Training</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
 
-<style>
-:root {
-  --bg: #0f172a;
-  --text: #e2e8f0;
-  --primary: #38bdf8;
-  --secondary: #6366f1;
-  --card: rgba(255,255,255,0.05);
-  --muted: #94a3b8;
-}
+    <style>
+      /* LOGIN SPECIFIC */
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(circle at 20% 20%, #1e3a8a, transparent 40%),
+          radial-gradient(circle at 80% 30%, #0ea5e9, transparent 40%),
+          var(--bg);
+      }
 
-body.light {
-  --bg: #f8fafc;
-  --text: #0f172a;
-  --card: rgba(0,0,0,0.05);
-  --muted: #475569;
-}
+      /* LOGIN CARD */
+      .login-card {
+        width: 100%;
+        max-width: 420px;
+        padding: 2.5rem 2rem;
+        border-radius: 18px;
+        background: var(--card);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
+      .login-card h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.4rem;
+      }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(circle at 20% 20%, #1e3a8a, transparent 40%),
-              radial-gradient(circle at 80% 30%, #0ea5e9, transparent 40%),
-              var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text);
-  transition: 0.3s ease;
-}
+      .login-card p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
 
-/* LOGIN CARD */
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  padding: 2.5rem 2rem;
-  border-radius: 18px;
-  background: var(--card);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-  text-align: center;
-}
+      /* GOOGLE BUTTON */
+      .google-btn {
+        width: 100%;
+        padding: 0.7rem;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 1.2rem;
+        transition: 0.3s ease;
+      }
 
-.login-card h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.4rem;
-}
+      .google-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
 
-.login-card p {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-}
+      /* DIVIDER */
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 1.2rem 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .divider span {
+        margin: 0 10px;
+      }
 
-/* GOOGLE BUTTON */
-.google-btn {
-  width: 100%;
-  padding: 0.7rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 1.2rem;
-  transition: 0.3s ease;
-}
+      /* FORM */
+      .form-group {
+        text-align: left;
+        margin-bottom: 1.2rem;
+      }
 
-.google-btn:hover {
-  background: rgba(255,255,255,0.12);
-}
+      .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+        color: var(--muted);
+      }
 
-/* DIVIDER */
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 1.2rem 0;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.1);
-}
-.divider span {
-  margin: 0 10px;
-}
+      .form-group input {
+        width: 100%;
+        padding: 0.75rem 0.9rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        outline: none;
+        transition: 0.3s ease;
+      }
 
-/* FORM */
-.form-group {
-  text-align: left;
-  margin-bottom: 1.2rem;
-}
+      .form-group input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+      }
 
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  margin-bottom: 0.4rem;
-  color: var(--muted);
-}
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        margin-bottom: 1.4rem;
+        color: var(--muted);
+      }
 
-.form-group input {
-  width: 100%;
-  padding: 0.75rem 0.9rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
-  outline: none;
-  transition: 0.3s ease;
-}
+      .form-options a {
+        color: var(--primary);
+        text-decoration: none;
+      }
 
-.form-group input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(56,189,248,0.2);
-}
+      /* LOGIN BUTTON */
+      .login-btn {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        color: white;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        transition: 0.3s ease;
+      }
 
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  margin-bottom: 1.4rem;
-  color: var(--muted);
-}
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(56, 189, 248, 0.3);
+      }
 
-.form-options a {
-  color: var(--primary);
-  text-decoration: none;
-}
+      /* FOOTER */
+      .login-footer {
+        margin-top: 1.2rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
 
-/* LOGIN BUTTON */
-.login-btn {
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  color: white;
-  background: linear-gradient(135deg,var(--primary),var(--secondary));
-  transition: 0.3s ease;
-}
+      .login-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+    </style>
+  </head>
 
-.login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(56,189,248,0.3);
-}
+  <body>
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
 
-/* FOOTER */
-.login-footer {
-  margin-top: 1.2rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
+        <ul class="navbar-menu">
+          <li><a href="index.html" class="navbar-link">Home</a></li>
+          <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
+          <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
 
-.login-footer a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-}
-</style>
-</head>
+          <li class="dropdown">
+            <a href="#" class="navbar-link">Dashboard ▾</a>
+            <div class="dropdown-menu">
+              <a href="#">User Dashboard</a>
+              <a href="#">Admin Dashboard</a>
+            </div>
+          </li>
 
-<body>
+          <li><a href="#" class="navbar-link">Community</a></li>
+          <li><a href="#" class="navbar-link">Impact</a></li>
+          <li><a href="#" class="navbar-link">Contact</a></li>
+        </ul>
 
-<div class="login-card">
-  <h2>Welcome Back</h2>
-  <p>Login to access your NGO training dashboard</p>
+        <div class="nav-actions">
+          <button
+            class="btn-donate"
+            onclick="window.location.href = 'login.html'"
+          >
+            Get Started
+          </button>
 
-  <!-- Google Login -->
-  <button class="google-btn">🔐 Continue with Google</button>
+          <label class="switch-3d-cyan">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="switch-track">
+              <span class="track-text text-3d">Dark</span>
+              <span class="track-text text-2d">Light</span>
+              <div class="switch-knob">
+                <div class="cube">
+                  <div class="face front"></div>
+                  <div class="face back"></div>
+                  <div class="face right"></div>
+                  <div class="face left"></div>
+                  <div class="face top"></div>
+                  <div class="face bottom"></div>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </nav>
 
-  <div class="divider"><span>OR</span></div>
+    <div class="login-card" style="margin-top: 100px">
+      <h2>Welcome Back</h2>
+      <p>Login to access your NGO training dashboard</p>
 
-  <!-- Email Login -->
-  <form>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" placeholder="Enter your email" required />
+      <!-- Google Login -->
+      <button class="google-btn">🔐 Continue with Google</button>
+
+      <div class="divider"><span>OR</span></div>
+
+      <!-- Email Login -->
+      <form>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="Enter your email" required />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Enter your password" required />
+        </div>
+
+        <div class="form-options">
+          <label><input type="checkbox" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+
+      <div class="login-footer">
+        Don’t have an account? <a href="#">Register</a>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" placeholder="Enter your password" required />
-    </div>
-
-    <div class="form-options">
-      <label><input type="checkbox" /> Remember me</label>
-      <a href="#">Forgot password?</a>
-    </div>
-
-    <button type="submit" class="login-btn">Login</button>
-  </form>
-
-  <div class="login-footer">
-    Don’t have an account? <a href="#">Register</a>
-  </div>
-</div>
-
-</body>
+    <script src="../assets/js/theme.js"></script>
+  </body>
 </html>
