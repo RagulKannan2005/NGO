@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="../assets/css/app.css" />
 
     <style>
-      /* Specific Training Page Styles */
       .hero {
-        background: linear-gradient(135deg, #1e3a8a, #111827);
+        background:
+          linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)),
+          url("../assets/Images/hero-traning.png") center/cover no-repeat;
         color: white;
         padding: 120px 0 80px;
         text-align: center;
@@ -221,13 +222,42 @@
     </nav>
 
     <section class="hero" style="margin-top: 40px">
-      <div class="container">
-        <h1>Conflict Resolution Training Programs</h1>
-        <p>Compare programs and save your favorites.</p>
+      <div class="container" style="max-width: 800px; margin: 0 auto">
+        <h1 style="font-size: 2.8rem; line-height: 1.2">
+          Conflict Resolution<br />Training Programs
+        </h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; margin: 20px auto 0">
+          Compare programs, acquire new skills, and save your favorites to your
+          wishlist.
+        </p>
 
-        <div class="top-actions">
-          <div>
-            Wishlist: <span class="wishlist-count" id="wishlistCount">0</span>
+        <div
+          class="top-actions"
+          style="margin-top: 35px; justify-content: center"
+        >
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              padding: 12px 24px;
+              border-radius: 30px;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              backdrop-filter: blur(10px);
+              display: inline-block;
+            "
+          >
+            Saved Programs:
+            <span
+              class="wishlist-count"
+              id="wishlistCount"
+              style="
+                color: #fff;
+                background: #ef4444;
+                padding: 2px 8px;
+                border-radius: 12px;
+                margin-left: 8px;
+              "
+              >0</span
+            >
           </div>
         </div>
       </div>
@@ -375,5 +405,3 @@
     <script src="../assets/js/theme.js"></script>
   </body>
 </html>
-
-

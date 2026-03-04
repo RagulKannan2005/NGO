@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifications - Admin - NGO Training</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/app.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* OVERRIDE GLOBALS FOR DASHBOARD ONLY */
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        /* Advanced ambient noise/blobs */
+        background-image:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(220, 38, 38, 0.08) 0%,
+            /* Red hue for admin */ transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(37, 99, 235, 0.08) 0%,
+            /* Blue hue */ transparent 50%
+          );
+        background-attachment: fixed;
+      }
+
+      /* FLOATING SIDEBAR */
+      .dash-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      .floating-sidebar {
+        width: 100px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 100;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+
+      html.dark .floating-sidebar {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      }
+
+      .floating-sidebar:hover {
+        width: 280px;
+        align-items: flex-start;
+      }
+
+      .nav-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          #ef4444,
+          #f97316
+        ); /* Admin logo colors */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 20px;
+        flex-shrink: 0;
+        transition: 0.4s;
+      }
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
+
+      /* Scrollable nav items area */
+      .nav-items-wrapper {
+        flex: 1;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      /* Hide scrollbar for nav items */
+      .nav-items-wrapper::-webkit-scrollbar {
+        width: 0;
+      }
+
+      .nav-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px; /* tighter gap for admin due to many items */
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+
+      .nav-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 10px 16px;
+        border-radius: 16px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-btn i {
+        min-width: 24px;
+        transition: 0.3s transform;
+      }
+      .nav-btn span {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .floating-sidebar:hover .nav-btn span {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .nav-btn:hover {
+        color: var(--text);
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .nav-btn:hover i {
+        transform: scale(1.1);
+      }
+
+      .nav-btn.active {
+        color: #ef4444; /* Admin brand color */
+        background: rgba(239, 68, 68, 0.1);
+      }
+      html.dark .nav-btn.active {
+        background: rgba(239, 68, 68, 0.15);
+      }
+
+      /* MAIN CONTENT AREA */
+      .dash-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border-radius: 32px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
+        overflow: hidden;
+      }
+      html.dark .dash-main {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* DASHBOARD HEADER */
+      .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 40px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+      }
+      .greeting h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .greeting p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 400;
+        margin-top: 4px;
+      }
+
+      .admin-badge {
+        font-size: 0.75rem;
+        background: #ef4444;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .profile-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 16px 6px 6px;
+        background: var(--card);
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
+      }
+      .profile-pill:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: url("https://ui-avatars.com/api/?name=Admin+User&background=ef4444&color=fff")
+          center/cover;
+      }
+
+      /* BENTO GRID SYSTEM */
+      .bento-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px;
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 200px;
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      @media (max-width: 1200px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .bento-grid {
+          grid-template-columns: 1fr;
+          grid-auto-rows: minmax(180px, auto);
+        }
+        .dash-wrapper {
+          padding: 10px;
+          flex-direction: column;
+        }
+        .floating-sidebar {
+          width: 100%;
+          flex-direction: row;
+          padding: 15px;
+          border-radius: 20px;
+          height: auto;
+        }
+        .nav-logo {
+          margin-bottom: 0;
+          margin-right: 20px;
+        }
+        .nav-items-wrapper {
+          overflow: visible;
+        }
+        .nav-items {
+          flex-direction: row;
+          padding: 0;
+          overflow-x: auto;
+        }
+        .nav-btn span {
+          display: none;
+        }
+        .floating-sidebar:hover {
+          width: 100%;
+          align-items: center;
+        }
+      }
+
+      /* BENTO CARDS */
+      .bento-card {
+        background: var(--card);
+        border-radius: 32px;
+        padding: 30px;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          box-shadow 0.4s ease;
+      }
+      .bento-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+      }
+
+      /* SPANS */
+      .bento-hero {
+        grid-column: span 2;
+        grid-row: span 1;
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.05),
+          rgba(249, 115, 22, 0.05)
+        );
+      }
+      html.dark .bento-hero {
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.1),
+          rgba(249, 115, 22, 0.1)
+        );
+        border-color: rgba(239, 68, 68, 0.2);
+      }
+
+      .bento-chart {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+      .bento-metric {
+        grid-column: span 1;
+        grid-row: span 1;
+        justify-content: space-between;
+      }
+      .bento-list {
+        grid-column: span 2;
+        grid-row: span 2;
+        padding: 0;
+      }
+
+      /* HERO CONTENT */
+      .hero-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+      .hero-title span {
+        color: #ef4444; /* Admin brand color */
+      }
+      .hero-desc {
+        color: var(--muted);
+        font-size: 0.95rem;
+        max-width: 80%;
+      }
+      .hero-graphics {
+        position: absolute;
+        right: -20%;
+        top: -50%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, #ef4444, transparent 70%);
+        opacity: 0.1;
+        border-radius: 50%;
+        filter: blur(30px);
+      }
+
+      /* METRIC CONTENT */
+      .metric-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        position: relative;
+      }
+      .metric-icon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: inherit;
+        filter: blur(10px);
+        opacity: 0.4;
+        z-index: -1;
+      }
+      .metric-value {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -1px;
+      }
+      .metric-label {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      /* Custom icon colors for admin */
+      .icon-red {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+      .icon-green {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .icon-orange {
+        background: rgba(249, 115, 22, 0.1);
+        color: #f97316;
+      }
+      .icon-purple {
+        background: rgba(139, 92, 246, 0.1);
+        color: #8b5cf6;
+      }
+
+      /* CSS BAR CHART */
+      .bento-chart h3 {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+        font-weight: 700;
+      }
+      .chart-container {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        gap: 8%;
+        padding-top: 20px;
+        border-bottom: 1px dashed rgba(128, 128, 128, 0.2);
+        position: relative;
+      }
+      .bar-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        height: 100%;
+        justify-content: flex-end;
+      }
+      .bar {
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+        background: #ef4444;
+        position: relative;
+        overflow: hidden;
+        transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0.8;
+      }
+      .bar:hover {
+        opacity: 1;
+        transform: scaleY(1.05);
+        transform-origin: bottom;
+      }
+      .bar::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.2) 0%,
+          transparent 100%
+        );
+      }
+      html.dark .bar::after {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 100%
+        );
+      }
+      .bar-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      /* ACTIVITY LIST */
+      .list-header {
+        padding: 30px 30px 15px 30px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .activity-item {
+        padding: 20px 30px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .activity-item:hover {
+        background: rgba(128, 128, 128, 0.02);
+      }
+      .activity-thumb {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .activity-thumb img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .activity-info {
+        flex: 1;
+      }
+      .activity-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 4px;
+        color: var(--text);
+      }
+      .activity-meta {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .activity-time {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
+
+    <!-- WRAPPER -->
+    <div class="dash-wrapper">
+      <!-- FLOATING SIDEBAR -->
+      <aside class="floating-sidebar">
+        <div class="nav-logo" onclick="window.location.href = 'index.html'">
+          <i data-lucide="shield-alert"></i>
+        </div>
+
+        <div class="nav-items-wrapper">
+          <div class="nav-items">
+            <a href="AdminDashboard.html" class="nav-btn" data-page="Dashboard">
+              <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
+            </a>
+            <a href="AdminUsers.html" class="nav-btn" data-page="Manage Users">
+              <i data-lucide="users"></i> <span>Manage Users</span>
+            </a>
+            <a
+              href="AdminTraining.html"
+              class="nav-btn"
+              data-page="Training Programs"
+            >
+              <i data-lucide="book-open"></i> <span>Training Programs</span>
+            </a>
+            <a
+              href="AdminResources.html"
+              class="nav-btn"
+              data-page="Resources Hub"
+            >
+              <i data-lucide="folder"></i> <span>Resources Hub</span>
+            </a>
+            <a href="AdminCommunity.html" class="nav-btn" data-page="Community">
+              <i data-lucide="message-square"></i> <span>Community</span>
+            </a>
+            <a
+              href="AdminCertificates.html"
+              class="nav-btn"
+              data-page="Certificates"
+            >
+              <i data-lucide="award"></i> <span>Certificates</span>
+            </a>
+            <a
+              href="AdminImpact.html"
+              class="nav-btn"
+              data-page="Impact Tracking"
+            >
+              <i data-lucide="globe"></i> <span>Impact Tracking</span>
+            </a>
+            <a
+              href="AdminNotifications.html"
+              class="nav-btn"
+              data-page="Notifications"
+              class="active"
+            >
+              <i data-lucide="bell"></i>
+              <span
+                >Notifications
+                <span
+                  class="badge"
+                  style="
+                    background: #ef4444;
+                    color: white;
+                    border-radius: 50%;
+                    font-size: 0.65rem;
+                    padding: 2px 6px;
+                    position: absolute;
+                    right: 15px;
+                    top: 10px;
+                  "
+                  >2</span
+                >
+              </span>
+            </a>
+            <a
+              href="AdminReports.html"
+              class="nav-btn"
+              data-page="Reports & Analytics"
+            >
+              <i data-lucide="pie-chart"></i> <span>Reports & Analytics</span>
+            </a>
+            <a
+              href="AdminFeedback.html"
+              class="nav-btn"
+              data-page="Feedback & Support"
+            >
+              <i data-lucide="headphones"></i> <span>Feedback & Support</span>
+            </a>
+            <a
+              href="AdminContent.html"
+              class="nav-btn"
+              data-page="Content Management"
+            >
+              <i data-lucide="file-text"></i> <span>Content Management</span>
+            </a>
+            <a href="AdminSettings.html" class="nav-btn" data-page="Settings">
+              <i data-lucide="settings"></i> <span>Settings</span> </a
+            ><a
+              href="index.html"
+              class="nav-btn"
+              style="color: var(--muted); margin-top: 20px"
+            >
+              <i data-lucide="log-out"></i> <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <main class="dash-main">
+        <!-- HEADER -->
+        <header class="top-nav">
+          <div class="greeting">
+            <h2>Notifications <span class="admin-badge">Admin</span></h2>
+            <p>Send platform updates and email announcements to users.</p>
+          </div>
+
+          <div class="top-actions">
+            <label
+              class="switch-3d-cyan"
+              style="transform: scale(0.6); margin: 0"
+            >
+              <input type="checkbox" class="switch-input" id="themeSwitch" />
+              <div class="switch-track">
+                <span class="track-text text-3d">Dark</span>
+                <span class="track-text text-2d">Light</span>
+                <div class="switch-knob">
+                  <div class="cube">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <div class="profile-pill">
+              <div class="avatar"></div>
+              <span style="font-weight: 600; font-size: 0.95rem"
+                >Admin User</span
+              >
+              <i
+                data-lucide="chevron-down"
+                style="width: 18px; color: var(--muted)"
+              ></i>
+            </div>
+          </div>
+        </header>
+
+        <!-- BENTO SCROLL AREA -->
+        <div class="bento-scroll">
+          <!-- SEND ANNOUNCEMENT FORM -->
+          <div
+            class="bento-card"
+            style="
+              grid-column: span 2;
+              grid-row: span 3;
+              display: flex;
+              flex-direction: column;
+            "
+          >
+            <h3
+              style="font-size: 1.3rem; font-weight: 700; margin-bottom: 20px"
+            >
+              New Announcement
+            </h3>
+
+            <div
+              style="flex: 1; display: flex; flex-direction: column; gap: 15px"
+            >
+              <div>
+                <label
+                  style="
+                    display: block;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: var(--text);
+                  "
+                  >Audience</label
+                >
+                <select
+                  style="
+                    width: 100%;
+                    padding: 12px 16px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(128, 128, 128, 0.2);
+                    background: transparent;
+                    color: var(--text);
+                  "
+                >
+                  <option>All Active Users</option>
+                  <option>Certified Alumni Only</option>
+                  <option>Currently Enrolled Students</option>
+                  <option>Mentors & Trainers</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  style="
+                    display: block;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: var(--text);
+                  "
+                  >Subject / Title</label
+                >
+                <input
+                  type="text"
+                  placeholder="Enter announcement title..."
+                  style="
+                    width: 100%;
+                    padding: 12px 16px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(128, 128, 128, 0.2);
+                    background: transparent;
+                    color: var(--text);
+                  "
+                />
+              </div>
+
+              <div style="flex: 1; display: flex; flex-direction: column">
+                <label
+                  style="
+                    display: block;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: var(--text);
+                  "
+                  >Message Content</label
+                >
+                <textarea
+                  placeholder="Write your message here..."
+                  style="
+                    width: 100%;
+                    flex: 1;
+                    padding: 16px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(128, 128, 128, 0.2);
+                    background: transparent;
+                    color: var(--text);
+                    resize: none;
+                    min-height: 150px;
+                    font-family: inherit;
+                    font-size: 0.95rem;
+                  "
+                ></textarea>
+              </div>
+
+              <div style="display: flex; gap: 10px; margin-top: 10px">
+                <button
+                  class="btn btn-primary"
+                  style="
+                    flex: 1;
+                    padding: 14px;
+                    border-radius: 12px;
+                    background: #ef4444;
+                    border: none;
+                    color: white;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                  "
+                >
+                  <i data-lucide="send" style="width: 18px"></i> Send Now
+                </button>
+                <button
+                  class="btn btn-outline"
+                  style="
+                    flex: 1;
+                    padding: 14px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(128, 128, 128, 0.2);
+                    color: var(--text);
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    background: transparent;
+                  "
+                >
+                  <i data-lucide="calendar" style="width: 18px"></i> Schedule
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAST ANNOUNCEMENTS LIST -->
+          <div
+            class="bento-card bento-list"
+            style="grid-column: span 2; grid-row: span 3"
+          >
+            <div class="list-header">Recent Broadcasts</div>
+
+            <div style="padding: 10px 30px">
+              <!-- Item 1 -->
+              <div
+                style="
+                  padding: 20px 0;
+                  border-bottom: 1px solid rgba(128, 128, 128, 0.05);
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 8px;
+                  "
+                >
+                  <h4
+                    style="
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--text);
+                    "
+                  >
+                    Maintenance Downtime Notice
+                  </h4>
+                  <span
+                    class="badge"
+                    style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+                    >Delivered</span
+                  >
+                </div>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--muted);
+                    margin-bottom: 12px;
+                  "
+                >
+                  Sent to: All Active Users &bull; Oct 25, 2023
+                </p>
+                <div
+                  style="
+                    display: flex;
+                    gap: 20px;
+                    font-size: 0.8rem;
+                    color: var(--text);
+                  "
+                >
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <i
+                      data-lucide="mail"
+                      style="width: 14px; color: var(--muted)"
+                    ></i>
+                    8,402 Sent
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <i
+                      data-lucide="eye"
+                      style="width: 14px; color: var(--muted)"
+                    ></i>
+                    68% Opened
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div
+                style="
+                  padding: 20px 0;
+                  border-bottom: 1px solid rgba(128, 128, 128, 0.05);
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 8px;
+                  "
+                >
+                  <h4
+                    style="
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--text);
+                    "
+                  >
+                    New Course: Advanced Negotiation
+                  </h4>
+                  <span
+                    class="badge"
+                    style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+                    >Delivered</span
+                  >
+                </div>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--muted);
+                    margin-bottom: 12px;
+                  "
+                >
+                  Sent to: Certified Alumni Only &bull; Oct 15, 2023
+                </p>
+                <div
+                  style="
+                    display: flex;
+                    gap: 20px;
+                    font-size: 0.8rem;
+                    color: var(--text);
+                  "
+                >
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <i
+                      data-lucide="mail"
+                      style="width: 14px; color: var(--muted)"
+                    ></i>
+                    2,150 Sent
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <i
+                      data-lucide="eye"
+                      style="width: 14px; color: var(--muted)"
+                    ></i>
+                    82% Opened
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div style="padding: 20px 0">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 8px;
+                  "
+                >
+                  <h4
+                    style="
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--text);
+                    "
+                  >
+                    Q3 Community Townhall Reminder
+                  </h4>
+                  <span
+                    class="badge"
+                    style="background: rgba(59, 130, 246, 0.1); color: #3b82f6"
+                    >Draft</span
+                  >
+                </div>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--muted);
+                    margin-bottom: 12px;
+                  "
+                >
+                  Target: All Active Users
+                </p>
+                <div style="display: flex; gap: 10px">
+                  <button
+                    style="
+                      background: none;
+                      border: none;
+                      color: #3b82f6;
+                      font-size: 0.8rem;
+                      font-weight: 600;
+                      cursor: pointer;
+                      padding: 0;
+                    "
+                  >
+                    Edit Draft
+                  </button>
+                  <button
+                    style="
+                      background: none;
+                      border: none;
+                      color: #ef4444;
+                      font-size: 0.8rem;
+                      font-weight: 600;
+                      cursor: pointer;
+                      padding: 0;
+                    "
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Theme Handling Scripts -->
+    <script src="../assets/js/theme.js"></script>
+    <script>
+      // Initialize lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
