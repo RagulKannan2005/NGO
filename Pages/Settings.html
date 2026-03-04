@@ -3,6 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+    
+
+        
+    
+
+        
+    
+
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const dir = localStorage.getItem("dir") || "ltr";
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        document.documentElement.dir = dir;
+      })();
+    </script>
     <title>Settings - NGO Training</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -406,7 +428,7 @@
           <a
             href="index.html"
             class="nav-btn"
-            style="color: #ef4444; margin-top: auto"
+            style="color: var(--admin-danger); margin-top: auto"
             ><i data-lucide="log-out"></i> <span>Logout</span></a
           >
         </div>
@@ -420,24 +442,15 @@
             <p>Manage your personal profile and platform preferences.</p>
           </div>
           <div class="top-actions">
-            <label
-              class="switch-3d-cyan"
-              style="transform: scale(0.6); margin: 0"
-            >
+            <button id="dirToggle" class="btn" style="background: var(--card); border: 1px solid rgba(128,128,128,0.1); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.02);">
+              <i data-lucide="languages" style="width: 18px;"></i>
+              <span>LTR</span>
+            </button>
+            <label class="theme-toggle">
               <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="switch-track">
-                <span class="track-text text-3d">Dark</span>
-                <span class="track-text text-2d">Light</span>
-                <div class="switch-knob">
-                  <div class="cube">
-                    <div class="face front"></div>
-                    <div class="face back"></div>
-                    <div class="face right"></div>
-                    <div class="face left"></div>
-                    <div class="face top"></div>
-                    <div class="face bottom"></div>
-                  </div>
-                </div>
+              <div class="icon-wrapper">
+                <i data-lucide="sun" class="sun-icon"></i>
+                <i data-lucide="moon" class="moon-icon"></i>
               </div>
             </label>
             <div class="profile-pill">
@@ -531,22 +544,11 @@
                     </p>
                   </div>
                   <!-- Reuse App Toggle -->
-                  <label
-                    class="switch-3d-cyan"
-                    style="transform: scale(0.6); margin: 0"
-                  >
+                  <label class="theme-toggle" style="transform: scale(0.8)">
                     <input type="checkbox" class="switch-input" checked />
-                    <div class="switch-track">
-                      <div class="switch-knob">
-                        <div class="cube">
-                          <div class="face front"></div>
-                          <div class="face back"></div>
-                          <div class="face right"></div>
-                          <div class="face left"></div>
-                          <div class="face top"></div>
-                          <div class="face bottom"></div>
-                        </div>
-                      </div>
+                    <div class="icon-wrapper">
+                      <i data-lucide="check" class="sun-icon"></i>
+                      <i data-lucide="x" class="moon-icon"></i>
                     </div>
                   </label>
                 </div>
@@ -558,22 +560,11 @@
                       Get notified when someone replies to your community post.
                     </p>
                   </div>
-                  <label
-                    class="switch-3d-cyan"
-                    style="transform: scale(0.6); margin: 0"
-                  >
+                  <label class="theme-toggle" style="transform: scale(0.8)">
                     <input type="checkbox" class="switch-input" checked />
-                    <div class="switch-track">
-                      <div class="switch-knob">
-                        <div class="cube">
-                          <div class="face front"></div>
-                          <div class="face back"></div>
-                          <div class="face right"></div>
-                          <div class="face left"></div>
-                          <div class="face top"></div>
-                          <div class="face bottom"></div>
-                        </div>
-                      </div>
+                    <div class="icon-wrapper">
+                      <i data-lucide="check" class="sun-icon"></i>
+                      <i data-lucide="x" class="moon-icon"></i>
                     </div>
                   </label>
                 </div>
@@ -648,16 +639,62 @@
                 </button>
               </div>
             </div>
+          
+    
+    
+
+        
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+          <p>
+            Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="TrainingPage.html">Programs</a></li>
+            <li><a href="Impact.html">Our Impact</a></li>
+            <li><a href="Community.html">Community</a></li>
+            <li><a href="404.html">404 Page</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="Contact.html">Help Center</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="Settings.html">Settings</a></li>
+            <li><a href="login.html">Login / Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+          <div class="social-links">
+            <a href="#"><i data-lucide="facebook"></i></a>
+            <a href="#"><i data-lucide="twitter"></i></a>
+            <a href="#"><i data-lucide="instagram"></i></a>
+            <a href="#"><i data-lucide="linkedin"></i></a>
           </div>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
+          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
       </main>
     </div>
 
     <script src="../assets/js/theme.js"></script>
-    <script>
-      lucide.createIcons();
-    </script>
   </body>
 </html>
-
-

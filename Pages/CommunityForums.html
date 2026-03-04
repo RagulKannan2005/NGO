@@ -3,6 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const dir = localStorage.getItem("dir") || "ltr";
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        document.documentElement.dir = dir;
+      })();
+    </script>
     <title>Community Forums - NGO Training</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -529,7 +542,7 @@
           <a
             href="index.html"
             class="nav-btn"
-            style="color: #ef4444; margin-top: auto"
+            style="color: var(--admin-danger); margin-top: auto"
             ><i data-lucide="log-out"></i> <span>Logout</span></a
           >
         </div>
@@ -545,25 +558,33 @@
             </p>
           </div>
           <div class="top-actions">
-            <!-- Theme Toggle -->
-            <label
-              class="switch-3d-cyan"
-              style="transform: scale(0.6); margin: 0"
+            <button
+              id="dirToggle"
+              class="btn"
+              style="
+                background: var(--card);
+                border: 1px solid rgba(128, 128, 128, 0.1);
+                color: var(--text);
+                padding: 8px 12px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: 0.3s;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
+              "
             >
+              <i data-lucide="languages" style="width: 18px"></i>
+              <span>LTR</span>
+            </button>
+            <!-- Theme Toggle -->
+            <label class="theme-toggle">
               <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="switch-track">
-                <span class="track-text text-3d">Dark</span>
-                <span class="track-text text-2d">Light</span>
-                <div class="switch-knob">
-                  <div class="cube">
-                    <div class="face front"></div>
-                    <div class="face back"></div>
-                    <div class="face right"></div>
-                    <div class="face left"></div>
-                    <div class="face top"></div>
-                    <div class="face bottom"></div>
-                  </div>
-                </div>
+              <div class="icon-wrapper">
+                <i data-lucide="sun" class="sun-icon"></i>
+                <i data-lucide="moon" class="moon-icon"></i>
               </div>
             </label>
             <div class="profile-pill">
@@ -786,7 +807,7 @@
                         class="circle-icon"
                         style="
                           background: rgba(16, 185, 129, 0.1);
-                          color: #10b981;
+                          color: var(--admin-success);
                         "
                       >
                         <i data-lucide="book-open"></i>
@@ -810,7 +831,11 @@
               <div class="bento-card">
                 <div class="card-header">
                   <h3>
-                    <i data-lucide="award" size="20" style="color: #f59e0b"></i>
+                    <i
+                      data-lucide="award"
+                      size="20"
+                      style="color: var(--admin-warning)"
+                    ></i>
                     Top Contributors
                   </h3>
                 </div>
@@ -846,16 +871,15 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          
+    
+    
+
+    
+
       </main>
     </div>
 
     <script src="../assets/js/theme.js"></script>
-    <script>
-      lucide.createIcons();
-    </script>
   </body>
 </html>
-
-

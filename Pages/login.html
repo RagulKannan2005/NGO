@@ -3,6 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+    
+
+        
+    
+
+        
+    
+
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const dir = localStorage.getItem("dir") || "ltr";
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        document.documentElement.dir = dir;
+      })();
+    </script>
     <title>Login | NGO Training</title>
 
     <link
@@ -10,6 +32,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
       /* LOGIN SPECIFIC */
@@ -86,7 +110,7 @@
 
       /* FORM */
       .form-group {
-        text-align: left;
+        text-align: start;
         margin-bottom: 1.2rem;
       }
 
@@ -166,58 +190,7 @@
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
-    <nav class="navbar">
-      <div class="navbar-container">
-        <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
-
-        <ul class="navbar-menu">
-          <li><a href="index.html" class="navbar-link">Home</a></li>
-          <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
-          <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
-
-          <li class="dropdown">
-            <a href="#" class="navbar-link">Dashboard ▾</a>
-            <div class="dropdown-menu">
-              <a href="UserDashboard.html">User Dashboard</a>
-              <a href="#">Admin Dashboard</a>
-            </div>
-          </li>
-
-          <li><a href="Community.html" class="navbar-link">Community</a></li>
-          <li><a href="Impact.html" class="navbar-link">Impact</a></li>
-          <li><a href="Contact.html" class="navbar-link">Contact</a></li>
-        </ul>
-
-        <div class="nav-actions">
-          <button
-            class="btn-donate"
-            onclick="window.location.href = 'login.html'"
-          >
-            Get Started
-          </button>
-
-          <label class="switch-3d-cyan">
-            <input type="checkbox" class="switch-input" id="themeSwitch" />
-            <div class="switch-track">
-              <span class="track-text text-3d">Dark</span>
-              <span class="track-text text-2d">Light</span>
-              <div class="switch-knob">
-                <div class="cube">
-                  <div class="face front"></div>
-                  <div class="face back"></div>
-                  <div class="face right"></div>
-                  <div class="face left"></div>
-                  <div class="face top"></div>
-                  <div class="face bottom"></div>
-                </div>
-              </div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </nav>
-
-    <div class="login-card" style="margin-top: 100px">
+    <div class="login-card">
       <h2>Welcome Back</h2>
       <p>Login to access your NGO training dashboard</p>
 
@@ -251,8 +224,13 @@
       </div>
     </div>
 
+    
+    
+    
+
+
     <script src="../assets/js/theme.js"></script>
+  
+
   </body>
 </html>
-
-

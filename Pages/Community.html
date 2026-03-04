@@ -3,6 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const dir = localStorage.getItem("dir") || "ltr";
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        document.documentElement.dir = dir;
+      })();
+    </script>
     <title>Community Hub - NGO Training</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -152,30 +166,6 @@
 
       .nav-spacer {
         flex-grow: 1;
-      }
-
-      .theme-toggle {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text);
-        transition: 0.3s;
-      }
-
-      .floating-sidebar:hover .theme-toggle {
-        width: 100%;
-        justify-content: flex-start;
-        padding-left: 12px;
-      }
-
-      .theme-toggle:hover {
-        background: rgba(37, 99, 235, 0.15);
       }
 
       /* MAIN CONTENT AREA */
@@ -821,49 +811,37 @@
   </head>
   <body>
     <!-- PAGE LOADER -->
-    <div id="page-loader" style="display: none;"></div>
+    <div id="page-loader" style="display: none"></div>
 
     <!-- MAIN WRAPPER -->
     <div class="dash-wrapper">
       <!-- FLOATING SIDEBAR -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href='index.html'">C</div>
+        <div class="nav-logo" onclick="window.location.href = 'index.html'">
+          N
+        </div>
         <div class="nav-items">
           <button class="nav-btn active" data-section="forum" title="Forum">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
+            <i data-lucide="message-square"></i>
             <span class="nav-label">Forum</span>
           </button>
           <button class="nav-btn" data-section="expert" title="Ask Expert">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 16v-4M12 8h.01"></path>
-            </svg>
+            <i data-lucide="info"></i>
             <span class="nav-label">Ask Expert</span>
           </button>
           <button class="nav-btn" data-section="badges" title="Badges">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 9V2h12v7M6 9a6 6 0 0 0 12 0M6 9h12"></path>
-            </svg>
+            <i data-lucide="award"></i>
             <span class="nav-label">Badges</span>
           </button>
         </div>
         <div class="nav-spacer"></div>
-        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <span class="nav-label">Theme</span>
-        </button>
+        <label class="theme-toggle">
+          <input type="checkbox" class="switch-input" id="themeSwitch" />
+          <div class="icon-wrapper">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+          </div>
+        </label>
       </aside>
 
       <!-- MAIN CONTENT -->
@@ -871,8 +849,35 @@
         <div class="content-header">
           <h1>Community Hub</h1>
           <div class="header-actions">
+            <button
+              id="dirToggle"
+              class="btn"
+              style="
+                background: var(--card);
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 8px 12px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                border: 1px solid rgba(128, 128, 128, 0.1);
+              "
+            >
+              <i data-lucide="languages" style="width: 18px"></i>
+              <span>LTR</span>
+            </button>
             <button class="btn-create" id="btnCreateDiscussion">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
@@ -885,30 +890,67 @@
           <!-- DISCUSSION FORUM SECTION -->
           <section class="community-section" id="forumSection">
             <div class="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                ></path>
               </svg>
               Discussion Forum
             </div>
-            <p class="section-subtitle">Connect with the community, share ideas, and find solutions to challenges</p>
-            
+            <p class="section-subtitle">
+              Connect with the community, share ideas, and find solutions to
+              challenges
+            </p>
+
             <div class="filter-tabs" id="categoryFilters"></div>
             <div class="discussion-grid" id="discussionGrid"></div>
           </section>
 
           <!-- ASK AN EXPERT SECTION -->
-          <section class="community-section" id="expertSection" style="display: none;">
+          <section
+            class="community-section"
+            id="expertSection"
+            style="display: none"
+          >
             <div class="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 16v-4M12 8h.01"></path>
               </svg>
               Ask an Expert
             </div>
-            <p class="section-subtitle">Get verified answers from certified trainers and experienced professionals</p>
-            
-            <button class="btn-create" id="btnAskQuestion" style="margin-bottom: 20px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <p class="section-subtitle">
+              Get verified answers from certified trainers and experienced
+              professionals
+            </p>
+
+            <button
+              class="btn-create"
+              id="btnAskQuestion"
+              style="margin-bottom: 20px"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
@@ -922,19 +964,36 @@
           </section>
 
           <!-- BADGES & RECOGNITION SECTION -->
-          <section class="community-section" id="badgesSection" style="display: none;">
+          <section
+            class="community-section"
+            id="badgesSection"
+            style="display: none"
+          >
             <div class="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M6 9V2h12v7M6 9a6 6 0 0 0 12 0M6 9h12"></path>
               </svg>
               Recognition & Badges
             </div>
-            <p class="section-subtitle">Earn badges for your contributions and see community recognition</p>
+            <p class="section-subtitle">
+              Earn badges for your contributions and see community recognition
+            </p>
 
-            <h3 style="margin: 20px 0 15px; font-weight: 700;">Available Badges</h3>
+            <h3 style="margin: 20px 0 15px; font-weight: 700">
+              Available Badges
+            </h3>
             <div class="badges-grid" id="badgesGrid"></div>
 
-            <h3 style="margin: 30px 0 15px; font-weight: 700;">Community Leaderboard</h3>
+            <h3 style="margin: 30px 0 15px; font-weight: 700">
+              Community Leaderboard
+            </h3>
             <div class="leaderboard-container">
               <table class="leaderboard-table" id="leaderboard"></table>
             </div>
@@ -948,12 +1007,19 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2>Create Discussion Topic</h2>
-          <button class="modal-close" onclick="closeModal('discussionModal')">×</button>
+          <button class="modal-close" onclick="closeModal('discussionModal')">
+            ×
+          </button>
         </div>
         <form id="discussionForm">
           <div class="form-group">
             <label>Title</label>
-            <input type="text" id="topicTitle" placeholder="Enter topic title" required />
+            <input
+              type="text"
+              id="topicTitle"
+              placeholder="Enter topic title"
+              required
+            />
           </div>
           <div class="form-group">
             <label>Category</label>
@@ -961,19 +1027,35 @@
               <option value="">Select a category</option>
               <option value="Community Conflicts">Community Conflicts</option>
               <option value="Gender-Based Issues">Gender-Based Issues</option>
-              <option value="Youth & School Mediation">Youth & School Mediation</option>
+              <option value="Youth & School Mediation">
+                Youth & School Mediation
+              </option>
               <option value="Workplace Disputes">Workplace Disputes</option>
-              <option value="Peacebuilding Strategies">Peacebuilding Strategies</option>
-              <option value="Legal & Policy Questions">Legal & Policy Questions</option>
+              <option value="Peacebuilding Strategies">
+                Peacebuilding Strategies
+              </option>
+              <option value="Legal & Policy Questions">
+                Legal & Policy Questions
+              </option>
             </select>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea id="topicDescription" placeholder="Describe your question or topic..." required></textarea>
+            <textarea
+              id="topicDescription"
+              placeholder="Describe your question or topic..."
+              required
+            ></textarea>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn-submit">Post Topic</button>
-            <button type="button" class="btn-cancel" onclick="closeModal('discussionModal')">Cancel</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              onclick="closeModal('discussionModal')"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
@@ -983,12 +1065,19 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2>Ask an Expert</h2>
-          <button class="modal-close" onclick="closeModal('questionModal')">×</button>
+          <button class="modal-close" onclick="closeModal('questionModal')">
+            ×
+          </button>
         </div>
         <form id="questionForm">
           <div class="form-group">
             <label>Question</label>
-            <input type="text" id="expertQuestion" placeholder="What is your question?" required />
+            <input
+              type="text"
+              id="expertQuestion"
+              placeholder="What is your question?"
+              required
+            />
           </div>
           <div class="form-group">
             <label>Topic</label>
@@ -1004,17 +1093,28 @@
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea id="expertDescription" placeholder="Provide more details..." required></textarea>
+            <textarea
+              id="expertDescription"
+              placeholder="Provide more details..."
+              required
+            ></textarea>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn-submit">Submit Question</button>
-            <button type="button" class="btn-cancel" onclick="closeModal('questionModal')">Cancel</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              onclick="closeModal('questionModal')"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- THEME SCRIPT -->
+
     <script src="../assets/js/theme.js"></script>
 
     <!-- MAIN SCRIPT -->
@@ -1022,19 +1122,21 @@
       // ============================================
       // MOCK DATA
       // ============================================
-      
+
       const discussionTopics = [
         {
           id: 1,
-          title: "How to resolve conflicts between NGOs with different priorities?",
+          title:
+            "How to resolve conflicts between NGOs with different priorities?",
           author: "Priya Sharma",
           ngoName: "Peace Trust India",
           category: "Community Conflicts",
           replies: 12,
           views: 245,
           lastActivity: "2 hours ago",
-          content: "We're struggling with coordination when organizations have overlapping but different goals...",
-          authorInitial: "PS"
+          content:
+            "We're struggling with coordination when organizations have overlapping but different goals...",
+          authorInitial: "PS",
         },
         {
           id: 2,
@@ -1045,8 +1147,9 @@
           replies: 8,
           views: 156,
           lastActivity: "4 hours ago",
-          content: "Looking for best practices for training mediators who work with rural women...",
-          authorInitial: "AM"
+          content:
+            "Looking for best practices for training mediators who work with rural women...",
+          authorInitial: "AM",
         },
         {
           id: 3,
@@ -1057,8 +1160,9 @@
           replies: 15,
           views: 398,
           lastActivity: "1 hour ago",
-          content: "What strategies have worked best for you to engage school-going youth?",
-          authorInitial: "RP"
+          content:
+            "What strategies have worked best for you to engage school-going youth?",
+          authorInitial: "RP",
         },
         {
           id: 4,
@@ -1069,8 +1173,9 @@
           replies: 5,
           views: 89,
           lastActivity: "6 hours ago",
-          content: "How do we handle situations where key employees won't attend mediation sessions?",
-          authorInitial: "MC"
+          content:
+            "How do we handle situations where key employees won't attend mediation sessions?",
+          authorInitial: "MC",
         },
         {
           id: 5,
@@ -1081,8 +1186,9 @@
           replies: 22,
           views: 567,
           lastActivity: "30 min ago",
-          content: "What are the key factors for long-term success in grassroots peacebuilding?",
-          authorInitial: "EW"
+          content:
+            "What are the key factors for long-term success in grassroots peacebuilding?",
+          authorInitial: "EW",
         },
         {
           id: 6,
@@ -1093,34 +1199,39 @@
           replies: 9,
           views: 201,
           lastActivity: "3 hours ago",
-          content: "Can someone explain the implications of the new mediation certification requirements?",
-          authorInitial: "SJ"
-        }
+          content:
+            "Can someone explain the implications of the new mediation certification requirements?",
+          authorInitial: "SJ",
+        },
       ];
 
       const expertAnswers = [
         {
           id: 1,
           questionId: 1,
-          question: "How to resolve conflicts between NGOs with different priorities?",
+          question:
+            "How to resolve conflicts between NGOs with different priorities?",
           expert: "Dr. Sarah Jenkins",
           credentials: "PhD in Conflict Resolution, 15+ years experience",
-          response: "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.",
+          response:
+            "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.",
           verified: true,
           upvotes: 45,
-          authorInitial: "SJ"
+          authorInitial: "SJ",
         },
         {
           id: 2,
           questionId: 2,
-          question: "Gender-sensitive mediation techniques for rural communities",
+          question:
+            "Gender-sensitive mediation techniques for rural communities",
           expert: "Elena Rodriguez",
           credentials: "Certified Gender Mediator, Award-winning Trainer",
-          response: "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.",
+          response:
+            "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.",
           verified: true,
           upvotes: 67,
-          authorInitial: "ER"
-        }
+          authorInitial: "ER",
+        },
       ];
 
       const communityBadges = [
@@ -1130,7 +1241,7 @@
           icon: "✨",
           description: "Posted 10+ discussion topics",
           earned: true,
-          earnedDate: "Mar 1, 2026"
+          earnedDate: "Mar 1, 2026",
         },
         {
           id: 2,
@@ -1138,7 +1249,7 @@
           icon: "🕊️",
           description: "100+ community contributions",
           earned: true,
-          earnedDate: "Feb 15, 2026"
+          earnedDate: "Feb 15, 2026",
         },
         {
           id: 3,
@@ -1146,7 +1257,7 @@
           icon: "🎓",
           description: "Helped 20+ members find solutions",
           earned: false,
-          earnedDate: null
+          earnedDate: null,
         },
         {
           id: 4,
@@ -1154,7 +1265,7 @@
           icon: "📖",
           description: "Shared 5+ detailed case studies",
           earned: false,
-          earnedDate: null
+          earnedDate: null,
         },
         {
           id: 5,
@@ -1162,7 +1273,7 @@
           icon: "⚖️",
           description: "Rated helpful by 50+ members",
           earned: true,
-          earnedDate: "Jan 28, 2026"
+          earnedDate: "Jan 28, 2026",
         },
         {
           id: 6,
@@ -1170,23 +1281,53 @@
           icon: "🤝",
           description: "Connected 15+ community members",
           earned: false,
-          earnedDate: null
-        }
+          earnedDate: null,
+        },
       ];
 
       const communityLeaderboard = [
-        { rank: 1, name: "Dr. Sarah Jenkins", organization: "Peace Institute", points: 2450, badge: "Expert Mentor" },
-        { rank: 2, name: "Priya Sharma", organization: "Peace Trust India", points: 1890, badge: "Peace Champion" },
-        { rank: 3, name: "Elena Rodriguez", organization: "Gender Mediation Center", points: 1567, badge: "Top Mediator" },
-        { rank: 4, name: "Michael Chen", organization: "Corporate Peace Solutions", points: 1234, badge: "Active Contributor" },
-        { rank: 5, name: "Raj Patel", organization: "Youth Leaders Initiative", points: 1045, badge: "Network Builder" }
+        {
+          rank: 1,
+          name: "Dr. Sarah Jenkins",
+          organization: "Peace Institute",
+          points: 2450,
+          badge: "Expert Mentor",
+        },
+        {
+          rank: 2,
+          name: "Priya Sharma",
+          organization: "Peace Trust India",
+          points: 1890,
+          badge: "Peace Champion",
+        },
+        {
+          rank: 3,
+          name: "Elena Rodriguez",
+          organization: "Gender Mediation Center",
+          points: 1567,
+          badge: "Top Mediator",
+        },
+        {
+          rank: 4,
+          name: "Michael Chen",
+          organization: "Corporate Peace Solutions",
+          points: 1234,
+          badge: "Active Contributor",
+        },
+        {
+          rank: 5,
+          name: "Raj Patel",
+          organization: "Youth Leaders Initiative",
+          points: 1045,
+          badge: "Network Builder",
+        },
       ];
 
       // ============================================
       // INITIALIZATION
       // ============================================
 
-      document.addEventListener("DOMContentLoaded", function() {
+      document.addEventListener("DOMContentLoaded", function () {
         initializeCategoryFilters();
         renderDiscussionCards();
         renderExpertFAQ();
@@ -1200,10 +1341,18 @@
       // ============================================
 
       function initializeCategoryFilters() {
-        const categories = ["All", "Community Conflicts", "Gender-Based Issues", "Youth & School Mediation", "Workplace Disputes", "Peacebuilding Strategies", "Legal & Policy Questions"];
+        const categories = [
+          "All",
+          "Community Conflicts",
+          "Gender-Based Issues",
+          "Youth & School Mediation",
+          "Workplace Disputes",
+          "Peacebuilding Strategies",
+          "Legal & Policy Questions",
+        ];
         const filterContainer = document.getElementById("categoryFilters");
-        
-        categories.forEach(category => {
+
+        categories.forEach((category) => {
           const tab = document.createElement("button");
           tab.className = `filter-tab ${category === "All" ? "active" : ""}`;
           tab.textContent = category;
@@ -1216,11 +1365,12 @@
         const grid = document.getElementById("discussionGrid");
         grid.innerHTML = "";
 
-        const filtered = filter === "All" 
-          ? discussionTopics 
-          : discussionTopics.filter(t => t.category === filter);
+        const filtered =
+          filter === "All"
+            ? discussionTopics
+            : discussionTopics.filter((t) => t.category === filter);
 
-        filtered.forEach(topic => {
+        filtered.forEach((topic) => {
           const card = document.createElement("div");
           card.className = "discussion-card";
           card.innerHTML = `
@@ -1295,7 +1445,10 @@
             Expert Verified
           </div>
           <div class="expert-profile">
-            <div class="expert-avatar">${answer.expert.split(' ').map(n => n[0]).join('')}</div>
+            <div class="expert-avatar">${answer.expert
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}</div>
             <div class="expert-info">
               <h4>${answer.expert}</h4>
               <p>${answer.credentials}</p>
@@ -1323,11 +1476,11 @@
         const badgesGrid = document.getElementById("badgesGrid");
         badgesGrid.innerHTML = "";
 
-        communityBadges.forEach(badge => {
+        communityBadges.forEach((badge) => {
           const card = document.createElement("div");
           card.className = "badge-card";
           card.innerHTML = `
-            ${badge.earned ? `<div class="badge-earned">✓</div>` : ''}
+            ${badge.earned ? `<div class="badge-earned">✓</div>` : ""}
             <div class="badge-icon">${badge.icon}</div>
             <div class="badge-name">${badge.name}</div>
             <div class="badge-description">${badge.description}</div>
@@ -1349,14 +1502,19 @@
             </tr>
           </thead>
           <tbody>
-            ${communityLeaderboard.map(member => `
+            ${communityLeaderboard
+              .map(
+                (member) => `
               <tr>
                 <td>
                   <div class="rank-badge rank-${member.rank}">${member.rank}</div>
                 </td>
                 <td>
                   <div class="member-info">
-                    <div class="member-avatar">${member.name.split(' ').map(n => n[0]).join('')}</div>
+                    <div class="member-avatar">${member.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}</div>
                     <span>${member.name}</span>
                   </div>
                 </td>
@@ -1368,7 +1526,9 @@
                   </span>
                 </td>
               </tr>
-            `).join('')}
+            `,
+              )
+              .join("")}
           </tbody>
         `;
       }
@@ -1379,80 +1539,89 @@
 
       function setupEventListeners() {
         // Section navigation
-        document.querySelectorAll(".nav-btn").forEach(btn => {
-          btn.addEventListener("click", function() {
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
             const section = this.dataset.section;
             switchSection(section);
-            
+
             // Update active button
-            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            document
+              .querySelectorAll(".nav-btn")
+              .forEach((b) => b.classList.remove("active"));
             this.classList.add("active");
           });
         });
 
         // Create discussion
-        document.getElementById("btnCreateDiscussion").addEventListener("click", () => {
-          openModal("discussionModal");
-        });
+        document
+          .getElementById("btnCreateDiscussion")
+          .addEventListener("click", () => {
+            openModal("discussionModal");
+          });
 
         // Create question
-        document.getElementById("btnAskQuestion").addEventListener("click", () => {
-          openModal("questionModal");
-        });
+        document
+          .getElementById("btnAskQuestion")
+          .addEventListener("click", () => {
+            openModal("questionModal");
+          });
 
         // Discussion form submit
-        document.getElementById("discussionForm").addEventListener("submit", function(e) {
-          e.preventDefault();
-          const newTopic = {
-            id: discussionTopics.length + 1,
-            title: document.getElementById("topicTitle").value,
-            author: "You",
-            ngoName: "Your Organization",
-            category: document.getElementById("topicCategory").value,
-            replies: 0,
-            views: 0,
-            lastActivity: "just now",
-            content: document.getElementById("topicDescription").value,
-            authorInitial: "Y"
-          };
-          discussionTopics.unshift(newTopic);
-          renderDiscussionCards();
-          closeModal("discussionModal");
-          this.reset();
-          alert("Discussion topic posted successfully!");
-        });
+        document
+          .getElementById("discussionForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const newTopic = {
+              id: discussionTopics.length + 1,
+              title: document.getElementById("topicTitle").value,
+              author: "You",
+              ngoName: "Your Organization",
+              category: document.getElementById("topicCategory").value,
+              replies: 0,
+              views: 0,
+              lastActivity: "just now",
+              content: document.getElementById("topicDescription").value,
+              authorInitial: "Y",
+            };
+            discussionTopics.unshift(newTopic);
+            renderDiscussionCards();
+            closeModal("discussionModal");
+            this.reset();
+            alert("Discussion topic posted successfully!");
+          });
 
         // Question form submit
-        document.getElementById("questionForm").addEventListener("submit", function(e) {
-          e.preventDefault();
-          closeModal("questionModal");
-          this.reset();
-          alert("Question submitted! An expert will review and respond soon.");
-        });
-
-        // Theme toggle
-        document.getElementById("themeToggle").addEventListener("click", function() {
-          document.documentElement.classList.toggle("dark");
-          localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
-        });
+        document
+          .getElementById("questionForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            closeModal("questionModal");
+            this.reset();
+            alert(
+              "Question submitted! An expert will review and respond soon.",
+            );
+          });
       }
 
       function switchSection(section) {
-        document.getElementById("forumSection").style.display = section === "forum" ? "block" : "none";
-        document.getElementById("expertSection").style.display = section === "expert" ? "block" : "none";
-        document.getElementById("badgesSection").style.display = section === "badges" ? "block" : "none";
-        
+        document.getElementById("forumSection").style.display =
+          section === "forum" ? "block" : "none";
+        document.getElementById("expertSection").style.display =
+          section === "expert" ? "block" : "none";
+        document.getElementById("badgesSection").style.display =
+          section === "badges" ? "block" : "none";
+
         // Scroll to top
         document.querySelector(".content-scroll").scrollTop = 0;
       }
 
       function filterDiscussions(category) {
         // Update active tab
-        document.querySelectorAll(".filter-tab").forEach(tab => {
+        document.querySelectorAll(".filter-tab").forEach((tab) => {
           tab.classList.remove("active");
           if (tab.textContent === category) tab.classList.add("active");
         });
-        
+
         renderDiscussionCards(category);
       }
 
@@ -1465,8 +1634,8 @@
       }
 
       // Close modal on outside click
-      document.querySelectorAll(".modal").forEach(modal => {
-        modal.addEventListener("click", function(e) {
+      document.querySelectorAll(".modal").forEach((modal) => {
+        modal.addEventListener("click", function (e) {
           if (e.target === this) {
             this.classList.remove("active");
           }
@@ -1474,13 +1643,13 @@
       });
 
       // Initialize first expert answer on page load
-      window.addEventListener("load", function() {
+      window.addEventListener("load", function () {
         if (expertAnswers.length > 0) {
           showExpertAnswer(expertAnswers[0]);
         }
       });
     </script>
+
+    <!-- FOOTER -->
   </body>
 </html>
-
-

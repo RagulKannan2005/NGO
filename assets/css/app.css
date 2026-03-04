@@ -7,6 +7,13 @@
   --secondary: #7c3aed;
   --muted: #475569;
   --border: #e5e7eb;
+
+  /* Admin Brand Colors */
+  --admin-danger: #ef4444;
+  --admin-success: #10b981;
+  --admin-warning: #f59e0b;
+  --admin-info: #3b82f6;
+  --admin-accent: #8b5cf6;
 }
 
 html.dark {
@@ -19,6 +26,14 @@ html.dark {
   --secondary: #6366f1;
   --muted: #94a3b8;
   --border: #334155;
+
+  /* Dark mode overrides for admin brands if needed (keeping same for now) */
+  --admin-danger: #f87171;
+  /* lighter red */
+  --admin-success: #34d399;
+  /* lighter green */
+  --admin-warning: #fbbf24;
+  /* lighter amber */
 }
 
 * {
@@ -28,17 +43,41 @@ html.dark {
   font-family: "Poppins", "Inter", sans-serif;
 }
 
+/* HIGH-END SNAPPY DIRECTION TRANSITION */
+html.dir-switching body {
+  opacity: 0.1;
+  filter: blur(10px);
+  transform: translateX(30px);
+  pointer-events: none;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   min-height: 100vh;
+}
+
+/* RTL Transitions */
+html {
+  transition: direction 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.container,
+.hero-split,
+.navbar-container,
+.bento-grid {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
 }
 
 .container {
   max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
+  margin-inline: auto;
+  padding-inline: 20px;
 }
 
 .section {
@@ -75,16 +114,18 @@ body {
 .navbar {
   position: fixed;
   top: 0;
-  width: 100%;
-  backdrop-filter: blur(14px);
+  inset-inline: 0;
+  backdrop-filter: blur(10px);
   background: var(--nav);
   border-bottom: 1px solid rgba(128, 128, 128, 0.1);
   z-index: 1000;
+  font-size: 0.9rem;
+  text-align: start;
 }
 
 .navbar-container {
   max-width: 1200px;
-  margin: auto;
+  margin-inline: auto;
   padding: 0.8rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -119,7 +160,7 @@ body {
   content: "";
   position: absolute;
   bottom: -6px;
-  left: 0;
+  inset-inline-start: 0;
   width: 0;
   height: 2px;
   background: var(--primary);
@@ -143,7 +184,7 @@ body {
 .dropdown-menu {
   position: absolute;
   top: 140%;
-  left: 0;
+  inset-inline-start: 0;
   background: var(--card);
   backdrop-filter: blur(12px);
   border-radius: 10px;
@@ -315,6 +356,76 @@ body {
   background: var(--bg-on);
 }
 
+/* MODERN THEME TOGGLE */
+.theme-toggle {
+  --size: 40px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.theme-toggle .switch-input {
+  display: none;
+}
+
+.theme-toggle .icon-wrapper {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+  position: absolute;
+  transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 20px;
+  height: 20px;
+}
+
+/* Light mode: Show Sun, Hide Moon */
+.theme-toggle .sun-icon {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+  color: #f59e0b;
+}
+
+.theme-toggle .moon-icon {
+  opacity: 0;
+  transform: translateY(20px) rotate(45deg);
+  color: #818cf8;
+}
+
+/* Dark mode (input checked): Show Moon, Hide Sun */
+.theme-toggle .switch-input:checked~.icon-wrapper .sun-icon {
+  opacity: 0;
+  transform: translateY(-20px) rotate(-45deg);
+}
+
+.theme-toggle .switch-input:checked~.icon-wrapper .moon-icon {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+/* Keep old styles temporarily for compatibility */
 @keyframes spin {
   from {
     transform: rotateX(0) rotateY(0);
@@ -461,6 +572,14 @@ body {
 }
 
 /* Testimonials */
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-block-end: 40px;
+  text-align: start;
+}
+
 .testimonial-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -478,7 +597,7 @@ body {
 .quote-icon {
   position: absolute;
   top: 1.5rem;
-  right: 1.5rem;
+  inset-inline-end: 1.5rem;
   color: var(--primary);
   opacity: 0.2;
   font-size: 3rem;
@@ -556,6 +675,8 @@ body {
 .footer-col h4 {
   margin-bottom: 1.5rem;
   color: var(--text);
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
 }
 
 .footer-col p {
@@ -590,6 +711,72 @@ body {
   border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border);
+}
+
+.social-links a:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  inset-inline-end: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  bottom: 40px;
+  /* Moves up slightly above the footer area when visible on scroll */
+}
+
+.back-to-top:hover {
+  transform: translateY(-5px);
+  background: var(--primary-dark, #1e40af);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 @media(max-width: 768px) {

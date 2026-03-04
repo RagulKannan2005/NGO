@@ -3,6 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const dir = localStorage.getItem("dir") || "ltr";
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+        document.documentElement.dir = dir;
+      })();
+    </script>
     <title>Next-Gen Dashboard - NGO Training</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -150,21 +163,58 @@
         background: rgba(37, 99, 235, 0.15);
       }
 
-      /* MAIN CONTENT AREA */
-      .dash-main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        border-radius: 32px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
-        overflow: hidden;
+      /* VIEW TRANSITION */
+      #dash-content {
+        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      html.dark .dash-main {
-        background: rgba(15, 23, 42, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.03);
+
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* HEADER SEARCH */
+      .header-search {
+        display: none;
+        align-items: center;
+        gap: 12px;
+        background: rgba(128, 128, 128, 0.05);
+        padding: 8px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        width: 300px;
+        transition: 0.3s;
+      }
+      .header-search:focus-within {
+        border-color: var(--primary);
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .header-search input {
+        background: none;
+        border: none;
+        color: var(--text);
+        outline: none;
+        width: 100%;
+        font-size: 0.9rem;
+      }
+      .header-filters {
+        display: none;
+        gap: 10px;
+      }
+      .filter-pill {
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        background: var(--card);
+        color: var(--muted);
+      }
+      .filter-pill.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
       }
 
       /* DASHBOARD HEADER */
@@ -177,14 +227,91 @@
       }
       .greeting h2 {
         font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--text);
+        font-weight: 800;
         letter-spacing: -0.5px;
+        margin-bottom: 4px;
       }
       .greeting p {
         color: var(--muted);
         font-size: 0.95rem;
-        font-weight: 400;
+      }
+
+      /* PREMIUM CARD ENHANCEMENTS */
+      .bento-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        background: var(--card);
+        border-radius: 24px;
+        padding: 24px;
+      }
+      .bento-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary);
+      }
+      html.dark .bento-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 18px;
+        margin-bottom: 20px;
+        background: var(--muted);
+        transition: 0.5s;
+      }
+      .bento-card:hover .card-img {
+        transform: scale(1.05);
+      }
+
+      .bento-hero {
+        background: linear-gradient(135deg, var(--primary), #7c3aed);
+        color: white;
+        border: none;
+      }
+      .bento-hero .hero-title span {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      
+      .btn-premium {
+        background: linear-gradient(135deg, var(--primary), #7c3aed);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+      .btn-premium:hover {
+        transform: scale(1.03);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+      }
+
+      /* TAGS & BADGES */
+      .badge-premium {
+        background: rgba(128, 128, 128, 0.1);
+        color: var(--primary);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .bento-hero .badge-premium {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(4px);
+        color: white;
       }
 
       .top-actions {
@@ -529,18 +656,33 @@
     <div class="dash-wrapper">
       <!-- FLOATING SIDEBAR -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href='index.html'">
+        <div class="nav-logo" onclick="window.location.href = 'index.html'">
           <i data-lucide="shield"></i>
         </div>
 
         <div class="nav-items">
-          <a href="UserDashboard.html" class="nav-btn active">
+          <a
+            href="#"
+            onclick="switchView('dashboard')"
+            class="nav-btn active"
+            id="nav-dashboard"
+          >
             <i data-lucide="layout-grid"></i> <span>Dashboard</span>
           </a>
-          <a href="TrainingPage.html" class="nav-btn">
+          <a
+            href="#"
+            onclick="switchView('explore')"
+            class="nav-btn"
+            id="nav-explore"
+          >
             <i data-lucide="compass"></i> <span>Explore Programs</span>
           </a>
-          <a href="wishlist.html" class="nav-btn">
+          <a
+            href="#"
+            onclick="switchView('wishlist')"
+            class="nav-btn"
+            id="nav-wishlist"
+          >
             <i data-lucide="bookmark"></i> <span>Saved Training</span>
           </a>
           <a href="MyCertificates.html" class="nav-btn">
@@ -582,7 +724,7 @@
           <a
             href="index.html"
             class="nav-btn"
-            style="color: #ef4444; margin-top: auto"
+            style="color: var(--admin-danger); margin-top: auto"
           >
             <i data-lucide="log-out"></i> <span>Logout</span>
           </a>
@@ -594,245 +736,332 @@
         <!-- HEADER -->
         <header class="top-nav">
           <div class="greeting">
-            <h2>Overview</h2>
-            <p>Here's what is happening with your training today.</p>
+            <h2 id="dash-title">Overview</h2>
+            <p id="dash-subtitle">Here's what is happening with your training today.</p>
+          </div>
+
+          <div class="header-search" id="headerSearch">
+            <i data-lucide="search" style="width: 18px; color: var(--muted)"></i>
+            <input type="text" id="searchInput" placeholder="Search trainings..." oninput="renderTrainingGrid()">
+          </div>
+
+          <div class="header-filters" id="headerFilters">
+            <div class="filter-pill active" onclick="setFilter('All', this)">All</div>
+            <div class="filter-pill" onclick="setFilter('Beginner', this)">Beginner</div>
+            <div class="filter-pill" onclick="setFilter('Intermediate', this)">Intermediate</div>
+            <div class="filter-pill" onclick="setFilter('Advanced', this)">Advanced</div>
           </div>
 
           <div class="top-actions">
-            <label
-              class="switch-3d-cyan"
-              style="transform: scale(0.6); margin: 0"
-            >
+            <button id="dirToggle" class="btn" style="background: var(--card); border: 1px solid rgba(128,128,128,0.1); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.02);">
+              <i data-lucide="languages" style="width: 18px;"></i>
+              <span>LTR</span>
+            </button>
+
+            <label class="theme-toggle">
               <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="switch-track">
-                <span class="track-text text-3d">Dark</span>
-                <span class="track-text text-2d">Light</span>
-                <div class="switch-knob">
-                  <div class="cube">
-                    <div class="face front"></div>
-                    <div class="face back"></div>
-                    <div class="face right"></div>
-                    <div class="face left"></div>
-                    <div class="face top"></div>
-                    <div class="face bottom"></div>
-                  </div>
-                </div>
+              <div class="icon-wrapper">
+                <i data-lucide="sun" class="sun-icon"></i>
+                <i data-lucide="moon" class="moon-icon"></i>
               </div>
             </label>
 
             <div class="profile-pill">
               <div class="avatar"></div>
-              <span style="font-weight: 600; font-size: 0.95rem"
-                >Sarah Jenkins</span
-              >
-              <i
-                data-lucide="chevron-down"
-                style="width: 18px; color: var(--muted)"
-              ></i>
+              <span style="font-weight: 600; font-size: 0.95rem">Sarah Jenkins</span>
+              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted)"></i>
             </div>
           </div>
         </header>
 
-        <!-- BENTO SCROLL AREA -->
         <div class="bento-scroll">
-          <div class="bento-grid">
-            <!-- HERO WIDGET (Span 2x1) -->
-            <div class="bento-card bento-hero">
-              <div class="hero-graphics"></div>
-              <h3 class="hero-title">
-                Ready to master <span>Conflict Resolution?</span>
-              </h3>
-              <p class="hero-desc">
-                You are only 3 modules away from completing your primary NGO
-                leadership track. Continue your latest session now to earn your
-                certificate.
-              </p>
-              <div style="margin-top: auto">
-                <button
-                  class="btn btn-primary"
-                  style="
-                    padding: 10px 24px;
-                    border-radius: 12px;
-                    font-weight: 600;
-                  "
-                >
-                  Resume Learning &rarr;
-                </button>
-              </div>
-            </div>
+          <div id="dash-content">
+            <!-- Initial content will be loaded by script -->
+          
+    
+    
 
-            <!-- METRIC 1 -->
-            <div class="bento-card bento-metric">
-              <div class="metric-icon icon-blue">
-                <i data-lucide="book-open-check"></i>
-              </div>
-              <div style="margin-top: auto">
-                <div class="metric-value">02</div>
-                <div class="metric-label">Active Courses</div>
-              </div>
-            </div>
-
-            <!-- METRIC 2 -->
-            <div class="bento-card bento-metric">
-              <div class="metric-icon icon-purple">
-                <i data-lucide="award"></i>
-              </div>
-              <div style="margin-top: auto">
-                <div class="metric-value">05</div>
-                <div class="metric-label">Certificates Earned</div>
-              </div>
-            </div>
-
-            <!-- CHART WIDGET (Span 2x2) -->
-            <div class="bento-card bento-chart">
-              <h3>Weekly Training Hours</h3>
-              <div class="chart-container">
-                <div class="bar-wrapper">
-                  <div class="bar" style="height: 40%"></div>
-                  <span class="bar-label">Mon</span>
-                </div>
-                <div class="bar-wrapper">
-                  <div class="bar" style="height: 70%"></div>
-                  <span class="bar-label">Tue</span>
-                </div>
-                <div class="bar-wrapper">
-                  <div
-                    class="bar"
-                    style="height: 20%; background: var(--muted)"
-                  ></div>
-                  <span class="bar-label">Wed</span>
-                </div>
-                <div class="bar-wrapper">
-                  <div class="bar" style="height: 90%"></div>
-                  <span class="bar-label">Thu</span>
-                </div>
-                <div class="bar-wrapper">
-                  <div class="bar" style="height: 50%"></div>
-                  <span class="bar-label">Fri</span>
-                </div>
-                <div class="bar-wrapper">
-                  <div
-                    class="bar"
-                    style="height: 10%; background: var(--muted)"
-                  ></div>
-                  <span class="bar-label">Sat</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- LIST WIDGET (Span 2x2) -->
-            <div class="bento-card bento-list">
-              <div class="list-header">Continue Learning</div>
-
-              <!-- Item 1 -->
-              <div class="course-item">
-                <div class="course-thumb">
-                  <i data-lucide="play" fill="white"></i>
-                </div>
-                <div class="course-info">
-                  <div class="course-title">Advanced Mediation Tactics</div>
-                  <div class="course-meta">
-                    Module 4 • High-Stakes Negotiation
-                  </div>
-                  <div class="prog-track">
-                    <div class="prog-fill" style="width: 75%"></div>
-                  </div>
-                </div>
-                <div style="font-weight: 700; color: var(--primary)">75%</div>
-              </div>
-
-              <!-- Item 2 -->
-              <div class="course-item">
-                <div
-                  class="course-thumb"
-                  style="
-                    background: var(--card);
-                    border: 1px solid var(--border);
-                    color: var(--text);
-                  "
-                >
-                  <i data-lucide="lock"></i>
-                </div>
-                <div class="course-info">
-                  <div class="course-title">Crisis Communication</div>
-                  <div class="course-meta">Module 1 • Introduction</div>
-                  <div class="prog-track">
-                    <div
-                      class="prog-fill"
-                      style="width: 5%; background: var(--muted)"
-                    ></div>
-                  </div>
-                </div>
-                <div style="font-weight: 700; color: var(--muted)">5%</div>
-              </div>
-            </div>
-
-            <!-- EXTRA WIDGET: RECOMMENDED (Span 2x1) -->
-            <div class="bento-card bento-hero" style="background: var(--card)">
-              <h3 class="hero-title" style="font-size: 1.3rem">
-                Explore Catalog
-              </h3>
-              <p class="hero-desc" style="margin-bottom: 20px">
-                We've added 3 new courses on International Law and Human Rights.
-              </p>
-              <button
-                class="btn btn-outline"
-                style="align-self: flex-start; border-radius: 12px"
-                onclick="window.location.href = 'TrainingPage.html'"
-              >
-                Browse New Additions
-              </button>
-            </div>
-
-            <!-- EXTRA WIDGET: COMMUNITY (Span 2x1) -->
-            <div class="bento-card bento-hero" style="background: var(--card)">
-              <h3 class="hero-title" style="font-size: 1.3rem">
-                <i
-                  data-lucide="message-circle"
-                  style="
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-right: 8px;
-                    color: var(--secondary);
-                  "
-                ></i>
-                Join the Forum
-              </h3>
-              <p class="hero-desc" style="margin-bottom: 20px">
-                Connect with 1,200+ other NGO members. Share field tactics and
-                ask questions.
-              </p>
-              <button
-                class="btn btn-outline"
-                style="align-self: flex-start; border-radius: 12px"
-              >
-                Open Community
-              </button>
-            </div>
+        
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+          <p>
+            Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="TrainingPage.html">Programs</a></li>
+            <li><a href="Impact.html">Our Impact</a></li>
+            <li><a href="Community.html">Community</a></li>
+            <li><a href="404.html">404 Page</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="Contact.html">Help Center</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="Settings.html">Settings</a></li>
+            <li><a href="login.html">Login / Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+          <div class="social-links">
+            <a href="#"><i data-lucide="facebook"></i></a>
+            <a href="#"><i data-lucide="twitter"></i></a>
+            <a href="#"><i data-lucide="instagram"></i></a>
+            <a href="#"><i data-lucide="linkedin"></i></a>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
+          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
 
+      </main>
+    <script src="../assets/js/data.js"></script>
     <script src="../assets/js/theme.js"></script>
     <script>
-      lucide.createIcons();
-      // Add slight delay to bars for load animation effect
-      window.addEventListener("load", () => {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      let currentFilter = 'All';
+
+      // Initial Dashboard Content Template
+      const dashboardTemplate = `
+          <div class="bento-grid">
+            <div class="bento-card bento-hero">
+              <div class="hero-graphics"></div>
+              <h3 class="hero-title" style="font-size: 2.2rem; margin-bottom: 20px;">Master <span>Conflict Resolution</span></h3>
+              <p class="hero-desc" style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; max-width: 500px;">You are only 3 modules away from completing your primary leadership track. Scale your impact today.</p>
+              <div style="margin-top: auto">
+                <button class="btn" style="background: white; color: var(--primary); padding: 14px 32px; border-radius: 14px; font-weight: 700; border: none; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">Resume Learning &rarr;</button>
+              </div>
+            </div>
+            <div class="bento-card bento-metric">
+              <div class="metric-icon icon-blue" style="background: rgba(37, 99, 235, 0.1); color: var(--primary);"><i data-lucide="book-open-check"></i></div>
+              <div style="margin-top: auto">
+                <div class="metric-value" style="font-size: 2.5rem; font-weight: 800;">02</div>
+                <div class="metric-label" style="font-weight: 600; color: var(--muted);">Active Courses</div>
+              </div>
+            </div>
+            <div class="bento-card bento-metric">
+              <div class="metric-icon icon-purple" style="background: rgba(124, 58, 237, 0.1); color: var(--secondary);"><i data-lucide="award"></i></div>
+              <div style="margin-top: auto">
+                <div class="metric-value" style="font-size: 2.5rem; font-weight: 800;">05</div>
+                <div class="metric-label" style="font-weight: 600; color: var(--muted);">Certificates</div>
+              </div>
+            </div>
+            <div class="bento-card bento-chart">
+              <h3 style="font-weight: 700; margin-bottom: 25px;">Weekly Activity</h3>
+              <div class="chart-container" id="barChartContainer">
+                <div class="bar-wrapper"><div class="bar" style="height: 40%; background: var(--primary);"></div><span class="bar-label">Mon</span></div>
+                <div class="bar-wrapper"><div class="bar" style="height: 70%; background: var(--primary);"></div><span class="bar-label">Tue</span></div>
+                <div class="bar-wrapper"><div class="bar" style="height: 20%; background: var(--muted)"></div><span class="bar-label">Wed</span></div>
+                <div class="bar-wrapper"><div class="bar" style="height: 90%; background: linear-gradient(to top, var(--primary), var(--secondary))"></div><span class="bar-label">Thu</span></div>
+                <div class="bar-wrapper"><div class="bar" style="height: 50%; background: var(--primary);"></div><span class="bar-label">Fri</span></div>
+                <div class="bar-wrapper"><div class="bar" style="height: 10%; background: var(--muted)"></div><span class="bar-label">Sat</span></div>
+              </div>
+            </div>
+            <div class="bento-card bento-list">
+              <div class="list-header" style="font-weight: 700; margin-bottom: 20px;">Upcoming Modules</div>
+              <div class="course-item" style="padding: 15px 0;">
+                <div class="course-thumb" style="background: var(--primary); color: white;"><i data-lucide="play" fill="currentColor"></i></div>
+                <div class="course-info">
+                  <div class="course-title" style="font-weight: 700;">Advanced Mediation</div>
+                  <div class="course-meta">Module 4 • High-Stakes</div>
+                  <div class="prog-track" style="background: rgba(128,128,128,0.1);"><div class="prog-fill" style="width: 75%; background: var(--primary);"></div></div>
+                </div>
+                <div style="font-weight: 800; color: var(--primary)">75%</div>
+              </div>
+              <div class="course-item" style="border: none; padding: 15px 0;">
+                <div class="course-thumb" style="background: var(--card); border: 1px solid var(--border); color: var(--text);"><i data-lucide="lock"></i></div>
+                <div class="course-info">
+                  <div class="course-title" style="font-weight: 700;">Crisis Management</div>
+                  <div class="course-meta">Module 1 • Intro</div>
+                  <div class="prog-track" style="background: rgba(128,128,128,0.1);"><div class="prog-fill" style="width: 5%; background: var(--muted)"></div></div>
+                </div>
+                <div style="font-weight: 800; color: var(--muted)">5%</div>
+              </div>
+            </div>
+          </div>
+      `;
+
+      function switchView(viewId) {
+        const content = document.getElementById("dash-content");
+        const title = document.getElementById("dash-title");
+        const subtitle = document.getElementById("dash-subtitle");
+        const headerSearch = document.getElementById("headerSearch");
+        const headerFilters = document.getElementById("headerFilters");
+
+        // UI Reset
+        headerSearch.style.display = "none";
+        headerFilters.style.display = "none";
+        document.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
+        
+        const activeBtn = document.getElementById("nav-" + viewId);
+        if (activeBtn) activeBtn.classList.add("active");
+
+        // Content Switch with Animation trigger
+        content.style.animation = 'none';
+        content.offsetHeight; // trigger reflow
+        content.style.animation = null;
+
+        if (viewId === "dashboard") {
+          title.innerText = "Overview";
+          subtitle.innerText = "Here's what is happening with your training today.";
+          content.innerHTML = dashboardTemplate;
+          animateBars();
+        } else if (viewId === "explore") {
+          title.innerText = "Explore Programs";
+          subtitle.innerText = "Discover new skills and specialized tracks.";
+          headerSearch.style.display = "flex";
+          headerFilters.style.display = "flex";
+          content.innerHTML = `<div class="bento-grid" id="trainingGrid"></div>`;
+          renderTrainingGrid();
+        } else if (viewId === "wishlist") {
+          title.innerText = "Saved Training";
+          subtitle.innerText = "Your curated list of upcoming learning goals.";
+          content.innerHTML = `
+            <div class="bento-grid" id="wishlistContainer"></div>
+            <div id="emptyWishlist" style="text-align: center; padding: 100px 40px; display: none;">
+              <div class="metric-icon icon-purple" style="margin: 0 auto 24px; width: 80px; height: 80px; font-size: 2rem;">
+                <i data-lucide="bookmark"></i>
+              </div>
+              <h3 style="font-size: 1.5rem; margin-bottom: 12px;">Your wishlist is empty</h3>
+              <p style="color: var(--muted); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                Explore our catalog to find programs that match your goals.
+              </p>
+              <button class="btn btn-primary" onclick="switchView('explore')" style="padding: 12px 32px; border-radius: 14px;">Browse Programs</button>
+            </div>
+          `;
+          renderWishlist();
+        }
+
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function setFilter(level, el) {
+        currentFilter = level;
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+        renderTrainingGrid();
+      }
+
+      function renderTrainingGrid() {
+        const grid = document.getElementById("trainingGrid");
+        if (!grid) return;
+        const query = document.getElementById("searchInput").value.toLowerCase();
+
+        grid.innerHTML = "";
+        const filtered = programs.filter((p) => {
+          return (currentFilter === "All" || p.level === currentFilter) && p.title.toLowerCase().includes(query);
+        });
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 100px; color: var(--muted); background: var(--card); border-radius: 32px; border: 1px dashed var(--border);">No programs found matching your criteria.</div>`;
+          return;
+        }
+
+        filtered.forEach((p, index) => {
+          const isSaved = wishlist.includes(p.id);
+          const isHero = index === 0 && query === ''; 
+          // Use generated images for first two, fallback for others
+          const imgPath = index === 0 ? "training_featured_1.png" : (index === 1 ? "training_featured_2.png" : "../assets/img/placeholder.png");
+          
+          grid.innerHTML += `
+            <div class="bento-card ${isHero ? 'bento-hero' : ''}" style="height: auto;">
+              ${!isHero ? `<img src="${imgPath}" class="card-img" alt="${p.title}">` : ''}
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <span class="badge-premium">${p.level}</span>
+                <button onclick="toggleWishlist(${p.id})" style="background: ${isHero ? 'rgba(255,255,255,0.1)' : 'var(--card)'}; border: 1px solid ${isHero ? 'rgba(255,255,255,0.2)' : 'var(--border)'}; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; color: ${isSaved ? "var(--admin-danger)" : (isHero ? "white" : "var(--muted)")}; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
+                  <i data-lucide="heart" style="width: 20px;" ${isSaved ? 'fill="currentColor"' : ""}></i>
+                </button>
+              </div>
+              <h3 style="font-size: ${isHero ? '2rem' : '1.25rem'}; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px;">${p.title}</h3>
+              <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 25px; line-height: 1.6; color: ${isHero ? 'white' : 'var(--muted)'}">${p.description}</p>
+              <div style="display: flex; gap: 12px; margin-top: auto;">
+                <button class="${isHero ? 'btn' : 'btn-premium'}" style="flex: 1; padding: 14px; border-radius: 14px; font-weight: 700; ${isHero ? 'background: white; color: var(--primary); border: none;' : ''}">Enroll Now</button>
+                <button class="btn btn-outline" style="padding: 14px; border-radius: 14px; ${isHero ? 'border-color: rgba(255,255,255,0.3); color: white;' : ''}"><i data-lucide="info" style="width: 20px;"></i></button>
+              </div>
+            </div>
+          `;
+        });
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function renderWishlist() {
+        const grid = document.getElementById("wishlistContainer");
+        const empty = document.getElementById("emptyWishlist");
+        if (!grid) return;
+        
+        wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        grid.innerHTML = "";
+        
+        const savedPrograms = programs.filter(p => wishlist.includes(p.id));
+
+        if (savedPrograms.length === 0) {
+          grid.style.display = "none";
+          empty.style.display = "block";
+        } else {
+          grid.style.display = "grid";
+          empty.style.display = "none";
+          savedPrograms.forEach((p) => {
+            grid.innerHTML += `
+              <div class="bento-card" style="height: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                  <span class="badge" style="background: rgba(124, 58, 237, 0.1); color: var(--secondary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${p.level}</span>
+                  <button onclick="toggleWishlist(${p.id}, true)" style="background: none; border: none; cursor: pointer; color: var(--admin-danger)">
+                    <i data-lucide="trash-2" style="width: 18px;"></i>
+                  </button>
+                </div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;">${p.title}</h3>
+                <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 20px;">Duration: ${p.duration}</div>
+                <button class="btn btn-primary" style="width: 100%; padding: 10px; border-radius: 12px;">Continue Enrollment</button>
+              </div>
+            `;
+          });
+        }
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function toggleWishlist(id, fromWishlistView = false) {
+        if (wishlist.includes(id)) {
+          wishlist = wishlist.filter((item) => item !== id);
+        } else {
+          wishlist.push(id);
+        }
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+        if (fromWishlistView) renderWishlist();
+        else renderTrainingGrid();
+      }
+
+      function animateBars() {
         const bars = document.querySelectorAll(".bar");
+        if (!bars.length) return;
         bars.forEach((bar, index) => {
           const targetHeight = bar.style.height;
           bar.style.height = "0";
-          setTimeout(
-            () => {
-              bar.style.height = targetHeight;
-            },
-            500 + index * 100,
-          );
+          setTimeout(() => {
+            bar.style.height = targetHeight;
+          }, 400 + index * 100);
         });
+      }
+
+      // Initial View
+      window.addEventListener("DOMContentLoaded", () => {
+        switchView('dashboard');
       });
     </script>
   </body>
 </html>
-
-
