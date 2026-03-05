@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
+      // Run this immediately to prevent CSS flashing on page load
       (function () {
         const theme = localStorage.getItem("theme");
         const dir = localStorage.getItem("dir") || "ltr";
@@ -491,7 +492,7 @@
         opacity: 0.9;
       }
 
-      /* --- FOOTER (Matches original) --- */
+      /* --- FOOTER --- */
       .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; margin-top: 40px; }
       .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
       .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
@@ -504,6 +505,16 @@
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
       .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
+      /* --- RTL OVERRIDES --- */
+      html[dir="rtl"] .dropdown-menu {
+        left: auto;
+        right: 0;
+      }
+      
+      html[dir="rtl"] .course-badge {
+        left: auto;
+        right: 15px;
+      }
 
       /* --- RESPONSIVE ADJUSTMENTS --- */
       @media (max-width: 950px) {
@@ -528,6 +539,10 @@
         }
         .dropdown-menu a { display: block; text-align: center; }
         .mobile-menu-btn { display: flex; }
+
+        /* Mobile RTL Support */
+        html[dir="rtl"] .navbar-menu { left: auto; right: -100%; }
+        html[dir="rtl"] .navbar-menu.active { left: auto; right: 0; }
       }
 
       @media (max-width: 650px) {
@@ -549,7 +564,8 @@
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
         
         <ul class="navbar-menu">
-          <li><a href="Home.html" class="navbar-link active">Home</a></li>
+          <li><a href="Home.html" class="navbar-link active">Home2</a></li>
+          <li><a href="index.html" class="navbar-link">Home1</a></li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
@@ -565,12 +581,14 @@
         </ul>
 
         <div class="nav-actions">
+          <!-- Direction Toggle Button -->
           <button id="dirToggle" class="nav-btn">
             <i data-lucide="languages"></i>
             <span>LTR</span>
           </button>
 
-          <label class="theme-toggle nav-btn icon-only" onclick="document.documentElement.classList.toggle('dark')">
+          <!-- Theme Toggle Button -->
+          <label class="theme-toggle nav-btn icon-only" style="cursor: pointer;">
             <div class="icon-wrapper">
               <i data-lucide="sun" class="sun-icon"></i>
               <i data-lucide="moon" class="moon-icon"></i>
@@ -787,7 +805,47 @@
       // Set Year
       document.getElementById("year").innerText = new Date().getFullYear();
 
-      // Mobile Menu Toggle Logic
+      /* ----------------------------------------------------
+         LTR / RTL TOGGLE LOGIC
+      ---------------------------------------------------- */
+      const dirToggleBtn = document.getElementById("dirToggle");
+      if (dirToggleBtn) {
+        const dirSpan = dirToggleBtn.querySelector("span");
+        
+        // Sync button text with current direction on load
+        const currentDir = document.documentElement.dir || "ltr";
+        dirSpan.textContent = currentDir.toUpperCase();
+
+        dirToggleBtn.addEventListener("click", () => {
+          // Determine the new direction
+          const newDir = document.documentElement.dir === "ltr" ? "rtl" : "ltr";
+          
+          // Apply to HTML tag and save to localStorage
+          document.documentElement.dir = newDir;
+          localStorage.setItem("dir", newDir);
+          
+          // Update button text
+          dirSpan.textContent = newDir.toUpperCase();
+        });
+      }
+
+      /* ----------------------------------------------------
+         THEME TOGGLE LOGIC (Fixed to save to localStorage)
+      ---------------------------------------------------- */
+      const themeToggle = document.querySelector(".theme-toggle");
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          document.documentElement.classList.toggle("dark");
+          
+          // Save the current theme preference to localStorage
+          const isDark = document.documentElement.classList.contains("dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+      }
+
+      /* ----------------------------------------------------
+         MOBILE MENU LOGIC
+      ---------------------------------------------------- */
       const mobileBtn = document.getElementById("mobileMenuBtn");
       const navMenu = document.querySelector(".navbar-menu");
       const navbar = document.querySelector(".navbar");
