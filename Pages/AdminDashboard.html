@@ -18,1047 +18,2362 @@
         document.documentElement.dir = dir;
       })();
     </script>
-    <title>Platform Overview | Admin Dashboard</title>
-
+    <title>Admin Dashboard | NGO Platform</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
+      :root {
+        --sidebar-width: 260px;
+        --sidebar-collapsed-width: 80px;
+        --header-height: 70px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
         display: flex;
-        height: 100vh;
         overflow: hidden;
-        background-image:
-          radial-gradient(
-            circle at 0% 0%,
-            rgba(239, 68, 68, 0.05) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 100% 100%,
-            rgba(37, 99, 235, 0.05) 0%,
-            transparent 50%
-          );
+        height: 100vh;
       }
 
-      .dash-wrapper {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        padding: 24px;
-        gap: 24px;
-        box-sizing: border-box;
-      }
-
-      /* Modern Floating Sidebar */
-      .floating-sidebar {
-        width: 100px;
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 32px;
+      /* Sidebar (Desktop) */
+      .sidebar {
+        width: var(--sidebar-width);
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-inline-end: 1px solid var(--border);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        padding: 40px 0;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03);
+        transition: var(--transition);
         z-index: 1000;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
         flex-shrink: 0;
       }
 
-      html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+      html.dark .sidebar {
+        background: rgba(15, 23, 42, 0.7);
       }
 
-      .floating-sidebar:hover {
-        width: 280px;
-        align-items: flex-start;
-      }
-
-      .nav-logo {
-        width: 52px;
-        height: 52px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, var(--admin-danger), #f97316);
+      .sidebar-header {
+        height: var(--header-height);
         display: flex;
         align-items: center;
-        justify-content: center;
-        color: white;
-        margin-bottom: 2rem;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .floating-sidebar:hover .nav-logo {
-        margin-inline-start: 24px;
-      }
-
-      .nav-items-wrapper {
-        flex: 1;
-        width: 100%;
-        overflow-y: auto;
         padding: 0 24px;
-      }
-
-      .nav-items-wrapper::-webkit-scrollbar {
-        width: 0;
-      }
-
-      .nav-btn {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 12px 16px;
-        border-radius: 16px;
-        color: var(--muted);
-        text-decoration: none;
-        transition: 0.3s;
-        white-space: nowrap;
-        margin-bottom: 4px;
-      }
-
-      .nav-btn i {
-        min-width: 24px;
-        transition: 0.3s;
-      }
-
-      .nav-btn span {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: 0.3s;
-        font-weight: 500;
-      }
-
-      .floating-sidebar:hover .nav-btn span {
-        opacity: 1;
-        transform: translateX(0);
-      }
-
-      .nav-btn:hover {
-        background: rgba(239, 68, 68, 0.05);
-        color: var(--text);
-      }
-
-      .nav-btn.active {
-        background: rgba(239, 68, 68, 0.1);
-        color: var(--admin-danger);
-      }
-
-      /* Main content glass container */
-      .dash-main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        border-radius: 36px;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        overflow: hidden;
-      }
-
-      html.dark .dash-main {
-        background: rgba(15, 23, 42, 0.4);
-        border-color: rgba(255, 255, 255, 0.05);
-      }
-
-      /* Header */
-      .top-nav {
-        padding: 30px 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        gap: 12px;
         border-bottom: 1px solid var(--border);
       }
 
-      .greeting h2 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin: 0;
+      .logo-box {
+        width: 35px;
+        height: 35px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 10px;
         display: flex;
         align-items: center;
-        gap: 12px;
-      }
-
-      .admin-tag {
-        font-size: 0.7rem;
-        background: var(--admin-danger);
+        justify-content: center;
         color: white;
-        padding: 4px 10px;
-        border-radius: 20px;
-        text-transform: uppercase;
+      }
+
+      .logo-text {
         font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: -0.5px;
+        white-space: nowrap;
       }
 
-      .top-actions {
+      .nav-list {
+        padding: 24px 12px;
+        flex: 1;
         display: flex;
-        gap: 1.5rem;
-        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+        overflow-y: auto;
       }
 
-      .profile-pill {
+      .nav-item {
         display: flex;
         align-items: center;
         gap: 12px;
-        background: var(--card);
-        padding: 6px 16px 6px 8px;
-        border-radius: 50px;
-        border: 1px solid var(--border);
+        padding: 12px 16px;
+        border-radius: 12px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: var(--transition);
         cursor: pointer;
-        transition: 0.2s;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: start;
+        font-family: inherit;
+        font-size: 1rem;
       }
 
-      .profile-pill:hover {
-        transform: translateY(-2px);
-        border-color: var(--admin-danger);
+      .nav-item:hover,
+      .nav-item.active {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
       }
 
-      .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: url("https://ui-avatars.com/api/?name=Admin+User&background=ef4444&color=fff");
-        background-size: cover;
+      .nav-item.active {
+        font-weight: 600;
       }
 
-      /* Bento Grid Area */
-      .bento-scroll {
+      /* Main Content Area */
+      .main-content {
         flex: 1;
-        overflow-y: auto;
-        padding: 40px;
-      }
-
-      .bento-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 200px;
-        gap: 24px;
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-
-      .bento-card {
-        background: var(--card);
-        border-radius: 32px;
-        border: 1px solid var(--border);
-        padding: 2.5rem;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
       }
 
-      .bento-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-        border-color: rgba(239, 68, 68, 0.2);
-      }
-
-      /* Card Sizes */
-      .c-wide {
-        grid-column: span 2;
-      }
-      .c-tall {
-        grid-row: span 2;
-      }
-
-      /* Performance card hero */
-      .performance-hero {
-        background: linear-gradient(
-          135deg,
-          rgba(239, 68, 68, 0.05),
-          rgba(249, 115, 22, 0.05)
-        );
+      .main-header {
+        height: var(--header-height);
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
 
-      .performance-hero h3 {
-        font-size: 1.8rem;
-        line-height: 1.2;
-        margin-bottom: 0.75rem;
-        color: var(--text);
+      html.dark .main-header {
+        background: rgba(15, 23, 42, 0.5);
       }
 
-      .performance-hero h3 span {
-        color: var(--admin-danger);
+      .header-title-box h1 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
       }
 
-      .performance-hero p {
+      .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* Dynamic Tab Content */
+      .tab-content {
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        padding: 32px;
+      }
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.4s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Generic Grid System */
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      /* Analytics View Styles */
+      .chart-container {
+        background: var(--card);
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        padding: 24px;
+        position: relative;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .chart-header h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .viz-box {
+        height: 200px;
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        padding-top: 20px;
+      }
+      .viz-bar {
+        flex: 1;
+        background: var(--primary);
+        border-radius: 6px 6px 0 0;
+        opacity: 0.8;
+        transition: 0.3s;
+        position: relative;
+      }
+      .viz-bar:hover {
+        opacity: 1;
+        transform: scaleY(1.05);
+      }
+      .viz-label {
+        font-size: 0.7rem;
         color: var(--muted);
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
-        max-width: 80%;
+        text-align: center;
+        margin-top: 8px;
+        font-weight: 600;
       }
 
-      /* Metric Cards */
-      .metric-card {
+      /* Stats Overlay */
+      .stat-mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .stat-mini-card {
+        background: rgba(128, 128, 128, 0.05);
+        padding: 16px;
+        border-radius: 16px;
+      }
+      .stat-mini-card span {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .stat-mini-card strong {
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      /* BENTO CARDS */
+      .bento-card {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 24px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .bento-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+      }
+      .bento-metric {
         justify-content: space-between;
       }
-
-      .m-icon {
+      .bento-list {
+        grid-column: span 2;
+        padding: 0;
+      }
+      .metric-icon {
         width: 48px;
         height: 48px;
         border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        position: relative;
+        margin-bottom: 16px;
       }
-
-      .m-value {
+      .metric-value {
         font-size: 2.5rem;
         font-weight: 800;
         line-height: 1;
-        letter-spacing: -0.02em;
+        letter-spacing: -1px;
+        margin-bottom: 4px;
       }
-      .m-label {
-        font-weight: 600;
+      .metric-label {
         color: var(--muted);
+        font-weight: 600;
         font-size: 0.9rem;
-        margin-top: 5px;
       }
-
-      .bg-red {
+      .icon-red {
         background: rgba(239, 68, 68, 0.1);
-        color: var(--admin-danger);
+        color: #ef4444;
       }
-      .bg-green {
-        background: rgba(34, 197, 94, 0.1);
-        color: #22c55e;
+      .icon-green {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
       }
-      .bg-orange {
+      .icon-orange {
         background: rgba(249, 115, 22, 0.1);
         color: #f97316;
       }
-      .bg-purple {
-        background: rgba(168, 85, 247, 0.1);
-        color: #a855f7;
+      .icon-purple {
+        background: rgba(139, 92, 246, 0.1);
+        color: #8b5cf6;
       }
-
-      /* Data Viz */
-      .chart-card h4 {
-        margin: 0 0 2rem;
-        font-size: 1.25rem;
+      .list-header {
+        padding: 24px 24px 16px 24px;
+        font-size: 1.1rem;
         font-weight: 700;
-      }
-
-      .bar-chart {
-        height: 250px;
+        border-bottom: 1px solid var(--border);
         display: flex;
-        align-items: flex-end;
-        gap: 10%;
-        padding-top: 20px;
-        border-bottom: 1px dashed var(--border);
-      }
-
-      .bar-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
-        gap: 12px;
-        height: 100%;
-        justify-content: flex-end;
       }
 
-      .bar {
-        width: 100%;
-        border-radius: 12px 12px 4px 4px;
-        background: var(--admin-danger);
-        opacity: 0.8;
-        transition: 0.5s;
+      /* User Table Card (Reusing from previous) */
+      .table-card {
+        background: var(--card);
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        overflow: hidden;
       }
-
-      .bar:hover {
-        opacity: 1;
-        transform: scaleX(1.1);
-      }
-      .label {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--muted);
-        text-transform: uppercase;
-      }
-
-      /* Activity List */
-      .activity-card {
-        padding: 0;
-      }
-      .card-header {
-        padding: 30px 40px 15px;
+      .table-header {
+        padding: 24px 32px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid var(--border);
       }
-
-      .activity-item {
-        padding: 24px 40px;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
-        transition: 0.2s;
+      .table-container {
+        overflow-x: auto;
       }
-
-      .activity-item:hover {
-        background: rgba(239, 68, 68, 0.02);
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
       }
-
-      .activity-img {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(128, 128, 128, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
+      th {
+        text-align: left;
+        padding: 16px 32px;
+        background: rgba(128, 128, 128, 0.02);
+        color: var(--muted);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        font-weight: 700;
       }
-
-      .activity-body {
-        flex: 1;
-      }
-      .activity-name {
-        font-weight: 600;
+      td {
+        padding: 16px 32px;
+        border-bottom: 1px solid var(--border);
         font-size: 0.95rem;
       }
-      .activity-info {
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-top: 2px;
-      }
-      .activity-time {
-        font-size: 0.8rem;
-        color: var(--muted);
-        white-space: nowrap;
-      }
 
+      /* Mobile Responsive HUD */
       @media (max-width: 1024px) {
-        .bento-grid {
-          grid-template-columns: repeat(2, 1fr);
+        .sidebar {
+          width: var(--sidebar-collapsed-width);
+          align-items: center;
+        }
+        .logo-text,
+        .nav-item span {
+          display: none;
+        }
+        .sidebar-header {
+          justify-content: center;
+          padding: 0;
+        }
+        .nav-item {
+          padding: 12px;
+          justify-content: center;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
         }
       }
 
       @media (max-width: 768px) {
-        .dash-wrapper {
-          padding: 12px;
-          flex-direction: column;
-        }
-        .floating-sidebar {
+        .sidebar {
+          position: fixed;
+          bottom: 0;
+          left: 0;
           width: 100%;
-          height: auto;
+          height: 60px;
           flex-direction: row;
-          padding: 15px 24px;
-          border-radius: 24px;
-        }
-        .nav-logo {
-          margin: 0 20px 0 0;
-        }
-        .nav-items-wrapper {
-          display: flex;
           padding: 0;
+          border-top: 1px solid var(--border);
+          border-inline-end: none;
         }
-        .nav-items {
-          display: flex;
-          flex-direction: row;
-          gap: 4px;
-          overflow-x: auto;
-        }
-        .nav-btn span {
+        .sidebar-header {
           display: none;
         }
-        .bento-grid {
-          grid-template-columns: 1fr;
-          grid-auto-rows: auto;
+        .nav-list {
+          flex-direction: row;
+          justify-content: flex-start;
+          padding: 0;
+          width: 100%;
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+        .nav-list::-webkit-scrollbar {
+          display: none; /* Chrome, Safari and Opera */
+        }
+        .nav-item {
+          border-radius: 0;
+          height: 100%;
+          width: auto;
+          min-width: 70px; /* slightly larger hit area */
+          flex: 0 0 auto;
+        }
+        .main-content {
+          margin-bottom: 60px;
+        }
+        .tab-content {
+          padding: 16px;
+        }
+        .main-header {
+          padding: 0 16px;
         }
       }
     </style>
   </head>
-
   <body>
-    <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader">
-      <div class="triangle1"></div>
-      <div class="triangle2"></div>
-      <p class="text">Please Wait</p>
-    </div>
-
-    <div class="dash-wrapper">
-      <!-- SIDEBAR -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = '../index.html'">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header" onClick="window.location.href='index.html'">
+        <div class="logo-box">
           <i data-lucide="shield"></i>
         </div>
+        <span class="logo-text">Admin Panel</span>
+      </div>
 
-        <div class="nav-items-wrapper">
-          <div class="nav-items">
-            <a href="AdminDashboard.html" class="nav-btn active">
-              <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
-            </a>
-            <a href="Adminpages/AdminUsers.html" class="nav-btn">
-              <i data-lucide="users"></i> <span>Users</span>
-            </a>
-            <a href="Adminpages/AdminTraining.html" class="nav-btn">
-              <i data-lucide="book-open"></i> <span>Trainings</span>
-            </a>
-            <a href="Adminpages/AdminResources.html" class="nav-btn">
-              <i data-lucide="folder"></i> <span>Resources</span>
-            </a>
-            <a href="Adminpages/AdminCommunity.html" class="nav-btn">
-              <i data-lucide="message-square"></i> <span>Community</span>
-            </a>
-            <a href="Adminpages/AdminCertificates.html" class="nav-btn">
-              <i data-lucide="award"></i> <span>Certs</span>
-            </a>
-            <a href="Adminpages/AdminReports.html" class="nav-btn">
-              <i data-lucide="pie-chart"></i> <span>Reports</span>
-            </a>
-            <a href="Adminpages/AdminSettings.html" class="nav-btn">
-              <i data-lucide="settings"></i> <span>Settings</span>
-            </a>
+      <nav class="nav-list">
+        <button class="nav-item active" data-tab="users">
+          <i data-lucide="users"></i>
+          <span>Users</span>
+        </button>
+        <button class="nav-item" data-tab="analytics">
+          <i data-lucide="line-chart"></i>
+          <span>Analytics</span>
+        </button>
+        <button class="nav-item" data-tab="training">
+          <i data-lucide="graduation-cap"></i>
+          <span>Training</span>
+        </button>
+        <button class="nav-item" data-tab="security">
+          <i data-lucide="lock"></i>
+          <span>Security</span>
+        </button>
+        <button class="nav-item" data-tab="community">
+          <i data-lucide="message-square"></i>
+          <span>Community</span>
+        </button>
+        <button class="nav-item" data-tab="impact">
+          <i data-lucide="globe"></i>
+          <span>Impact</span>
+        </button>
+        <button class="nav-item" data-tab="certificates">
+          <i data-lucide="award"></i>
+          <span>Certificates</span>
+        </button>
+        <button class="nav-item" data-tab="content">
+          <i data-lucide="file-text"></i>
+          <span>Content CMS</span>
+        </button>
+        <button class="nav-item" data-tab="notifications">
+          <i data-lucide="bell"></i>
+          <span>Notifications</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-title-box">
+          <h1 id="tabTitle">User Directory</h1>
+        </div>
+
+        <div class="user-actions">
+          <button
+            id="dirToggle"
+            class="btn btn-light"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background: var(--card);
+              border: 1px solid var(--border);
+            "
+          >
+            <i data-lucide="languages" style="width: 18px"></i>
+            <span class="desktop-only">LTR</span>
+          </button>
+
+          <label class="theme-toggle">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="icon-wrapper">
+              <i data-lucide="sun" class="sun-icon"></i>
+              <i data-lucide="moon" class="moon-icon"></i>
+            </div>
+          </label>
+
+          <div
+            class="avatar"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              background: var(--primary);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-weight: bold;
+              cursor: pointer;
+            "
+          >
+            A
           </div>
         </div>
-      </aside>
+      </header>
 
-      <!-- MAIN -->
-      <main class="dash-main">
-        <header class="top-nav">
-          <div class="greeting">
-            <h2>Platform Metrics <span class="admin-tag">Admin</span></h2>
-          </div>
-
-          <div class="top-actions">
-            <button
-              id="dirToggle"
-              class="btn btn-light"
-              style="
-                padding: 8px 12px;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                cursor: pointer;
-                border: 1px solid var(--border);
-                background: var(--card);
-                color: var(--text);
-              "
-            >
-              <i data-lucide="languages" style="width: 18px"></i>
-              <span>LTR</span>
-            </button>
-
-            <label class="theme-toggle">
-              <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="icon-wrapper">
-                <i data-lucide="sun" class="sun-icon"></i>
-                <i data-lucide="moon" class="moon-icon"></i>
-              </div>
-            </label>
-
-            <div
-              class="profile-pill"
-              onclick="window.location.href = 'Adminpages/AdminSettings.html'"
-            >
-              <div class="avatar"></div>
-              <span style="font-weight: 700; font-size: 0.9rem">Admin</span>
-              <i data-lucide="chevron-down" style="width: 16px"></i>
+      <!-- TAB: USERS -->
+      <section id="tab-users" class="tab-content active">
+        <div class="content-grid">
+          <!-- STATS ROW -->
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-red">
+              <i data-lucide="users"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">1,245</div>
+              <div class="metric-label">Total Users</div>
             </div>
           </div>
-        </header>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-green">
+              <i data-lucide="user-check"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">890</div>
+              <div class="metric-label">Active Now</div>
+            </div>
+          </div>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-orange">
+              <i data-lucide="user-x"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">12</div>
+              <div class="metric-label">Suspended</div>
+            </div>
+          </div>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-purple">
+              <i data-lucide="shield"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">4</div>
+              <div class="metric-label">Administrators</div>
+            </div>
+          </div>
 
-        <div class="bento-scroll">
-          <div class="bento-grid">
-            <!-- Hero -->
-            <div class="bento-card performance-hero c-wide">
-              <h3>System health is <span>excellent.</span></h3>
-              <p>
-                Tracking 942 active sessions today. All API services are
-                performing within normal parameters.
-              </p>
-              <div style="display: flex; gap: 12px">
-                <button
-                  onclick="
-                    window.location.href = 'Adminpages/AdminReports.html'
-                  "
+          <!-- USERS TABLE -->
+          <div class="bento-card" style="grid-column: 1 / -1; padding: 0">
+            <div class="list-header">
+              System Users
+              <div style="display: flex; gap: 10px">
+                <input
+                  type="text"
+                  placeholder="Search users..."
                   style="
-                    background: var(--admin-danger);
-                    color: white;
-                    border: none;
-                    padding: 10px 24px;
-                    border-radius: 12px;
-                    font-weight: 700;
-                    cursor: pointer;
-                  "
-                >
-                  Live Reports
-                </button>
-                <button
-                  onclick="window.location.href = 'Adminpages/AdminUsers.html'"
-                  style="
-                    background: var(--card);
+                    padding: 8px 16px;
+                    border-radius: 8px;
                     border: 1px solid var(--border);
+                    background: transparent;
                     color: var(--text);
-                    padding: 10px 24px;
-                    border-radius: 12px;
-                    font-weight: 700;
-                    cursor: pointer;
+                  "
+                />
+                <button
+                  class="btn btn-outline"
+                  style="
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    background: transparent;
+                    color: var(--text);
                   "
                 >
-                  Review Users
+                  Filter <i data-lucide="filter" style="width: 14px"></i>
+                </button>
+                <button
+                  class="btn btn-primary"
+                  style="
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    background: var(--primary);
+                    border: none;
+                    color: white;
+                  "
+                >
+                  + Add User
                 </button>
               </div>
             </div>
 
-            <!-- Metrics -->
-            <div class="bento-card metric-card">
-              <div class="m-icon bg-red"><i data-lucide="users"></i></div>
-              <div>
-                <div class="m-value">1,245</div>
-                <div class="m-label">Total Users</div>
-              </div>
-            </div>
-
-            <div class="bento-card metric-card">
-              <div class="m-icon bg-green"><i data-lucide="activity"></i></div>
-              <div>
-                <div class="m-value">942</div>
-                <div class="m-label">Active Users</div>
-              </div>
-            </div>
-
-            <!-- Chart -->
-            <div class="bento-card chart-card c-wide c-tall">
-              <h4>Organization Growth</h4>
-              <div class="bar-chart">
-                <div class="bar-item">
-                  <div class="bar" style="height: 35%"></div>
-                  <span class="label">Jul</span>
-                </div>
-                <div class="bar-item">
-                  <div class="bar" style="height: 50%"></div>
-                  <span class="label">Aug</span>
-                </div>
-                <div class="bar-item">
-                  <div class="bar" style="height: 65%"></div>
-                  <span class="label">Sep</span>
-                </div>
-                <div class="bar-item">
-                  <div class="bar" style="height: 80%"></div>
-                  <span class="label">Oct</span>
-                </div>
-                <div class="bar-item">
-                  <div class="bar" style="height: 90%"></div>
-                  <span class="label">Nov</span>
-                </div>
-                <div class="bar-item">
-                  <div class="bar" style="height: 100%"></div>
-                  <span class="label">Dec</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- List -->
-            <div class="bento-card activity-card c-wide c-tall">
-              <div class="card-header">
-                <h4 style="margin: 0; font-weight: 700">Live Feed</h4>
-                <a
-                  href="Adminpages/AdminNotifications.html"
-                  style="
-                    font-size: 0.85rem;
-                    font-weight: 700;
-                    color: var(--primary);
-                    text-decoration: none;
-                  "
-                  >View All</a
+            <div style="padding: 0 30px; overflow-x: auto">
+              <table
+                style="
+                  width: 100%;
+                  text-align: left;
+                  border-collapse: collapse;
+                  margin-top: 10px;
+                  min-width: 600px;
+                "
+              >
+                <thead>
+                  <tr
+                    style="
+                      border-bottom: 1px solid var(--border);
+                      color: var(--muted);
+                    "
+                  >
+                    <th style="padding: 15px 10px; font-weight: 500">User</th>
+                    <th style="padding: 15px 10px; font-weight: 500">Email</th>
+                    <th style="padding: 15px 10px; font-weight: 500">Role</th>
+                    <th style="padding: 15px 10px; font-weight: 500">Status</th>
+                    <th
+                      style="
+                        padding: 15px 10px;
+                        font-weight: 500;
+                        text-align: right;
+                      "
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <!-- Data populated by JS -->
+                </tbody>
+              </table>
+              <div
+                style="
+                  padding: 20px 0;
+                  text-align: center;
+                  color: var(--muted);
+                  font-size: 0.9rem;
+                "
+              >
+                Showing 1-4 of 1,245 users.
+                <a href="#" style="color: var(--primary); text-decoration: none"
+                  >View Next Page</a
                 >
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div class="activity-item">
-                <div class="activity-img">
-                  <img
-                    src="https://ui-avatars.com/api/?name=John+D&background=0D8ABC&color=fff"
-                  />
-                </div>
-                <div class="activity-body">
-                  <div class="activity-name">John Doe</div>
-                  <div class="activity-info">
-                    Completed Course: Advanced Mediation
-                  </div>
-                </div>
-                <div class="activity-time">2m ago</div>
+      <!-- TAB: ANALYTICS -->
+      <section id="tab-analytics" class="tab-content">
+        <div class="content-grid">
+          <div class="chart-container" style="grid-column: span 2">
+            <div class="chart-header">
+              <h3>Engagement Trend</h3>
+              <select
+                style="
+                  background: var(--bg);
+                  border: 1px solid var(--border);
+                  padding: 4px 12px;
+                  border-radius: 8px;
+                  font-size: 0.8rem;
+                  color: var(--text);
+                "
+              >
+                <option>Last 7 Days</option>
+                <option>Last 30 Days</option>
+              </select>
+            </div>
+            <div class="viz-box">
+              <div class="viz-bar" style="height: 40%">
+                <div class="viz-label">Mon</div>
               </div>
-
-              <div class="activity-item">
-                <div class="activity-img">
-                  <img
-                    src="https://ui-avatars.com/api/?name=Sarah+M&background=10b981&color=fff"
-                  />
-                </div>
-                <div class="activity-body">
-                  <div class="activity-name">Sarah Mensah</div>
-                  <div class="activity-info">
-                    Registered New NGO: PeaceFirst
-                  </div>
-                </div>
-                <div class="activity-time">12m ago</div>
+              <div class="viz-bar" style="height: 65%">
+                <div class="viz-label">Tue</div>
               </div>
-
-              <div class="activity-item">
-                <div class="activity-img">
-                  <i
-                    data-lucide="message-circle"
-                    style="width: 20px; color: #f97316"
-                  ></i>
-                </div>
-                <div class="activity-body">
-                  <div class="activity-name">Community Update</div>
-                  <div class="activity-info">
-                    New trending topic in Leadership circle
-                  </div>
-                </div>
-                <div class="activity-time">1h ago</div>
+              <div class="viz-bar" style="height: 50%">
+                <div class="viz-label">Wed</div>
               </div>
-
-              <div class="activity-item" style="border: none">
-                <div class="activity-img">
-                  <i
-                    data-lucide="award"
-                    style="width: 20px; color: #a855f7"
-                  ></i>
-                </div>
-                <div class="activity-body">
-                  <div class="activity-name">Certification</div>
-                  <div class="activity-info">
-                    Auto-issued 24 certificates for Module B
-                  </div>
-                </div>
-                <div class="activity-time">3h ago</div>
+              <div class="viz-bar" style="height: 90%">
+                <div class="viz-label">Thu</div>
+              </div>
+              <div class="viz-bar" style="height: 75%">
+                <div class="viz-label">Fri</div>
+              </div>
+              <div class="viz-bar" style="height: 30%">
+                <div class="viz-label">Sat</div>
+              </div>
+              <div class="viz-bar" style="height: 25%">
+                <div class="viz-label">Sun</div>
               </div>
             </div>
+          </div>
 
-            <!-- Extra Metrics -->
-            <div class="bento-card metric-card">
-              <div class="m-icon bg-orange">
-                <i data-lucide="book-open"></i>
+          <div class="chart-container">
+            <div class="chart-header"><h3>Active Regions</h3></div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span style="font-size: 0.9rem">West Africa</span>
+                <span style="font-weight: 700">45%</span>
               </div>
-              <div>
-                <div class="m-value">42</div>
-                <div class="m-label">Program Curriculums</div>
+              <div
+                style="
+                  width: 100%;
+                  height: 8px;
+                  background: rgba(128, 128, 128, 0.1);
+                  border-radius: 4px;
+                "
+              >
+                <div
+                  style="
+                    width: 45%;
+                    height: 100%;
+                    background: var(--primary);
+                    border-radius: 4px;
+                  "
+                ></div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span style="font-size: 0.9rem">East Asia</span>
+                <span style="font-weight: 700">30%</span>
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  height: 8px;
+                  background: rgba(128, 128, 128, 0.1);
+                  border-radius: 4px;
+                "
+              >
+                <div
+                  style="
+                    width: 30%;
+                    height: 100%;
+                    background: var(--secondary);
+                    border-radius: 4px;
+                  "
+                ></div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div class="bento-card metric-card">
-              <div class="m-icon bg-purple"><i data-lucide="award"></i></div>
-              <div>
-                <div class="m-value">8k+</div>
-                <div class="m-label">Certs Issued</div>
-              </div>
+        <div class="stat-mini-grid">
+          <div class="stat-mini-card">
+            <span>Daily Active Users</span>
+            <strong>1,240 <small style="color: #10b981">+12%</small></strong>
+          </div>
+          <div class="stat-mini-card">
+            <span>Avg. Session Time</span>
+            <strong>12m 45s <small style="color: #ef4444">-2%</small></strong>
+          </div>
+          <div class="stat-mini-card">
+            <span>Completion Rate</span>
+            <strong>78.4% <small style="color: #10b981">+5%</small></strong>
+          </div>
+          <div class="stat-mini-card">
+            <span>New Registrations</span>
+            <strong>34 <small style="color: var(--primary)">+8</small></strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: TRAINING -->
+      <section id="tab-training" class="tab-content">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+          "
+        >
+          <h2 style="font-size: 1.5rem; font-weight: 700">Training Manager</h2>
+          <button
+            class="btn btn-primary"
+            style="
+              background: var(--primary);
+              color: white;
+              border-radius: 12px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              padding: 12px 24px;
+              font-weight: 600;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <i data-lucide="plus" style="width: 18px"></i> Create New Course
+          </button>
+        </div>
+
+        <div class="content-grid">
+          <!-- Course List -->
+          <div class="table-card" style="grid-column: span 2">
+            <div class="table-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700">
+                Active Courses
+              </h3>
             </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Course Name</th>
+                    <th>Students</th>
+                    <th>Revenue</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="courseTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-            <!-- Bottom Span -->
+          <!-- Resource Library -->
+          <div class="chart-container">
+            <div class="chart-header"><h3>Resource Library</h3></div>
             <div
-              class="bento-card c-wide"
+              style="display: flex; flex-direction: column; gap: 16px"
+              id="resourceList"
+            >
+              <!-- Populated by JS -->
+            </div>
+            <button
+              class="btn"
               style="
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+                width: 100%;
+                margin-top: 20px;
+                border: 1px dashed var(--border);
+                background: transparent;
+                color: var(--muted);
+                padding: 10px;
+                border-radius: 12px;
+                cursor: pointer;
               "
             >
-              <div>
-                <h4 style="margin: 0 0 5px; font-weight: 700">
-                  AI Scenario Hub
-                </h4>
-                <p style="margin: 0; font-size: 0.9rem; color: var(--muted)">
-                  Generate complex practice conflicts with AI.
-                </p>
-              </div>
-              <button
-                onclick="window.location.href = 'Adminpages/AdminTraining.html'"
+              <i
+                data-lucide="upload-cloud"
+                style="width: 16px; margin-bottom: 4px"
+              ></i
+              ><br />Upload File
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: SECURITY -->
+      <section id="tab-security" class="tab-content">
+        <div class="content-grid">
+          <!-- Global Broadcast -->
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3>Global Broadcast</h3>
+              <i
+                data-lucide="megaphone"
+                style="width: 20px; color: var(--primary)"
+              ></i>
+            </div>
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--muted);
+                margin-bottom: 20px;
+              "
+            >
+              Send a notification to all active users on the platform.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <input
+                type="text"
+                placeholder="Announcement Title"
                 style="
-                  background: rgba(168, 85, 247, 0.1);
-                  color: #a855f7;
-                  border: none;
-                  padding: 10px 20px;
+                  background: var(--bg);
+                  border: 1px solid var(--border);
+                  padding: 12px;
                   border-radius: 12px;
-                  font-weight: 700;
+                  font-family: inherit;
+                  color: var(--text);
+                "
+              />
+              <textarea
+                placeholder="Message content..."
+                style="
+                  background: var(--bg);
+                  border: 1px solid var(--border);
+                  padding: 12px;
+                  border-radius: 12px;
+                  font-family: inherit;
+                  color: var(--text);
+                  min-height: 100px;
+                  resize: none;
+                "
+              ></textarea>
+              <button
+                class="btn btn-primary"
+                style="
+                  background: var(--primary);
+                  color: white;
+                  padding: 12px;
+                  border-radius: 12px;
+                  font-weight: 600;
+                  border: none;
                   cursor: pointer;
                 "
               >
-                Launch AI
-              </button>
-            </div>
-
-            <div
-              class="bento-card c-wide"
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              "
-            >
-              <div>
-                <h4 style="margin: 0 0 5px; font-weight: 700">
-                  Global Impact Map
-                </h4>
-                <p style="margin: 0; font-size: 0.9rem; color: var(--muted)">
-                  Visualize real-world training footprint.
-                </p>
-              </div>
-              <button
-                onclick="window.location.href = 'Adminpages/AdminImpact.html'"
-                style="
-                  background: rgba(34, 197, 94, 0.1);
-                  color: #22c55e;
-                  border: none;
-                  padding: 10px 20px;
-                  border-radius: 12px;
-                  font-weight: 700;
-                  cursor: pointer;
-                "
-              >
-                Open Map
+                Send Broadcast
               </button>
             </div>
           </div>
 
-          <!-- Standardized Footer (Self-Injected inside scrollable area) -->
-          <footer
-            class="footer"
+          <!-- Audit Log Mini -->
+          <div class="table-card" style="grid-column: span 2">
+            <div class="table-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700">
+                Recent Audit Logs
+              </h3>
+              <button
+                class="btn"
+                style="
+                  font-size: 0.8rem;
+                  background: transparent;
+                  border: 1px solid var(--border);
+                  padding: 4px 12px;
+                  border-radius: 8px;
+                "
+              >
+                View All
+              </button>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>User</th>
+                    <th>IP Address</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Settings -->
+        <div class="chart-container">
+          <div class="chart-header"><h3>Security Settings</h3></div>
+          <div
             style="
-              padding: 100px 0 0;
-              margin-top: 50px;
-              border-top: 1px solid var(--border);
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 24px;
             "
           >
             <div
-              class="footer-grid"
               style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 40px;
-                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
               "
             >
-              <div class="footer-col">
-                <h4
-                  style="
-                    color: var(--primary);
-                    font-size: 1.5rem;
-                    margin-bottom: 1rem;
-                    font-family: &quot;Outfit&quot;, sans-serif;
-                  "
-                >
-                  🌍 NGO Training
-                </h4>
-                <p
-                  style="
-                    font-size: 0.9rem;
-                    color: var(--muted);
-                    line-height: 1.6;
-                  "
-                >
-                  Empowering individuals and organizations with conflict
-                  resolution skills for a more peaceful world. Our platform
-                  provides high-quality training for everyone.
-                </p>
+              <div>
+                <div style="font-weight: 600">Two-Factor Auth</div>
+                <div style="font-size: 0.75rem; color: var(--muted)">
+                  Require 2FA for all admins
+                </div>
               </div>
-              <div class="footer-col">
-                <h4 style="font-size: 1.1rem; margin-bottom: 1.25rem">
-                  Quick Links
-                </h4>
-                <ul
+              <input type="checkbox" checked />
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <div style="font-weight: 600">Maintenance Mode</div>
+                <div style="font-size: 0.75rem; color: var(--muted)">
+                  Disable public access
+                </div>
+              </div>
+              <input type="checkbox" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: COMMUNITY -->
+      <section id="tab-community" class="tab-content">
+        <div class="content-grid">
+          <!-- QUICK STATS -->
+          <div
+            class="bento-card bento-metric"
+            style="
+              background: linear-gradient(
+                135deg,
+                rgba(239, 68, 68, 0.05),
+                rgba(249, 115, 22, 0.05)
+              );
+            "
+          >
+            <div class="metric-icon icon-red">
+              <i data-lucide="alert-triangle"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value" style="color: #ef4444">12</div>
+              <div class="metric-label">Reported Posts</div>
+            </div>
+          </div>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-green">
+              <i data-lucide="message-square"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">450</div>
+              <div class="metric-label">Active Discussions</div>
+            </div>
+          </div>
+
+          <!-- MODERATION FEED -->
+          <div class="bento-card bento-list" style="grid-column: span 2">
+            <div class="list-header">
+              Community Feed (Moderator View)
+              <div style="display: flex; gap: 10px">
+                <select
                   style="
-                    list-style: none;
-                    padding: 0;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    background: transparent;
+                    color: var(--text);
+                  "
+                >
+                  <option>All Posts</option>
+                  <option>Reported Only</option>
+                  <option>Pending Approval</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- POST 1 (Reported) -->
+            <div
+              style="padding: 20px 24px; border-bottom: 1px solid var(--border)"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: flex-start;
+                  margin-bottom: 10px;
+                "
+              >
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <img
+                    src="https://ui-avatars.com/api/?name=John+Doe&background=cbd5e1&color=333"
+                    style="width: 36px; border-radius: 50%"
+                  />
+                  <div>
+                    <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
+                      John Doe
+                      <span
+                        style="
+                          color: var(--muted);
+                          font-weight: 400;
+                          font-size: 0.8rem;
+                        "
+                        >in General Discussion</span
+                      >
+                    </h4>
+                    <p
+                      style="font-size: 0.8rem; color: var(--muted); margin: 0"
+                    >
+                      10 mins ago
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="badge"
+                  style="
+                    background: rgba(239, 68, 68, 0.1);
+                    color: #ef4444;
+                    padding: 4px 10px;
+                    border-radius: 20px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
                     display: flex;
-                    flex-direction: column;
-                    gap: 8px;
+                    align-items: center;
                   "
+                  ><i
+                    data-lucide="flag"
+                    style="width: 12px; margin-right: 4px"
+                  ></i>
+                  Reported (3)</span
                 >
-                  <li>
-                    <a
-                      href="../index.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Home</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="AdminTraining.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Programs</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="AdminImpact.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Our Impact</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../Community.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Community</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../404.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >404 Page</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../Comingsoon.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Coming Soon</a
-                    >
-                  </li>
-                </ul>
               </div>
-              <div class="footer-col">
-                <h4 style="font-size: 1.1rem; margin-bottom: 1.25rem">
-                  Support
-                </h4>
-                <ul
+              <p
+                style="
+                  font-size: 0.95rem;
+                  margin: 15px 0;
+                  color: var(--text);
+                  line-height: 1.5;
+                "
+              >
+                Does anyone know how to bypass the module 2 quiz? I don't feel
+                like watching the 40 minute video.
+              </p>
+              <div style="display: flex; gap: 10px">
+                <button
+                  class="btn btn-outline"
                   style="
-                    list-style: none;
-                    padding: 0;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
+                    border-radius: 8px;
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    color: #ef4444;
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    background: transparent;
+                    cursor: pointer;
                   "
                 >
-                  <li>
-                    <a
-                      href="../Contact.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Help Center</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../wishlist.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Wishlist</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="AdminSettings.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Settings</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../login.html"
-                      style="
-                        text-decoration: none;
-                        color: var(--muted);
-                        font-size: 0.9rem;
-                      "
-                      >Login / Register</a
-                    >
-                  </li>
-                </ul>
+                  Remove Post
+                </button>
+                <button
+                  class="btn btn-outline"
+                  style="
+                    border-radius: 8px;
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    color: #f97316;
+                    border: 1px solid rgba(249, 115, 22, 0.3);
+                    background: transparent;
+                    cursor: pointer;
+                  "
+                >
+                  Warn User
+                </button>
+                <button
+                  class="btn btn-outline"
+                  style="
+                    border-radius: 8px;
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    background: transparent;
+                    border: 1px solid var(--border);
+                    color: var(--text);
+                    cursor: pointer;
+                  "
+                >
+                  Dismiss Flags
+                </button>
               </div>
-              <div class="footer-col">
-                <h4 style="font-size: 1.1rem; margin-bottom: 1.25rem">
-                  Follow Us
-                </h4>
-                <div style="display: flex; gap: 15px">
-                  <a href="#" style="color: var(--muted)"
-                    ><i data-lucide="facebook" style="width: 20px"></i
-                  ></a>
-                  <a href="#" style="color: var(--muted)"
-                    ><i data-lucide="twitter" style="width: 20px"></i
-                  ></a>
-                  <a href="#" style="color: var(--muted)"
-                    ><i data-lucide="instagram" style="width: 20px"></i
-                  ></a>
-                  <a href="#" style="color: var(--muted)"
-                    ><i data-lucide="linkedin" style="width: 20px"></i
-                  ></a>
+            </div>
+
+            <!-- POST 2 (Normal) -->
+            <div style="padding: 20px 24px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: flex-start;
+                  margin-bottom: 10px;
+                "
+              >
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <img
+                    src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=f472b6&color=fff"
+                    style="width: 36px; border-radius: 50%"
+                  />
+                  <div>
+                    <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
+                      Sarah Jenkins
+                      <span
+                        style="
+                          color: var(--muted);
+                          font-weight: 400;
+                          font-size: 0.8rem;
+                        "
+                        >in Case Studies</span
+                      >
+                    </h4>
+                    <p
+                      style="font-size: 0.8rem; color: var(--muted); margin: 0"
+                    >
+                      2 hours ago
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p
+                style="
+                  font-size: 0.95rem;
+                  margin: 15px 0;
+                  color: var(--text);
+                  line-height: 1.5;
+                "
+              >
+                I found the section on implicit bias really eye-opening. Does
+                anyone have additional reading materials on recognizing
+                microaggressions in rural community settings?
+              </p>
+              <div style="display: flex; gap: 10px">
+                <button
+                  class="btn btn-outline"
+                  style="
+                    border-radius: 8px;
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    color: #10b981;
+                    border: 1px solid rgba(16, 185, 129, 0.3);
+                    background: transparent;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                  "
+                >
+                  <i
+                    data-lucide="pin"
+                    style="width: 14px; margin-right: 4px"
+                  ></i>
+                  Pin Post
+                </button>
+                <button
+                  class="btn btn-outline"
+                  style="
+                    border-radius: 8px;
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    color: #ef4444;
+                    border: 1px solid transparent;
+                    background: transparent;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                  "
+                >
+                  <i
+                    data-lucide="trash-2"
+                    style="width: 14px; margin-right: 4px"
+                  ></i>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: IMPACT -->
+      <section id="tab-impact" class="tab-content">
+        <div class="content-grid">
+          <div class="chart-container" style="grid-column: span 2">
+            <div class="chart-header">
+              <h3>Global Impact Map</h3>
+              <span
+                class="status-pill"
+                style="
+                  padding: 4px 12px;
+                  border-radius: 20px;
+                  font-size: 0.8rem;
+                  font-weight: 600;
+                  background: rgba(37, 99, 235, 0.1);
+                  color: var(--primary);
+                "
+                >12 Regions Covered</span
+              >
+            </div>
+            <div
+              style="
+                height: 300px;
+                background: rgba(128, 128, 128, 0.05);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+              "
+            >
+              <!-- Placeholder for a real map visualization -->
+              <i
+                data-lucide="map"
+                style="
+                  width: 80px;
+                  height: 80px;
+                  color: var(--primary);
+                  opacity: 0.2;
+                "
+              ></i>
+              <div
+                style="
+                  position: absolute;
+                  top: 20%;
+                  left: 30%;
+                  width: 12px;
+                  height: 12px;
+                  background: var(--secondary);
+                  border-radius: 50%;
+                  box-shadow: 0 0 10px var(--secondary);
+                "
+              ></div>
+              <div
+                style="
+                  position: absolute;
+                  top: 40%;
+                  left: 60%;
+                  width: 12px;
+                  height: 12px;
+                  background: var(--primary);
+                  border-radius: 50%;
+                  box-shadow: 0 0 10px var(--primary);
+                "
+              ></div>
+              <div
+                style="
+                  position: absolute;
+                  top: 70%;
+                  left: 45%;
+                  width: 12px;
+                  height: 12px;
+                  background: #10b981;
+                  border-radius: 50%;
+                  box-shadow: 0 0 10px #10b981;
+                "
+              ></div>
+              <div
+                style="
+                  position: absolute;
+                  bottom: 20px;
+                  left: 20px;
+                  font-size: 0.75rem;
+                  color: var(--muted);
+                "
+              >
+                Visualization: Impact Density
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="stat-mini-grid"
+            style="display: flex; flex-direction: column; gap: 16px"
+          >
+            <div class="stat-mini-card">
+              <span>Total People Trained</span>
+              <strong>14,250 <small style="color: #10b981">+18%</small></strong>
+            </div>
+            <div class="stat-mini-card">
+              <span>Workshops Conducted</span>
+              <strong
+                >412 <small style="color: var(--primary)">+24</small></strong
+              >
+            </div>
+            <div class="stat-mini-card">
+              <span>Success Stories</span>
+              <strong>85 <small style="color: #f59e0b">New</small></strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header"><h3>Success Stories</h3></div>
+          <div
+            id="successStoriesList"
+            style="
+              padding: 24px;
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 24px;
+            "
+          >
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: CERTIFICATES -->
+      <section id="tab-certificates" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Issued Certificates</h3>
+            <div style="display: flex; gap: 12px">
+              <button
+                class="btn btn-light"
+                style="
+                  padding: 8px 16px;
+                  border-radius: 10px;
+                  border: 1px solid var(--border);
+                  font-size: 0.85rem;
+                "
+              >
+                Export List
+              </button>
+              <button
+                class="btn btn-primary"
+                style="
+                  background: var(--primary);
+                  color: white;
+                  padding: 8px 16px;
+                  border-radius: 10px;
+                  font-size: 0.85rem;
+                  border: none;
+                  cursor: pointer;
+                "
+              >
+                Generate Bulk
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Program</th>
+                  <th>Issue Date</th>
+                  <th>Revocation</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="certificatesTableBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: CONTENT (CMS) -->
+      <section id="tab-content" class="tab-content">
+        <div class="content-grid">
+          <!-- CMS Overview Stats -->
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-purple">
+              <i data-lucide="layout-template"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">3</div>
+              <div class="metric-label">Active Landing Pages</div>
+            </div>
+          </div>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-green">
+              <i data-lucide="message-square"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">12</div>
+              <div class="metric-label">Published Testimonials</div>
+            </div>
+          </div>
+
+          <!-- Content Editor Section -->
+          <div class="bento-card bento-list" style="grid-column: span 2">
+            <div
+              class="list-header"
+              style="flex-direction: column; align-items: flex-start; gap: 16px"
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <span>Global Content Manager</span>
+                <div style="display: flex; gap: 10px">
+                  <button
+                    class="btn btn-outline"
+                    style="
+                      border-radius: 8px;
+                      padding: 6px 12px;
+                      font-size: 0.8rem;
+                      border: 1px solid var(--primary);
+                      color: var(--primary);
+                      background: rgba(37, 99, 235, 0.05);
+                      cursor: pointer;
+                    "
+                  >
+                    Homepage
+                  </button>
+                  <button
+                    class="btn btn-outline"
+                    style="
+                      border-radius: 8px;
+                      padding: 6px 12px;
+                      font-size: 0.8rem;
+                      border: 1px solid var(--border);
+                      background: transparent;
+                      color: var(--text);
+                      cursor: pointer;
+                    "
+                  >
+                    About Us
+                  </button>
+                  <button
+                    class="btn btn-outline"
+                    style="
+                      border-radius: 8px;
+                      padding: 6px 12px;
+                      font-size: 0.8rem;
+                      border: 1px solid var(--border);
+                      background: transparent;
+                      color: var(--text);
+                      cursor: pointer;
+                    "
+                  >
+                    Contact
+                  </button>
                 </div>
               </div>
             </div>
+
+            <div style="padding: 24px">
+              <!-- Homepage Banner Edit -->
+              <div style="margin-bottom: 24px">
+                <h4 style="font-weight: 600; margin-bottom: 12px">
+                  Hero Banner Text
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 12px">
+                  <input
+                    type="text"
+                    value="Empowering Communities for a Peaceful Tomorrow"
+                    style="
+                      padding: 12px;
+                      border-radius: 8px;
+                      border: 1px solid var(--border);
+                      background: var(--bg);
+                      color: var(--text);
+                      width: 100%;
+                    "
+                  />
+                  <textarea
+                    style="
+                      padding: 12px;
+                      border-radius: 8px;
+                      border: 1px solid var(--border);
+                      background: var(--bg);
+                      color: var(--text);
+                      width: 100%;
+                      height: 80px;
+                      resize: none;
+                    "
+                  >
+Join our global initiative to foster peace, resolve conflicts, and build sustainable local ecosystems.</textarea
+                  >
+                  <div style="display: flex; justify-content: flex-end">
+                    <button
+                      class="btn btn-primary"
+                      style="
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        font-size: 0.85rem;
+                        cursor: pointer;
+                      "
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <hr
+                style="
+                  border: none;
+                  border-top: 1px solid var(--border);
+                  margin: 24px 0;
+                "
+              />
+
+              <!-- Testimonials Manager -->
+              <div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 16px;
+                  "
+                >
+                  <h4 style="font-weight: 600; margin: 0">
+                    Manage Testimonials
+                  </h4>
+                  <button
+                    class="btn btn-light"
+                    style="
+                      padding: 6px 12px;
+                      border-radius: 8px;
+                      border: 1px solid var(--border);
+                      font-size: 0.8rem;
+                    "
+                  >
+                    + Add New
+                  </button>
+                </div>
+
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 16px;
+                  "
+                  id="testimonialsList"
+                >
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: NOTIFICATIONS -->
+      <section id="tab-notifications" class="tab-content">
+        <div class="content-grid">
+          <!-- Notification Stats -->
+          <div class="bento-card bento-metric">
             <div
-              class="footer-bottom"
+              class="metric-icon"
+              style="background: rgba(59, 130, 246, 0.1); color: #3b82f6"
+            >
+              <i data-lucide="bell"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">24</div>
+              <div class="metric-label">Unread Alerts</div>
+            </div>
+          </div>
+          <div class="bento-card bento-metric">
+            <div class="metric-icon icon-orange">
+              <i data-lucide="mail-warning"></i>
+            </div>
+            <div style="margin-top: auto">
+              <div class="metric-value">5</div>
+              <div class="metric-label">System Warnings</div>
+            </div>
+          </div>
+
+          <!-- Notification Feed -->
+          <div class="bento-card bento-list" style="grid-column: span 2">
+            <div
+              class="list-header"
               style="
-                margin-top: 60px;
-                padding-top: 30px;
-                border-top: 1px solid rgba(128, 128, 128, 0.1);
-                text-align: center;
-                font-size: 0.85rem;
-                color: var(--muted);
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 16px;
               "
             >
-              <p>&copy; 2026 NGO Training Platform. All rights reserved.</p>
+              Recent Activity & Alerts
+              <button
+                class="btn btn-light"
+                style="
+                  padding: 6px 12px;
+                  border-radius: 8px;
+                  font-size: 0.8rem;
+                  border: 1px solid var(--border);
+                "
+              >
+                Mark All as Read
+              </button>
             </div>
-          </footer>
-        </div>
-      </main>
-    </div>
 
-    <!-- Scripts -->
+            <div
+              id="notificationsList"
+              style="display: flex; flex-direction: column"
+            >
+              <!-- Populated by JS -->
+            </div>
+
+            <div
+              style="
+                padding: 16px 24px;
+                text-align: center;
+                border-top: 1px solid var(--border);
+              "
+            >
+              <button
+                class="btn btn-outline"
+                style="
+                  background: transparent;
+                  border: none;
+                  color: var(--primary);
+                  font-weight: 600;
+                  cursor: pointer;
+                "
+              >
+                View Older Notifications
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <script src="../assets/js/theme.js"></script>
     <script>
-      lucide.createIcons();
+      // DUMMY IMPACT DATA
+      const successStories = [
+        {
+          title: "Empowering Local Communities",
+          description:
+            "Our program helped 15 villages establish sustainable farming practices, improving food security for over 5,000 people.",
+          author: "John Doe",
+          date: "Mar 1, 2024",
+        },
+        {
+          title: "Bridging Divides Through Dialogue",
+          description:
+            "A series of workshops brought together rival community leaders, leading to a significant reduction in local conflicts.",
+          author: "Jane Smith",
+          date: "Feb 15, 2024",
+        },
+        {
+          title: "Youth Leadership in Action",
+          description:
+            "Graduates of our youth program initiated 10+ community projects, addressing local challenges from education to environmental protection.",
+          author: "Community Youth Council",
+          date: "Jan 20, 2024",
+        },
+      ];
+
+      function renderImpact() {
+        const ssList = document.getElementById("successStoriesList");
+        if (!ssList) return;
+
+        ssList.innerHTML = successStories
+          .map(
+            (story) => `
+          <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+            <h4 style="font-size: 1rem; font-weight: 600;">${story.title}</h4>
+            <p style="font-size: 0.85rem; color: var(--muted);">${story.description}</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted);">
+              <span>By ${story.author}</span>
+              <span>${story.date}</span>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      // DUMMY CERTIFICATES DATA
+      const certificates = [
+        {
+          user: "Alex Thompson",
+          program: "Advanced Mediation",
+          issueDate: "Feb 28, 2024",
+          revocation: "N/A",
+        },
+        {
+          user: "Sarah Jenkins",
+          program: "Conflict Resolution 101",
+          issueDate: "Jan 15, 2024",
+          revocation: "N/A",
+        },
+        {
+          user: "Michael Chen",
+          program: "Global Impact Strategy",
+          issueDate: "Mar 10, 2024",
+          revocation: "N/A",
+        },
+        {
+          user: "Elena Rodriguez",
+          program: "Advanced Mediation",
+          issueDate: "Feb 01, 2024",
+          revocation: "Mar 15, 2024",
+        },
+      ];
+
+      function renderCertificates() {
+        const cBody = document.getElementById("certificatesTableBody");
+        if (!cBody) return;
+
+        cBody.innerHTML = certificates
+          .map(
+            (cert) => `
+          <tr>
+            <td style="font-weight: 600">${cert.user}</td>
+            <td>${cert.program}</td>
+            <td>${cert.issueDate}</td>
+            <td><span class="status-pill" style="padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: ${cert.revocation === "N/A" ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)"}; color: ${cert.revocation === "N/A" ? "#10b981" : "#ef4444"};">${cert.revocation}</span></td>
+            <td>
+              <div class="action-btns" style="display: flex; gap: 8px;">
+                <button class="icon-btn" title="View" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer;"><i data-lucide="eye" style="width: 12px"></i></button>
+                <button class="icon-btn" title="Revoke" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #ef4444; cursor: pointer;"><i data-lucide="ban" style="width: 12px"></i></button>
+              </div>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DUMMY USER DATA
+      const users = [
+        {
+          name: "Alex Thompson",
+          email: "alex@example.com",
+          role: "Administrator",
+          joined: "Oct 24, 2023",
+          status: "Active",
+          avatar: "https://i.pravatar.cc/150?u=1",
+        },
+        {
+          name: "Sarah Jenkins",
+          email: "sarah.j@example.com",
+          role: "Moderator",
+          joined: "Nov 12, 2023",
+          status: "Active",
+          avatar: "https://i.pravatar.cc/150?u=2",
+        },
+        {
+          name: "Michael Chen",
+          email: "m.chen@example.com",
+          role: "Trainer",
+          joined: "Dec 05, 2023",
+          status: "Pending",
+          avatar: "https://i.pravatar.cc/150?u=3",
+        },
+        {
+          name: "Elena Rodriguez",
+          email: "elena.r@example.com",
+          role: "Partner",
+          joined: "Jan 15, 2024",
+          status: "Active",
+          avatar: "https://i.pravatar.cc/150?u=4",
+        },
+      ];
+
+      // DUMMY TRAINING DATA
+      const courses = [
+        {
+          name: "Conflict Resolution 101",
+          students: 842,
+          revenue: "$12,450",
+          status: "Published",
+        },
+        {
+          name: "Advanced Mediation",
+          students: 320,
+          revenue: "$8,200",
+          status: "Draft",
+        },
+        {
+          name: "Global Impact Strategy",
+          students: 1240,
+          revenue: "$24,500",
+          status: "Published",
+        },
+      ];
+
+      const resources = [
+        { name: "Mediation_Guide.pdf", type: "PDF", size: "2.4 MB" },
+        { name: "Intro_Video.mp4", type: "Video", size: "45 MB" },
+        { name: "Course_Outline.docx", type: "Doc", size: "1.2 MB" },
+      ];
+
+      function renderTraining() {
+        const cBody = document.getElementById("courseTableBody");
+        const rList = document.getElementById("resourceList");
+        if (!cBody || !rList) return;
+
+        cBody.innerHTML = courses
+          .map(
+            (c) => `
+          <tr>
+            <td style="font-weight: 600">${c.name}</td>
+            <td>${c.students}</td>
+            <td>${c.revenue}</td>
+            <td><span class="status-pill" style="padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: ${c.status === "Published" ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)"}; color: ${c.status === "Published" ? "#10b981" : "#ef4444"};">${c.status}</span></td>
+            <td><button class="icon-btn" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer;"><i data-lucide="more-horizontal" style="width: 12px"></i></button></td>
+          </tr>
+        `,
+          )
+          .join("");
+
+        rList.innerHTML = resources
+          .map(
+            (r) => `
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(128,128,128,0.05); border-radius: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+              <i data-lucide="${r.type === "Video" ? "play-circle" : "file-text"}" style="width: 20px"></i>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.9rem;">${r.name}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">${r.type} • ${r.size}</div>
+            </div>
+            <i data-lucide="download" style="width: 16px; color: var(--muted); cursor: pointer;"></i>
+          </div>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DUMMY CMS DATA
+      const testimonials = [
+        {
+          author: "Maria S.",
+          role: "Program Graduate",
+          text: "The mediation training completely changed how we handle disputes in our cooperative.",
+          status: "Published",
+        },
+        {
+          author: "Community Council",
+          role: "Partner Org",
+          text: "An invaluable resource for building localized peace frameworks.",
+          status: "Published",
+        },
+        {
+          author: "Alex T.",
+          role: "Volunteer",
+          text: "I loved the modules on crisis intervention.",
+          status: "Draft",
+        },
+      ];
+
+      function renderCMS() {
+        const tList = document.getElementById("testimonialsList");
+        if (!tList) return;
+
+        tList.innerHTML = testimonials
+          .map(
+            (t) => `
+          <div style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; position: relative;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+               <span style="font-weight: 600; font-size: 0.9rem;">${t.author}</span>
+               <span class="status-pill" style="padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; background: ${t.status === "Published" ? "rgba(16, 185, 129, 0.1)" : "rgba(245, 158, 11, 0.1)"}; color: ${t.status === "Published" ? "#10b981" : "#f59e0b"};">${t.status}</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 12px;">${t.role}</div>
+            <p style="font-size: 0.85rem; color: var(--text); line-height: 1.4; margin-bottom: 16px;">"${t.text}"</p>
+            <div style="display: flex; gap: 8px; justify-content: flex-end;">
+               <button class="icon-btn" title="Edit" style="width: 24px; height: 24px; border-radius: 4px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--muted);"><i data-lucide="edit-2" style="width: 12px;"></i></button>
+               <button class="icon-btn" title="Delete" style="width: 24px; height: 24px; border-radius: 4px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: #ef4444;"><i data-lucide="trash-2" style="width: 12px;"></i></button>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DUMMY NOTIFICATIONS DATA
+      const notifications = [
+        {
+          id: 1,
+          type: "alert",
+          title: "High Server Load Detected",
+          message:
+            "Database CPU utilization exceeded 80% for the last 15 minutes.",
+          time: "10 mins ago",
+          unread: true,
+        },
+        {
+          id: 2,
+          type: "user",
+          title: "New Instructor Registration",
+          message: "David Chen has registered and is awaiting role approval.",
+          time: "2 hours ago",
+          unread: true,
+        },
+        {
+          id: 3,
+          type: "system",
+          title: "Automated Backup Completed",
+          message:
+            "Daily system backup was successfully generated and stored securely.",
+          time: "5 hours ago",
+          unread: false,
+        },
+        {
+          id: 4,
+          type: "community",
+          title: "Mass Report Spike",
+          message:
+            "Module 3 Discussion thread received 15 flags within an hour.",
+          time: "1 day ago",
+          unread: false,
+        },
+      ];
+
+      function renderNotifications() {
+        const nList = document.getElementById("notificationsList");
+        if (!nList) return;
+
+        const getIconAndColor = (type) => {
+          switch (type) {
+            case "alert":
+              return {
+                icon: "alert-triangle",
+                bg: "rgba(239, 68, 68, 0.1)",
+                color: "#ef4444",
+              };
+            case "user":
+              return {
+                icon: "user-plus",
+                bg: "rgba(59, 130, 246, 0.1)",
+                color: "#3b82f6",
+              };
+            case "system":
+              return {
+                icon: "hard-drive",
+                bg: "rgba(16, 185, 129, 0.1)",
+                color: "#10b981",
+              };
+            case "community":
+              return {
+                icon: "flag",
+                bg: "rgba(245, 158, 11, 0.1)",
+                color: "#f59e0b",
+              };
+            default:
+              return {
+                icon: "bell",
+                bg: "rgba(128, 128, 128, 0.1)",
+                color: "var(--muted)",
+              };
+          }
+        };
+
+        nList.innerHTML = notifications
+          .map((n) => {
+            const style = getIconAndColor(n.type);
+            return `
+          <div style="padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; border-bottom: 1px solid var(--border); background: ${n.unread ? "rgba(128, 128, 128, 0.02)" : "transparent"};">
+            <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: ${style.bg}; color: ${style.color}; flex-shrink: 0;">
+              <i data-lucide="${style.icon}" style="width: 20px;"></i>
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+                  ${n.title}
+                  ${n.unread ? '<span style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary);"></span>' : ""}
+                </h4>
+                <span style="font-size: 0.75rem; color: var(--muted);">${n.time}</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--muted); margin: 0; line-height: 1.5;">${n.message}</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="icon-btn" title="Mark Read" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--muted);"><i data-lucide="check" style="width: 14px;"></i></button>
+            </div>
+          </div>
+        `;
+          })
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DUMMY SECURITY DATA
+      const auditLogs = [
+        {
+          action: "User Deleted",
+          user: "Admin (Alex)",
+          ip: "192.168.1.1",
+          time: "2 mins ago",
+        },
+        {
+          action: "Course Published",
+          user: "Trainer (Sarah)",
+          ip: "192.168.1.45",
+          time: "1 hour ago",
+        },
+        {
+          action: "Login Success",
+          user: "Admin (Alex)",
+          ip: "192.168.1.1",
+          time: "2 hours ago",
+        },
+        {
+          action: "RBAC Changed",
+          user: "Root",
+          ip: "127.0.0.1",
+          time: "5 hours ago",
+        },
+      ];
+
+      function renderSecurity() {
+        const aBody = document.getElementById("auditTableBody");
+        if (!aBody) return;
+
+        aBody.innerHTML = auditLogs
+          .map(
+            (log) => `
+          <tr>
+            <td style="font-weight: 600">${log.action}</td>
+            <td>${log.user}</td>
+            <td style="font-family: monospace; font-size: 0.8rem;">${log.ip}</td>
+            <td style="color: var(--muted)">${log.time}</td>
+          </tr>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DUMMY COMMUNITY DATA
+      const moderationQueue = [
+        {
+          content: "Potential misinformation in #peace-talks",
+          user: "j_doe92",
+          reason: "Misinformation",
+          status: "Pending",
+        },
+        {
+          content: "Spam links in General Discussion",
+          user: "bot_user",
+          reason: "Spam",
+          status: "In Review",
+        },
+        {
+          content: "Harassment reported in circle #3",
+          user: "m_smith",
+          reason: "Harassment",
+          status: "Pending",
+        },
+      ];
+
+      const activeCircles = [
+        { name: "Conflict Mediation Level 2", members: 45, status: "Active" },
+        { name: "Peace Building Strategies", members: 128, status: "Active" },
+        {
+          name: "Youth Leadership Forum",
+          members: 56,
+          status: "Starting Soon",
+        },
+      ];
+
+      function renderCommunity() {
+        const mBody = document.getElementById("moderationTableBody");
+        const cList = document.getElementById("circlesList");
+        if (!mBody || !cList) return;
+
+        mBody.innerHTML = moderationQueue
+          .map(
+            (item) => `
+          <tr>
+            <td style="font-weight: 600">${item.content}</td>
+            <td style="color: var(--muted)">@${item.user}</td>
+            <td><span style="font-size: 0.85rem">${item.reason}</span></td>
+            <td><span class="status-pill" style="padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: ${item.status === "Pending" ? "rgba(239, 68, 68, 0.1)" : "rgba(245, 158, 11, 0.1)"}; color: ${item.status === "Pending" ? "#ef4444" : "#f59e0b"};">${item.status}</span></td>
+            <td>
+              <div class="action-btns" style="display: flex; gap: 8px;">
+                <button class="icon-btn" title="Approve" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #10b981; cursor: pointer;"><i data-lucide="check" style="width: 12px"></i></button>
+                <button class="icon-btn" title="Remove Content" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #ef4444; cursor: pointer;"><i data-lucide="trash-2" style="width: 12px"></i></button>
+                <button class="icon-btn" title="Ban User" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #ef4444; cursor: pointer;"><i data-lucide="user-minus" style="width: 12px"></i></button>
+              </div>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+
+        cList.innerHTML = activeCircles
+          .map(
+            (circle) => `
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(128,128,128,0.05); border-radius: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background: var(--secondary); color: white; display: flex; align-items: center; justify-content: center;">
+              <i data-lucide="users" style="width: 20px"></i>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.9rem;">${circle.name}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">${circle.members} Members • ${circle.status}</div>
+            </div>
+            <i data-lucide="chevron-right" style="width: 16px; color: var(--muted);"></i>
+          </div>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // DISCUSSIONS DATA
+      const discussions = [
+        {
+          topic: "How to resolve land disputes?",
+          author: "Elder_Kofi",
+          replies: 24,
+          views: 156,
+          status: "Pinned",
+        },
+        {
+          topic: "New environmental laws in 2024",
+          author: "GreenPeace_Dev",
+          replies: 12,
+          views: 89,
+          status: "Active",
+        },
+        {
+          topic: "Expert Answer: Mediation Techniques",
+          author: "Dr_Sarah",
+          replies: 5,
+          views: 342,
+          status: "Expert Highlight",
+        },
+      ];
+
+      function renderDiscussions() {
+        const dBody = document.getElementById("discussionsTableBody");
+        if (!dBody) return;
+
+        dBody.innerHTML = discussions
+          .map(
+            (post) => `
+          <tr>
+            <td style="font-weight: 600">
+                <div style="display: flex; flex-direction: column;">
+                    <span>${post.topic}</span>
+                    <small style="color: var(--muted); font-weight: 400;">Last reply 2h ago</small>
+                </div>
+            </td>
+            <td>@${post.author}</td>
+            <td style="font-size: 0.85rem;">
+                <div style="display: flex; gap: 12px; color: var(--muted);">
+                    <span><i data-lucide="message-square" style="width: 12px; vertical-align: middle; margin-right: 4px;"></i>${post.replies}</span>
+                    <span><i data-lucide="eye" style="width: 12px; vertical-align: middle; margin-right: 4px;"></i>${post.views}</span>
+                </div>
+            </td>
+            <td><span class="status-pill" style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: ${post.status === "Pinned" ? "rgba(37, 99, 235, 0.1)" : "rgba(16, 185, 129, 0.1)"}; color: ${post.status === "Pinned" ? "var(--primary)" : "#10b981"};">${post.status}</span></td>
+            <td>
+              <div class="action-btns" style="display: flex; gap: 8px;">
+                <button class="icon-btn" title="Pin / Unpin" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--primary); cursor: pointer;"><i data-lucide="pin" style="width: 12px"></i></button>
+                <button class="icon-btn" title="Highlight Expert" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #f59e0b; cursor: pointer;"><i data-lucide="star" style="width: 12px"></i></button>
+                <button class="icon-btn" title="Delete Post" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: #ef4444; cursor: pointer;"><i data-lucide="trash-2" style="width: 12px"></i></button>
+              </div>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      function renderUsers() {
+        const tbody = document.getElementById("userTableBody");
+        if (!tbody) return;
+        tbody.innerHTML = users
+          .map(
+            (u) => `
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px 10px; display: flex; align-items: center; gap: 10px;">
+              <img src="${u.avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+              <strong style="color: var(--text);">${u.name}</strong>
+            </td>
+            <td style="padding: 15px 10px; color: var(--muted);">${u.email}</td>
+            <td style="padding: 15px 10px; color: var(--text);">${u.role}</td>
+            <td style="padding: 15px 10px;">
+              <span style="background: ${u.status === "Active" ? "rgba(16, 185, 129, 0.1)" : u.status === "Pending" ? "rgba(249, 115, 22, 0.1)" : "rgba(239, 68, 68, 0.1)"}; color: ${u.status === "Active" ? "#10b981" : u.status === "Pending" ? "#f97316" : "#ef4444"}; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                ${u.status}
+              </span>
+            </td>
+            <td style="padding: 15px 10px; text-align: right;">
+              <button style="background: transparent; border: none; color: var(--muted); cursor: pointer;">
+                <i data-lucide="edit" style="width: 16px;"></i>
+              </button>
+              <button style="background: transparent; border: none; color: #ef4444; cursor: pointer; margin-left: 10px;">
+                <i data-lucide="trash-2" style="width: 16px;"></i>
+              </button>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      // TAB SWITCHING LOGIC
+      const tabBtns = document.querySelectorAll(".nav-item[data-tab]");
+      const tabContents = document.querySelectorAll(".tab-content");
+      const tabTitle = document.getElementById("tabTitle");
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+
+          // Update Buttons
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Update Content
+          tabContents.forEach((content) => {
+            content.classList.remove("active");
+            if (content.id === `tab-${target}`) {
+              content.classList.add("active");
+            }
+          });
+
+          // Update Header Title
+          const titles = {
+            users: "User Directory",
+            analytics: "Platform Analytics",
+            training: "Training Manager",
+            security: "Security Center",
+            community: "Community Management",
+            impact: "Impact Tracking",
+            certificates: "Certificate Management",
+            content: "Content Management (CMS)",
+            notifications: "Notifications Hub",
+          };
+          tabTitle.innerText = titles[target] || "Dashboard";
+
+          if (typeof lucide !== "undefined") lucide.createIcons();
+        });
+      });
+
+      // INITIALIZE
+      document.addEventListener("DOMContentLoaded", () => {
+        renderUsers();
+        renderTraining();
+        renderSecurity();
+        renderCommunity();
+        renderDiscussions();
+        renderImpact();
+        renderCertificates();
+        renderCMS();
+        renderNotifications();
+      });
     </script>
   </body>
 </html>
