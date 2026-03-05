@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -13,18 +12,16 @@
           (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
         ) {
           document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
         }
         document.documentElement.dir = dir;
       })();
     </script>
-    <title>Training Programs | PeaceForge</title>
+    <title>Training Programs | NGO Training</title>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
@@ -32,169 +29,285 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+      /* ROOT VARIABLES */
+      :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.15);
+        --admin-danger: #ef4444;
+      }
+
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* NAVIGATION */
+      .navbar {
+        position: fixed; top: 0; width: 100%; z-index: 1000;
+        background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: 0.3s;
+      }
+      html.dark .navbar { background: rgba(15, 23, 42, 0.8); }
+      .navbar.solid-bg { background: var(--card) !important; backdrop-filter: none; }
+      
+      .navbar-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 2rem; max-width: 1400px; margin: 0 auto; }
+      .navbar-logo { font-size: 1.4rem; font-weight: 800; font-family: "Outfit", sans-serif; text-decoration: none; color: var(--text); }
+      
+      .navbar-menu { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; align-items: center; }
+      .navbar-link { color: var(--muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
+      .navbar-link:hover, .navbar-link.active { color: var(--primary); }
+      
+      .nav-actions { display: flex; align-items: center; gap: 15px; }
+      .mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text); cursor: pointer; padding: 8px; align-items: center; justify-content: center; }
+
+      .theme-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text); }
+      .theme-toggle input { display: none; }
+
+      /* Dropdown */
+      .dropdown { position: relative; }
+      .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 10px; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 5px; }
+      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+      .dropdown-menu a { padding: 10px 15px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.95rem; transition: 0.2s; }
+      .dropdown-menu a:hover { background: rgba(128,128,128,0.05); color: var(--primary); }
+
+      /* HERO SECTION */
       .hero {
         background:
-          linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)),
-          url("../assets/Images/hero-traning.png") center/cover no-repeat;
+          linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)),
+          url("https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
         color: white;
-        padding: 120px 0 80px;
+        padding: 180px 2rem 120px;
         text-align: center;
+        background-attachment: fixed;
       }
-      .hero h1 {
-        margin-bottom: 15px;
-      }
+      .hero h1 { font-family: "Outfit", sans-serif; font-size: 3.5rem; font-weight: 800; margin-top: 0; margin-bottom: 20px; line-height: 1.2; }
+      .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-      .top-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
+      /* FILTER BAR */
+      .filter-container {
+        max-width: 900px;
+        margin: -40px auto 40px;
+        position: relative;
+        z-index: 10;
+        padding: 0 2rem;
       }
+      .filter-bar {
+        display: flex; gap: 15px; padding: 20px;
+        background: var(--card); border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        border: 1px solid var(--border); flex-wrap: wrap;
+      }
+      .filter-bar input, .filter-bar select {
+        padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border);
+        background: var(--bg); color: var(--text); outline: none; flex: 1;
+        min-width: 200px; font-family: inherit; font-size: 0.95rem; transition: 0.3s;
+      }
+      .filter-bar input:focus, .filter-bar select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+      
+      .wishlist-pill {
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        padding: 14px 24px; background: rgba(37,99,235,0.1); color: var(--primary);
+        border-radius: 12px; font-weight: 600; text-decoration: none; border: 1px solid rgba(37,99,235,0.2);
+        transition: 0.3s; white-space: nowrap; cursor: pointer;
+      }
+      .wishlist-pill:hover { background: var(--primary); color: white; }
+      .wishlist-count { background: var(--admin-danger); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; }
 
+      /* TRAINING GRID & CARDS */
       .training-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-        margin-top: 50px;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+        gap: 24px;
+        margin-bottom: 100px;
       }
 
-      .training-card {
-        background: var(--card);
-        padding: 20px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        transition: 0.3s;
+      .program-card {
+        background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+        padding: 2.5rem; display: flex; flex-direction: column;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.02);
       }
-      .training-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      }
+      .program-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
 
-      .badge {
-        display: inline-block;
-        padding: 4px 8px;
-        font-size: 0.75rem;
-        border-radius: 20px;
-        background: #dbeafe;
-        color: var(--primary);
-        margin-right: 5px;
+      .card-badge {
+        display: inline-block; padding: 6px 14px; background: rgba(128,128,128,0.1);
+        color: var(--text); border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+        text-transform: uppercase; margin-bottom: 1.5rem; align-self: flex-start;
       }
+      .badge-Advanced { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+      .badge-Intermediate { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+      .badge-Beginner { background: rgba(16, 185, 129, 0.1); color: #10b981; }
 
-      .meta {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin: 10px 0;
-      }
+      .program-card h3 { font-family: "Outfit", sans-serif; font-size: 1.4rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.3; }
+      
+      .card-meta { display: flex; align-items: center; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
+      .card-meta span { display: flex; align-items: center; gap: 0.5rem; }
 
-      .card-actions {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 10px;
+      .card-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+      
+      .btn-enroll {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white; border: none; padding: 0.8rem; border-radius: 12px; font-weight: 600;
+        cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none;
       }
+      .btn-enroll:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+      
+      .btn-details {
+        background: transparent; color: var(--text); border: 1px solid var(--border);
+        padding: 0.8rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; text-align: center;
+      }
+      .btn-details:hover { background: var(--bg); border-color: var(--primary); color: var(--primary); }
+
+      .btn-save {
+        background: var(--bg); color: var(--muted); border: 1px solid var(--border); width: 45px; height: 45px;
+        border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+      }
+      .btn-save:hover { border-color: var(--primary); color: var(--primary); }
+      .btn-save.saved { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.2); }
+      .btn-save.saved svg { fill: currentColor; }
 
       /* MODAL */
       .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);
+        display: none; align-items: center; justify-content: center; z-index: 2000;
+        opacity: 0; transition: opacity 0.3s ease; padding: 20px;
       }
-      .modal.show {
-        display: flex;
-        opacity: 1;
-      }
+      .modal.show { display: flex; opacity: 1; }
+      
       .modal-content {
-        background: var(
-          --bg
-        ); /* Changed from var(--card) which is transparent in dark mode */
-        padding: 30px;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 600px;
-        border: 1px solid var(--border);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Darkened shadow slightly */
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
+        background: var(--card); padding: 40px; border-radius: 24px;
+        width: 100%; max-width: 600px; border: 1px solid var(--border);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); transform: translateY(20px);
+        transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; position: relative;
       }
-      .modal.show .modal-content {
-        transform: translateY(0);
-      }
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 20px;
-      }
+      .modal.show .modal-content { transform: translateY(0); }
+      
+      .modal-header { margin-bottom: 25px; padding-right: 30px; }
       .modal-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--muted);
+        position: absolute; top: 30px; right: 30px; background: var(--bg); border: 1px solid var(--border);
+        width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; color: var(--text); transition: 0.2s;
       }
-      .modal-body p {
-        margin-bottom: 15px;
-        color: var(--text);
-      }
-      .compare-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-      }
-      .wishlist-count {
-        font-weight: 600;
-        color: var(--primary);
+      .modal-close:hover { background: var(--admin-danger); color: white; border-color: var(--admin-danger); }
+      
+      .modal-title { font-family: "Outfit", sans-serif; font-size: 1.8rem; margin: 0 0 10px 0; }
+      
+      .modal-body { color: var(--text); line-height: 1.7; }
+      .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: var(--bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
+      .modal-grid div { display: flex; flex-direction: column; gap: 5px; }
+      .modal-grid label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+      .modal-grid span { font-weight: 600; }
+
+      /* FOOTER */
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; margin-top: auto; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer-col ul li { margin-bottom: 12px; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a:hover { color: var(--primary); }
+      .social-links { display: flex; gap: 15px; }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+
+      /* RESPONSIVE MEDIA QUERIES */
+      @media (max-width: 1024px) {
+        .hero h1 { font-size: 3rem; }
       }
 
-      /* SEARCH & FILTER BAR */
-      .filter-bar {
-        display: flex;
-        gap: 15px;
-        margin-top: 30px;
-        flex-wrap: wrap;
+      @media (max-width: 900px) {
+        .navbar-menu {
+          position: fixed; top: 70px; left: -100%; display: flex !important;
+          flex-direction: column; background: var(--card); width: 100%; text-align: center;
+          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          padding: 2rem 0; border-bottom: 1px solid var(--border); z-index: 99;
+          max-height: calc(100vh - 70px); overflow-y: auto;
+        }
+        .navbar-menu.active { left: 0; }
+        .navbar-menu li { margin: 15px 0; width: 100%; }
+        
+        .dropdown:hover .dropdown-menu { position: static; box-shadow: none; border: none; transform: none; visibility: visible; opacity: 1; background: transparent; padding: 0; margin-top: 10px;}
+        .dropdown-menu a { display: block; text-align: center; }
+        
+        .mobile-menu-btn { display: flex; order: 3; }
+        .navbar-logo { flex: 1; }
+        .nav-actions { order: 2; margin-right: 15px; gap: 10px; }
+        .nav-actions .btn-donate { display: none; }
       }
-      .filter-bar input,
-      .filter-bar select {
-        padding: 10px 15px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: var(--card);
-        color: var(--text);
-        outline: none;
-        flex: 1;
-        min-width: 200px;
+
+      @media (max-width: 768px) {
+        .hero { padding: 140px 1.5rem 80px; }
+        .hero h1 { font-size: 2.5rem; }
+        .filter-container { padding: 0 1.5rem; margin-top: -20px; }
+        .filter-bar { flex-direction: column; padding: 15px; }
+        .wishlist-pill { width: 100%; justify-content: center; }
+        
+        .training-grid { grid-template-columns: 1fr; }
+        .card-actions { grid-template-columns: 1fr 1fr auto; }
+        
+        .footer { padding: 40px 0 30px; }
+        .footer-grid { gap: 30px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .footer-legal { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
       }
-      .filter-bar input:focus,
-      .filter-bar select:focus {
-        border-color: var(--primary);
+
+      @media (max-width: 480px) {
+        .hero h1 { font-size: 2rem; }
+        .hero p { font-size: 1rem; }
+        .program-card { padding: 1.5rem; }
+        .card-actions { grid-template-columns: 1fr; }
+        .btn-save { width: 100%; }
+        
+        .navbar-container { padding: 15px 1rem; }
+        #dirToggle span { display: none; }
+        
+        .modal-content { padding: 25px 20px; }
+        .modal-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
 
   <body>
-    <!-- PAGE LOADER (From Uiverse.io by Cksunandh) -->
-    <div class="cssloader" id="page-loader">
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
+
+    <!-- Navigation -->
     <nav class="navbar">
       <div class="navbar-container">
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
 
         <ul class="navbar-menu">
           <li><a href="index.html" class="navbar-link">Home</a></li>
-          <li>
-            <a href="TrainingPage.html" class="navbar-link active">Trainings</a>
-          </li>
+          <li><a href="TrainingPage.html" class="navbar-link active">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
-
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
@@ -202,149 +315,165 @@
             <a href="#" class="navbar-link">Dashboard ▾</a>
             <div class="dropdown-menu">
               <a href="UserDashboard.html">User Dashboard</a>
-              <a href="#">Admin Dashboard</a>
+              <a href="AdminDashboard.html">Admin Dashboard</a>
             </div>
           </li>
         </ul>
 
         <div class="nav-actions">
-          <button
-            class="btn-donate"
-            onclick="window.location.href = 'login.html'"
-          >
-            Get Started
-          </button>
-          <button
-            id="dirToggle"
-            class="btn"
-            style="
-              background: var(--card);
-              border: 1px solid var(--border);
-              color: var(--text);
-              padding: 8px 12px;
-              border-radius: 10px;
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              font-weight: 600;
-              cursor: pointer;
-            "
-          >
+          <button class="btn-donate" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 8px 16px; border-radius: 10px; font-weight: 600; border: none; cursor: pointer;" onclick="window.location.href = 'login.html'">Get Started</button>
+          
+          <button id="dirToggle" style="padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text);">
             <i data-lucide="languages" style="width: 18px"></i>
             <span>LTR</span>
           </button>
-
-          <label class="theme-toggle">
-            <input type="checkbox" class="switch-input" id="themeSwitch" />
-            <div class="icon-wrapper">
-              <i data-lucide="sun" class="sun-icon"></i>
-              <i data-lucide="moon" class="moon-icon"></i>
-            </div>
+          
+          <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+            <i data-lucide="moon" style="width: 18px"></i>
           </label>
         </div>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i data-lucide="menu"></i>
+        </button>
       </div>
     </nav>
 
-    <section class="hero" style="margin-top: 40px">
-      <div class="container" style="max-width: 800px; margin: 0 auto">
-        <h1 style="font-size: 2.8rem; line-height: 1.2">
-          Conflict Resolution<br />Training Programs
-        </h1>
-        <p style="font-size: 1.15rem; opacity: 0.9; margin: 20px auto 0">
-          Compare programs, acquire new skills, and save your favorites to your
-          wishlist.
-        </p>
-
-        <div
-          class="top-actions"
-          style="margin-top: 35px; justify-content: center"
-        >
-          <div
-            style="
-              background: rgba(255, 255, 255, 0.1);
-              padding: 12px 24px;
-              border-radius: 30px;
-              border: 1px solid rgba(255, 255, 255, 0.2);
-              backdrop-filter: blur(10px);
-              display: inline-block;
-            "
-          >
-            Saved Programs:
-            <span
-              class="wishlist-count"
-              id="wishlistCount"
-              style="
-                color: #fff;
-                background: var(--admin-danger);
-                padding: 2px 8px;
-                border-radius: 12px;
-                margin-left: 8px;
-              "
-              >0</span
-            >
-          </div>
-        </div>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container" style="max-width: 800px;">
+        <h1>Conflict Resolution<br />Training Programs</h1>
+        <p>Compare programs, acquire new skills tailored to high-impact NGO environments, and save your favorites to your wishlist.</p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <!-- SEARCH & FILTER -->
-        <div class="filter-bar">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search course by name..."
-          />
-          <select id="levelFilter">
-            <option value="All">All Levels</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
-        </div>
-
-        <div class="training-grid" id="trainingGrid" style="margin-top: 30px">
-          <!-- Cards injected via JS -->
-        </div>
+    <!-- FILTER BAR -->
+    <div class="filter-container">
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Search course by name or topic..." />
+        <select id="levelFilter">
+          <option value="All">All Levels</option>
+          <option value="Beginner">Beginner Tracks</option>
+          <option value="Intermediate">Intermediate Tracks</option>
+          <option value="Advanced">Advanced Tracks</option>
+        </select>
+        <button class="wishlist-pill" onclick="window.location.href='wishlist.html'">
+          <i data-lucide="bookmark" style="width: 18px;"></i> Saved
+          <span class="wishlist-count" id="wishlistCount">0</span>
+        </button>
       </div>
-    </section>
+    </div>
+
+    <!-- MAIN GRID -->
+    <main class="container">
+      <div class="training-grid" id="trainingGrid">
+        <!-- Cards injected via JS -->
+      </div>
+    </main>
 
     <!-- COURSE DETAILS MODAL -->
     <div class="modal" id="detailsModal">
       <div class="modal-content">
+        <button class="modal-close" onclick="closeDetails()"><i data-lucide="x" style="width: 20px;"></i></button>
         <div class="modal-header">
-          <div>
-            <h2 id="modalTitle">Course Title</h2>
-            <span class="badge" id="modalLevel">Level</span>
-          </div>
-          <button class="modal-close" onclick="closeDetails()">×</button>
+          <span class="card-badge" id="modalLevel" style="margin-bottom: 10px;">Level</span>
+          <h2 class="modal-title" id="modalTitle">Course Title</h2>
         </div>
         <div class="modal-body">
-          <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
-          <p><strong>Instructor:</strong> <span id="modalInstructor"></span></p>
-          <p><strong>Modules:</strong> <span id="modalModules"></span></p>
-          <hr
-            style="border-color: var(--border); margin: 15px 0; opacity: 0.5"
-          />
-          <p id="modalDesc">Course Description</p>
-        </div>
-        <div style="margin-top: 20px; text-align: right">
-          <button class="btn btn-primary" onclick="closeDetails()">
-            Close
-          </button>
+          <div class="modal-grid">
+            <div><label>Duration</label> <span id="modalDuration"></span></div>
+            <div><label>Instructor</label> <span id="modalInstructor"></span></div>
+            <div><label>Modules</label> <span id="modalModules"></span></div>
+            <div><label>Format</label> <span>100% Online</span></div>
+          </div>
+          <h4 style="margin-bottom: 10px; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">About this program</h4>
+          <p id="modalDesc" style="color: var(--muted); margin-bottom: 30px;">Course Description</p>
+          
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-enroll" style="flex: 1; padding: 12px;" onclick="window.location.href='login.html'">Enroll Now</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="../assets/js/data.js"></script>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+            <p style="color: var(--muted); line-height: 1.6;">
+              Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="TrainingPage.html">Programs</a></li>
+              <li><a href="Impact.html">Our Impact</a></li>
+              <li><a href="Community.html">Community</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="Contact.html">Help Center</a></li>
+              <li><a href="wishlist.html">Wishlist</a></li>
+              <li><a href="Settings.html">Settings</a></li>
+              <li><a href="login.html">Login / Register</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Follow Us</h4>
+            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <div class="social-links">
+              <a href="#"><i data-lucide="facebook"></i></a>
+              <a href="#"><i data-lucide="twitter"></i></a>
+              <a href="#"><i data-lucide="instagram"></i></a>
+              <a href="#"><i data-lucide="linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
+            <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SCRIPTS -->
     <script>
+      // Initialize Icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+      
+      // Set Year
+      document.getElementById("year").innerText = new Date().getFullYear();
+
+      // Fallback Data in case data.js is missing
+      const programsFallback = [
+        { id: 1, title: "Advanced Conflict Resolution", level: "Advanced", instructor: "Dr. Sarah Jenkins", description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", duration: "6 Weeks", modules: 12 },
+        { id: 2, title: "Foundations of Mediation", level: "Beginner", instructor: "Michael Torres", description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", duration: "3 Weeks", modules: 5 },
+        { id: 3, title: "Cross-Cultural Communication", level: "Intermediate", instructor: "Aisha Rahman", description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", duration: "4 Weeks", modules: 8 },
+        { id: 4, title: "Negotiation Strategies", level: "Advanced", instructor: "David Chen", description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", duration: "8 Weeks", modules: 16 },
+        { id: 5, title: "Trauma-Informed Care", level: "Intermediate", instructor: "Dr. Elena Rossi", description: "Understand psychological impacts and learn how to appropriately support affected populations post-conflict.", duration: "5 Weeks", modules: 10 },
+        { id: 6, title: "Local Leadership Basics", level: "Beginner", instructor: "Michael Torres", description: "Empower local voices and build resilient communities from the ground up.", duration: "2 Weeks", modules: 4 }
+      ];
+
+      const activePrograms = typeof programs !== 'undefined' ? programs : programsFallback;
+
       let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
       // DOM Elements
       const grid = document.getElementById("trainingGrid");
       const searchInput = document.getElementById("searchInput");
       const levelFilter = document.getElementById("levelFilter");
+      const modal = document.getElementById("detailsModal");
 
       function updateWishlistCount() {
         const countBadge = document.getElementById("wishlistCount");
@@ -359,154 +488,128 @@
         }
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
         updateWishlistCount();
-        renderGrid(); // Re-render to update button state
+        renderGrid(); 
       }
 
       function openDetails(id) {
-        const p = programs.find((p) => p.id === id);
+        const p = activePrograms.find((p) => p.id === id);
         if (!p) return;
+        
         document.getElementById("modalTitle").innerText = p.title;
-        document.getElementById("modalLevel").innerText = p.level;
+        
+        const badgeElement = document.getElementById("modalLevel");
+        badgeElement.innerText = p.level;
+        badgeElement.className = `card-badge badge-${p.level}`;
+        
         document.getElementById("modalDuration").innerText = p.duration;
-        document.getElementById("modalInstructor").innerText = p.instructor;
-        document.getElementById("modalModules").innerText = p.modules;
+        document.getElementById("modalInstructor").innerText = p.instructor || "NGO Expert Team";
+        document.getElementById("modalModules").innerText = p.modules || "6";
         document.getElementById("modalDesc").innerText = p.description;
 
-        document.getElementById("detailsModal").classList.add("show");
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
       }
 
       function closeDetails() {
-        document.getElementById("detailsModal").classList.remove("show");
+        modal.classList.remove("show");
+        document.body.style.overflow = "auto";
       }
 
-      // Render dynamic logic
+      // Close modal on outside click
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          closeDetails();
+        }
+      }
+
+      // Render Grid Logic
       function renderGrid() {
         const query = searchInput.value.toLowerCase();
         const level = levelFilter.value;
 
         grid.innerHTML = "";
 
-        const filtered = programs.filter((p) => {
-          const matchesSearch = p.title.toLowerCase().includes(query);
+        const filtered = activePrograms.filter((p) => {
+          const matchesSearch = p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
           const matchesLevel = level === "All" || p.level === level;
           return matchesSearch && matchesLevel;
         });
 
         if (filtered.length === 0) {
-          grid.innerHTML = `<p style="color:var(--muted); text-align:center; grid-column:1/-1; padding: 40px;">No programs found matching the criteria.</p>`;
-          return;
-        }
+          grid.innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding: 60px 20px; background: var(--card); border-radius: 24px; border: 2px dashed var(--border);">
+              <i data-lucide="search-x" style="width: 48px; height: 48px; color: var(--muted); margin-bottom: 15px;"></i>
+              <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-bottom: 10px;">No programs found</h3>
+              <p style="color:var(--muted);">Try adjusting your search terms or changing the level filter.</p>
+            </div>`;
+        } else {
+          filtered.forEach((p) => {
+            const isSaved = wishlist.includes(p.id);
+            const saveBtnClass = isSaved ? "btn-save saved" : "btn-save";
+            const saveIconProps = isSaved ? 'fill="currentColor"' : '';
 
-        filtered.forEach((p) => {
-          const isSaved = wishlist.includes(p.id);
-          const saveBtnHtml = isSaved
-            ? `<button class="btn btn-danger" onclick="toggleWishlist(${p.id})">Remove</button>`
-            : `<button class="btn btn-light" onclick="toggleWishlist(${p.id})">Save</button>`;
-
-          grid.innerHTML += `
-            <div class="card training-card">
-              <h3 style="margin-bottom:10px">${p.title}</h3>
-              <span class="badge">${p.level}</span>
-              <div class="meta">Duration: ${p.duration}</div>
-              <div class="card-actions" style="margin-top:15px; display:flex; gap:8px;">
-                ${saveBtnHtml}
-                <button class="btn btn-light" onclick="openDetails(${p.id})">Details</button>
-                <button class="btn btn-primary">Enroll</button>
+            grid.innerHTML += `
+              <div class="program-card">
+                <span class="card-badge badge-${p.level}">${p.level}</span>
+                <h3>${p.title}</h3>
+                <div class="card-meta">
+                  <span><i data-lucide="clock" style="width:14px"></i> ${p.duration}</span>
+                  <span><i data-lucide="book-open" style="width:14px"></i> ${p.modules || 6} Modules</span>
+                </div>
+                <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6;">${p.description.substring(0, 100)}...</p>
+                <div class="card-actions">
+                  <button class="btn-details" onclick="openDetails(${p.id})">Details</button>
+                  <button class="btn-enroll" onclick="window.location.href='login.html'">Enroll</button>
+                  <button class="${saveBtnClass}" onclick="toggleWishlist(${p.id})" title="${isSaved ? 'Remove from saved' : 'Save program'}">
+                    <i data-lucide="bookmark" style="width: 20px" ${saveIconProps}></i>
+                  </button>
+                </div>
               </div>
-            </div>
-          `;
-        });
+            `;
+          });
+        }
+        
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
       }
 
       // Listeners
       searchInput.addEventListener("input", renderGrid);
       levelFilter.addEventListener("change", renderGrid);
 
+      // Initial Render
       updateWishlistCount();
       renderGrid();
+
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const navMenu = document.querySelector(".navbar-menu");
+      const navbar = document.querySelector(".navbar");
+
+      if (mobileBtn && navMenu) {
+        mobileBtn.addEventListener("click", () => {
+          navMenu.classList.toggle("active");
+          const isExpanded = navMenu.classList.contains("active");
+
+          if (navbar) {
+            if (isExpanded) {
+              navbar.classList.add("solid-bg");
+            } else {
+              navbar.classList.remove("solid-bg");
+            }
+          }
+
+          const icon = mobileBtn.querySelector("i");
+          if (icon) {
+            icon.setAttribute("data-lucide", isExpanded ? "x" : "menu");
+            if (typeof lucide !== 'undefined') {
+              lucide.createIcons();
+            }
+          }
+        });
+      }
     </script>
-
     <script src="../assets/js/theme.js"></script>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4
-            style="
-              color: var(--primary);
-              font-size: 1.5rem;
-              margin-bottom: 1rem;
-              font-family: &quot;Outfit&quot;, sans-serif;
-            "
-          >
-            🌍 NGO Training
-          </h4>
-          <p>
-            Empowering individuals and organizations with conflict resolution
-            skills for a more peaceful world. Our platform provides
-            high-quality, accessible training for everyone.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="TrainingPage.html">Programs</a></li>
-            <li><a href="Impact.html">Our Impact</a></li>
-            <li><a href="Community.html">Community</a></li>
-            <li><a href="404.html">404 Page</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="Contact.html">Help Center</a></li>
-            <li><a href="wishlist.html">Wishlist</a></li>
-            <li><a href="Settings.html">Settings</a></li>
-            <li><a href="login.html">Login / Register</a></li>
-            <li><a href="Comingsoon.html">Comingsoon Page</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <p style="margin-bottom: 1.5rem">
-            Join our community on social media to stay updated.
-          </p>
-          <div class="social-links">
-            <a href="#"><i data-lucide="facebook"></i></a>
-            <a href="#"><i data-lucide="twitter"></i></a>
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="linkedin"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>
-          &copy; <span id="year">2026</span> NGO Training Platform. All rights
-          reserved.
-        </p>
-        <div class="footer-legal">
-          <a
-            href="#"
-            style="
-              color: var(--muted);
-              text-decoration: none;
-              margin-left: 20px;
-            "
-            >Privacy Policy</a
-          >
-          <a
-            href="#"
-            style="
-              color: var(--muted);
-              text-decoration: none;
-              margin-left: 20px;
-            "
-            >Terms of Service</a
-          >
-        </div>
-      </div>
-    </footer>
   </body>
 </html>

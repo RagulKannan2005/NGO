@@ -121,6 +121,39 @@ html {
   z-index: 1000;
   font-size: 0.9rem;
   text-align: start;
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    background: var(--card);
+    backdrop-filter: none;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .dropdown-menu {
+    position: static;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    margin-top: 10px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .dropdown-menu a {
+    padding: 12px 1rem;
+    color: var(--muted);
+    justify-content: center;
+  }
 }
 
 .navbar-container {

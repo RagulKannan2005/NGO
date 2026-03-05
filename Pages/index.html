@@ -51,7 +51,7 @@
         font-family: "Poppins", sans-serif;
         background: var(--bg);
         color: var(--text);
-        overflow-x: hidden; /* Prevents floating elements from causing horizontal scroll */
+        overflow-x: hidden;
         margin: 0;
       }
 
@@ -270,7 +270,7 @@
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
       .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
-      /* Mobile Navigation Support */
+      /* Base Navigation Support */
       .mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text); cursor: pointer; padding: 8px; align-items: center; justify-content: center; }
       .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: 0.3s; }
       html.dark .navbar { background: rgba(15,23,42,0.8); }
@@ -284,12 +284,53 @@
       .theme-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text); }
       .theme-toggle input { display: none; }
 
-      /* Dropdown */
+      /* =========================================
+         FIXED DROPDOWN MENU
+         ========================================= */
       .dropdown { position: relative; }
-      .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 10px; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 5px; }
-      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-      .dropdown-menu a { padding: 10px 15px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.95rem; transition: 0.2s; }
-      .dropdown-menu a:hover { background: rgba(128,128,128,0.05); color: var(--primary); }
+      
+      .dropdown-menu { 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        background: var(--card); 
+        border: 1px solid var(--border); 
+        border-radius: 16px; 
+        padding: 10px; 
+        min-width: 200px; 
+        opacity: 0; 
+        visibility: hidden; 
+        transform: translateY(10px); 
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        display: flex; 
+        flex-direction: column; 
+        gap: 5px; 
+        z-index: 100;
+      }
+
+      /* Desktop & Tablet functionality */
+      .dropdown:hover .dropdown-menu,
+      .dropdown:focus-within .dropdown-menu { 
+        opacity: 1; 
+        visibility: visible; 
+        transform: translateY(0); 
+      }
+
+      .dropdown-menu a { 
+        padding: 10px 15px; 
+        color: var(--text); 
+        text-decoration: none; 
+        border-radius: 8px; 
+        font-size: 0.95rem; 
+        transition: 0.2s; 
+      }
+      
+      .dropdown-menu a:hover,
+      .dropdown-menu a:focus { 
+        background: rgba(128,128,128,0.05); 
+        color: var(--primary); 
+      }
 
       /* =========================================
          RESPONSIVE BREAKPOINTS 
@@ -308,7 +349,7 @@
         .mission-image { order: -1; }
         .mission-text { display: flex; flex-direction: column; align-items: center; }
         .check-list li { justify-content: center; }
-        .floating-stat { display: none; /* Hide floating stats to prevent overflow on tablet */ }
+        .floating-stat { display: none; }
       }
 
       /* Navbar Mobile Breakpoint */
@@ -319,14 +360,31 @@
           width: 100%; text-align: center;
           transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-          padding: 2rem 0; border-bottom: 1px solid var(--border);
+          padding: 1.5rem 0; border-bottom: 1px solid var(--border);
+          max-height: calc(100vh - 70px);
+          overflow-y: auto;
         }
         .navbar-menu.active { left: 0; }
-        .navbar-menu li { margin: 15px 0; width: 100%; }
-        .dropdown:hover .dropdown-menu { position: static; box-shadow: none; border: none; transform: none; visibility: visible; opacity: 1; background: transparent; padding: 0; margin-top: 10px;}
+        .navbar-menu li { margin: 10px 0; width: 100%; }
+        
+        /* Dropdown Override for Mobile */
+        .dropdown { width: 100%; }
+        .dropdown-menu { 
+          position: static; 
+          opacity: 1; 
+          visibility: visible; 
+          transform: none !important; 
+          background: rgba(128, 128, 128, 0.04); 
+          box-shadow: none; 
+          border: none; 
+          padding: 10px; 
+          margin: 10px auto 0;
+          width: 90%;
+        }
         .dropdown-menu a { display: block; text-align: center; }
+        
         .mobile-menu-btn { display: flex; }
-        .nav-actions .btn-primary { display: none; } /* Hide "Get Started" in nav, rely on hero CTA */
+        .nav-actions .btn-primary { display: none; } 
       }
 
       /* Mobile Layout */
@@ -357,7 +415,7 @@
         .btn-primary, .btn-outline { width: 100%; box-sizing: border-box; }
         .navbar-container { padding: 15px 1rem; }
         .navbar-logo { font-size: 1.2rem; }
-        #dirToggle span { display: none; } /* Hide text on language toggle to save space */
+        #dirToggle span { display: none; } 
         .check-list li { flex-direction: column; text-align: center; gap: 5px; }
         .section-header h2 { font-size: 1.8rem; }
       }
@@ -386,6 +444,7 @@
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
         <ul class="navbar-menu">
           <li><a href="index.html" class="navbar-link active">Home</a></li>
+          <li><a href="Home2.html" class="navbar-link">Home 2</a></li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
@@ -652,9 +711,12 @@
             <h4>Quick Links</h4>
             <ul>
               <li><a href="index.html">Home</a></li>
+              
               <li><a href="TrainingPage.html">Programs</a></li>
               <li><a href="Impact.html">Our Impact</a></li>
               <li><a href="Community.html">Community</a></li>
+              <li><a href="404.html">404</a></li>
+              <li><a href="Comingsoon.html">Coming Soon</a></li>
             </ul>
           </div>
           <div class="footer-col">

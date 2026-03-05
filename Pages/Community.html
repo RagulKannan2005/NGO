@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <script>
       (function () {
@@ -13,11 +13,14 @@
           (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
         ) {
           document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
         }
         document.documentElement.dir = dir;
       })();
     </script>
     <title>Community Hub - NGO Training</title>
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -25,28 +28,43 @@
     <link rel="stylesheet" href="../assets/css/app.css" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-      /* COMMUNITY PAGE SPECIFIC STYLES */
+      /* ROOT VARIABLES */
+      :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --danger: #ef4444;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.15);
+      }
+
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
+        color: var(--text);
         display: flex;
         height: 100vh;
         overflow: hidden;
+        margin: 0;
         background-image:
-          radial-gradient(
-            circle at 0% 0%,
-            rgba(37, 99, 235, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 100% 100%,
-            rgba(124, 58, 237, 0.08) 0%,
-            transparent 50%
-          );
+          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
         background-attachment: fixed;
       }
 
+      /* CORE LAYOUT */
       .dash-wrapper {
         display: flex;
         width: 100%;
@@ -56,769 +74,299 @@
         box-sizing: border-box;
       }
 
-      /* FLOATING SIDEBAR */
+      /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
         background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid var(--border);
         border-radius: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.03),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
         z-index: 100;
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
         flex-shrink: 0;
       }
-
       html.dark .floating-sidebar {
         background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.2),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
-
-      .floating-sidebar:hover {
-        width: 280px;
-        align-items: flex-start;
-      }
+      .floating-sidebar:hover { width: 280px; align-items: flex-start; }
 
       .nav-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
+        width: 48px; height: 48px; border-radius: 16px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-bottom: 40px;
-        flex-shrink: 0;
-        transition: 0.4s;
-        font-weight: 700;
-        font-size: 1.3rem;
+        display: flex; align-items: center; justify-content: center;
+        color: white; margin-bottom: 40px; flex-shrink: 0; transition: 0.4s;
+        font-weight: 700; font-size: 1.3rem; cursor: pointer;
       }
-
-      .floating-sidebar:hover .nav-logo {
-        margin-left: 24px;
-      }
+      .floating-sidebar:hover .nav-logo { margin-left: 24px; }
 
       .nav-items {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 100%;
-        padding: 0 24px;
-        box-sizing: border-box;
-        flex-grow: 1;
+        display: flex; flex-direction: column; gap: 16px;
+        width: 100%; padding: 0 24px; box-sizing: border-box; flex-grow: 1;
       }
 
       .nav-btn {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text);
-        transition: 0.3s;
-        flex-shrink: 0;
-        position: relative;
+        width: 48px; height: 48px; border-radius: 12px; background: transparent;
+        border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        color: var(--muted); transition: 0.3s; flex-shrink: 0; position: relative;
       }
+      .floating-sidebar:hover .nav-btn { width: 100%; justify-content: flex-start; padding-left: 12px; }
+      
+      .nav-btn:hover { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
+      .nav-btn.active { background: rgba(37, 99, 235, 0.15); color: var(--primary); }
 
-      .floating-sidebar:hover .nav-btn {
-        width: 100%;
-        justify-content: flex-start;
-        padding-left: 12px;
-      }
-
-      .nav-btn:hover {
-        background: rgba(37, 99, 235, 0.15);
-        color: var(--primary);
-      }
-
-      .nav-btn.active {
-        background: rgba(37, 99, 235, 0.25);
-        color: var(--primary);
-      }
-
-      .nav-label {
-        display: none;
-        margin-left: 12px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-
-      .floating-sidebar:hover .nav-label {
-        display: block;
-      }
-
-      .nav-spacer {
-        flex-grow: 1;
-      }
+      .nav-label { display: none; margin-left: 12px; font-size: 0.95rem; font-weight: 600; white-space: nowrap; }
+      .floating-sidebar:hover .nav-label { display: block; }
+      .nav-spacer { flex-grow: 1; }
 
       /* MAIN CONTENT AREA */
       .main-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
+        flex: 1; display: flex; flex-direction: column; overflow: hidden;
+        background: var(--bg); border-radius: 32px;
       }
 
       .content-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid var(--border);
+        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+        padding: 30px 40px; border-bottom: 1px solid var(--border);
       }
+      .content-header h1 { font-size: 2rem; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
 
-      .content-header h1 {
-        font-size: 2rem;
-        font-weight: 700;
-      }
-
-      .header-actions {
-        display: flex;
-        gap: 12px;
-      }
-
+      .header-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+      
       .btn-create {
-        padding: 10px 20px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: 0.3s;
+        padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;
+        display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
       }
+      .btn-create:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3); }
 
-      .btn-create:hover {
-        background: var(--secondary);
+      .theme-toggle {
+        display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+        border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text);
       }
+      .theme-toggle input { display: none; }
 
       /* SCROLLABLE CONTENT */
-      .content-scroll {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-
-      .content-scroll::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .content-scroll::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      .content-scroll::-webkit-scrollbar-thumb {
-        background: rgba(128, 128, 128, 0.4);
-        border-radius: 4px;
-      }
-
-      .content-scroll::-webkit-scrollbar-thumb:hover {
-        background: rgba(128, 128, 128, 0.6);
-      }
+      .content-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 40px; -webkit-overflow-scrolling: touch; }
+      .content-scroll::-webkit-scrollbar { width: 8px; }
+      .content-scroll::-webkit-scrollbar-track { background: transparent; }
+      .content-scroll::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.2); border-radius: 4px; }
 
       /* SECTION LAYOUT */
-      .community-section {
-        margin-bottom: 50px;
-      }
-
-      .section-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .section-subtitle {
-        color: var(--muted);
-        font-size: 0.9rem;
-        margin-bottom: 15px;
-      }
+      .community-section { margin-bottom: 50px; max-width: 1400px; margin-left: auto; margin-right: auto; }
+      .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+      .section-subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 25px; margin-top: 0; }
 
       /* FILTER TABS */
       .filter-tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
+        display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;
       }
-
+      .filter-tabs::-webkit-scrollbar { display: none; }
+      
       .filter-tab {
-        padding: 8px 16px;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        cursor: pointer;
-        transition: 0.3s;
-        color: var(--text);
-        font-weight: 500;
-        font-size: 0.9rem;
+        padding: 10px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 50px;
+        cursor: pointer; transition: 0.3s; color: var(--muted); font-weight: 600; font-size: 0.9rem; white-space: nowrap;
       }
-
-      .filter-tab:hover {
-        border-color: var(--primary);
-      }
-
-      .filter-tab.active {
-        background: var(--primary);
-        color: white;
-        border-color: var(--primary);
-      }
+      .filter-tab:hover { border-color: var(--primary); color: var(--text); }
+      .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
 
       /* DISCUSSION CARDS */
-      .discussion-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 20px;
-      }
-
+      .discussion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); gap: 24px; }
+      
       .discussion-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-        cursor: pointer;
-        transition: 0.3s;
+        background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px;
+        cursor: pointer; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.02); display: flex; flex-direction: column;
       }
-
-      .discussion-card:hover {
-        border-color: var(--primary);
-        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
-      }
+      .discussion-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
       .card-category {
-        display: inline-block;
-        padding: 4px 12px;
-        background: rgba(37, 99, 235, 0.15);
-        color: var(--primary);
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-bottom: 10px;
+        display: inline-block; padding: 6px 14px; background: rgba(37, 99, 235, 0.1); color: var(--primary);
+        border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; align-self: flex-start;
       }
 
-      .card-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        line-height: 1.4;
-      }
+      .card-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; line-height: 1.4; }
+      
+      .card-author { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; font-size: 0.9rem; color: var(--muted); }
+      .author-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 700; }
 
-      .card-author {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
+      .card-stats { display: flex; gap: 16px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+      .stat-item { display: flex; align-items: center; gap: 6px; }
 
-      .author-avatar {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.7rem;
-        font-weight: 700;
-      }
-
-      .card-stats {
-        display: flex;
-        gap: 16px;
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border);
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
-
-      .stat-item {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      .card-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 12px;
-      }
-
+      .card-actions { display: flex; gap: 10px; margin-top: 15px; }
       .action-btn {
-        flex: 1;
-        padding: 8px;
-        background: transparent;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        cursor: pointer;
-        color: var(--text);
-        font-size: 0.85rem;
-        transition: 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
+        flex: 1; padding: 10px; background: transparent; border: 1px solid var(--border); border-radius: 12px;
+        cursor: pointer; color: var(--text); font-size: 0.85rem; font-weight: 600; transition: 0.3s;
+        display: flex; align-items: center; justify-content: center; gap: 6px;
       }
-
-      .action-btn:hover {
-        background: rgba(37, 99, 235, 0.1);
-        border-color: var(--primary);
-        color: var(--primary);
-      }
+      .action-btn:hover { background: rgba(37, 99, 235, 0.05); border-color: var(--primary); color: var(--primary); }
 
       /* EXPERT SECTION */
-      .expert-container {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 30px;
-      }
+      .expert-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; }
+      
+      .expert-faq { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px; max-height: 600px; overflow-y: auto; }
+      .faq-item { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); cursor: pointer; transition: 0.3s; }
+      .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+      .faq-item:hover .faq-question { color: var(--primary); }
+      .faq-question { font-weight: 600; font-size: 1.05rem; margin-bottom: 6px; transition: 0.3s; }
+      .faq-meta { font-size: 0.85rem; color: var(--muted); }
 
-      .expert-faq {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-        max-height: 500px;
-        overflow-y: auto;
-      }
-
-      .faq-item {
-        margin-bottom: 16px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid var(--border);
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .faq-item:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-      }
-
-      .faq-item:hover {
-        color: var(--primary);
-      }
-
-      .faq-question {
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-
-      .faq-meta {
-        font-size: 0.8rem;
-        color: var(--muted);
-      }
-
-      .expert-answer {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-      }
-
+      .expert-answer { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 30px; height: fit-content; }
       .expert-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-bottom: 10px;
+        display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); color: var(--admin-success);
+        padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 20px;
       }
-
-      .expert-profile {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .expert-avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 700;
-        flex-shrink: 0;
-      }
-
-      .expert-info h4 {
-        font-weight: 700;
-        margin-bottom: 2px;
-      }
-
-      .expert-info p {
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
-
-      .expert-answer-text {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-
-      .answer-actions {
-        display: flex;
-        gap: 12px;
-      }
+      .expert-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+      .expert-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem; flex-shrink: 0; }
+      .expert-info h4 { font-weight: 800; font-size: 1.2rem; margin: 0 0 4px 0; }
+      .expert-info p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+      .expert-answer-text { font-size: 1rem; line-height: 1.7; margin-bottom: 25px; color: var(--text); }
 
       /* BADGES SECTION */
-      .badges-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 16px;
-        margin-bottom: 30px;
-      }
-
-      .badge-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-        text-align: center;
-        transition: 0.3s;
-        cursor: pointer;
-        position: relative;
-      }
-
-      .badge-card:hover {
-        background: rgba(37, 99, 235, 0.05);
-        border-color: var(--primary);
-        transform: translateY(-4px);
-      }
-
-      .badge-earned {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        width: 24px;
-        height: 24px;
-        background: #22c55e;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.8rem;
-      }
-
-      .badge-icon {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 12px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-      }
-
-      .badge-name {
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 4px;
-      }
-
-      .badge-description {
-        font-size: 0.75rem;
-        color: var(--muted);
-      }
+      .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; margin-bottom: 40px; }
+      .badge-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px 15px; text-align: center; transition: 0.3s; position: relative; }
+      .badge-card:hover { background: rgba(37, 99, 235, 0.02); border-color: var(--primary); transform: translateY(-5px); }
+      .badge-earned { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: var(--admin-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
+      .badge-icon { width: 64px; height: 64px; margin: 0 auto 15px; border-radius: 16px; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(124,58,237,0.1)); border: 1px solid rgba(124,58,237,0.2); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+      .badge-name { font-weight: 800; font-size: 1rem; margin-bottom: 6px; }
+      .badge-description { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
 
       /* LEADERBOARD */
-      .leaderboard-container {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
-        overflow-x: auto;
-      }
+      .leaderboard-container { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px; overflow-x: auto; }
+      .leaderboard-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+      .leaderboard-table th { text-align: left; padding: 15px; border-bottom: 2px solid var(--border); font-weight: 700; font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+      .leaderboard-table td { padding: 15px; border-bottom: 1px dashed var(--border); }
+      .leaderboard-table tr:last-child td { border-bottom: none; }
+      .leaderboard-table tr:hover td { background: rgba(128,128,128,0.02); }
 
-      .leaderboard-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+      .rank-badge { width: 36px; height: 36px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--text); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; }
+      .rank-1 { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; border: none; }
+      .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: white; border: none; }
+      .rank-3 { background: linear-gradient(135deg, #b45309, #78350f); color: white; border: none; }
 
-      .leaderboard-table th {
-        text-align: left;
-        padding: 12px;
-        border-bottom: 2px solid var(--border);
-        font-weight: 700;
-        font-size: 0.9rem;
-        color: var(--muted);
-      }
-
-      .leaderboard-table td {
-        padding: 14px 12px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .leaderboard-table tr:hover {
-        background: rgba(37, 99, 235, 0.05);
-      }
-
-      .rank-badge {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-      }
-
-      .rank-1 {
-        background: linear-gradient(135deg, #fbbf24, #f97316);
-      }
-
-      .rank-2 {
-        background: linear-gradient(135deg, #c0cfe4, #a0afc0);
-      }
-
-      .rank-3 {
-        background: linear-gradient(135deg, #d2691e, #a0522d);
-      }
-
-      .member-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .member-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.8rem;
-        font-weight: 700;
-        flex-shrink: 0;
-      }
+      .member-info { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+      .member-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
 
       /* MODALS */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-      }
+      .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+      .modal.active { display: flex; }
+      
+      .modal-content { background: var(--card); border-radius: 24px; padding: 40px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.2); position: relative; }
+      
+      .modal-header { margin-bottom: 25px; }
+      .modal-header h2 { font-size: 1.8rem; font-weight: 800; margin: 0; font-family: "Outfit", sans-serif; }
+      .modal-close { position: absolute; top: 30px; right: 30px; background: var(--bg); border: 1px solid var(--border); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); transition: 0.2s; }
+      .modal-close:hover { background: var(--danger); color: white; border-color: var(--danger); }
 
-      .modal.active {
-        display: flex;
-      }
+      .form-group { margin-bottom: 20px; }
+      .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+      .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem; box-sizing: border-box; transition: 0.3s; }
+      .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+      .form-group textarea { resize: vertical; min-height: 120px; }
 
-      .modal-content {
-        background: var(--card);
-        border-radius: 12px;
-        padding: 30px;
-        max-width: 500px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-      }
+      .form-actions { display: flex; gap: 15px; margin-top: 30px; }
+      .form-actions button { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+      .btn-submit { background: var(--primary); color: white; }
+      .btn-submit:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37,99,235,0.2); }
+      .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--text); }
+      .btn-cancel:hover { background: var(--bg); }
 
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid var(--border);
-      }
+      /* FOOTER */
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px; margin-top: 40px; border-radius: 32px 32px 0 0; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer-col ul li { margin-bottom: 12px; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a:hover { color: var(--primary); }
+      .social-links { display: flex; gap: 15px; }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
-      .modal-header h2 {
-        font-size: 1.3rem;
-        font-weight: 700;
-      }
+      /* =========================================
+         RESPONSIVE BREAKPOINTS 
+         ========================================= */
 
-      .modal-close {
-        background: none;
-        border: none;
-        color: var(--text);
-        cursor: pointer;
-        font-size: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 600;
-        font-size: 0.9rem;
-      }
-
-      .form-group input,
-      .form-group textarea,
-      .form-group select {
-        width: 100%;
-        padding: 10px;
-        background: rgba(37, 99, 235, 0.05);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        color: var(--text);
-        font-family: inherit;
-      }
-
-      .form-group textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
-
-      .form-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-      }
-
-      .form-actions button {
-        flex: 1;
-        padding: 10px;
-        border-radius: 6px;
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .btn-submit {
-        background: var(--primary);
-        color: white;
-      }
-
-      .btn-submit:hover {
-        background: var(--secondary);
-      }
-
-      .btn-cancel {
-        background: var(--card);
-        border: 1px solid var(--border);
-        color: var(--text);
-      }
-
-      .btn-cancel:hover {
-        background: rgba(37, 99, 235, 0.05);
-      }
-
-      /* RESPONSIVE */
       @media (max-width: 1200px) {
-        .expert-container {
-          grid-template-columns: 1fr;
-        }
-
-        .discussion-grid {
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        }
+        .expert-container { grid-template-columns: 1fr; }
       }
 
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .dash-wrapper { padding: 16px; gap: 16px; }
+        .content-scroll { padding: 24px; }
+        .content-header { padding: 20px 24px; }
+        
+        /* Smaller floating sidebar on tablet */
+        .floating-sidebar { width: 80px; }
+        .floating-sidebar:hover { width: 240px; }
+      }
+
+      /* Mobile - Bottom Navigation */
       @media (max-width: 768px) {
-        .dash-wrapper {
-          padding: 12px;
-          gap: 12px;
-        }
+        body { flex-direction: column; }
+        .dash-wrapper { flex-direction: column; padding: 0; gap: 0; }
 
+        /* Sidebar turns into Bottom Nav App Bar */
         .floating-sidebar {
-          width: 60px;
-          padding: 20px 0;
+          position: fixed; bottom: 0; left: 0; width: 100% !important; height: 70px;
+          flex-direction: row; padding: 0; border-radius: 20px 20px 0 0;
+          border-top: 1px solid var(--border); border-bottom: none; border-left: none; border-right: none;
+          z-index: 1000; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); background: var(--card);
         }
+        
+        .nav-logo, .nav-spacer { display: none !important; }
+        .nav-items { flex-direction: row; justify-content: space-around; align-items: center; height: 100%; padding: 0 10px; gap: 0; }
+        .nav-btn { width: 50px; height: 50px; }
+        .floating-sidebar:hover .nav-btn { width: 50px; padding: 0; justify-content: center; }
+        .nav-label { display: none !important; } /* Hide labels on bottom nav */
 
-        .floating-sidebar:hover {
-          width: 200px;
-        }
-
-        .content-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 15px;
-        }
-
-        .header-actions {
-          width: 100%;
-        }
-
-        .btn-create {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .discussion-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .badges-grid {
-          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        }
+        .main-content { border-radius: 0; margin-bottom: 70px; } /* Leave space for bottom nav */
+        
+        .content-header h1 { font-size: 1.6rem; }
+        .header-actions { width: 100%; justify-content: space-between; }
+        .btn-create { flex: 1; justify-content: center; }
+        
+        .discussion-grid { grid-template-columns: 1fr; }
+        .badges-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+        
+        .modal-content { padding: 30px 20px; border-radius: 20px; }
+        .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+      }
+      
+      @media (max-width: 480px) {
+        .content-header { padding: 15px 20px; }
+        .content-scroll { padding: 15px 20px; }
+        #dirToggle span { display: none; }
+        .expert-profile { flex-direction: column; text-align: center; }
+        .answer-actions { flex-wrap: wrap; }
+        /* .main-content */
       }
     </style>
   </head>
   <body>
     <!-- PAGE LOADER -->
-    <div id="page-loader" style="display: none"></div>
+    <div class="cssloader" id="page-loader" style="display: none;">
+      <div class="triangle1"></div>
+      <div class="triangle2"></div>
+      <p class="text">Please Wait</p>
+    </div>
 
     <!-- MAIN WRAPPER -->
     <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR -->
+      
+      <!-- FLOATING SIDEBAR / BOTTOM NAV ON MOBILE -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = 'index.html'">
-          N
+        <div class="nav-logo" onclick="window.location.href='index.html'">
+          <i data-lucide="shield"></i>
         </div>
         <div class="nav-items">
           <button class="nav-btn active" data-section="forum" title="Forum">
@@ -826,22 +374,21 @@
             <span class="nav-label">Forum</span>
           </button>
           <button class="nav-btn" data-section="expert" title="Ask Expert">
-            <i data-lucide="info"></i>
+            <i data-lucide="help-circle"></i>
             <span class="nav-label">Ask Expert</span>
           </button>
           <button class="nav-btn" data-section="badges" title="Badges">
             <i data-lucide="award"></i>
             <span class="nav-label">Badges</span>
           </button>
+          
+          <!-- Add back navigation to main dashboard on mobile nav -->
+          <button class="nav-btn" title="Dashboard" onclick="window.location.href='UserDashboard.html'">
+            <i data-lucide="layout-grid"></i>
+            <span class="nav-label">Dashboard</span>
+          </button>
         </div>
         <div class="nav-spacer"></div>
-        <label class="theme-toggle">
-          <input type="checkbox" class="switch-input" id="themeSwitch" />
-          <div class="icon-wrapper">
-            <i data-lucide="sun" class="sun-icon"></i>
-            <i data-lucide="moon" class="moon-icon"></i>
-          </div>
-        </label>
       </aside>
 
       <!-- MAIN CONTENT -->
@@ -849,64 +396,32 @@
         <div class="content-header">
           <h1>Community Hub</h1>
           <div class="header-actions">
-            <button
-              id="dirToggle"
-              class="btn"
-              style="
-                background: var(--card);
-                border: 1px solid var(--border);
-                color: var(--text);
-                padding: 8px 12px;
-                border-radius: 12px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-weight: 600;
-                cursor: pointer;
-                border: 1px solid rgba(128, 128, 128, 0.1);
-              "
-            >
+            <button id="dirToggle" class="btn" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
               <i data-lucide="languages" style="width: 18px"></i>
               <span>LTR</span>
             </button>
+            
+            <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+              <i data-lucide="moon" style="width: 18px"></i>
+            </label>
+            
             <button class="btn-create" id="btnCreateDiscussion">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
+              <i data-lucide="plus" style="width: 18px;"></i>
               New Topic
             </button>
           </div>
         </div>
 
         <div class="content-scroll">
+          
           <!-- DISCUSSION FORUM SECTION -->
           <section class="community-section" id="forumSection">
             <div class="section-title">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-                ></path>
-              </svg>
+              <i data-lucide="messages-square" style="color: var(--primary);"></i>
               Discussion Forum
             </div>
             <p class="section-subtitle">
-              Connect with the community, share ideas, and find solutions to
-              challenges
+              Connect with the community, share ideas, and find solutions to challenges in the field.
             </p>
 
             <div class="filter-tabs" id="categoryFilters"></div>
@@ -914,47 +429,17 @@
           </section>
 
           <!-- ASK AN EXPERT SECTION -->
-          <section
-            class="community-section"
-            id="expertSection"
-            style="display: none"
-          >
+          <section class="community-section" id="expertSection" style="display: none">
             <div class="section-title">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16v-4M12 8h.01"></path>
-              </svg>
+              <i data-lucide="user-check" style="color: var(--primary); cursor: pointer;" onclick="window.location.href='index.html'"></i>
               Ask an Expert
             </div>
             <p class="section-subtitle">
-              Get verified answers from certified trainers and experienced
-              professionals
+              Get verified answers from certified trainers and experienced professionals in real-time.
             </p>
 
-            <button
-              class="btn-create"
-              id="btnAskQuestion"
-              style="margin-bottom: 20px"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Ask Question
+            <button class="btn-create" id="btnAskQuestion" style="margin-bottom: 30px; display: inline-flex; width: fit-content;">
+              <i data-lucide="help-circle" style="width: 18px;"></i> Ask Question
             </button>
 
             <div class="expert-container">
@@ -964,40 +449,71 @@
           </section>
 
           <!-- BADGES & RECOGNITION SECTION -->
-          <section
-            class="community-section"
-            id="badgesSection"
-            style="display: none"
-          >
+          <section class="community-section" id="badgesSection" style="display: none">
             <div class="section-title">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M6 9V2h12v7M6 9a6 6 0 0 0 12 0M6 9h12"></path>
-              </svg>
+              <i data-lucide="medal" style="color: var(--primary);"></i>
               Recognition & Badges
             </div>
             <p class="section-subtitle">
-              Earn badges for your contributions and see community recognition
+              Earn badges for your contributions and see where you stand on the community leaderboard.
             </p>
 
-            <h3 style="margin: 20px 0 15px; font-weight: 700">
-              Available Badges
-            </h3>
+            <h3 style="margin: 20px 0 15px; font-weight: 800; font-family: 'Outfit', sans-serif;">Your Earned Badges</h3>
             <div class="badges-grid" id="badgesGrid"></div>
 
-            <h3 style="margin: 30px 0 15px; font-weight: 700">
-              Community Leaderboard
-            </h3>
+            <h3 style="margin: 40px 0 15px; font-weight: 800; font-family: 'Outfit', sans-serif;">Community Leaderboard</h3>
             <div class="leaderboard-container">
               <table class="leaderboard-table" id="leaderboard"></table>
             </div>
           </section>
+
+          <!-- FOOTER INCLUDED INSIDE SCROLL AREA -->
+          <footer class="footer">
+            <div class="footer-grid">
+              <div class="footer-col">
+                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+                <p style="color: var(--muted); line-height: 1.6;">
+                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+                </p>
+              </div>
+              <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="TrainingPage.html">Programs</a></li>
+                  <li><a href="Impact.html">Our Impact</a></li>
+                  <li><a href="Community.html">Community</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="Contact.html">Help Center</a></li>
+                  <li><a href="wishlist.html">Wishlist</a></li>
+                  <li><a href="Settings.html">Settings</a></li>
+                  <li><a href="login.html">Login / Register</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Follow Us</h4>
+                <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+                <div class="social-links">
+                  <a href="#"><i data-lucide="facebook"></i></a>
+                  <a href="#"><i data-lucide="twitter"></i></a>
+                  <a href="#"><i data-lucide="instagram"></i></a>
+                  <a href="#"><i data-lucide="linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <div class="footer-legal">
+                <a href="#" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
+                <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+              </div>
+            </div>
+          </footer>
+          
         </div>
       </main>
     </div>
@@ -1005,21 +521,16 @@
     <!-- MODALS -->
     <div class="modal" id="discussionModal">
       <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('discussionModal')">
+          <i data-lucide="x"></i>
+        </button>
         <div class="modal-header">
           <h2>Create Discussion Topic</h2>
-          <button class="modal-close" onclick="closeModal('discussionModal')">
-            ×
-          </button>
         </div>
         <form id="discussionForm">
           <div class="form-group">
             <label>Title</label>
-            <input
-              type="text"
-              id="topicTitle"
-              placeholder="Enter topic title"
-              required
-            />
+            <input type="text" id="topicTitle" placeholder="Enter topic title" required />
           </div>
           <div class="form-group">
             <label>Category</label>
@@ -1027,35 +538,19 @@
               <option value="">Select a category</option>
               <option value="Community Conflicts">Community Conflicts</option>
               <option value="Gender-Based Issues">Gender-Based Issues</option>
-              <option value="Youth & School Mediation">
-                Youth & School Mediation
-              </option>
+              <option value="Youth & School Mediation">Youth & School Mediation</option>
               <option value="Workplace Disputes">Workplace Disputes</option>
-              <option value="Peacebuilding Strategies">
-                Peacebuilding Strategies
-              </option>
-              <option value="Legal & Policy Questions">
-                Legal & Policy Questions
-              </option>
+              <option value="Peacebuilding Strategies">Peacebuilding Strategies</option>
+              <option value="Legal & Policy Questions">Legal & Policy Questions</option>
             </select>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea
-              id="topicDescription"
-              placeholder="Describe your question or topic..."
-              required
-            ></textarea>
+            <textarea id="topicDescription" placeholder="Describe your question or topic..." required></textarea>
           </div>
           <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeModal('discussionModal')">Cancel</button>
             <button type="submit" class="btn-submit">Post Topic</button>
-            <button
-              type="button"
-              class="btn-cancel"
-              onclick="closeModal('discussionModal')"
-            >
-              Cancel
-            </button>
           </div>
         </form>
       </div>
@@ -1063,24 +558,19 @@
 
     <div class="modal" id="questionModal">
       <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('questionModal')">
+          <i data-lucide="x"></i>
+        </button>
         <div class="modal-header">
           <h2>Ask an Expert</h2>
-          <button class="modal-close" onclick="closeModal('questionModal')">
-            ×
-          </button>
         </div>
         <form id="questionForm">
           <div class="form-group">
             <label>Question</label>
-            <input
-              type="text"
-              id="expertQuestion"
-              placeholder="What is your question?"
-              required
-            />
+            <input type="text" id="expertQuestion" placeholder="What is your question?" required />
           </div>
           <div class="form-group">
-            <label>Topic</label>
+            <label>Topic Area</label>
             <select id="expertTopic" required>
               <option value="">Select a topic</option>
               <option value="Conflict Resolution">Conflict Resolution</option>
@@ -1092,241 +582,66 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Description</label>
-            <textarea
-              id="expertDescription"
-              placeholder="Provide more details..."
-              required
-            ></textarea>
+            <label>Additional Details</label>
+            <textarea id="expertDescription" placeholder="Provide more context so the expert can help you better..." required></textarea>
           </div>
           <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeModal('questionModal')">Cancel</button>
             <button type="submit" class="btn-submit">Submit Question</button>
-            <button
-              type="button"
-              class="btn-cancel"
-              onclick="closeModal('questionModal')"
-            >
-              Cancel
-            </button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- THEME SCRIPT -->
-
+    <!-- SCRIPTS -->
     <script src="../assets/js/theme.js"></script>
 
-    <!-- MAIN SCRIPT -->
     <script>
+      // ============================================
+      // INIT ICONS & YEAR
+      // ============================================
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+      document.getElementById('year').innerText = new Date().getFullYear();
+
       // ============================================
       // MOCK DATA
       // ============================================
-
       const discussionTopics = [
-        {
-          id: 1,
-          title:
-            "How to resolve conflicts between NGOs with different priorities?",
-          author: "Priya Sharma",
-          ngoName: "Peace Trust India",
-          category: "Community Conflicts",
-          replies: 12,
-          views: 245,
-          lastActivity: "2 hours ago",
-          content:
-            "We're struggling with coordination when organizations have overlapping but different goals...",
-          authorInitial: "PS",
-        },
-        {
-          id: 2,
-          title: "Gender-sensitive mediation techniques for rural communities",
-          author: "Aisha Mohammed",
-          ngoName: "Women's Voice Foundation",
-          category: "Gender-Based Issues",
-          replies: 8,
-          views: 156,
-          lastActivity: "4 hours ago",
-          content:
-            "Looking for best practices for training mediators who work with rural women...",
-          authorInitial: "AM",
-        },
-        {
-          id: 3,
-          title: "Youth engagement in peacebuilding programs",
-          author: "Raj Patel",
-          ngoName: "Youth Leaders Initiative",
-          category: "Youth & School Mediation",
-          replies: 15,
-          views: 398,
-          lastActivity: "1 hour ago",
-          content:
-            "What strategies have worked best for you to engage school-going youth?",
-          authorInitial: "RP",
-        },
-        {
-          id: 4,
-          title: "Workplace mediation: When employees refuse to participate",
-          author: "Michael Chen",
-          ngoName: "Corporate Peace Solutions",
-          category: "Workplace Disputes",
-          replies: 5,
-          views: 89,
-          lastActivity: "6 hours ago",
-          content:
-            "How do we handle situations where key employees won't attend mediation sessions?",
-          authorInitial: "MC",
-        },
-        {
-          id: 5,
-          title: "Building sustainable peace initiatives at grassroots level",
-          author: "Dr. Emily Watson",
-          ngoName: "Global Peace Network",
-          category: "Peacebuilding Strategies",
-          replies: 22,
-          views: 567,
-          lastActivity: "30 min ago",
-          content:
-            "What are the key factors for long-term success in grassroots peacebuilding?",
-          authorInitial: "EW",
-        },
-        {
-          id: 6,
-          title: "Understanding the new mediation policy framework",
-          author: "Sarah Johnson",
-          ngoName: "Policy & Law Center",
-          category: "Legal & Policy Questions",
-          replies: 9,
-          views: 201,
-          lastActivity: "3 hours ago",
-          content:
-            "Can someone explain the implications of the new mediation certification requirements?",
-          authorInitial: "SJ",
-        },
+        { id: 1, title: "How to resolve conflicts between NGOs with different priorities?", author: "Priya Sharma", ngoName: "Peace Trust India", category: "Community Conflicts", replies: 12, views: 245, lastActivity: "2 hours ago", content: "We're struggling with coordination when organizations have overlapping but different goals...", authorInitial: "PS" },
+        { id: 2, title: "Gender-sensitive mediation techniques for rural communities", author: "Aisha Mohammed", ngoName: "Women's Voice Foundation", category: "Gender-Based Issues", replies: 8, views: 156, lastActivity: "4 hours ago", content: "Looking for best practices for training mediators who work with rural women...", authorInitial: "AM" },
+        { id: 3, title: "Youth engagement in peacebuilding programs", author: "Raj Patel", ngoName: "Youth Leaders Initiative", category: "Youth & School Mediation", replies: 15, views: 398, lastActivity: "1 hour ago", content: "What strategies have worked best for you to engage school-going youth?", authorInitial: "RP" },
+        { id: 4, title: "Workplace mediation: When employees refuse to participate", author: "Michael Chen", ngoName: "Corporate Peace Solutions", category: "Workplace Disputes", replies: 5, views: 89, lastActivity: "6 hours ago", content: "How do we handle situations where key employees won't attend mediation sessions?", authorInitial: "MC" },
+        { id: 5, title: "Building sustainable peace initiatives at grassroots level", author: "Dr. Emily Watson", ngoName: "Global Peace Network", category: "Peacebuilding Strategies", replies: 22, views: 567, lastActivity: "30 min ago", content: "What are the key factors for long-term success in grassroots peacebuilding?", authorInitial: "EW" },
+        { id: 6, title: "Understanding the new mediation policy framework", author: "Sarah Johnson", ngoName: "Policy & Law Center", category: "Legal & Policy Questions", replies: 9, views: 201, lastActivity: "3 hours ago", content: "Can someone explain the implications of the new mediation certification requirements?", authorInitial: "SJ" }
       ];
 
       const expertAnswers = [
-        {
-          id: 1,
-          questionId: 1,
-          question:
-            "How to resolve conflicts between NGOs with different priorities?",
-          expert: "Dr. Sarah Jenkins",
-          credentials: "PhD in Conflict Resolution, 15+ years experience",
-          response:
-            "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.",
-          verified: true,
-          upvotes: 45,
-          authorInitial: "SJ",
-        },
-        {
-          id: 2,
-          questionId: 2,
-          question:
-            "Gender-sensitive mediation techniques for rural communities",
-          expert: "Elena Rodriguez",
-          credentials: "Certified Gender Mediator, Award-winning Trainer",
-          response:
-            "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.",
-          verified: true,
-          upvotes: 67,
-          authorInitial: "ER",
-        },
+        { id: 1, questionId: 1, question: "How to resolve conflicts between NGOs with different priorities?", expert: "Dr. Sarah Jenkins", credentials: "PhD in Conflict Resolution, 15+ years experience", response: "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.", verified: true, upvotes: 45, authorInitial: "SJ" },
+        { id: 2, questionId: 2, question: "Gender-sensitive mediation techniques for rural communities", expert: "Elena Rodriguez", credentials: "Certified Gender Mediator, Award-winning Trainer", response: "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.", verified: true, upvotes: 67, authorInitial: "ER" }
       ];
 
       const communityBadges = [
-        {
-          id: 1,
-          name: "Active Contributor",
-          icon: "✨",
-          description: "Posted 10+ discussion topics",
-          earned: true,
-          earnedDate: "Mar 1, 2026",
-        },
-        {
-          id: 2,
-          name: "Peace Champion",
-          icon: "🕊️",
-          description: "100+ community contributions",
-          earned: true,
-          earnedDate: "Feb 15, 2026",
-        },
-        {
-          id: 3,
-          name: "Expert Mentor",
-          icon: "🎓",
-          description: "Helped 20+ members find solutions",
-          earned: false,
-          earnedDate: null,
-        },
-        {
-          id: 4,
-          name: "Case Study Contributor",
-          icon: "📖",
-          description: "Shared 5+ detailed case studies",
-          earned: false,
-          earnedDate: null,
-        },
-        {
-          id: 5,
-          name: "Top Mediator",
-          icon: "⚖️",
-          description: "Rated helpful by 50+ members",
-          earned: true,
-          earnedDate: "Jan 28, 2026",
-        },
-        {
-          id: 6,
-          name: "Network Builder",
-          icon: "🤝",
-          description: "Connected 15+ community members",
-          earned: false,
-          earnedDate: null,
-        },
+        { id: 1, name: "Active Contributor", icon: "✨", description: "Posted 10+ discussion topics", earned: true, earnedDate: "Mar 1, 2026" },
+        { id: 2, name: "Peace Champion", icon: "🕊️", description: "100+ community contributions", earned: true, earnedDate: "Feb 15, 2026" },
+        { id: 5, name: "Top Mediator", icon: "⚖️", description: "Rated helpful by 50+ members", earned: true, earnedDate: "Jan 28, 2026" },
+        { id: 3, name: "Expert Mentor", icon: "🎓", description: "Helped 20+ members find solutions", earned: false, earnedDate: null },
+        { id: 4, name: "Case Study Pro", icon: "📖", description: "Shared 5+ detailed case studies", earned: false, earnedDate: null },
+        { id: 6, name: "Network Builder", icon: "🤝", description: "Connected 15+ community members", earned: false, earnedDate: null }
       ];
 
       const communityLeaderboard = [
-        {
-          rank: 1,
-          name: "Dr. Sarah Jenkins",
-          organization: "Peace Institute",
-          points: 2450,
-          badge: "Expert Mentor",
-        },
-        {
-          rank: 2,
-          name: "Priya Sharma",
-          organization: "Peace Trust India",
-          points: 1890,
-          badge: "Peace Champion",
-        },
-        {
-          rank: 3,
-          name: "Elena Rodriguez",
-          organization: "Gender Mediation Center",
-          points: 1567,
-          badge: "Top Mediator",
-        },
-        {
-          rank: 4,
-          name: "Michael Chen",
-          organization: "Corporate Peace Solutions",
-          points: 1234,
-          badge: "Active Contributor",
-        },
-        {
-          rank: 5,
-          name: "Raj Patel",
-          organization: "Youth Leaders Initiative",
-          points: 1045,
-          badge: "Network Builder",
-        },
+        { rank: 1, name: "Dr. Sarah Jenkins", organization: "Peace Institute", points: 2450, badge: "Expert Mentor" },
+        { rank: 2, name: "Priya Sharma", organization: "Peace Trust India", points: 1890, badge: "Peace Champion" },
+        { rank: 3, name: "Elena Rodriguez", organization: "Gender Center", points: 1567, badge: "Top Mediator" },
+        { rank: 4, name: "Michael Chen", organization: "Corporate Peace", points: 1234, badge: "Active Contributor" },
+        { rank: 5, name: "Raj Patel", organization: "Youth Leaders", points: 1045, badge: "Network Builder" }
       ];
 
       // ============================================
       // INITIALIZATION
       // ============================================
-
       document.addEventListener("DOMContentLoaded", function () {
         initializeCategoryFilters();
         renderDiscussionCards();
@@ -1336,99 +651,74 @@
         setupEventListeners();
       });
 
-      // ============================================
-      // RENDER FUNCTIONS
-      // ============================================
-
       function initializeCategoryFilters() {
-        const categories = [
-          "All",
-          "Community Conflicts",
-          "Gender-Based Issues",
-          "Youth & School Mediation",
-          "Workplace Disputes",
-          "Peacebuilding Strategies",
-          "Legal & Policy Questions",
-        ];
+        const categories = ["All", "Community Conflicts", "Gender-Based Issues", "Youth & School Mediation", "Workplace Disputes", "Peacebuilding Strategies", "Legal & Policy Questions"];
         const filterContainer = document.getElementById("categoryFilters");
 
         categories.forEach((category) => {
-          const tab = document.createElement("button");
+          const tab = document.createElement("div");
           tab.className = `filter-tab ${category === "All" ? "active" : ""}`;
           tab.textContent = category;
-          tab.onclick = () => filterDiscussions(category);
+          tab.onclick = () => filterDiscussions(category, tab);
           filterContainer.appendChild(tab);
         });
+      }
+
+      function filterDiscussions(category, tabElement) {
+        document.querySelectorAll(".filter-tab").forEach(tab => tab.classList.remove("active"));
+        tabElement.classList.add("active");
+        renderDiscussionCards(category);
       }
 
       function renderDiscussionCards(filter = "All") {
         const grid = document.getElementById("discussionGrid");
         grid.innerHTML = "";
 
-        const filtered =
-          filter === "All"
-            ? discussionTopics
-            : discussionTopics.filter((t) => t.category === filter);
+        const filtered = filter === "All" ? discussionTopics : discussionTopics.filter((t) => t.category === filter);
+
+        if(filtered.length === 0) {
+          grid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align: center; color: var(--muted); background: var(--card); border-radius: 24px; border: 2px dashed var(--border);">No topics found for this category. Be the first to start a discussion!</div>`;
+          return;
+        }
 
         filtered.forEach((topic) => {
-          const card = document.createElement("div");
-          card.className = "discussion-card";
-          card.innerHTML = `
-            <div class="card-category">${topic.category}</div>
-            <h3 class="card-title">${topic.title}</h3>
-            <div class="card-author">
-              <div class="author-avatar">${topic.authorInitial}</div>
-              <div>
-                <strong>${topic.author}</strong><br>
-                <span style="font-size: 0.75rem; color: var(--muted);">${topic.ngoName}</span>
+          grid.innerHTML += `
+            <div class="discussion-card">
+              <div class="card-category">${topic.category}</div>
+              <h3 class="card-title">${topic.title}</h3>
+              <div class="card-author">
+                <div class="author-avatar">${topic.authorInitial}</div>
+                <div>
+                  <strong>${topic.author}</strong><br>
+                  <span style="font-size: 0.8rem; color: var(--muted);">${topic.ngoName}</span>
+                </div>
               </div>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                ${topic.replies} replies
+              <div class="card-stats">
+                <div class="stat-item"><i data-lucide="message-circle" style="width: 16px;"></i> ${topic.replies}</div>
+                <div class="stat-item"><i data-lucide="eye" style="width: 16px;"></i> ${topic.views}</div>
+                <div class="stat-item" style="margin-left: auto;">${topic.lastActivity}</div>
               </div>
-              <div class="stat-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                ${topic.views} views
+              <div class="card-actions">
+                <button class="action-btn"><i data-lucide="corner-down-right" style="width: 16px;"></i> Reply</button>
+                <button class="action-btn"><i data-lucide="arrow-up-circle" style="width: 16px;"></i> Upvote</button>
               </div>
-              <div class="stat-item">${topic.lastActivity}</div>
-            </div>
-            <div class="card-actions">
-              <button class="action-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 21 14 15"></polyline>
-                  <circle cx="10" cy="11" r="8"></circle>
-                </svg>
-                Reply
-              </button>
-              <button class="action-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-                Upvote
-              </button>
             </div>
           `;
-          grid.appendChild(card);
         });
+        
+        if (typeof lucide !== 'undefined') lucide.createIcons();
       }
 
       function renderExpertFAQ() {
         const faqContainer = document.getElementById("expertFAQ");
-        faqContainer.innerHTML = "";
+        faqContainer.innerHTML = "<h3 style='margin-top: 0; margin-bottom: 20px; font-family: Outfit, sans-serif;'>Previously Answered</h3>";
 
-        expertAnswers.forEach((answer, index) => {
+        expertAnswers.forEach((answer) => {
           const item = document.createElement("div");
           item.className = "faq-item";
           item.innerHTML = `
             <div class="faq-question">${answer.question}</div>
-            <div class="faq-meta">By ${answer.expert}</div>
+            <div class="faq-meta">Answered by ${answer.expert}</div>
           `;
           item.onclick = () => showExpertAnswer(answer);
           faqContainer.appendChild(item);
@@ -1438,38 +728,22 @@
       function showExpertAnswer(answer) {
         const answerContainer = document.getElementById("expertAnswer");
         answerContainer.innerHTML = `
-          <div class="expert-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
-            </svg>
-            Expert Verified
-          </div>
+          <div class="expert-badge"><i data-lucide="check-circle-2" style="width: 16px;"></i> Expert Verified</div>
           <div class="expert-profile">
-            <div class="expert-avatar">${answer.expert
-              .split(" ")
-              .map((n) => n[0])
-              .join("")}</div>
+            <div class="expert-avatar">${answer.authorInitial}</div>
             <div class="expert-info">
               <h4>${answer.expert}</h4>
               <p>${answer.credentials}</p>
             </div>
           </div>
+          <h4 style="font-family: Outfit, sans-serif; font-size: 1.1rem; margin-bottom: 15px;">Q: ${answer.question}</h4>
           <div class="expert-answer-text">${answer.response}</div>
           <div class="answer-actions">
-            <button class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-              </svg>
-              ${answer.upvotes} Helpful
-            </button>
-            <button class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Reply
-            </button>
+            <button class="action-btn"><i data-lucide="thumbs-up" style="width: 16px;"></i> ${answer.upvotes} Helpful</button>
+            <button class="action-btn"><i data-lucide="message-square" style="width: 16px;"></i> Follow Up</button>
           </div>
         `;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
       }
 
       function renderBadges() {
@@ -1477,16 +751,16 @@
         badgesGrid.innerHTML = "";
 
         communityBadges.forEach((badge) => {
-          const card = document.createElement("div");
-          card.className = "badge-card";
-          card.innerHTML = `
-            ${badge.earned ? `<div class="badge-earned">✓</div>` : ""}
-            <div class="badge-icon">${badge.icon}</div>
-            <div class="badge-name">${badge.name}</div>
-            <div class="badge-description">${badge.description}</div>
+          badgesGrid.innerHTML += `
+            <div class="badge-card" style="${badge.earned ? 'border-color: var(--primary); background: rgba(37,99,235,0.02);' : 'opacity: 0.6;'}">
+              ${badge.earned ? `<div class="badge-earned"><i data-lucide="check" style="width: 16px;"></i></div>` : ""}
+              <div class="badge-icon" style="${badge.earned ? '' : 'filter: grayscale(1);'}">${badge.icon}</div>
+              <div class="badge-name">${badge.name}</div>
+              <div class="badge-description">${badge.description}</div>
+            </div>
           `;
-          badgesGrid.appendChild(card);
         });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
       }
 
       function renderLeaderboard() {
@@ -1494,162 +768,124 @@
         table.innerHTML = `
           <thead>
             <tr>
-              <th style="width: 60px;">Rank</th>
+              <th style="width: 80px;">Rank</th>
               <th>Member</th>
               <th>Organization</th>
-              <th style="width: 80px;">Points</th>
+              <th style="width: 100px;">Points</th>
               <th>Top Badge</th>
             </tr>
           </thead>
           <tbody>
-            ${communityLeaderboard
-              .map(
-                (member) => `
+            ${communityLeaderboard.map((member) => `
               <tr>
-                <td>
-                  <div class="rank-badge rank-${member.rank}">${member.rank}</div>
-                </td>
+                <td><div class="rank-badge rank-${member.rank}">${member.rank}</div></td>
                 <td>
                   <div class="member-info">
-                    <div class="member-avatar">${member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}</div>
+                    <div class="member-avatar">${member.name.split(" ").map((n) => n[0]).join("")}</div>
                     <span>${member.name}</span>
                   </div>
                 </td>
-                <td>${member.organization}</td>
-                <td><strong>${member.points}</strong></td>
+                <td style="color: var(--muted);">${member.organization}</td>
+                <td><strong style="color: var(--primary);">${member.points}</strong></td>
                 <td>
-                  <span style="padding: 4px 8px; background: rgba(37, 99, 235, 0.15); color: var(--primary); border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                  <span style="padding: 6px 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block;">
                     ${member.badge}
                   </span>
                 </td>
               </tr>
-            `,
-              )
-              .join("")}
+            `).join("")}
           </tbody>
         `;
       }
 
       // ============================================
-      // EVENT LISTENERS & INTERACTIONS
+      // EVENT LISTENERS & MODALS
       // ============================================
-
       function setupEventListeners() {
         // Section navigation
         document.querySelectorAll(".nav-btn").forEach((btn) => {
           btn.addEventListener("click", function () {
-            const section = this.dataset.section;
-            switchSection(section);
-
-            // Update active button
-            document
-              .querySelectorAll(".nav-btn")
-              .forEach((b) => b.classList.remove("active"));
-            this.classList.add("active");
+            if(this.dataset.section) {
+              switchSection(this.dataset.section);
+              document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
+              this.classList.add("active");
+            }
           });
         });
 
-        // Create discussion
-        document
-          .getElementById("btnCreateDiscussion")
-          .addEventListener("click", () => {
-            openModal("discussionModal");
-          });
+        // Modals
+        document.getElementById("btnCreateDiscussion").addEventListener("click", () => openModal("discussionModal"));
+        document.getElementById("btnAskQuestion").addEventListener("click", () => openModal("questionModal"));
 
-        // Create question
-        document
-          .getElementById("btnAskQuestion")
-          .addEventListener("click", () => {
-            openModal("questionModal");
-          });
+        // Forms
+        document.getElementById("discussionForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          const newTopic = {
+            id: discussionTopics.length + 1,
+            title: document.getElementById("topicTitle").value,
+            author: "Sarah J.",
+            ngoName: "Your Organization",
+            category: document.getElementById("topicCategory").value,
+            replies: 0, views: 0, lastActivity: "just now",
+            content: document.getElementById("topicDescription").value,
+            authorInitial: "SJ",
+          };
+          discussionTopics.unshift(newTopic);
+          // Reset Filter to All to see new topic
+          const allTab = Array.from(document.querySelectorAll('.filter-tab')).find(t => t.textContent === 'All');
+          filterDiscussions("All", allTab);
+          closeModal("discussionModal");
+          this.reset();
+        });
 
-        // Discussion form submit
-        document
-          .getElementById("discussionForm")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-            const newTopic = {
-              id: discussionTopics.length + 1,
-              title: document.getElementById("topicTitle").value,
-              author: "You",
-              ngoName: "Your Organization",
-              category: document.getElementById("topicCategory").value,
-              replies: 0,
-              views: 0,
-              lastActivity: "just now",
-              content: document.getElementById("topicDescription").value,
-              authorInitial: "Y",
-            };
-            discussionTopics.unshift(newTopic);
-            renderDiscussionCards();
-            closeModal("discussionModal");
-            this.reset();
-            alert("Discussion topic posted successfully!");
-          });
-
-        // Question form submit
-        document
-          .getElementById("questionForm")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-            closeModal("questionModal");
-            this.reset();
-            alert(
-              "Question submitted! An expert will review and respond soon.",
-            );
-          });
+        document.getElementById("questionForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          closeModal("questionModal");
+          this.reset();
+          alert("Question submitted! An expert will review and respond soon.");
+        });
       }
 
       function switchSection(section) {
-        document.getElementById("forumSection").style.display =
-          section === "forum" ? "block" : "none";
-        document.getElementById("expertSection").style.display =
-          section === "expert" ? "block" : "none";
-        document.getElementById("badgesSection").style.display =
-          section === "badges" ? "block" : "none";
+        document.getElementById("forumSection").style.display = section === "forum" ? "block" : "none";
+        document.getElementById("expertSection").style.display = section === "expert" ? "block" : "none";
+        document.getElementById("badgesSection").style.display = section === "badges" ? "block" : "none";
+        
+        // Update Mobile Top Header Title
+        const headerTitle = document.querySelector('.content-header h1');
+        if (section === "forum") headerTitle.innerText = "Community Hub";
+        if (section === "expert") headerTitle.innerText = "Ask an Expert";
+        if (section === "badges") headerTitle.innerText = "Badges & Leaderboard";
 
-        // Scroll to top
+        // Update actions based on section
+        const btnCreate = document.getElementById('btnCreateDiscussion');
+        if (section === 'forum') {
+          btnCreate.style.display = 'flex';
+          btnCreate.innerHTML = '<i data-lucide="plus" style="width: 18px;"></i> New Topic';
+          btnCreate.onclick = () => openModal('discussionModal');
+        } else if (section === 'expert') {
+          btnCreate.style.display = 'none'; // Replaced by inline button in section
+        } else {
+          btnCreate.style.display = 'none';
+        }
+
         document.querySelector(".content-scroll").scrollTop = 0;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
       }
 
-      function filterDiscussions(category) {
-        // Update active tab
-        document.querySelectorAll(".filter-tab").forEach((tab) => {
-          tab.classList.remove("active");
-          if (tab.textContent === category) tab.classList.add("active");
-        });
+      function openModal(modalId) { document.getElementById(modalId).classList.add("active"); }
+      function closeModal(modalId) { document.getElementById(modalId).classList.remove("active"); }
 
-        renderDiscussionCards(category);
-      }
-
-      function openModal(modalId) {
-        document.getElementById(modalId).classList.add("active");
-      }
-
-      function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove("active");
-      }
-
-      // Close modal on outside click
       document.querySelectorAll(".modal").forEach((modal) => {
         modal.addEventListener("click", function (e) {
-          if (e.target === this) {
-            this.classList.remove("active");
-          }
+          if (e.target === this) this.classList.remove("active");
         });
       });
 
-      // Initialize first expert answer on page load
+      // Show initial expert answer
       window.addEventListener("load", function () {
-        if (expertAnswers.length > 0) {
-          showExpertAnswer(expertAnswers[0]);
-        }
+        if (expertAnswers.length > 0) showExpertAnswer(expertAnswers[0]);
       });
     </script>
-
-    <!-- FOOTER -->
   </body>
 </html>

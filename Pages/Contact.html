@@ -320,6 +320,73 @@
           padding: 2rem;
         }
       }
+
+      @media (max-width: 480px) {
+        .contact-header {
+          padding-top: 140px;
+        }
+        .contact-header h1 {
+          font-size: 1.8rem;
+        }
+        .contact-form-card {
+          padding: 1.5rem;
+        }
+        .support-sections {
+          padding: 60px 1.5rem;
+        }
+      }
+
+      /* Mobile Navigation Support */
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+        margin-right: -8px;
+      }
+
+      .navbar.solid-bg {
+        background: var(--card) !important;
+        backdrop-filter: none;
+      }
+
+      @media (max-width: 900px) {
+        .navbar-menu {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          display: flex !important;
+          flex-direction: column;
+          background: var(--bg);
+          width: 100%;
+          text-align: center;
+          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          padding: 2rem 0;
+          backdrop-filter: blur(10px);
+          z-index: 99;
+          max-height: calc(100vh - 70px);
+          overflow-y: auto;
+        }
+
+        .navbar-menu.active {
+          left: 0;
+        }
+
+        .navbar-menu li {
+          margin: 15px 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .nav-actions {
+          gap: 10px;
+        }
+      }
     </style>
   </head>
 
@@ -335,6 +402,11 @@
     <nav class="navbar">
       <div class="navbar-container">
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i data-lucide="menu"></i>
+        </button>
+
         <ul class="navbar-menu">
           <li><a href="index.html" class="navbar-link">Home</a></li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
@@ -661,6 +733,34 @@
       lucide.createIcons();
       // Set copyright year
       document.getElementById("year").innerText = new Date().getFullYear();
+
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const navMenu = document.querySelector(".navbar-menu");
+      const navbar = document.querySelector(".navbar");
+
+      if (mobileBtn && navMenu) {
+        mobileBtn.addEventListener("click", () => {
+          navMenu.classList.toggle("active");
+          const isExpanded = navMenu.classList.contains("active");
+
+          if (navbar) {
+            if (isExpanded) {
+              navbar.classList.add("solid-bg");
+            } else {
+              navbar.classList.remove("solid-bg");
+            }
+          }
+
+          const icon = mobileBtn.querySelector("i");
+          if (icon) {
+            icon.setAttribute("data-lucide", isExpanded ? "x" : "menu");
+            if (typeof lucide !== "undefined") {
+              lucide.createIcons();
+            }
+          }
+        });
+      }
     </script>
   </body>
 </html>

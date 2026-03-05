@@ -156,6 +156,10 @@
         margin: 0;
       }
 
+      .mobile-logo {
+        display: none;
+      }
+
       .user-actions {
         display: flex;
         align-items: center;
@@ -443,6 +447,23 @@
         .main-header {
           padding: 0 16px;
         }
+        .mobile-logo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+        }
+        .mobile-logo .logo-box {
+          width: 32px;
+          height: 32px;
+        }
+        .mobile-logo span {
+          font-weight: 800;
+          font-size: 1.1rem;
+        }
+        .desktop-only {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -500,7 +521,16 @@
     <main class="main-content">
       <header class="main-header">
         <div class="header-title-box">
-          <h1 id="tabTitle">User Directory</h1>
+          <h1 id="tabTitle" class="desktop-only">User Directory</h1>
+          <div
+            class="mobile-logo"
+            onclick="window.location.href = 'index.html'"
+          >
+            <div class="logo-box">
+              <i data-lucide="shield"></i>
+            </div>
+            <span>Admin</span>
+          </div>
         </div>
 
         <div class="user-actions">

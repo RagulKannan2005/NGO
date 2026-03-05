@@ -25,207 +25,152 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      /* DASHBOARD BASE STYLES REUSED FROM UserDashboard.html */
+      :root {
+        --sidebar-width: 260px;
+        --sidebar-collapsed-width: 80px;
+        --header-height: 70px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
         display: flex;
         height: 100vh;
         overflow: hidden;
-        background-image:
-          radial-gradient(
-            circle at 0% 0%,
-            rgba(37, 99, 235, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 100% 100%,
-            rgba(124, 58, 237, 0.08) 0%,
-            transparent 50%
-          );
-        background-attachment: fixed;
       }
 
-      .dash-wrapper {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        padding: 24px;
-        gap: 24px;
-        box-sizing: border-box;
-      }
-
-      /* SIDEBAR */
-      .floating-sidebar {
-        width: 100px;
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 32px;
+      /* Sidebar (Desktop) */
+      .sidebar {
+        width: var(--sidebar-width);
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-inline-end: 1px solid var(--border);
         display: flex;
         flex-direction: column;
+        transition: var(--transition);
+        z-index: 1000;
+        flex-shrink: 0;
+      }
+
+      html.dark .sidebar {
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .sidebar-header {
+        height: var(--header-height);
+        display: flex;
         align-items: center;
-        padding: 40px 0;
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.03),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        z-index: 100;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        padding: 0 24px;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
       }
 
-      html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.2),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-      }
-
-      .floating-sidebar:hover {
-        width: 280px;
-        align-items: flex-start;
-      }
-
-      .nav-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
+      .logo-box {
+        width: 35px;
+        height: 35px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        margin-bottom: 40px;
-        flex-shrink: 0;
-        transition: 0.4s;
-      }
-      .floating-sidebar:hover .nav-logo {
-        margin-left: 24px;
       }
 
-      .nav-items {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 100%;
-        padding: 0 24px;
-        box-sizing: border-box;
-      }
-      .nav-btn {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 12px 16px;
-        border-radius: 16px;
-        color: var(--muted);
-        text-decoration: none;
-        transition: all 0.3s ease;
+      .logo-text {
+        font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: -0.5px;
         white-space: nowrap;
-        overflow: hidden;
-      }
-      .nav-btn i {
-        min-width: 24px;
-        transition: 0.3s transform;
-      }
-      .nav-btn span {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s;
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
-      .floating-sidebar:hover .nav-btn span {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .nav-btn:hover {
-        color: var(--text);
-        background: rgba(128, 128, 128, 0.08);
-      }
-      .nav-btn:hover i {
-        transform: scale(1.1);
-      }
-      .nav-btn.active {
-        color: var(--primary);
-        background: rgba(37, 99, 235, 0.1);
-      }
-      html.dark .nav-btn.active {
-        background: rgba(37, 99, 235, 0.15);
       }
 
-      /* MAIN CONTENT */
-      .dash-main {
+      .nav-list {
+        padding: 24px 12px;
         flex: 1;
         display: flex;
         flex-direction: column;
-        border-radius: 32px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
-        overflow: hidden;
-      }
-      html.dark .dash-main {
-        background: rgba(15, 23, 42, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.03);
+        gap: 8px;
+        overflow-y: auto;
       }
 
-      /* HEADER */
-      .top-nav {
+      .nav-item {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 30px 40px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
-      }
-      .greeting h2 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.5px;
-      }
-      .greeting p {
+        gap: 12px;
+        padding: 12px 16px;
+        border-radius: 12px;
         color: var(--muted);
-        font-size: 0.95rem;
-        font-weight: 400;
+        text-decoration: none;
+        transition: var(--transition);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: start;
+        font-family: inherit;
+        font-size: 1rem;
       }
-      .top-actions {
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+      }
+
+      .nav-item.active {
+        font-weight: 600;
+      }
+
+      /* Main Content Area */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .main-header {
+        height: var(--header-height);
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      html.dark .main-header {
+        background: rgba(15, 23, 42, 0.5);
+      }
+
+      .header-title-box h1 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .mobile-logo {
+        display: none;
+      }
+
+      .user-actions {
         display: flex;
         align-items: center;
         gap: 20px;
       }
 
-      .profile-pill {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 6px 16px 6px 6px;
-        background: var(--card);
-        border: 1px solid rgba(128, 128, 128, 0.1);
-        border-radius: 50px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-      .profile-pill:hover {
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
-        transform: translateY(-2px);
-      }
-      .avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
-          center/cover;
-      }
-
-      /* BENTO GRID (CERTIFICATES SPECIFIC) */
+      /* Bento Grid Layout */
       .bento-scroll {
         flex: 1;
         overflow-y: auto;
-        padding: 40px;
+        padding: 32px;
       }
       .bento-grid {
         display: grid;
@@ -234,86 +179,23 @@
         max-width: 1400px;
         margin: 0 auto;
       }
-      @media (max-width: 1200px) {
-        .bento-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (max-width: 768px) {
-        .bento-grid {
-          grid-template-columns: 1fr;
-        }
-        .dash-wrapper {
-          padding: 10px;
-          flex-direction: column;
-        }
-        .floating-sidebar {
-          width: 100%;
-          flex-direction: row;
-          padding: 15px;
-          border-radius: 20px;
-          height: auto;
-        }
-        .nav-logo {
-          margin-bottom: 0;
-          margin-right: 20px;
-        }
-        .nav-items {
-          flex-direction: row;
-          padding: 0;
-          overflow-x: auto;
-        }
-        .nav-btn span {
-          display: none;
-        }
-        .floating-sidebar:hover {
-          width: 100%;
-          align-items: center;
-        }
-      }
 
-      /* CERTIFICATE CARD */
+      /* Certificate Card */
       .cert-card {
         background: var(--card);
         border-radius: 24px;
-        padding: 0; /* padding removed for edge-to-edge cover */
-        border: 1px solid rgba(128, 128, 128, 0.1);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-        display: flex;
-        flex-direction: column;
+        border: 1px solid var(--border);
+        transition: var(--transition);
         overflow: hidden;
-        transition:
-          transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-          box-shadow 0.4s ease;
       }
-      .cert-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        border-color: var(--primary);
-      }
-
+      .cert-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+      
       .cert-cover {
         height: 140px;
-        background: linear-gradient(
-          135deg,
-          rgba(37, 99, 235, 0.2),
-          rgba(124, 58, 237, 0.2)
-        );
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .cert-cover::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z" fill="rgba(255,255,255,0.05)" fill-rule="evenodd"/></svg>');
       }
       .cert-badge {
         width: 60px;
@@ -324,115 +206,71 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        z-index: 2;
       }
+      .cert-body { padding: 24px; }
+      .cert-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+      .cert-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; }
+      .cert-actions { display: flex; gap: 10px; }
 
-      .cert-body {
-        padding: 30px 25px 25px 25px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-      .cert-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-        line-height: 1.3;
-      }
-
-      .cert-meta {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      .cert-meta span {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .cert-actions {
-        margin-top: auto;
-        display: flex;
-        gap: 10px;
-      }
-      .cert-actions .btn {
-        flex: 1;
-        padding: 8px 0;
-        font-size: 0.9rem;
-        border-radius: 12px;
-      }
-
-      /* SKILLS RADAR (Span 3 on Desktop) */
+      /* Skills Bento */
       .skills-bento {
         grid-column: span 3;
         background: var(--card);
-        border-radius: 32px;
-        padding: 40px;
-        border: 1px solid rgba(128, 128, 128, 0.1);
+        border-radius: 24px;
+        padding: 32px;
+        border: 1px solid var(--border);
         display: flex;
-        gap: 40px;
+        gap: 32px;
         align-items: center;
       }
-      @media (max-width: 1200px) {
-        .skills-bento {
-          grid-column: span 2;
-          flex-direction: column;
-        }
+      .skills-info h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+      .skill-bars { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+      .s-bar-wrap { display: flex; align-items: center; gap: 12px; }
+      .s-bar-label { width: 100px; font-weight: 600; font-size: 0.85rem; }
+      .s-bar-track { flex: 1; height: 8px; background: rgba(128,128,128,0.1); border-radius: 4px; overflow: hidden; }
+      .s-bar-fill { height: 100%; border-radius: 4px; }
+
+      /* Mobile Responsive */
+      @media (max-width: 1024px) {
+        .sidebar { width: var(--sidebar-collapsed-width); align-items: center; }
+        .logo-text, .nav-item span { display: none; }
+        .sidebar-header { justify-content: center; padding: 0; }
+        .nav-item { padding: 12px; justify-content: center; border-radius: 50%; width: 50px; height: 50px; }
+        .bento-grid { grid-template-columns: repeat(2, 1fr); }
+        .skills-bento { grid-column: span 2; }
       }
+
       @media (max-width: 768px) {
-        .skills-bento {
-          grid-column: span 1;
-          padding: 20px;
+        .sidebar {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 60px;
+          flex-direction: row;
+          padding: 0;
+          border-top: 1px solid var(--border);
+          border-inline-end: none;
         }
-      }
-
-      .skills-info {
-        flex: 1;
-      }
-      .skills-info h3 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        span {
-          color: var(--primary);
+        .sidebar-header { display: none; }
+        .nav-list {
+          flex-direction: row;
+          padding: 0;
+          width: 100%;
+          overflow-x: auto;
+          scrollbar-width: none;
+          gap: 0;
         }
-      }
-      .skills-info p {
-        color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-
-      .skill-bars {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .s-bar-wrap {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-      .s-bar-label {
-        width: 120px;
-        font-weight: 600;
-        font-size: 0.9rem;
-      }
-      .s-bar-track {
-        flex: 1;
-        height: 8px;
-        background: rgba(128, 128, 128, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-      }
-      .s-bar-fill {
-        height: 100%;
-        border-radius: 4px;
+        .nav-list::-webkit-scrollbar { display: none; }
+        .nav-item { border-radius: 0; height: 100%; width: auto; min-width: 70px; flex: 0 0 auto; justify-content: center;}
+        .main-content { margin-bottom: 60px; }
+        .main-header { padding: 0 16px; }
+        .mobile-logo { display: flex; align-items: center; gap: 10px; }
+        .mobile-logo .logo-box { width: 32px; height: 32px; }
+        .mobile-logo span { font-weight: 800; font-size: 1.1rem; }
+        .desktop-only { display: none; }
+        .bento-grid { grid-template-columns: 1fr; }
+        .skills-bento { grid-column: span 1; flex-direction: column; }
       }
     </style>
   </head>
@@ -444,122 +282,91 @@
       <p class="text">Please Wait</p>
     </div>
 
-    <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header" onClick="window.location.href='index.html'">
+        <div class="logo-box">
           <i data-lucide="shield"></i>
         </div>
+        <span class="logo-text">User Portal</span>
+      </div>
 
-        <div class="nav-items">
-          <a href="UserDashboard.html" class="nav-btn">
-            <i data-lucide="layout-grid"></i> <span>Dashboard</span>
-          </a>
-          <a href="TrainingPage.html" class="nav-btn">
-            <i data-lucide="compass"></i> <span>Explore Programs</span>
-          </a>
-          <a href="wishlist.html" class="nav-btn">
-            <i data-lucide="bookmark"></i> <span>Saved Training</span>
-          </a>
-          <a href="MyCertificates.html" class="nav-btn active">
-            <i data-lucide="award"></i> <span>My Certificates</span>
-          </a>
-          <a href="LearningStats.html" class="nav-btn">
-            <i data-lucide="bar-chart-2"></i> <span>Learning Stats</span>
-          </a>
-          <a href="CommunityForums.html" class="nav-btn">
-            <i data-lucide="users"></i> <span>Community Forums</span>
-          </a>
-          <a href="Messages.html" class="nav-btn">
-            <i data-lucide="mail"></i>
-            <span
-              >Messages
-              <span
-                class="badge"
-                style="
-                  background: var(--danger);
-                  color: white;
-                  border-radius: 50%;
-                  font-size: 0.65rem;
-                  padding: 2px 6px;
-                  position: absolute;
-                  right: 15px;
-                  top: 10px;
-                "
-                >3</span
-              ></span
-            >
-          </a>
-          <a href="Settings.html" class="nav-btn">
-            <i data-lucide="settings"></i> <span>Account Settings</span>
-          </a>
-          <a href="#" class="nav-btn">
-            <i data-lucide="help-circle"></i> <span>Help & Support</span>
-          </a>
-          <div style="flex: 1"></div>
-          <a
-            href="index.html"
-            class="nav-btn"
-            style="color: var(--admin-danger); margin-top: auto"
-          >
-            <i data-lucide="log-out"></i> <span>Logout</span>
-          </a>
-        </div>
-      </aside>
+      <nav class="nav-list">
+        <a href="UserDashboard.html" class="nav-item">
+          <i data-lucide="layout-grid"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="TrainingPage.html" class="nav-item">
+          <i data-lucide="compass"></i>
+          <span>Explore Programs</span>
+        </a>
+        <a href="wishlist.html" class="nav-item">
+          <i data-lucide="bookmark"></i>
+          <span>Saved Training</span>
+        </a>
+        <a href="MyCertificates.html" class="nav-item active">
+          <i data-lucide="award"></i>
+          <span>Certificates</span>
+        </a>
+        <a href="LearningStats.html" class="nav-item">
+          <i data-lucide="bar-chart-2"></i>
+          <span>Stats</span>
+        </a>
+        <a href="CommunityForums.html" class="nav-item">
+          <i data-lucide="users"></i>
+          <span>Forum</span>
+        </a>
+        <a href="Messages.html" class="nav-item">
+          <i data-lucide="mail"></i>
+          <span>Messages</span>
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+        <div style="flex: 1"></div>
+        <a href="index.html" class="nav-item" style="color: #ef4444; margin-top: auto">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </a>
+      </nav>
+    </aside>
 
-      <!-- MAIN AREA -->
-      <main class="dash-main">
-        <!-- HEADER -->
-        <header class="top-nav">
-          <div class="greeting">
-            <h2>Achievements</h2>
-            <p>View and download your earned NGO certificates.</p>
-          </div>
-
-          <div class="top-actions">
-            <button
-              id="dirToggle"
-              class="btn"
-              style="
-                background: var(--card);
-                border: 1px solid rgba(128, 128, 128, 0.1);
-                color: var(--text);
-                padding: 8px 12px;
-                border-radius: 12px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: 0.3s;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
-              "
-            >
-              <i data-lucide="languages" style="width: 18px"></i>
-              <span>LTR</span>
-            </button>
-            <label class="theme-toggle">
-              <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="icon-wrapper">
-                <i data-lucide="sun" class="sun-icon"></i>
-                <i data-lucide="moon" class="moon-icon"></i>
-              </div>
-            </label>
-
-            <div class="profile-pill">
-              <div class="avatar"></div>
-              <span style="font-weight: 600; font-size: 0.95rem"
-                >Sarah Jenkins</span
-              >
-              <i
-                data-lucide="chevron-down"
-                style="width: 18px; color: var(--muted)"
-              ></i>
+    <!-- MAIN AREA -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-title-box">
+          <div class="mobile-logo" onClick="window.location.href='index.html'">
+            <div class="logo-box">
+              <i data-lucide="shield"></i>
             </div>
+            <span>NGO Training</span>
           </div>
-        </header>
+          <h1 class="desktop-only">Achievements</h1>
+        </div>
 
-        <!-- BENTO SCROLL AREA -->
+        <div class="user-actions">
+          <button id="dirToggle" class="icon-btn" title="Toggle Language Direction" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; transition: 0.3s;">
+            <i data-lucide="languages" style="width: 18px;"></i>
+            <span class="desktop-only">LTR</span>
+          </button>
+
+          <label class="theme-toggle">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="icon-wrapper">
+              <i data-lucide="sun" class="sun-icon"></i>
+              <i data-lucide="moon" class="moon-icon"></i>
+            </div>
+          </label>
+
+          <div class="profile-pill" style="display: flex; align-items: center; gap: 10px; padding: 6px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 50px; cursor: pointer;">
+            <div class="avatar" style="width: 28px; height: 28px; border-radius: 50%; background: url('https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff') center/cover;"></div>
+            <span class="desktop-only" style="font-weight: 600; font-size: 0.9rem">Sarah J.</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="bento-scroll">
         <div class="bento-scroll">
           <div class="bento-grid">
             <!-- SKILLS RADAR BENTO (Span 3) -->

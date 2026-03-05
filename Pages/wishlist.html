@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -28,19 +28,152 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+      /* OVERRIDE & BASE STYLES */
+      :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.15);
+      }
+
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+
       body {
         font-family: "Poppins", sans-serif;
         background: var(--bg);
         color: var(--text);
+        margin: 0;
+        overflow-x: hidden;
       }
 
-      /* Modern Hero Header with Background Image */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Mobile Navigation Support */
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        transition: 0.3s;
+      }
+      
+      html.dark .navbar {
+        background: rgba(15, 23, 42, 0.8);
+      }
+      
+      .navbar.solid-bg {
+        background: var(--card) !important;
+        backdrop-filter: none;
+      }
+
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .navbar-logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        font-family: "Outfit", sans-serif;
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .navbar-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+
+      .navbar-link {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .navbar-link:hover,
+      .navbar-link.active {
+        color: var(--primary);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        color: var(--text);
+      }
+      .theme-toggle input { display: none; }
+
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Dropdown */
+      .dropdown { position: relative; }
+      .dropdown-menu {
+        position: absolute; top: 100%; left: 0; background: var(--card); border: 1px solid var(--border);
+        border-radius: 16px; padding: 10px; min-width: 200px; opacity: 0; visibility: hidden;
+        transform: translateY(10px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: flex; flex-direction: column; gap: 5px;
+      }
+      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+      .dropdown-menu a { padding: 10px 15px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.95rem; transition: 0.2s; }
+      .dropdown-menu a:hover { background: rgba(128,128,128,0.05); color: var(--primary); }
+
+      /* Modern Hero Header */
       .wishlist-header {
         padding: 180px 2rem 100px;
         text-align: center;
         background:
-          linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.9)),
-          url("../assets/Images/hero-w.png");
+          linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)),
+          url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -54,7 +187,7 @@
       }
 
       .section-label {
-        color: var(--primary);
+        color: #38bdf8; /* Brighter blue for dark background visibility */
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.15em;
@@ -66,15 +199,16 @@
       .wishlist-header h1 {
         font-family: "Outfit", sans-serif;
         font-size: 3.5rem;
-        font-weight: 700;
+        font-weight: 800;
         line-height: 1.1;
+        margin-top: 0;
         margin-bottom: 1.5rem;
         color: white;
       }
 
       .wishlist-header p {
         font-size: 1.25rem;
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.85);
         max-width: 700px;
         margin: 0 auto 2.5rem;
         line-height: 1.6;
@@ -84,227 +218,157 @@
         display: flex;
         gap: 1rem;
         justify-content: center;
+        flex-wrap: wrap;
       }
 
       .btn-action {
-        padding: 12px 24px;
+        padding: 14px 28px;
         border-radius: 12px;
         font-weight: 600;
         cursor: pointer;
         transition: 0.3s;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         border: none;
+        font-size: 1rem;
       }
 
-      .btn-share {
-        background: white;
-        color: var(--primary);
-      }
-
-      .btn-clear {
-        background: rgba(239, 68, 68, 0.2);
-        color: #fca5a5;
-        border: 1px solid rgba(239, 68, 68, 0.3);
-      }
-
-      .btn-action:hover {
-        transform: translateY(-2px);
-      }
+      .btn-share { background: white; color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+      .btn-share:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+      .btn-clear { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px); }
+      .btn-clear:hover { background: rgba(239, 68, 68, 0.3); transform: translateY(-3px); }
 
       /* Training Grid */
-      .wishlist-main {
-        max-width: 1200px;
-        margin: 0 auto 100px;
-        padding: 0 2rem;
-      }
-
+      .wishlist-main { margin: 0 auto 100px; }
       .training-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
         gap: 2rem;
       }
 
       /* Modern Bento Card */
       .program-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 2.5rem;
-        display: flex;
-        flex-direction: column;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
+        background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+        padding: 2.5rem; display: flex; flex-direction: column;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.02);
       }
-
-      .program-card:hover {
-        transform: translateY(-8px);
-        border-color: var(--primary);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      }
+      .program-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
 
       .card-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        background: rgba(37, 99, 235, 0.1);
-        color: var(--primary);
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        margin-bottom: 1.5rem;
-        align-self: flex-start;
+        display: inline-block; padding: 6px 14px; background: rgba(37, 99, 235, 0.1);
+        color: var(--primary); border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+        text-transform: uppercase; margin-bottom: 1.5rem; align-self: flex-start;
       }
 
-      .program-card h3 {
-        font-family: "Outfit", sans-serif;
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.3;
-      }
+      .program-card h3 { font-family: "Outfit", sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.3; }
+      
+      .card-meta { display: flex; align-items: center; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
+      .card-meta span { display: flex; align-items: center; gap: 0.5rem; }
 
-      .card-meta {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        font-size: 0.9rem;
-        color: var(--muted);
-        margin-bottom: 1.5rem;
-      }
-
-      .card-meta span {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .card-actions {
-        margin-top: auto;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 0.75rem;
-      }
-
+      .card-actions { margin-top: auto; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
       .btn-enroll {
-        background: var(--primary);
-        color: white;
-        border: none;
-        padding: 0.9rem;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.2s;
-        text-align: center;
-        text-decoration: none;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white; border: none; padding: 0.9rem; border-radius: 12px; font-weight: 600;
+        cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none;
       }
-
-      .btn-enroll:hover {
-        background: var(--secondary);
-        transform: scale(1.02);
-      }
-
+      .btn-enroll:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+      
       .btn-remove {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        border: none;
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.2s;
+        background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; width: 48px; height: 48px;
+        border-radius: 12px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; transition: 0.2s;
       }
-
-      .btn-remove:hover {
-        background: #ef4444;
-        color: white;
-      }
+      .btn-remove:hover { background: #ef4444; color: white; }
 
       /* Empty State */
       .empty-state {
-        text-align: center;
-        padding: 100px 2rem;
-        background: var(--card);
-        border: 2px dashed var(--border);
-        border-radius: 32px;
-        max-width: 650px;
-        margin: 0 auto;
+        text-align: center; padding: 80px 2rem; background: var(--card);
+        border: 2px dashed var(--border); border-radius: 32px; max-width: 650px; margin: 0 auto;
       }
-
       .empty-icon {
-        width: 80px;
-        height: 80px;
-        background: rgba(37, 99, 235, 0.05);
-        color: var(--primary);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 2.5rem;
+        width: 80px; height: 80px; background: rgba(37, 99, 235, 0.05); color: var(--primary);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2.5rem;
       }
-
-      .empty-state h2 {
-        font-family: "Outfit", sans-serif;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .empty-state p {
-        font-size: 1.1rem;
-        color: var(--muted);
-        margin-bottom: 2.5rem;
-        line-height: 1.6;
-      }
-
+      .empty-state h2 { font-family: "Outfit", sans-serif; font-size: 2rem; margin-top: 0; margin-bottom: 1rem; }
+      .empty-state p { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.6; }
       .btn-browse {
-        background: var(--primary);
-        color: white;
-        padding: 1rem 2.5rem;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        display: inline-block;
-        transition: 0.3s;
+        background: var(--primary); color: white; padding: 1rem 2.5rem; border-radius: 12px;
+        text-decoration: none; font-weight: 600; display: inline-block; transition: 0.3s;
       }
+      .btn-browse:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
 
-      .btn-browse:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
-      }
+      /* Footer */
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; margin-top: 40px; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer-col ul li { margin-bottom: 12px; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a:hover { color: var(--primary); }
+      .social-links { display: flex; gap: 15px; }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
+      /* =========================================
+         RESPONSIVE BREAKPOINTS 
+         ========================================= */
+         
       @media (max-width: 1024px) {
-        .wishlist-header h1 {
-          font-size: 3rem;
+        .wishlist-header h1 { font-size: 3rem; }
+      }
+
+      /* Navbar Breakpoint */
+      @media (max-width: 900px) {
+        .navbar-menu {
+          position: fixed; top: 70px; left: -100%; display: flex !important;
+          flex-direction: column; background: var(--card); width: 100%; text-align: center;
+          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          padding: 2rem 0; border-bottom: 1px solid var(--border); z-index: 99;
+          max-height: calc(100vh - 70px); overflow-y: auto;
         }
+        .navbar-menu.active { left: 0; }
+        .navbar-menu li { margin: 15px 0; width: 100%; }
+        
+        .dropdown:hover .dropdown-menu { position: static; box-shadow: none; border: none; transform: none; visibility: visible; opacity: 1; background: transparent; padding: 0; margin-top: 10px;}
+        .dropdown-menu a { display: block; text-align: center; }
+        
+        .mobile-menu-btn { display: flex; order: 3; }
+        .navbar-logo { flex: 1; }
+        .nav-actions { order: 2; margin-right: 15px; gap: 10px; }
       }
 
       @media (max-width: 768px) {
-        .wishlist-header {
-          padding: 140px 1.5rem 80px;
-        }
+        .wishlist-header { padding: 140px 1.5rem 80px; }
+        .wishlist-header h1 { font-size: 2.5rem; }
+        .wishlist-actions { flex-direction: column; }
+        .btn-action { width: 100%; }
+        .training-grid { grid-template-columns: 1fr; }
+        
+        .footer { padding: 40px 0 30px; }
+        .footer-grid { gap: 30px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .footer-legal { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
+      }
 
-        .wishlist-header h1 {
-          font-size: 2.5rem;
-        }
-
-        .training-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .wishlist-actions {
-          flex-direction: column;
-        }
+      @media (max-width: 480px) {
+        .wishlist-header { padding: 120px 1.5rem 60px; }
+        .wishlist-header h1 { font-size: 2rem; }
+        .wishlist-header p { font-size: 1rem; }
+        .program-card { padding: 1.5rem; }
+        
+        /* Compact top nav for tiny screens */
+        .navbar-container { padding: 15px 1rem; }
+        #dirToggle span { display: none; }
       }
     </style>
   </head>
 
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader">
+    <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -314,12 +378,11 @@
     <nav class="navbar">
       <div class="navbar-container">
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
+
         <ul class="navbar-menu">
           <li><a href="index.html" class="navbar-link">Home</a></li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
-          <li>
-            <a href="wishlist.html" class="navbar-link active">Wishlist</a>
-          </li>
+          <li><a href="wishlist.html" class="navbar-link active">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
@@ -333,32 +396,19 @@
         </ul>
 
         <div class="nav-actions">
-          <button
-            id="dirToggle"
-            class="btn btn-light"
-            style="
-              padding: 8px 12px;
-              border-radius: 10px;
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              cursor: pointer;
-              border: 1px solid var(--border);
-              background: var(--card);
-              color: var(--text);
-            "
-          >
+          <button id="dirToggle" style="padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text);">
             <i data-lucide="languages" style="width: 18px"></i>
             <span>LTR</span>
           </button>
-          <label class="theme-toggle">
-            <input type="checkbox" class="switch-input" id="themeSwitch" />
-            <div class="icon-wrapper">
-              <i data-lucide="sun" class="sun-icon"></i>
-              <i data-lucide="moon" class="moon-icon"></i>
-            </div>
+          
+          <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+            <i data-lucide="moon" style="width: 18px"></i>
           </label>
         </div>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i data-lucide="menu"></i>
+        </button>
       </div>
     </nav>
 
@@ -384,7 +434,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="wishlist-main">
+    <main class="wishlist-main container">
       <div id="wishlistContainer" class="training-grid">
         <!-- Rendered via JS -->
       </div>
@@ -404,110 +454,104 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4
-            style="
-              color: var(--primary);
-              font-size: 1.5rem;
-              margin-bottom: 1rem;
-              font-family: &quot;Outfit&quot;, sans-serif;
-            "
-          >
-            🌍 NGO Training
-          </h4>
-          <p>
-            Empowering individuals and organizations with conflict resolution
-            skills for a more peaceful world. Our platform provides
-            high-quality, accessible training for everyone.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="TrainingPage.html">Programs</a></li>
-            <li><a href="Impact.html">Our Impact</a></li>
-            <li><a href="Community.html">Community</a></li>
-            <li><a href="404.html">404 Page</a></li>
-            <li><a href="Comingsoon.html">Comingsoon Page</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="Contact.html">Help Center</a></li>
-            <li><a href="wishlist.html">Wishlist</a></li>
-            <li><a href="Settings.html">Settings</a></li>
-            <li><a href="login.html">Login / Register</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <p style="margin-bottom: 1.5rem">
-            Join our community on social media to stay updated.
-          </p>
-          <div class="social-links">
-            <a href="#"><i data-lucide="facebook"></i></a>
-            <a href="#"><i data-lucide="twitter"></i></a>
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="linkedin"></i></a>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+            <p style="color: var(--muted); line-height: 1.6;">
+              Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="TrainingPage.html">Programs</a></li>
+              <li><a href="Impact.html">Our Impact</a></li>
+              <li><a href="Community.html">Community</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="Contact.html">Help Center</a></li>
+              <li><a href="wishlist.html">Wishlist</a></li>
+              <li><a href="Settings.html">Settings</a></li>
+              <li><a href="login.html">Login / Register</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Follow Us</h4>
+            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <div class="social-links">
+              <a href="#"><i data-lucide="facebook"></i></a>
+              <a href="#"><i data-lucide="twitter"></i></a>
+              <a href="#"><i data-lucide="instagram"></i></a>
+              <a href="#"><i data-lucide="linkedin"></i></a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>
-          &copy; <span id="year">2026</span> NGO Training Platform. All rights
-          reserved.
-        </p>
-        <div class="footer-legal">
-          <a
-            href="#"
-            style="
-              color: var(--muted);
-              text-decoration: none;
-              margin-left: 20px;
-            "
-            >Privacy Policy</a
-          >
-          <a
-            href="#"
-            style="
-              color: var(--muted);
-              text-decoration: none;
-              margin-left: 20px;
-            "
-            >Terms of Service</a
-          >
+        <div class="footer-bottom">
+          <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
+            <a href="#" style="color: var(--muted); text-decoration: none;">Terms of Service</a>
+          </div>
         </div>
       </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="../assets/js/data.js"></script>
-    <script src="../assets/js/theme.js"></script>
     <script>
-      lucide.createIcons();
+      // Initialize Icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+      
+      // Set Year
       document.getElementById("year").innerText = new Date().getFullYear();
 
-      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      // Fallback Programs Mock Data (In case data.js is missing or slow)
+      const programsFallback = [
+        { id: 1, title: "Advanced Conflict Resolution", level: "Advanced", description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", duration: "6 Weeks", modules: 12 },
+        { id: 2, title: "Foundations of Mediation", level: "Beginner", description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", duration: "3 Weeks", modules: 5 },
+        { id: 3, title: "Cross-Cultural Communication", level: "Intermediate", description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", duration: "4 Weeks", modules: 8 },
+        { id: 4, title: "Negotiation Strategies", level: "Advanced", description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", duration: "8 Weeks", modules: 16 }
+      ];
+
+      // Use defined programs array or fallback
+      const activePrograms = typeof programs !== 'undefined' ? programs : programsFallback;
+
+      let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+      
+      // If local storage is empty, populate 2 dummy items so the user can see the design
+      if (!wishlist || !Array.isArray(wishlist)) {
+        wishlist = [1, 3]; 
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      }
+
       const container = document.getElementById("wishlistContainer");
       const emptyState = document.getElementById("emptyState");
 
       function renderWishlist() {
         container.innerHTML = "";
 
-        if (!wishlist || wishlist.length === 0) {
+        if (wishlist.length === 0) {
           emptyState.style.display = "block";
           container.style.display = "none";
+          // Disable clear/share buttons if empty
+          document.querySelector('.btn-share').style.opacity = '0.5';
+          document.querySelector('.btn-clear').style.opacity = '0.5';
           return;
         }
 
         emptyState.style.display = "none";
         container.style.display = "grid";
+        document.querySelector('.btn-share').style.opacity = '1';
+        document.querySelector('.btn-clear').style.opacity = '1';
 
         wishlist.forEach((id) => {
-          const program = programs.find((p) => p.id === id);
+          const program = activePrograms.find((p) => p.id === id);
           if (program) {
             container.innerHTML += `
               <div class="program-card">
@@ -515,7 +559,7 @@
                 <h3>${program.title}</h3>
                 <div class="card-meta">
                   <span><i data-lucide="clock" style="width:14px"></i> ${program.duration}</span>
-                  <span><i data-lucide="book-open" style="width:14px"></i> ${program.modules} Modules</span>
+                  <span><i data-lucide="book-open" style="width:14px"></i> ${program.modules || 6} Modules</span>
                 </div>
                 <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6;">${program.description.substring(0, 110)}...</p>
                 <div class="card-actions">
@@ -528,7 +572,10 @@
             `;
           }
         });
-        lucide.createIcons();
+        
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
       }
 
       function removeFromWishlist(id) {
@@ -554,7 +601,7 @@
 
         let shareText = "My Training Wishlist at NGO Training:\n\n";
         wishlist.forEach((id, index) => {
-          const p = programs.find((prog) => prog.id === id);
+          const p = activePrograms.find((prog) => prog.id === id);
           if (p) {
             shareText += `${index + 1}. ${p.title} (${p.level})\n`;
           }
@@ -570,7 +617,37 @@
           });
       }
 
+      // Initial Render
       renderWishlist();
+
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const navMenu = document.querySelector(".navbar-menu");
+      const navbar = document.querySelector(".navbar");
+
+      if (mobileBtn && navMenu) {
+        mobileBtn.addEventListener("click", () => {
+          navMenu.classList.toggle("active");
+          const isExpanded = navMenu.classList.contains("active");
+
+          if (navbar) {
+            if (isExpanded) {
+              navbar.classList.add("solid-bg");
+            } else {
+              navbar.classList.remove("solid-bg");
+            }
+          }
+
+          const icon = mobileBtn.querySelector("i");
+          if (icon) {
+            icon.setAttribute("data-lucide", isExpanded ? "x" : "menu");
+            if (typeof lucide !== "undefined") {
+              lucide.createIcons();
+            }
+          }
+        });
+      }
     </script>
+    <script src="../assets/js/theme.js"></script>
   </body>
 </html>

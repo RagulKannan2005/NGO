@@ -72,6 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       backToTop.classList.remove("visible");
     }
+
+    // Scroll-aware navbar
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+      if (window.scrollY > 60) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    }
   });
 
   backToTop.addEventListener("click", () => {
