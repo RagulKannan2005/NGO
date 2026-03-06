@@ -470,7 +470,7 @@
   <body>
     <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar-header" onClick="window.location.href='index.html'">
+      <div class="sidebar-header" onClick="window.location.href='../index.html'">
         <div class="logo-box">
           <i data-lucide="shield"></i>
         </div>
@@ -524,7 +524,7 @@
           <h1 id="tabTitle" class="desktop-only">User Directory</h1>
           <div
             class="mobile-logo"
-            onclick="window.location.href = 'index.html'"
+            onclick="window.location.href = '../index.html'"
           >
             <div class="logo-box">
               <i data-lucide="shield"></i>
@@ -706,7 +706,7 @@
                 "
               >
                 Showing 1-4 of 1,245 users.
-                <a href="#" style="color: var(--primary); text-decoration: none"
+                <a href="javascript:void(0)" style="color: var(--primary); text-decoration: none"
                   >View Next Page</a
                 >
               </div>
@@ -1143,7 +1143,7 @@
                   <img
                     src="https://ui-avatars.com/api/?name=John+Doe&background=cbd5e1&color=333"
                     style="width: 36px; border-radius: 50%"
-                  />
+                  / alt="NGO Image">
                   <div>
                     <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
                       John Doe
@@ -1253,7 +1253,7 @@
                   <img
                     src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=f472b6&color=fff"
                     style="width: 36px; border-radius: 50%"
-                  />
+                  / alt="NGO Image">
                   <div>
                     <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
                       Sarah Jenkins
@@ -2328,7 +2328,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
             (u) => `
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 15px 10px; display: flex; align-items: center; gap: 10px;">
-              <img src="${u.avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+              <img src="${u.avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" / alt="NGO Image">
               <strong style="color: var(--text);">${u.name}</strong>
             </td>
             <td style="padding: 15px 10px; color: var(--muted);">${u.email}</td>

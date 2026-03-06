@@ -1,0 +1,116 @@
+
+--- index.html ---
+Line 949: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1464: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1465: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1466: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1467: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1477: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+Line 1482: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\javascript:void(0))
+
+--- Pages\AdminDashboard.html ---
+Line 709: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Community.html ---
+Line 501: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 502: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 503: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 504: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 511: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 512: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\CommunityForums.html ---
+Line 538: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Contact.html ---
+Line 418: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 695: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 696: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 697: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 698: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 708: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 717: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Home2.html ---
+Line 575: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 781: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 782: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 783: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 784: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 791: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 792: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Impact.html ---
+Line 757: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 920: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 921: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 922: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 923: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 933: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 934: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\LearningStats.html ---
+Line 407: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 609: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 610: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 611: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 612: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 619: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 620: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\login.html ---
+Line 225: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 232: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Messages.html ---
+Line 670: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\MyCertificates.html ---
+Line 394: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 584: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 585: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 586: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 587: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 594: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 595: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\Settings.html ---
+Line 493: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 508: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 709: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 710: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 711: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 712: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 719: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 720: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\TrainingPage.html ---
+Line 315: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 431: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 432: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 433: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 434: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 441: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 442: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\UserDashboard.html ---
+Line 672: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 675: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 678: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 681: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 703: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 790: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 791: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 792: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 793: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 800: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 801: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+
+--- Pages\wishlist.html ---
+Line 390: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 487: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 488: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 489: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 490: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 497: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))
+Line 498: Broken link/asset to local file: 'javascript:void(0)' (Resolved: E:\websitengo\NGO\Pages\javascript:void(0))

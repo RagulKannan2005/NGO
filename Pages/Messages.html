@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -25,13 +25,35 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      /* DASHBOARD BASE STYLES */
+      /* OVERRIDE GLOBALS FOR DASHBOARD ONLY */
+      :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --danger: #ef4444;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.1);
+      }
+      
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
+        color: var(--text);
         display: flex;
         height: 100vh;
         overflow: hidden;
+        margin: 0;
+        /* Advanced ambient noise/blobs */
         background-image:
           radial-gradient(
             circle at 0% 0%,
@@ -45,6 +67,8 @@
           );
         background-attachment: fixed;
       }
+
+      /* CORE LAYOUT */
       .dash-wrapper {
         display: flex;
         width: 100%;
@@ -54,13 +78,26 @@
         box-sizing: border-box;
       }
 
-      /* SIDEBAR */
+      .dash-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        background: var(--bg);
+        border-radius: 32px;
+        border: 1px solid var(--border);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
+      }
+
+      /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
         background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid var(--border);
         border-radius: 32px;
         display: flex;
         flex-direction: column;
@@ -73,13 +110,14 @@
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
       }
+
       html.dark .floating-sidebar {
         background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow:
           0 30px 60px rgba(0, 0, 0, 0.2),
           inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
+
       .floating-sidebar:hover {
         width: 280px;
         align-items: flex-start;
@@ -97,6 +135,7 @@
         margin-bottom: 40px;
         flex-shrink: 0;
         transition: 0.4s;
+        cursor: pointer;
       }
       .floating-sidebar:hover .nav-logo {
         margin-left: 24px;
@@ -110,6 +149,7 @@
         padding: 0 24px;
         box-sizing: border-box;
       }
+
       .nav-btn {
         width: 100%;
         display: flex;
@@ -121,30 +161,57 @@
         text-decoration: none;
         transition: all 0.3s ease;
         white-space: nowrap;
+        position: relative;
         overflow: hidden;
       }
-      .nav-btn i {
+      
+      .nav-icon-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         min-width: 24px;
+        width: 24px;
+        height: 24px;
+      }
+      .nav-icon-wrap i,
+      .nav-icon-wrap svg {
         transition: 0.3s transform;
       }
-      .nav-btn span {
+      .nav-badge {
+        background: var(--danger);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        position: absolute;
+        top: -6px;
+        right: -10px;
+        font-weight: 700;
+      }
+
+      .nav-text {
         opacity: 0;
         transform: translateX(-10px);
         transition: all 0.3s;
         font-weight: 500;
         font-size: 0.95rem;
       }
-      .floating-sidebar:hover .nav-btn span {
+
+      .floating-sidebar:hover .nav-text {
         opacity: 1;
         transform: translateX(0);
       }
+
       .nav-btn:hover {
         color: var(--text);
         background: rgba(128, 128, 128, 0.08);
       }
-      .nav-btn:hover i {
+      .nav-btn:hover i,
+      .nav-btn:hover svg {
         transform: scale(1.1);
       }
+
       .nav-btn.active {
         color: var(--primary);
         background: rgba(37, 99, 235, 0.1);
@@ -153,58 +220,98 @@
         background: rgba(37, 99, 235, 0.15);
       }
 
-      /* MAIN CONTENT */
-      .dash-main {
-        flex: 1;
+      /* DASHBOARD HEADER */
+      .top-nav {
         display: flex;
-        flex-direction: column;
-        border-radius: 32px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
-        overflow: hidden;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px 40px;
+        border-bottom: 1px solid var(--border);
+        gap: 20px;
+        background: var(--bg);
+        z-index: 10;
       }
-      html.dark .dash-main {
-        background: rgba(15, 23, 42, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.03);
+      .greeting h2 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+        margin-top: 0;
+      }
+      .greeting p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin: 0;
       }
 
-      /* SPLIT PANE INBOX LAYOUT */
+      /* TOP ACTIONS */
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .profile-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 16px 6px 6px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
+      }
+      .profile-pill:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
+          center/cover;
+      }
+
+      /* =========================================
+         INBOX LAYOUT (MESSAGES)
+         ========================================= */
       .inbox-container {
         flex: 1;
         display: flex;
-        overflow: hidden;
+        overflow: hidden; /* Desktop view handles internal overflow */
+        background: var(--bg);
       }
 
       /* INBOX LIST (LEFT) */
       .inbox-list {
         width: 350px;
-        border-right: 1px solid rgba(128, 128, 128, 0.1);
+        border-right: 1px solid var(--border);
         display: flex;
         flex-direction: column;
-        background: rgba(255, 255, 255, 0.2);
-      }
-      html.dark .inbox-list {
-        background: rgba(15, 23, 42, 0.2);
+        background: var(--card);
       }
 
       .inbox-header {
-        padding: 30px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        padding: 24px 30px;
+        border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
       .inbox-header h3 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 700;
+        margin: 0;
       }
 
       .thread-list {
         flex: 1;
         overflow-y: auto;
         padding: 15px;
+        -webkit-overflow-scrolling: touch;
       }
       .thread-item {
         padding: 20px;
@@ -218,8 +325,8 @@
         background: rgba(128, 128, 128, 0.05);
       }
       .thread-item.active {
-        background: var(--card);
-        border-color: rgba(128, 128, 128, 0.1);
+        background: var(--bg);
+        border-color: var(--border);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
       }
 
@@ -232,6 +339,7 @@
       .thread-sender {
         font-weight: 700;
         font-size: 1.05rem;
+        color: var(--text);
       }
       .thread-time {
         font-size: 0.75rem;
@@ -270,15 +378,16 @@
 
       .detail-header {
         padding: 30px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
       }
       .detail-subject {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 700;
-        margin-bottom: 15px;
+        margin: 0 0 15px 0;
+        color: var(--text);
       }
       .sender-info {
         display: flex;
@@ -289,7 +398,7 @@
         width: 45px;
         height: 45px;
         border-radius: 50%;
-        background: var(--border);
+        background-color: var(--border);
         background-size: cover;
         background-position: center;
       }
@@ -297,45 +406,91 @@
         font-weight: 700;
         font-size: 1.1rem;
         display: block;
+        color: var(--text);
       }
       .sender-email {
         color: var(--muted);
         font-size: 0.85rem;
       }
 
+      /* Action Buttons */
+      .action-btns {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        font-family: inherit;
+        font-size: 0.95rem;
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: var(--card);
+      }
+      .btn-outline:hover {
+        background: rgba(128, 128, 128, 0.05);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #fff;
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+      }
+
+      /* Message Body */
       .detail-body {
         flex: 1;
         overflow-y: auto;
         padding: 40px;
+        -webkit-overflow-scrolling: touch;
       }
       .msg-bubble {
         background: var(--card);
         padding: 30px;
         border-radius: 0 24px 24px 24px;
-        border: 1px solid rgba(128, 128, 128, 0.1);
+        border: 1px solid var(--border);
         max-width: 80%;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
         line-height: 1.6;
         color: var(--muted);
       }
+      html.dark .msg-bubble {
+        color: var(--text); /* Brighter text in dark mode for legibility */
+      }
       .msg-bubble p {
+        margin-top: 0;
         margin-bottom: 15px;
       }
       .msg-bubble p:last-child {
         margin-bottom: 0;
       }
 
+      /* Reply Area */
       .detail-reply {
         padding: 30px;
-        border-top: 1px solid rgba(128, 128, 128, 0.1);
-        background: rgba(128, 128, 128, 0.02);
+        border-top: 1px solid var(--border);
+        background: var(--card);
       }
       .reply-box {
         width: 100%;
         min-height: 120px;
         padding: 20px;
+        box-sizing: border-box;
         border-radius: 16px;
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        border: 1px solid var(--border);
         background: var(--bg);
         color: var(--text);
         font-family: "Outfit", sans-serif;
@@ -349,135 +504,227 @@
         box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
       }
 
+      /* -------------------------------------
+         RESPONSIVE BREAKPOINTS 
+         ------------------------------------- */
+
+      /* Desktop / Large Tablet */
       @media (max-width: 1024px) {
-        .inbox-list {
-          width: 300px;
-        }
+        .dash-wrapper { padding: 16px; gap: 16px; }
+        .inbox-list { width: 300px; }
       }
-      @media (max-width: 768px) {
+
+      /* Tablet Portrait & Mobile (Trigger Bottom Nav) */
+      @media (max-width: 850px) {
+        body { height: 100dvh; }
         .dash-wrapper {
-          padding: 10px;
+          padding: 0;
           flex-direction: column;
+          gap: 0;
         }
+        
+        .top-nav { padding: 20px 24px; }
+
+        /* Transform Sidebar into Fixed Bottom Bar */
         .floating-sidebar {
+          position: fixed;
+          bottom: 0;
+          top: auto;
+          left: 0;
           width: 100%;
+          height: 70px;
           flex-direction: row;
-          padding: 15px;
-          border-radius: 20px;
-          height: auto;
+          padding: 0 15px;
+          border-radius: 24px 24px 0 0;
+          border: none;
+          border-top: 1px solid var(--border);
+          background: var(--card);
+          box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+          align-items: center;
+          justify-content: flex-start;
+          box-sizing: border-box;
         }
-        .nav-logo {
-          margin-bottom: 0;
-          margin-right: 20px;
-        }
+        .floating-sidebar:hover { width: 100%; align-items: center; } 
+        
+        .nav-logo { display: none; }
+        
         .nav-items {
           flex-direction: row;
           padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
           overflow-x: auto;
+          gap: 15px;
+          align-items: center;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
         }
-        .nav-btn span {
-          display: none;
+        .nav-items::-webkit-scrollbar { display: none; }
+        
+        .nav-btn { 
+          padding: 10px; 
+          border-radius: 12px; 
+          width: auto; 
+          scroll-snap-align: center; 
+          flex-shrink: 0; 
         }
+        .nav-text { display: none !important; }
+
+        /* Resize main area to not get covered by bottom bar */
+        .dash-main { 
+          border-radius: 0; 
+          border: none; 
+          height: calc(100vh - 70px); 
+        }
+        
+        /* Stack the Inbox vertically */
         .inbox-container {
           flex-direction: column;
         }
         .inbox-list {
           width: 100%;
-          height: 300px;
+          height: 35vh;
           border-right: none;
-          border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+          border-bottom: 1px solid var(--border);
         }
+        .detail-header {
+          flex-direction: column;
+          gap: 15px;
+          padding: 20px;
+        }
+        .action-btns { width: 100%; flex-wrap: wrap; }
+        .detail-body { padding: 20px; }
+        .msg-bubble { max-width: 100%; padding: 20px; }
+        .detail-reply { padding: 20px; }
+      }
+
+      /* Small Mobile Overrides */
+      @media (max-width: 500px) {
+        .top-nav { padding: 15px 20px; }
+        .greeting p { display: none; } 
+        .top-actions #dirToggle { display: none; } 
+        .profile-pill span { display: none; } 
+        .profile-pill { padding: 4px; border-radius: 50%; }
+        .inbox-list { height: 30vh; }
       }
     </style>
   </head>
   <body>
-    <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader">
+    <!-- PAGE LOADER (Hidden if no logic exists, visual structure intact) -->
+    <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
 
+    <!-- WRAPPER -->
     <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR -->
+      <!-- FLOATING SIDEBAR / BOTTOM NAV -->
       <aside class="floating-sidebar">
-        <div class="nav-logo"><i data-lucide="shield"></i></div>
+        <div class="nav-logo" onclick="window.location.href = '../index.html'">
+          <i data-lucide="shield"></i>
+        </div>
+
         <div class="nav-items">
-          <a href="UserDashboard.html" class="nav-btn"
-            ><i data-lucide="layout-grid"></i> <span>Dashboard</span></a
-          >
-          <a href="TrainingPage.html" class="nav-btn"
-            ><i data-lucide="compass"></i> <span>Explore Programs</span></a
-          >
-          <a href="wishlist.html" class="nav-btn"
-            ><i data-lucide="bookmark"></i> <span>Saved Training</span></a
-          >
-          <a href="MyCertificates.html" class="nav-btn"
-            ><i data-lucide="award"></i> <span>My Certificates</span></a
-          >
-          <a href="LearningStats.html" class="nav-btn"
-            ><i data-lucide="bar-chart-2"></i> <span>Learning Stats</span></a
-          >
-          <a href="CommunityForums.html" class="nav-btn"
-            ><i data-lucide="users"></i> <span>Community Forums</span></a
-          >
-          <a href="Messages.html" class="nav-btn active">
-            <i data-lucide="mail"></i>
-            <span
-              >Messages
-              <span
-                class="badge"
-                style="
-                  background: var(--danger);
-                  color: white;
-                  border-radius: 50%;
-                  font-size: 0.65rem;
-                  padding: 2px 6px;
-                  position: absolute;
-                  right: 15px;
-                  top: 10px;
-                "
-                >3</span
-              ></span
-            >
+          <a href="UserDashboard.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="layout-grid"></i></div>
+            <span class="nav-text">Dashboard</span>
           </a>
-          <a href="Settings.html" class="nav-btn"
-            ><i data-lucide="settings"></i> <span>Account Settings</span></a
-          >
-          <a href="#" class="nav-btn"
-            ><i data-lucide="help-circle"></i> <span>Help & Support</span></a
-          >
-          <div style="flex: 1"></div>
-          <a
-            href="index.html"
-            class="nav-btn"
-            style="color: var(--admin-danger); margin-top: auto"
-            ><i data-lucide="log-out"></i> <span>Logout</span></a
-          >
+          <a href="TrainingPage.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="compass"></i></div>
+            <span class="nav-text">Explore Programs</span>
+          </a>
+          <a href="wishlist.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="bookmark"></i></div>
+            <span class="nav-text">Saved Training</span>
+          </a>
+          <a href="MyCertificates.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="award"></i></div>
+            <span class="nav-text">My Certificates</span>
+          </a>
+          <a href="LearningStats.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="bar-chart-2"></i></div>
+            <span class="nav-text">Learning Stats</span>
+          </a>
+          <a href="CommunityForums.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="users"></i></div>
+            <span class="nav-text">Community Forums</span>
+          </a>
+          
+          <!-- Active Messages Nav Link -->
+          <a href="Messages.html" class="nav-btn active">
+            <div class="nav-icon-wrap">
+              <i data-lucide="mail"></i>
+              <span class="nav-badge">3</span>
+            </div>
+            <span class="nav-text">Messages</span>
+          </a>
+          
+          <a href="Settings.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="settings"></i></div>
+            <span class="nav-text">Account Settings</span>
+          </a>
+          <a href="javascript:void(0)" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="help-circle"></i></div>
+            <span class="nav-text">Help & Support</span>
+          </a>
+          <div style="flex: 1" class="nav-text"></div>
+          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
+            <div class="nav-icon-wrap"><i data-lucide="log-out"></i></div>
+            <span class="nav-text">Logout</span>
+          </a>
         </div>
       </aside>
 
       <!-- MAIN AREA -->
       <main class="dash-main">
+        <!-- GLOBAL HEADER -->
+        <header class="top-nav">
+          <div class="greeting">
+            <h2>Messages</h2>
+            <p>You have 3 unread messages in your inbox.</p>
+          </div>
+
+          <div class="top-actions">
+            <!-- LTR / RTL Toggle -->
+            <button id="dirToggle" class="btn btn-outline" style="padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+              <i data-lucide="languages" style="width: 18px;"></i>
+              <span>LTR</span>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')" style="background: var(--card); color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; cursor:pointer;">
+              <i data-lucide="moon" style="width: 18px;"></i>
+            </button>
+
+            <!-- Profile Info -->
+            <div class="profile-pill">
+              <div class="avatar"></div>
+              <span style="font-weight: 600; font-size: 0.95rem">Sarah Jenkins</span>
+              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted)"></i>
+            </div>
+          </div>
+        </header>
+
+        <!-- INBOX SPLIT PANE -->
         <div class="inbox-container">
           <!-- LEFT LIST -->
           <div class="inbox-list">
             <div class="inbox-header">
               <h3>Inbox</h3>
-              <button
-                class="btn btn-outline"
-                style="padding: 8px; border-radius: 12px"
-              >
-                <i data-lucide="edit-3" size="18"></i>
+              <button class="btn btn-outline" style="padding: 8px; border-radius: 12px">
+                <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i>
               </button>
             </div>
+            
             <div class="thread-list">
               <!-- Thread 1 -->
               <div class="thread-item active">
                 <div class="thread-top">
-                  <span class="thread-sender"
-                    ><span class="unread-dot"></span>Dr. Marcus Webb</span
-                  >
+                  <span class="thread-sender"><span class="unread-dot"></span>Dr. Marcus Webb</span>
                   <span class="thread-time">10:42 AM</span>
                 </div>
                 <div class="thread-subject">Feedback on your Assignment</div>
@@ -489,9 +736,7 @@
               <!-- Thread 2 -->
               <div class="thread-item">
                 <div class="thread-top">
-                  <span class="thread-sender"
-                    ><span class="unread-dot"></span>System Admin</span
-                  >
+                  <span class="thread-sender"><span class="unread-dot"></span>System Admin</span>
                   <span class="thread-time">Yesterday</span>
                 </div>
                 <div class="thread-subject">Certificate Issued!</div>
@@ -503,9 +748,7 @@
               <!-- Thread 3 -->
               <div class="thread-item">
                 <div class="thread-top">
-                  <span class="thread-sender"
-                    ><span class="unread-dot"></span>Community Team</span
-                  >
+                  <span class="thread-sender"><span class="unread-dot"></span>Community Team</span>
                   <span class="thread-time">Tuesday</span>
                 </div>
                 <div class="thread-subject">Webinar Link for Friday</div>
@@ -541,78 +784,26 @@
                   <div
                     class="sender-avatar"
                     style="
-                      background-image: url(&quot;https://ui-avatars.com/api/?name=Marcus+Webb&background=10b981&color=fff&quot;);
+                      background-image: url('https://ui-avatars.com/api/?name=Marcus+Webb&background=10b981&color=fff');
                     "
                   ></div>
                   <div>
                     <span class="sender-name">Dr. Marcus Webb</span>
-                    <span class="sender-email"
-                      >marcus.webb@ngo-training.edu • Oct 26, 10:42 AM</span
-                    >
+                    <span class="sender-email">marcus.webb@ngo-training.edu • Oct 26, 10:42 AM</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Actions -->
-              <div style="display: flex; gap: 10px; align-items: center">
-                <button
-                  id="dirToggle"
-                  class="btn"
-                  style="
-                    background: var(--card);
-                    border: 1px solid rgba(128, 128, 128, 0.1);
-                    color: var(--text);
-                    padding: 8px 12px;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: 0.3s;
-                  "
-                >
-                  <i data-lucide="languages" style="width: 18px"></i>
-                  <span>LTR</span>
+              <!-- Message Actions -->
+              <div class="action-btns">
+                <button class="btn btn-outline" style="padding: 10px; border-radius: 12px" title="Star Message">
+                  <i data-lucide="star" style="width: 18px; height: 18px;"></i>
                 </button>
-                <!-- Theme toggle injected here for accessibility in Dashboard header -->
-                <label class="theme-toggle">
-                  <input
-                    type="checkbox"
-                    class="switch-input"
-                    id="themeSwitch"
-                  />
-                  <div class="icon-wrapper">
-                    <i data-lucide="sun" class="sun-icon"></i>
-                    <i data-lucide="moon" class="moon-icon"></i>
-                  </div>
-                </label>
-
-                <button
-                  class="btn btn-outline"
-                  style="padding: 10px; border-radius: 12px"
-                >
-                  <i data-lucide="star" size="18"></i>
+                <button class="btn btn-outline" style="padding: 10px; border-radius: 12px" title="Delete">
+                  <i data-lucide="trash-2" style="width: 18px; height: 18px; color: var(--danger);"></i>
                 </button>
-                <button
-                  class="btn btn-outline"
-                  style="padding: 10px; border-radius: 12px"
-                >
-                  <i data-lucide="trash-2" size="18" color="var(--danger)"></i>
-                </button>
-                <button
-                  class="btn btn-primary"
-                  style="padding: 10px 20px; border-radius: 12px"
-                >
-                  <i
-                    data-lucide="reply"
-                    size="18"
-                    style="
-                      margin-right: 8px;
-                      display: inline-block;
-                      vertical-align: text-bottom;
-                    "
-                  ></i>
+                <button class="btn btn-primary" style="padding: 10px 20px; border-radius: 12px">
+                  <i data-lucide="reply" style="width: 18px; height: 18px; margin-right: 8px; display: inline-block; vertical-align: text-bottom;"></i>
                   Reply
                 </button>
               </div>
@@ -646,21 +837,12 @@
                 class="reply-box"
                 placeholder="Type your reply here..."
               ></textarea>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-              >
-                <div style="color: var(--muted); cursor: pointer">
-                  <i data-lucide="paperclip" style="margin-right: 15px"></i>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="color: var(--muted); cursor: pointer; display: flex; gap: 15px;">
+                  <i data-lucide="paperclip"></i>
                   <i data-lucide="image"></i>
                 </div>
-                <button
-                  class="btn btn-primary"
-                  style="border-radius: 12px; padding: 10px 30px"
-                >
+                <button class="btn btn-primary" style="border-radius: 12px; padding: 10px 30px">
                   Send Message
                 </button>
               </div>
@@ -669,6 +851,15 @@
         </div>
       </main>
     </div>
+    
+    <!-- Initialize Icons after DOM loads -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        if(typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+      });
+    </script>
     <script src="../assets/js/theme.js"></script>
   </body>
 </html>

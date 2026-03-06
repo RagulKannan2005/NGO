@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -25,442 +25,454 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+      /* OVERRIDE GLOBALS FOR DASHBOARD ONLY */
       :root {
-        --sidebar-width: 260px;
-        --sidebar-collapsed-width: 80px;
-        --header-height: 70px;
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --danger: #ef4444;
+        --admin-success: #10b981;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.1);
+      }
+      
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
       }
 
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
+        color: var(--text);
         display: flex;
         height: 100vh;
         overflow: hidden;
+        margin: 0;
+        background-image:
+          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+        background-attachment: fixed;
       }
 
-      /* Sidebar (Desktop) */
-      .sidebar {
-        width: var(--sidebar-width);
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-inline-end: 1px solid var(--border);
+      /* CORE LAYOUT */
+      .dash-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      .dash-main {
+        flex: 1;
         display: flex;
         flex-direction: column;
-        transition: var(--transition);
-        z-index: 1000;
-        flex-shrink: 0;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        background: var(--bg);
+        border-radius: 32px;
+        border: 1px solid var(--border);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
       }
 
-      html.dark .sidebar {
-        background: rgba(15, 23, 42, 0.7);
-      }
-
-      .sidebar-header {
-        height: var(--header-height);
+      /* FLOATING SIDEBAR (Desktop) */
+      .floating-sidebar {
+        width: 100px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--border);
+        border-radius: 32px;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 0 24px;
-        gap: 12px;
-        border-bottom: 1px solid var(--border);
-        cursor: pointer;
+        padding: 40px 0;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 100;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+      html.dark .floating-sidebar {
+        background: rgba(15, 23, 42, 0.5);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
 
-      .logo-box {
-        width: 35px;
-        height: 35px;
+      .floating-sidebar:hover { width: 280px; align-items: flex-start; }
+
+      .nav-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+        transition: 0.4s;
+        cursor: pointer;
       }
+      .floating-sidebar:hover .nav-logo { margin-left: 24px; }
 
-      .logo-text {
-        font-weight: 800;
-        font-size: 1.2rem;
-        letter-spacing: -0.5px;
-        white-space: nowrap;
-      }
-
-      .nav-list {
-        padding: 24px 12px;
-        flex: 1;
+      .nav-items {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        overflow-y: auto;
+        gap: 16px;
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
       }
 
-      .nav-item {
+      .nav-btn {
+        width: 100%;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
         padding: 12px 16px;
-        border-radius: 12px;
+        border-radius: 16px;
         color: var(--muted);
         text-decoration: none;
-        transition: var(--transition);
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        width: 100%;
-        text-align: start;
-        font-family: inherit;
-        font-size: 1rem;
-      }
-
-      .nav-item:hover,
-      .nav-item.active {
-        background: rgba(37, 99, 235, 0.1);
-        color: var(--primary);
-      }
-
-      .nav-item.active {
-        font-weight: 600;
-      }
-
-      /* Main Content Area */
-      .main-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        position: relative;
         overflow: hidden;
       }
-
-      .main-header {
-        height: var(--header-height);
-        background: rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border);
+      
+      .nav-icon-wrap {
+        position: relative;
         display: flex;
         align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
+      }
+      .nav-icon-wrap i, .nav-icon-wrap svg { transition: 0.3s transform; }
+      .nav-badge {
+        background: var(--danger);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        position: absolute;
+        top: -6px;
+        right: -10px;
+        font-weight: 700;
+      }
+
+      .nav-text {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .floating-sidebar:hover .nav-text { opacity: 1; transform: translateX(0); }
+      .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
+      .nav-btn:hover i, .nav-btn:hover svg { transform: scale(1.1); }
+      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); }
+      html.dark .nav-btn.active { background: rgba(37, 99, 235, 0.15); }
+
+      /* DASHBOARD HEADER */
+      .top-nav {
+        display: flex;
         justify-content: space-between;
-        padding: 0 32px;
-        position: sticky;
-        top: 0;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px 40px;
+        border-bottom: 1px solid var(--border);
+        gap: 20px;
+        background: var(--bg);
         z-index: 10;
       }
+      .greeting h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
+      .greeting p { color: var(--muted); font-size: 0.95rem; margin: 0; }
 
-      html.dark .main-header {
-        background: rgba(15, 23, 42, 0.5);
+      .top-actions { display: flex; align-items: center; gap: 15px; }
+      .profile-pill {
+        display: flex; align-items: center; gap: 12px; padding: 6px 16px 6px 6px;
+        background: var(--card); border: 1px solid var(--border); border-radius: 50px;
+        cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
       }
-
-      .header-title-box h1 {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin: 0;
-      }
-
-      .mobile-logo {
-        display: none;
-      }
-
-      .user-actions {
-        display: flex;
-        align-items: center;
-        gap: 20px;
+      .profile-pill:hover { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05); transform: translateY(-2px); }
+      .avatar {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff") center/cover;
       }
 
-      /* Bento Grid Layout */
-      .bento-scroll {
-        flex: 1;
-        overflow-y: auto;
-        padding: 32px;
+      /* BUTTONS */
+      .btn {
+        background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+        transition: 0.3s; font-family: inherit; font-size: 0.95rem; padding: 10px 20px; border-radius: 12px; font-weight: 600;
       }
-      .bento-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        max-width: 1400px;
-        margin: 0 auto;
+      .btn-outline { border: 1px solid var(--border); color: var(--text); background: var(--card); }
+      .btn-outline:hover { background: rgba(128, 128, 128, 0.05); }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border: none;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
       }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4); }
 
-      /* Certificate Card */
-      .cert-card {
-        background: var(--card);
-        border-radius: 24px;
-        border: 1px solid var(--border);
-        transition: var(--transition);
-        overflow: hidden;
-      }
-      .cert-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-      
-      .cert-cover {
-        height: 140px;
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .cert-badge {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .cert-body { padding: 24px; }
-      .cert-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-      .cert-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; }
-      .cert-actions { display: flex; gap: 10px; }
+      /* CONTENT AREA */
+      .bento-scroll { flex: 1; overflow-y: auto; padding: 40px; -webkit-overflow-scrolling: touch; }
+      .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1400px; margin: 0 auto; }
 
-      /* Skills Bento */
+      /* SKILLS BENTO */
       .skills-bento {
-        grid-column: span 3;
-        background: var(--card);
-        border-radius: 24px;
-        padding: 32px;
-        border: 1px solid var(--border);
-        display: flex;
-        gap: 32px;
-        align-items: center;
+        grid-column: span 3; background: var(--card); border-radius: 32px; padding: 40px;
+        border: 1px solid var(--border); display: flex; gap: 40px; align-items: center; justify-content: space-between;
       }
-      .skills-info h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
-      .skill-bars { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
-      .s-bar-wrap { display: flex; align-items: center; gap: 12px; }
-      .s-bar-label { width: 100px; font-weight: 600; font-size: 0.85rem; }
+      .skills-info { flex: 1; }
+      .skills-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; margin-top: 0;}
+      .skills-info h3 span { color: var(--primary); }
+      .skills-info p { color: var(--muted); line-height: 1.6; margin-bottom: 25px; }
+      
+      .skill-bars { display: flex; flex-direction: column; gap: 15px; }
+      .s-bar-wrap { display: flex; align-items: center; gap: 15px; }
+      .s-bar-label { width: 110px; font-weight: 600; font-size: 0.95rem; color: var(--text); }
       .s-bar-track { flex: 1; height: 8px; background: rgba(128,128,128,0.1); border-radius: 4px; overflow: hidden; }
       .s-bar-fill { height: 100%; border-radius: 4px; }
 
-      /* Mobile Responsive */
+      /* CERTIFICATE CARDS */
+      .cert-card {
+        background: var(--card); border-radius: 32px; border: 1px solid var(--border);
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        display: flex; flex-direction: column;
+      }
+      .cert-card:hover { transform: translateY(-5px) scale(1.02); border-color: var(--primary); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05); }
+      html.dark .cert-card:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
+      
+      .cert-cover { height: 160px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1)); display: flex; align-items: center; justify-content: center; }
+      .cert-badge { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(37,99,235,0.2); }
+      
+      .cert-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
+      .cert-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 15px; margin-top: 0; color: var(--text); }
+      .cert-meta { display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; color: var(--muted); margin-bottom: 25px; }
+      .cert-meta span { display: flex; align-items: center; gap: 8px; }
+      .cert-actions { display: flex; gap: 10px; margin-top: auto; }
+      .cert-actions .btn { flex: 1; padding: 12px; }
+      .cert-actions .btn-outline { flex: 0 0 auto; width: 45px; padding: 0; }
+
+      /* FOOTER */
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px; margin-top: 40px; border-radius: 32px 32px 0 0; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer-col ul li { margin-bottom: 12px; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a:hover { color: var(--primary); }
+      .social-links { display: flex; gap: 15px; }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+
+      /* -------------------------------------
+         RESPONSIVE BREAKPOINTS 
+         ------------------------------------- */
       @media (max-width: 1024px) {
-        .sidebar { width: var(--sidebar-collapsed-width); align-items: center; }
-        .logo-text, .nav-item span { display: none; }
-        .sidebar-header { justify-content: center; padding: 0; }
-        .nav-item { padding: 12px; justify-content: center; border-radius: 50%; width: 50px; height: 50px; }
+        .dash-wrapper { padding: 16px; gap: 16px; }
         .bento-grid { grid-template-columns: repeat(2, 1fr); }
-        .skills-bento { grid-column: span 2; }
       }
 
+      /* Tablet & Mobile (Bottom Nav Transition) */
+      @media (max-width: 850px) {
+        body { height: 100dvh; }
+        .dash-wrapper { padding: 0; flex-direction: column; gap: 0; }
+        
+        .top-nav { padding: 20px 24px; }
+        .bento-scroll { padding: 24px; }
+
+        /* Transform Sidebar into Fixed Bottom Bar */
+        .floating-sidebar {
+          position: fixed; bottom: 0; top: auto; left: 0; width: 100%; height: 70px; flex-direction: row;
+          padding: 0 15px; border-radius: 24px 24px 0 0; border: none; border-top: 1px solid var(--border);
+          background: var(--card); box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1); z-index: 1000;
+          align-items: center; justify-content: flex-start; box-sizing: border-box;
+        }
+        .floating-sidebar:hover { width: 100%; align-items: center; } 
+        
+        .nav-logo { display: none; }
+        
+        .nav-items {
+          flex-direction: row; padding: 0; margin: 0; height: 100%; width: 100%; overflow-x: auto;
+          gap: 15px; align-items: center; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .nav-items::-webkit-scrollbar { display: none; }
+        
+        .nav-btn { padding: 10px; border-radius: 12px; width: auto; scroll-snap-align: center; flex-shrink: 0; }
+        .nav-text { display: none !important; }
+
+        .dash-main { border-radius: 0; border: none; height: calc(100vh - 70px); }
+        .skills-bento { flex-direction: column; text-align: center; gap: 30px; }
+        .s-bar-wrap { text-align: left; }
+      }
+
+      /* Mobile Overrides */
       @media (max-width: 768px) {
-        .sidebar {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 60px;
-          flex-direction: row;
-          padding: 0;
-          border-top: 1px solid var(--border);
-          border-inline-end: none;
-        }
-        .sidebar-header { display: none; }
-        .nav-list {
-          flex-direction: row;
-          padding: 0;
-          width: 100%;
-          overflow-x: auto;
-          scrollbar-width: none;
-          gap: 0;
-        }
-        .nav-list::-webkit-scrollbar { display: none; }
-        .nav-item { border-radius: 0; height: 100%; width: auto; min-width: 70px; flex: 0 0 auto; justify-content: center;}
-        .main-content { margin-bottom: 60px; }
-        .main-header { padding: 0 16px; }
-        .mobile-logo { display: flex; align-items: center; gap: 10px; }
-        .mobile-logo .logo-box { width: 32px; height: 32px; }
-        .mobile-logo span { font-weight: 800; font-size: 1.1rem; }
-        .desktop-only { display: none; }
         .bento-grid { grid-template-columns: 1fr; }
-        .skills-bento { grid-column: span 1; flex-direction: column; }
+        .skills-bento { grid-column: span 1; padding: 24px; }
+      }
+
+      @media (max-width: 500px) {
+        .top-nav { padding: 15px 20px; }
+        .greeting p { display: none; } 
+        .top-actions #dirToggle { display: none; } 
+        .profile-pill span { display: none; } 
+        .profile-pill { padding: 4px; border-radius: 50%; }
+        
+        .bento-scroll { padding: 20px; padding-bottom: 90px; }
+        .cert-card { border-radius: 28px; }
+        .cert-body { padding: 24px; }
+        .footer { padding: 30px 20px; border-radius: 0; }
+        .footer-grid { gap: 30px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
       }
     </style>
   </head>
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader">
+    <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-header" onClick="window.location.href='index.html'">
-        <div class="logo-box">
+    <!-- WRAPPER -->
+    <div class="dash-wrapper">
+      <!-- FLOATING SIDEBAR / BOTTOM NAV -->
+      <aside class="floating-sidebar">
+        <div class="nav-logo" onclick="window.location.href = '../index.html'">
           <i data-lucide="shield"></i>
         </div>
-        <span class="logo-text">User Portal</span>
-      </div>
 
-      <nav class="nav-list">
-        <a href="UserDashboard.html" class="nav-item">
-          <i data-lucide="layout-grid"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="TrainingPage.html" class="nav-item">
-          <i data-lucide="compass"></i>
-          <span>Explore Programs</span>
-        </a>
-        <a href="wishlist.html" class="nav-item">
-          <i data-lucide="bookmark"></i>
-          <span>Saved Training</span>
-        </a>
-        <a href="MyCertificates.html" class="nav-item active">
-          <i data-lucide="award"></i>
-          <span>Certificates</span>
-        </a>
-        <a href="LearningStats.html" class="nav-item">
-          <i data-lucide="bar-chart-2"></i>
-          <span>Stats</span>
-        </a>
-        <a href="CommunityForums.html" class="nav-item">
-          <i data-lucide="users"></i>
-          <span>Forum</span>
-        </a>
-        <a href="Messages.html" class="nav-item">
-          <i data-lucide="mail"></i>
-          <span>Messages</span>
-        </a>
-        <a href="Settings.html" class="nav-item">
-          <i data-lucide="settings"></i>
-          <span>Settings</span>
-        </a>
-        <div style="flex: 1"></div>
-        <a href="index.html" class="nav-item" style="color: #ef4444; margin-top: auto">
-          <i data-lucide="log-out"></i>
-          <span>Logout</span>
-        </a>
-      </nav>
-    </aside>
-
-    <!-- MAIN AREA -->
-    <main class="main-content">
-      <header class="main-header">
-        <div class="header-title-box">
-          <div class="mobile-logo" onClick="window.location.href='index.html'">
-            <div class="logo-box">
-              <i data-lucide="shield"></i>
+        <div class="nav-items">
+          <a href="UserDashboard.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="layout-grid"></i></div>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="TrainingPage.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="compass"></i></div>
+            <span class="nav-text">Explore Programs</span>
+          </a>
+          <a href="wishlist.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="bookmark"></i></div>
+            <span class="nav-text">Saved Training</span>
+          </a>
+          <a href="MyCertificates.html" class="nav-btn active">
+            <div class="nav-icon-wrap"><i data-lucide="award"></i></div>
+            <span class="nav-text">My Certificates</span>
+          </a>
+          <a href="LearningStats.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="bar-chart-2"></i></div>
+            <span class="nav-text">Learning Stats</span>
+          </a>
+          <a href="CommunityForums.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="users"></i></div>
+            <span class="nav-text">Community Forums</span>
+          </a>
+          <a href="Messages.html" class="nav-btn">
+            <div class="nav-icon-wrap">
+              <i data-lucide="mail"></i>
+              <span class="nav-badge">3</span>
             </div>
-            <span>NGO Training</span>
-          </div>
-          <h1 class="desktop-only">Achievements</h1>
+            <span class="nav-text">Messages</span>
+          </a>
+          <a href="Settings.html" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="settings"></i></div>
+            <span class="nav-text">Account Settings</span>
+          </a>
+          <a href="javascript:void(0)" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="help-circle"></i></div>
+            <span class="nav-text">Help & Support</span>
+          </a>
+          <div style="flex: 1" class="nav-text"></div>
+          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
+            <div class="nav-icon-wrap"><i data-lucide="log-out"></i></div>
+            <span class="nav-text">Logout</span>
+          </a>
         </div>
+      </aside>
 
-        <div class="user-actions">
-          <button id="dirToggle" class="icon-btn" title="Toggle Language Direction" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; transition: 0.3s;">
-            <i data-lucide="languages" style="width: 18px;"></i>
-            <span class="desktop-only">LTR</span>
-          </button>
+      <!-- MAIN AREA -->
+      <main class="dash-main">
+        <!-- GLOBAL HEADER -->
+        <header class="top-nav">
+          <div class="greeting">
+            <h2>Achievements</h2>
+            <p>Review your certificates and skill mastery.</p>
+          </div>
 
-          <label class="theme-toggle">
-            <input type="checkbox" class="switch-input" id="themeSwitch" />
-            <div class="icon-wrapper">
-              <i data-lucide="sun" class="sun-icon"></i>
-              <i data-lucide="moon" class="moon-icon"></i>
+          <div class="top-actions">
+            <!-- LTR / RTL Toggle -->
+            <button id="dirToggle" class="btn btn-outline" style="padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+              <i data-lucide="languages" style="width: 18px;"></i>
+              <span>LTR</span>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')" style="background: var(--card); color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; cursor:pointer;">
+              <i data-lucide="moon" style="width: 18px;"></i>
+            </button>
+
+            <!-- Profile Info -->
+            <div class="profile-pill">
+              <div class="avatar"></div>
+              <span style="font-weight: 600; font-size: 0.95rem">Sarah Jenkins</span>
+              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted)"></i>
             </div>
-          </label>
-
-          <div class="profile-pill" style="display: flex; align-items: center; gap: 10px; padding: 6px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 50px; cursor: pointer;">
-            <div class="avatar" style="width: 28px; height: 28px; border-radius: 50%; background: url('https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff') center/cover;"></div>
-            <span class="desktop-only" style="font-weight: 600; font-size: 0.9rem">Sarah J.</span>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div class="bento-scroll">
+        <!-- CONTENT SCROLL -->
         <div class="bento-scroll">
           <div class="bento-grid">
+            
             <!-- SKILLS RADAR BENTO (Span 3) -->
             <div class="skills-bento">
               <div class="skills-info">
                 <h3>Your <span>Mastery Summary</span></h3>
                 <p>
-                  Based on your completed courses and certificate tracks, here
-                  is a breakdown of your core competencies. You are excelling in
-                  Mediation!
+                  Based on your completed courses and certificate tracks, here is a breakdown of your core competencies. You are excelling in Mediation!
                 </p>
 
                 <div class="skill-bars">
                   <div class="s-bar-wrap">
                     <span class="s-bar-label">Mediation</span>
                     <div class="s-bar-track">
-                      <div
-                        class="s-bar-fill"
-                        style="
-                          width: 95%;
-                          background: linear-gradient(
-                            90deg,
-                            var(--secondary),
-                            var(--primary)
-                          );
-                        "
-                      ></div>
+                      <div class="s-bar-fill" style="width: 95%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div>
                     </div>
-                    <span style="font-weight: 700">95%</span>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">95%</span>
                   </div>
                   <div class="s-bar-wrap">
                     <span class="s-bar-label">Crisis Comms</span>
                     <div class="s-bar-track">
-                      <div
-                        class="s-bar-fill"
-                        style="
-                          width: 70%;
-                          background: linear-gradient(
-                            90deg,
-                            var(--secondary),
-                            var(--primary)
-                          );
-                        "
-                      ></div>
+                      <div class="s-bar-fill" style="width: 70%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div>
                     </div>
-                    <span style="font-weight: 700">70%</span>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">70%</span>
                   </div>
                   <div class="s-bar-wrap">
                     <span class="s-bar-label">Field Ops</span>
                     <div class="s-bar-track">
-                      <div
-                        class="s-bar-fill"
-                        style="
-                          width: 45%;
-                          background: linear-gradient(
-                            90deg,
-                            var(--secondary),
-                            var(--primary)
-                          );
-                        "
-                      ></div>
+                      <div class="s-bar-fill" style="width: 45%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div>
                     </div>
-                    <span style="font-weight: 700">45%</span>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">45%</span>
                   </div>
                 </div>
               </div>
-              <div
-                style="
-                  width: 250px;
-                  height: 250px;
-                  background: radial-gradient(
-                    circle,
-                    rgba(37, 99, 235, 0.1),
-                    transparent
-                  );
-                  border-radius: 50%;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  border: 1px dashed rgba(128, 128, 128, 0.2);
-                "
-              >
-                <!-- Simulated Radar Chart using CSS overlays -->
-                <div
-                  style="
-                    position: relative;
-                    width: 140px;
-                    height: 140px;
-                    border: 2px solid var(--primary);
-                    transform: rotate(45deg);
-                    background: rgba(37, 99, 235, 0.2);
-                    box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-                  "
-                ></div>
+              
+              <!-- Radar Chart Graphic Element -->
+              <div style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(37, 99, 235, 0.1), transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(128, 128, 128, 0.2); flex-shrink: 0;">
+                <div style="position: relative; width: 140px; height: 140px; border: 2px solid var(--primary); transform: rotate(45deg); background: rgba(37, 99, 235, 0.2); box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);"></div>
               </div>
             </div>
 
@@ -468,90 +480,46 @@
             <div class="cert-card">
               <div class="cert-cover">
                 <div class="cert-badge">
-                  <i data-lucide="shield-check" size="32"></i>
+                  <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
                 </div>
               </div>
               <div class="cert-body">
                 <h4 class="cert-title">Conflict Resolution Fundamentals</h4>
                 <div class="cert-meta">
-                  <span
-                    ><i data-lucide="calendar" size="14"></i> Issued: Aug 12,
-                    2025</span
-                  >
-                  <span
-                    ><i data-lucide="hash" size="14"></i> ID: CR-8942-JS</span
-                  >
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Aug 12, 2025</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: CR-8942-JS</span>
                 </div>
                 <div class="cert-actions">
                   <button class="btn btn-primary">
-                    <i
-                      data-lucide="download"
-                      size="16"
-                      style="
-                        margin-right: 6px;
-                        display: inline-block;
-                        vertical-align: text-bottom;
-                      "
-                    ></i>
+                    <i data-lucide="download" style="width: 16px; margin-right: 6px; display: inline-block; vertical-align: text-bottom;"></i>
                     PDF
                   </button>
                   <button class="btn btn-outline">
-                    <i data-lucide="share-2" size="16"></i>
+                    <i data-lucide="share-2" style="width: 16px;"></i>
                   </button>
                 </div>
               </div>
             </div>
 
             <div class="cert-card">
-              <div
-                class="cert-cover"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    rgba(16, 185, 129, 0.2),
-                    rgba(37, 99, 235, 0.2)
-                  );
-                "
-              >
-                <div
-                  class="cert-badge"
-                  style="
-                    background: linear-gradient(
-                      135deg,
-                      var(--admin-success),
-                      var(--primary)
-                    );
-                  "
-                >
-                  <i data-lucide="shield-check" size="32"></i>
+              <div class="cert-cover" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(37, 99, 235, 0.1));">
+                <div class="cert-badge" style="background: linear-gradient(135deg, var(--admin-success), var(--primary));">
+                  <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
                 </div>
               </div>
               <div class="cert-body">
                 <h4 class="cert-title">Negotiation Tactics Masterclass</h4>
                 <div class="cert-meta">
-                  <span
-                    ><i data-lucide="calendar" size="14"></i> Issued: Nov 05,
-                    2025</span
-                  >
-                  <span
-                    ><i data-lucide="hash" size="14"></i> ID: NT-1044-SJ</span
-                  >
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Nov 05, 2025</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: NT-1044-SJ</span>
                 </div>
                 <div class="cert-actions">
                   <button class="btn btn-primary">
-                    <i
-                      data-lucide="download"
-                      size="16"
-                      style="
-                        margin-right: 6px;
-                        display: inline-block;
-                        vertical-align: text-bottom;
-                      "
-                    ></i>
+                    <i data-lucide="download" style="width: 16px; margin-right: 6px; display: inline-block; vertical-align: text-bottom;"></i>
                     PDF
                   </button>
                   <button class="btn btn-outline">
-                    <i data-lucide="share-2" size="16"></i>
+                    <i data-lucide="share-2" style="width: 16px;"></i>
                   </button>
                 </div>
               </div>
@@ -560,95 +528,86 @@
             <div class="cert-card">
               <div class="cert-cover">
                 <div class="cert-badge">
-                  <i data-lucide="shield-check" size="32"></i>
+                  <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
                 </div>
               </div>
               <div class="cert-body">
                 <h4 class="cert-title">Stress Management for Mediators</h4>
                 <div class="cert-meta">
-                  <span
-                    ><i data-lucide="calendar" size="14"></i> Issued: Jan 22,
-                    2026</span
-                  >
-                  <span
-                    ><i data-lucide="hash" size="14"></i> ID: SM-9931-KL</span
-                  >
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Jan 22, 2026</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: SM-9931-KL</span>
                 </div>
                 <div class="cert-actions">
                   <button class="btn btn-primary">
-                    <i
-                      data-lucide="download"
-                      size="16"
-                      style="
-                        margin-right: 6px;
-                        display: inline-block;
-                        vertical-align: text-bottom;
-                      "
-                    ></i>
+                    <i data-lucide="download" style="width: 16px; margin-right: 6px; display: inline-block; vertical-align: text-bottom;"></i>
                     PDF
                   </button>
                   <button class="btn btn-outline">
-                    <i data-lucide="share-2" size="16"></i>
+                    <i data-lucide="share-2" style="width: 16px;"></i>
                   </button>
                 </div>
               </div>
             </div>
-          
-    
-    
-
-        
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-          <p>
-            Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="TrainingPage.html">Programs</a></li>
-            <li><a href="Impact.html">Our Impact</a></li>
-            <li><a href="Community.html">Community</a></li>
-            <li><a href="404.html">404 Page</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="Contact.html">Help Center</a></li>
-            <li><a href="wishlist.html">Wishlist</a></li>
-            <li><a href="Settings.html">Settings</a></li>
-            <li><a href="login.html">Login / Register</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
-          <div class="social-links">
-            <a href="#"><i data-lucide="facebook"></i></a>
-            <a href="#"><i data-lucide="twitter"></i></a>
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="linkedin"></i></a>
+            
           </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
-          <a href="#" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
-        </div>
-      </div>
-    </footer>
 
+          <!-- FOOTER -->
+          <footer class="footer">
+            <div class="footer-grid">
+              <div class="footer-col">
+                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+                <p>
+                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+                </p>
+              </div>
+              <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                  <li><a href="../index.html">Home</a></li>
+                  <li><a href="TrainingPage.html">Programs</a></li>
+                  <li><a href="Impact.html">Our Impact</a></li>
+                  <li><a href="CommunityForums.html">Community</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="Contact.html">Help Center</a></li>
+                  <li><a href="wishlist.html">Wishlist</a></li>
+                  <li><a href="Settings.html">Settings</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Follow Us</h4>
+                <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+                <div class="social-links">
+                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <div class="footer-legal">
+                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
+                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+              </div>
+            </div>
+          </footer>
+        </div>
       </main>
     </div>
 
     <script src="../assets/js/theme.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+        document.getElementById("year").innerText = new Date().getFullYear();
+      });
+    </script>
   </body>
 </html>

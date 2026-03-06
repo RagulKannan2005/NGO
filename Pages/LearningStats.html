@@ -89,9 +89,11 @@
         position: relative;
         background: var(--bg);
         border-radius: 32px;
+        border: 1px solid var(--border);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
       }
 
-      /* FLOATING SIDEBAR */
+      /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
         background: rgba(255, 255, 255, 0.6);
@@ -140,10 +142,38 @@
         text-decoration: none; transition: all 0.3s ease;
         white-space: nowrap; position: relative; overflow: hidden;
       }
-      .nav-btn i, .nav-btn svg { min-width: 24px; width: 24px; height: 24px; transition: 0.3s transform; }
-      .nav-btn span { opacity: 0; transform: translateX(-10px); transition: all 0.3s; font-weight: 500; font-size: 0.95rem; }
       
-      .floating-sidebar:hover .nav-btn span { opacity: 1; transform: translateX(0); }
+      .nav-icon-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
+      }
+      .nav-icon-wrap i, .nav-icon-wrap svg { transition: 0.3s transform; }
+      .nav-badge {
+        background: var(--danger);
+        color: white;
+        border-radius: 50%;
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        position: absolute;
+        top: -6px;
+        right: -10px;
+        font-weight: 700;
+      }
+
+      .nav-text {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      
+      .floating-sidebar:hover .nav-text { opacity: 1; transform: translateX(0); }
       .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
       .nav-btn:hover i, .nav-btn:hover svg { transform: scale(1.1); }
       
@@ -153,9 +183,10 @@
       /* DASHBOARD HEADER */
       .top-nav {
         display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-        padding: 30px 40px; border-bottom: 1px solid var(--border); gap: 20px;
+        padding: 20px 40px; border-bottom: 1px solid var(--border); gap: 20px; z-index: 10;
+        background: var(--bg);
       }
-      .greeting h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
+      .greeting h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
       .greeting p { color: var(--muted); font-size: 0.95rem; margin: 0; }
 
       .top-actions { display: flex; align-items: center; gap: 15px; }
@@ -184,7 +215,7 @@
       html.dark .bento-card:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
 
       /* STATS SPECIFIC CSS */
-      .metric-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; position: relative; margin-bottom: 20px; }
+      .metric-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; position: relative; margin-bottom: 20px; flex-shrink: 0;}
       .metric-icon::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: inherit; filter: blur(10px); opacity: 0.4; z-index: -1; }
       .metric-value { font-size: 2.8rem; font-weight: 800; line-height: 1; letter-spacing: -1px; margin-bottom: 8px;}
       .metric-label { color: var(--muted); font-weight: 600; font-size: 0.95rem; }
@@ -196,7 +227,7 @@
 
       /* TIMELINE BENTO */
       .timeline-bento { grid-column: span 4; }
-      .timeline-bento h3, .list-bento h3 { margin-top: 0; margin-bottom: 30px; font-size: 1.4rem; font-weight: 700; }
+      .timeline-bento h3, .list-bento h3 { margin-top: 0; margin-bottom: 30px; font-size: 1.4rem; font-weight: 700; color: var(--text); }
       .timeline { display: flex; align-items: flex-start; overflow-x: auto; padding-bottom: 16px; scrollbar-width: thin; }
       .timeline::-webkit-scrollbar { height: 6px; }
       .timeline::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.3); border-radius: 10px; }
@@ -206,7 +237,7 @@
       .tl-dot.empty { background: var(--border); box-shadow: none; }
       .tl-node:not(:last-child)::after { content: ""; position: absolute; top: 11px; left: 50%; width: 100%; height: 2px; background: var(--border); z-index: 1; }
       .tl-node.active:not(:last-child)::after { background: var(--primary); }
-      .tl-label { font-weight: 800; margin-top: 15px; font-size: 1.1rem; }
+      .tl-label { font-weight: 800; margin-top: 15px; font-size: 1.1rem; color: var(--text); }
       .tl-desc { font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 6px; line-height: 1.5; padding: 0 10px; }
 
       /* SKILLS LIST BENTO */
@@ -247,30 +278,52 @@
         .bento-grid { grid-template-columns: repeat(2, 1fr); }
       }
 
-      /* Mobile Layout / Vertical Break */
-      @media (max-width: 768px) {
+      /* Tablet & Mobile Break (Bottom Fixed Navigation) */
+      @media (max-width: 850px) {
         body { height: 100dvh; }
         .dash-wrapper { padding: 0; flex-direction: column; gap: 0; }
         
-        /* Sidebar becomes top sticky horizontal bar */
+        .top-nav { padding: 20px 24px; }
+        
+        /* Transform Sidebar into Fixed Bottom Bar */
         .floating-sidebar {
-          width: 100%; height: auto; flex-direction: row; padding: 10px 20px;
-          border-radius: 0; border-left: none; border-right: none; border-top: none;
-          background: var(--card); position: sticky; top: 0; z-index: 1000;
+          position: fixed; bottom: 0; top: auto; left: 0; width: 100%; height: 70px; flex-direction: row;
+          padding: 0 15px; border-radius: 24px 24px 0 0; border: none; border-top: 1px solid var(--border);
+          background: var(--card); box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1); z-index: 1000;
+          align-items: center; justify-content: flex-start; box-sizing: border-box; flex-shrink: 0;
         }
         .floating-sidebar:hover { width: 100%; align-items: center; } 
         
-        .nav-logo { margin-bottom: 0; width: 40px; height: 40px; margin-right: 15px; }
-        .floating-sidebar:hover .nav-logo { margin-left: 0; }
+        .nav-logo { display: none; }
         
-        .nav-items { flex-direction: row; padding: 0; overflow-x: auto; gap: 12px; scrollbar-width: none; }
+        .nav-items {
+          flex-direction: row; padding: 0; margin: 0; height: 100%; width: 100%; overflow-x: auto;
+          gap: 15px; align-items: center; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
         .nav-items::-webkit-scrollbar { display: none; }
-        .nav-btn { padding: 8px 12px; border-radius: 12px; width: auto; }
-        .nav-btn span { display: none; }
         
-        /* Grid Adjustments */
+        .nav-btn { padding: 10px; border-radius: 12px; width: auto; scroll-snap-align: center; flex-shrink: 0; }
+        .nav-text { display: none !important; }
+
+        .dash-main { border-radius: 0; border: none; height: calc(100vh - 70px); }
+      }
+
+      /* Mobile Grid Overrides */
+      @media (max-width: 768px) {
         .bento-grid { grid-template-columns: 1fr; gap: 16px; }
-        .timeline-bento, .list-bento, .bento-mini { grid-column: span 1; }
+        .timeline-bento, .list-bento { grid-column: span 1; }
+        
+        /* Make mini cards horizontal on small screens to save space */
+        .bento-mini { 
+          grid-column: span 1; 
+          display: flex; 
+          flex-direction: row; 
+          align-items: center; 
+          gap: 20px; 
+          padding: 20px;
+        }
+        .bento-mini .metric-icon { margin-bottom: 0; }
+        .bento-mini > div:last-child { margin-top: auto; margin-bottom: auto; }
         
         .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
         .footer-grid { gap: 30px; }
@@ -287,22 +340,13 @@
         
         .top-actions #dirToggle { display: none; } 
         .profile-pill span { display: none; } 
-        .profile-pill { padding: 4px; }
+        .profile-pill { padding: 4px; border-radius: 50%; }
         
-        .bento-scroll { padding: 20px; padding-bottom: 100px; } 
+        .bento-scroll { padding: 20px; padding-bottom: 90px; } 
+        .bento-card { border-radius: 28px; }
         
-        /* Bottom Sticky Nav App-Style */
-        .floating-sidebar {
-          position: fixed; bottom: 0; top: auto; border-top: 1px solid var(--border);
-          border-radius: 24px 24px 0 0; padding: 12px; justify-content: center;
-          box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-        }
-        .nav-logo { display: none; }
-        .nav-items { justify-content: flex-start; gap: 20px; padding: 0 10px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .nav-btn { scroll-snap-align: center; flex-shrink: 0; }
-        
-        .bento-card { padding: 24px; border-radius: 28px; }
-        .metric-value { font-size: 2.2rem; }
+        .metric-value { font-size: 2.2rem; margin-bottom: 0; }
+        .metric-label { font-size: 0.85rem; }
       }
     </style>
   </head>
@@ -317,40 +361,57 @@
     <!-- WRAPPER -->
     <div class="dash-wrapper">
       
-      <!-- FLOATING SIDEBAR (Matches UserDashboard) -->
+      <!-- FLOATING SIDEBAR / BOTTOM NAV -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = 'index.html'">
+        <div class="nav-logo" onclick="window.location.href = '../index.html'">
           <i data-lucide="shield"></i>
         </div>
 
         <div class="nav-items">
           <a href="UserDashboard.html" class="nav-btn">
-            <i data-lucide="layout-grid"></i> <span>Dashboard</span>
+            <div class="nav-icon-wrap"><i data-lucide="layout-grid"></i></div>
+            <span class="nav-text">Dashboard</span>
           </a>
           <a href="TrainingPage.html" class="nav-btn">
-            <i data-lucide="compass"></i> <span>Explore Programs</span>
+            <div class="nav-icon-wrap"><i data-lucide="compass"></i></div>
+            <span class="nav-text">Explore Programs</span>
           </a>
           <a href="wishlist.html" class="nav-btn">
-            <i data-lucide="bookmark"></i> <span>Saved Training</span>
+            <div class="nav-icon-wrap"><i data-lucide="bookmark"></i></div>
+            <span class="nav-text">Saved Training</span>
           </a>
           <a href="MyCertificates.html" class="nav-btn">
-            <i data-lucide="award"></i> <span>Certificates</span>
+            <div class="nav-icon-wrap"><i data-lucide="award"></i></div>
+            <span class="nav-text">My Certificates</span>
           </a>
+          <!-- Active Nav Link -->
           <a href="LearningStats.html" class="nav-btn active">
-            <i data-lucide="bar-chart-2"></i> <span>Stats</span>
+            <div class="nav-icon-wrap"><i data-lucide="bar-chart-2"></i></div>
+            <span class="nav-text">Learning Stats</span>
           </a>
           <a href="CommunityForums.html" class="nav-btn">
-            <i data-lucide="users"></i> <span>Forum</span>
+            <div class="nav-icon-wrap"><i data-lucide="users"></i></div>
+            <span class="nav-text">Community Forums</span>
           </a>
           <a href="Messages.html" class="nav-btn">
-            <i data-lucide="mail"></i> <span>Messages</span>
+            <div class="nav-icon-wrap">
+              <i data-lucide="mail"></i>
+              <span class="nav-badge">3</span>
+            </div>
+            <span class="nav-text">Messages</span>
           </a>
           <a href="Settings.html" class="nav-btn">
-            <i data-lucide="settings"></i> <span>Settings</span>
+            <div class="nav-icon-wrap"><i data-lucide="settings"></i></div>
+            <span class="nav-text">Account Settings</span>
           </a>
-          <div style="flex: 1" class="desktop-only"></div>
-          <a href="index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
-            <i data-lucide="log-out"></i> <span>Logout</span>
+          <a href="javascript:void(0)" class="nav-btn">
+            <div class="nav-icon-wrap"><i data-lucide="help-circle"></i></div>
+            <span class="nav-text">Help & Support</span>
+          </a>
+          <div style="flex: 1" class="nav-text"></div>
+          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
+            <div class="nav-icon-wrap"><i data-lucide="log-out"></i></div>
+            <span class="nav-text">Logout</span>
           </a>
         </div>
       </aside>
@@ -359,7 +420,7 @@
       <main class="dash-main">
         <!-- HEADER -->
         <header class="top-nav">
-          <div class="greeting">
+          <div class="greeting" onclick="window.location.href = '../index.html'">
             <h2>Learning Analytics</h2>
             <p>Track your milestone progress and skill development.</p>
           </div>
@@ -390,26 +451,34 @@
             <!-- 4 MINI METRICS -->
             <div class="bento-card bento-mini">
               <div class="metric-icon icon-amber"><i data-lucide="help-circle"></i></div>
-              <div class="metric-value">42</div>
-              <div class="metric-label">Quizzes Passed</div>
+              <div>
+                <div class="metric-value">42</div>
+                <div class="metric-label">Quizzes Passed</div>
+              </div>
             </div>
 
             <div class="bento-card bento-mini">
               <div class="metric-icon icon-green"><i data-lucide="target"></i></div>
-              <div class="metric-value">94%</div>
-              <div class="metric-label">Avg. Test Score</div>
+              <div>
+                <div class="metric-value">94%</div>
+                <div class="metric-label">Avg. Test Score</div>
+              </div>
             </div>
 
             <div class="bento-card bento-mini">
               <div class="metric-icon icon-rose"><i data-lucide="book-open"></i></div>
-              <div class="metric-value">12</div>
-              <div class="metric-label">Modules Finished</div>
+              <div>
+                <div class="metric-value">12</div>
+                <div class="metric-label">Modules Finished</div>
+              </div>
             </div>
 
             <div class="bento-card bento-mini">
               <div class="metric-icon icon-purple"><i data-lucide="calendar"></i></div>
-              <div class="metric-value">14</div>
-              <div class="metric-label">Day Streak!</div>
+              <div>
+                <div class="metric-value">14</div>
+                <div class="metric-label">Day Streak!</div>
+              </div>
             </div>
 
             <!-- TIMELINE (Span 4) -->
@@ -518,10 +587,10 @@
               <div class="footer-col">
                 <h4>Quick Links</h4>
                 <ul>
-                  <li><a href="index.html">Home</a></li>
+                  <li><a href="../index.html">Home</a></li>
                   <li><a href="TrainingPage.html">Programs</a></li>
                   <li><a href="Impact.html">Our Impact</a></li>
-                  <li><a href="Community.html">Community</a></li>
+                  <li><a href="CommunityForums.html">Community</a></li>
                 </ul>
               </div>
               <div class="footer-col">
@@ -537,18 +606,18 @@
                 <h4>Follow Us</h4>
                 <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
                 <div class="social-links">
-                  <a href="#"><i data-lucide="facebook"></i></a>
-                  <a href="#"><i data-lucide="twitter"></i></a>
-                  <a href="#"><i data-lucide="instagram"></i></a>
-                  <a href="#"><i data-lucide="linkedin"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
                 </div>
               </div>
             </div>
             <div class="footer-bottom">
               <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
               <div class="footer-legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+                <a href="javascript:void(0)">Privacy Policy</a>
+                <a href="javascript:void(0)">Terms of Service</a>
               </div>
             </div>
           </footer>
@@ -559,11 +628,13 @@
     <!-- Scripts -->
     <script>
       // Initialize Lucide Icons
-      if (typeof lucide !== "undefined") {
-        lucide.createIcons();
-      }
-      // Set Copyright Year
-      document.getElementById('year').innerText = new Date().getFullYear();
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+        // Set Copyright Year
+        document.getElementById('year').innerText = new Date().getFullYear();
+      });
     </script>
     <script src="../assets/js/theme.js"></script>
   </body>

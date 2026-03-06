@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="../assets/images/head.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/png" href="assets/images/head.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -25,7 +28,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -67,8 +70,16 @@
         min-height: 100vh;
         padding: 160px 2rem 80px;
         background:
-          radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.08), transparent 45%),
-          radial-gradient(circle at 85% 25%, rgba(14, 165, 233, 0.08), transparent 45%),
+          radial-gradient(
+            circle at 15% 15%,
+            rgba(37, 99, 235, 0.08),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% 25%,
+            rgba(14, 165, 233, 0.08),
+            transparent 45%
+          ),
           var(--bg);
         display: flex;
         align-items: center;
@@ -164,173 +175,535 @@
         flex-wrap: wrap;
       }
 
-      .trust-avatars { display: flex; }
-      .trust-avatars .avatar {
-        width: 40px; height: 40px; border-radius: 50%;
-        border: 3px solid var(--bg); margin-left: -12px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex; align-items: center; justify-content: center;
-        color: white; font-size: 0.8rem; font-weight: 700;
+      .trust-avatars {
+        display: flex;
       }
-      .trust-avatars .avatar:first-child { margin-left: 0; }
-      .trust-text { font-size: 0.95rem; color: var(--muted); }
+      .trust-avatars .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid var(--bg);
+        margin-left: -12px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .trust-avatars .avatar:first-child {
+        margin-left: 0;
+      }
+      .trust-text {
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
 
       /* Floating Stat Cards */
-      .hero-visual { position: relative; display: flex; justify-content: center; }
-      
+      .hero-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
       .main-image-wrap {
-        background: var(--card); padding: 12px; border-radius: 32px;
-        border: 1px solid var(--border); box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
+        background: var(--card);
+        padding: 12px;
+        border-radius: 32px;
+        border: 1px solid var(--border);
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(10px);
       }
-      
-      .main-image-wrap img { width: 100%; max-width: 400px; border-radius: 24px; display: block; }
+
+      .main-image-wrap img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 24px;
+        display: block;
+      }
 
       .floating-stat {
-        position: absolute; background: var(--card); border: 1px solid var(--border);
-        padding: 1rem 1.25rem; border-radius: 20px; display: flex; align-items: center; gap: 1rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); backdrop-filter: blur(12px); transition: 0.3s;
+        position: absolute;
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 1rem 1.25rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(12px);
+        transition: 0.3s;
       }
-      .floating-stat:hover { transform: scale(1.05) translateY(-5px); border-color: var(--primary); }
-      .stat-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; }
-      .stat-info h4 { font-family: "Outfit", sans-serif; font-size: 1.25rem; margin: 0 0 2px 0; }
-      .stat-info p { font-size: 0.75rem; color: var(--muted); margin: 0; }
+      .floating-stat:hover {
+        transform: scale(1.05) translateY(-5px);
+        border-color: var(--primary);
+      }
+      .stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .stat-info h4 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.25rem;
+        margin: 0 0 2px 0;
+      }
+      .stat-info p {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin: 0;
+      }
 
-      .s-top { top: -20px; left: -20px; animation: float 6s infinite ease-in-out; }
-      .s-mid { right: -30px; top: 40%; animation: float 5s infinite ease-in-out reverse; }
-      .s-bottom { bottom: -20px; left: 20%; animation: float 7s infinite ease-in-out; }
+      .s-top {
+        top: -20px;
+        left: -20px;
+        animation: float 6s infinite ease-in-out;
+      }
+      .s-mid {
+        right: -30px;
+        top: 40%;
+        animation: float 5s infinite ease-in-out reverse;
+      }
+      .s-bottom {
+        bottom: -20px;
+        left: 20%;
+        animation: float 7s infinite ease-in-out;
+      }
 
       @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-15px); }
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
       }
 
       /* Modern Features Grid */
-      .features { padding: 100px 2rem; }
-      .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+      .features {
+        padding: 100px 2rem;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2rem;
+      }
 
       .feature-card {
-        background: var(--card); border: 1px solid var(--border);
-        border-radius: 24px; padding: 2.5rem; transition: 0.3s; height: 100%; box-sizing: border-box;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        transition: 0.3s;
+        height: 100%;
+        box-sizing: border-box;
       }
-      .feature-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02); }
-      .feature-card i { width: 48px; height: 48px; color: var(--primary); margin-bottom: 1.5rem; }
-      .feature-card h3 { font-family: "Outfit", sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; }
-      .feature-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+      .feature-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+      }
+      .feature-card i {
+        width: 48px;
+        height: 48px;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+      }
+      .feature-card h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+      .feature-card p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+      }
 
       /* Mission Section */
-      .mission { padding: 100px 2rem; background: rgba(128, 128, 128, 0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-      .mission-container { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-      .mission-text h2 { font-family: "Outfit", sans-serif; font-size: 3rem; margin-top: 0; margin-bottom: 2rem; line-height: 1.2; }
-      .check-list { list-style: none; padding: 0; margin: 2.5rem 0; }
-      .check-list li { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; font-weight: 500; }
-      .check-list i { color: #22c55e; width: 24px; flex-shrink: 0; }
-      .mission-image img { width: 100%; border-radius: 32px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1); }
+      .mission {
+        padding: 100px 2rem;
+        background: rgba(128, 128, 128, 0.02);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .mission-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+      .mission-text h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 3rem;
+        margin-top: 0;
+        margin-bottom: 2rem;
+        line-height: 1.2;
+      }
+      .check-list {
+        list-style: none;
+        padding: 0;
+        margin: 2.5rem 0;
+      }
+      .check-list li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        font-weight: 500;
+      }
+      .check-list i {
+        color: #22c55e;
+        width: 24px;
+        flex-shrink: 0;
+      }
+      .mission-image img {
+        width: 100%;
+        border-radius: 32px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+      }
 
       /* General Section Styles */
-      .home-section { padding: 100px 2rem; }
-      .section-header { text-align: center; margin-bottom: 4rem; }
-      .section-header h2 { font-family: "Outfit", sans-serif; font-size: 3rem; margin-top: 0.5rem; margin-bottom: 0;}
+      .home-section {
+        padding: 100px 2rem;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+      .section-header h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 3rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+      }
 
       /* Program Cards */
-      .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-      .prog-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem; display: flex; flex-direction: column; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-      .prog-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-      .card-label { color: var(--primary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; }
-      .prog-card h3 { font-family: "Outfit", sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; }
+      .programs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+      .prog-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+      }
+      .prog-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
+      .card-label {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .prog-card h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
 
       /* Testimonials */
-      .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-      .test-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-      .quote-mark { font-family: "Outfit", sans-serif; font-size: 5rem; color: var(--primary); opacity: 0.1; position: absolute; top: -10px; left: 1.5rem; line-height: 1; }
-      .test-author { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
-      .test-author img { width: 50px; height: 50px; border-radius: 15px; object-fit: cover; }
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .test-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+      }
+      .quote-mark {
+        font-family: "Outfit", sans-serif;
+        font-size: 5rem;
+        color: var(--primary);
+        opacity: 0.1;
+        position: absolute;
+        top: -10px;
+        left: 1.5rem;
+        line-height: 1;
+      }
+      .test-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .test-author img {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        object-fit: cover;
+      }
 
       /* CTA Banner */
-      .cta-section { padding: 100px 2rem; }
-      .cta-card {
-        max-width: 1000px; margin: 0 auto;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 40px; padding: 5rem 2rem; text-align: center; color: white;
-        box-shadow: 0 40px 80px rgba(37, 99, 235, 0.2); position: relative; overflow: hidden;
+      .cta-section {
+        padding: 100px 2rem;
       }
-      .cta-card::before { content: ""; position: absolute; inset: 0; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><circle cx="50" cy="50" r="40" fill="white"/></svg>') repeat; opacity: 0.4; }
-      .cta-card h2 { font-family: "Outfit", sans-serif; font-size: 3.5rem; margin-top: 0; margin-bottom: 1.5rem; position: relative; z-index: 1;}
-      .cta-card p { font-size: 1.25rem; margin-bottom: 3rem; opacity: 0.9; position: relative; z-index: 1; max-width: 600px; margin-left: auto; margin-right: auto;}
+      .cta-card {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 40px;
+        padding: 5rem 2rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 40px 80px rgba(37, 99, 235, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><circle cx="50" cy="50" r="40" fill="white"/></svg>')
+          repeat;
+        opacity: 0.4;
+      }
+      .cta-card h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 3.5rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+      .cta-card p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
       /* Footer */
-      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 2rem 40px; margin-top: 40px; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
-      .footer-col ul li { margin-bottom: 12px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
-      .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 15px; }
-      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
-      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer {
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        padding: 60px 2rem 40px;
+        margin-top: 40px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.95rem;
+      }
+      .footer-col ul li a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 25px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
       /* Base Navigation Support */
-      .mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text); cursor: pointer; padding: 8px; align-items: center; justify-content: center; }
-      .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: 0.3s; }
-      html.dark .navbar { background: rgba(15,23,42,0.8); }
-      .navbar.solid-bg { background: var(--card) !important; backdrop-filter: none; }
-      .navbar-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 2rem; max-width: 1400px; margin: 0 auto; }
-      .navbar-logo { font-size: 1.4rem; font-weight: 800; font-family: "Outfit", sans-serif; text-decoration: none; color: var(--text); }
-      .navbar-menu { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; align-items: center; }
-      .navbar-link { color: var(--muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
-      .navbar-link:hover, .navbar-link.active { color: var(--primary); }
-      .nav-actions { display: flex; align-items: center; gap: 15px; }
-      .theme-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text); }
-      .theme-toggle input { display: none; }
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        transition: 0.3s;
+      }
+      html.dark .navbar {
+        background: rgba(15, 23, 42, 0.8);
+      }
+      .navbar.solid-bg {
+        background: var(--card) !important;
+        backdrop-filter: none;
+      }
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .navbar-logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        font-family: "Outfit", sans-serif;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .navbar-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+      .navbar-link {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+      .navbar-link:hover,
+      .navbar-link.active {
+        color: var(--primary);
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        color: var(--text);
+      }
+      .theme-toggle input {
+        display: none;
+      }
 
       /* =========================================
          FIXED DROPDOWN MENU
          ========================================= */
-      .dropdown { position: relative; }
-      
-      .dropdown-menu { 
-        position: absolute; 
-        top: 100%; 
-        left: 0; 
-        background: var(--card); 
-        border: 1px solid var(--border); 
-        border-radius: 16px; 
-        padding: 10px; 
-        min-width: 200px; 
-        opacity: 0; 
-        visibility: hidden; 
-        transform: translateY(10px); 
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-        display: flex; 
-        flex-direction: column; 
-        gap: 5px; 
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 10px;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
         z-index: 100;
       }
 
       /* Desktop & Tablet functionality */
       .dropdown:hover .dropdown-menu,
-      .dropdown:focus-within .dropdown-menu { 
-        opacity: 1; 
-        visibility: visible; 
-        transform: translateY(0); 
+      .dropdown:focus-within .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
       }
 
-      .dropdown-menu a { 
-        padding: 10px 15px; 
-        color: var(--text); 
-        text-decoration: none; 
-        border-radius: 8px; 
-        font-size: 0.95rem; 
-        transition: 0.2s; 
+      .dropdown-menu a {
+        padding: 10px 15px;
+        color: var(--text);
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: 0.2s;
       }
-      
+
       .dropdown-menu a:hover,
-      .dropdown-menu a:focus { 
-        background: rgba(128,128,128,0.05); 
-        color: var(--primary); 
+      .dropdown-menu a:focus {
+        background: rgba(128, 128, 128, 0.05);
+        color: var(--primary);
       }
 
       /* =========================================
@@ -339,101 +712,216 @@
 
       /* Tablet & Small Desktop */
       @media (max-width: 1100px) {
-        .hero-container, .mission-container {
+        .hero-container,
+        .mission-container {
           grid-template-columns: 1fr;
           text-align: center;
           gap: 3rem;
         }
-        .hero h1 { font-size: 3.5rem; }
-        .hero p { margin: 0 auto 3rem; }
-        .hero-actions, .hero-trust { justify-content: center; }
-        .mission-image { order: -1; }
-        .mission-text { display: flex; flex-direction: column; align-items: center; }
-        .check-list li { justify-content: center; }
-        .floating-stat { display: none; }
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+        .hero p {
+          margin: 0 auto 3rem;
+        }
+        .hero-actions,
+        .hero-trust {
+          justify-content: center;
+        }
+        .mission-image {
+          order: -1;
+        }
+        .mission-text {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .check-list li {
+          justify-content: center;
+        }
+        .floating-stat {
+          display: none;
+        }
       }
 
       /* Navbar Mobile Breakpoint */
       @media (max-width: 950px) {
         .navbar-menu {
-          position: fixed; top: 70px; left: -100%;
-          flex-direction: column; background: var(--card);
-          width: 100%; text-align: center;
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          flex-direction: column;
+          background: var(--card);
+          width: 100%;
+          text-align: center;
           transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-          padding: 1.5rem 0; border-bottom: 1px solid var(--border);
+          padding: 1.5rem 0;
+          border-bottom: 1px solid var(--border);
           max-height: calc(100vh - 70px);
           overflow-y: auto;
         }
-        .navbar-menu.active { left: 0; }
-        .navbar-menu li { margin: 10px 0; width: 100%; }
-        
+        .navbar-menu.active {
+          left: 0;
+        }
+        .navbar-menu li {
+          margin: 10px 0;
+          width: 100%;
+        }
+
         /* Dropdown Override for Mobile */
-        .dropdown { width: 100%; }
-        .dropdown-menu { 
-          position: static; 
-          opacity: 1; 
-          visibility: visible; 
-          transform: none !important; 
-          background: rgba(128, 128, 128, 0.04); 
-          box-shadow: none; 
-          border: none; 
-          padding: 10px; 
+        .dropdown {
+          width: 100%;
+        }
+        .dropdown-menu {
+          position: static;
+          opacity: 1;
+          visibility: visible;
+          transform: none !important;
+          background: rgba(128, 128, 128, 0.04);
+          box-shadow: none;
+          border: none;
+          padding: 10px;
           margin: 10px auto 0;
           width: 90%;
         }
-        .dropdown-menu a { display: block; text-align: center; }
-        
-        .mobile-menu-btn { display: flex; }
-        .nav-actions .btn-primary { display: none; } 
+        .dropdown-menu a {
+          display: block;
+          text-align: center;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+        .nav-actions .btn-primary {
+          display: none;
+        }
       }
 
       /* Mobile Layout */
       @media (max-width: 768px) {
-        .hero { padding: 140px 1.5rem 60px; }
-        .hero h1 { font-size: 2.5rem; }
-        .hero p { font-size: 1.1rem; }
-        .cta-card h2 { font-size: 2.2rem; }
-        .mission-text h2 { font-size: 2.2rem; }
-        .section-header h2 { font-size: 2.2rem; }
-        
-        .programs-grid, .testimonial-grid { grid-template-columns: 1fr; }
-        
-        .features, .mission, .home-section, .cta-section { padding: 60px 1.5rem; }
-        .cta-card { padding: 4rem 1.5rem; border-radius: 32px; }
-        
-        .footer { padding: 40px 1.5rem 30px; }
-        .footer-grid { gap: 30px; }
-        .footer-bottom { flex-direction: column; text-align: center; gap: 15px; }
-        .footer-legal { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin: 0; }
-        .footer-legal a { margin: 0; }
+        .hero {
+          padding: 140px 1.5rem 60px;
+        }
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .hero p {
+          font-size: 1.1rem;
+        }
+        .cta-card h2 {
+          font-size: 2.2rem;
+        }
+        .mission-text h2 {
+          font-size: 2.2rem;
+        }
+        .section-header h2 {
+          font-size: 2.2rem;
+        }
+
+        .programs-grid,
+        .testimonial-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .features,
+        .mission,
+        .home-section,
+        .cta-section {
+          padding: 60px 1.5rem;
+        }
+        .cta-card {
+          padding: 4rem 1.5rem;
+          border-radius: 32px;
+        }
+
+        .footer {
+          padding: 40px 1.5rem 30px;
+        }
+        .footer-grid {
+          gap: 30px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+          gap: 15px;
+        }
+        .footer-legal {
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin: 0;
+        }
+        .footer-legal a {
+          margin: 0;
+        }
       }
 
       /* Small Mobile */
       @media (max-width: 480px) {
-        .hero h1 { font-size: 2rem; }
-        .hero-actions { flex-direction: column; width: 100%; }
-        .btn-primary, .btn-outline { width: 100%; box-sizing: border-box; }
-        .navbar-container { padding: 15px 1rem; }
-        .navbar-logo { font-size: 1.2rem; }
-        #dirToggle span { display: none; } 
-        .check-list li { flex-direction: column; text-align: center; gap: 5px; }
-        .section-header h2 { font-size: 1.8rem; }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .hero-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+        .btn-primary,
+        .btn-outline {
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .navbar-container {
+          padding: 15px 1rem;
+        }
+        .navbar-logo {
+          font-size: 1.2rem;
+        }
+        #dirToggle span {
+          display: none;
+        }
+        .check-list li {
+          flex-direction: column;
+          text-align: center;
+          gap: 5px;
+        }
+        .section-header h2 {
+          font-size: 1.8rem;
+        }
       }
 
       /* Scroll Animations */
-      .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-      .fade-in { opacity: 0; transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1); }
-      .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-      .delay-100 { transition-delay: 100ms; }
-      .delay-200 { transition-delay: 200ms; }
-      .delay-300 { transition-delay: 300ms; }
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .fade-in {
+        opacity: 0;
+        transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .delay-100 {
+        transition-delay: 100ms;
+      }
+      .delay-200 {
+        transition-delay: 200ms;
+      }
+      .delay-300 {
+        transition-delay: 300ms;
+      }
     </style>
   </head>
 
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -445,30 +933,59 @@
         <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
         <ul class="navbar-menu">
           <li><a href="index.html" class="navbar-link active">Home</a></li>
-          <li><a href="Home2.html" class="navbar-link">Home 2</a></li>
-          <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
-          <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
-          <li><a href="Community.html" class="navbar-link">Community</a></li>
-          <li><a href="Impact.html" class="navbar-link">Impact</a></li>
-          <li><a href="Contact.html" class="navbar-link">Contact</a></li>
+          <li><a href="Pages/Home2.html" class="navbar-link">Home 2</a></li>
+          <li>
+            <a href="Pages/TrainingPage.html" class="navbar-link">Trainings</a>
+          </li>
+          <li>
+            <a href="Pages/wishlist.html" class="navbar-link">Wishlist</a>
+          </li>
+          <li>
+            <a href="Pages/Community.html" class="navbar-link">Community</a>
+          </li>
+          <li><a href="Pages/Impact.html" class="navbar-link">Impact</a></li>
+          <li><a href="Pages/Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
-            <a href="#" class="navbar-link">Dashboard ▾</a>
+            <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
             <div class="dropdown-menu">
-              <a href="UserDashboard.html">User Dashboard</a>
-              <a href="AdminDashboard.html">Admin Dashboard</a>
+              <a href="Pages/UserDashboard.html">User Dashboard</a>
+              <a href="Pages/AdminDashboard.html">Admin Dashboard</a>
             </div>
           </li>
         </ul>
 
         <div class="nav-actions">
-          <button class="btn-primary" style="padding: 8px 16px; font-size: 0.9rem;" onclick="window.location.href = 'login.html'">Get Started</button>
-          
-          <button id="dirToggle" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer;">
+          <button
+            class="btn-primary"
+            style="padding: 8px 16px; font-size: 0.9rem"
+            onclick="window.location.href = 'Pages/login.html'"
+          >
+            Get Started
+          </button>
+
+          <button
+            id="dirToggle"
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              color: var(--text);
+              padding: 8px 12px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-weight: 600;
+              cursor: pointer;
+            "
+          >
             <i data-lucide="languages" style="width: 18px"></i>
             <span>LTR</span>
           </button>
 
-          <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+          <label
+            class="theme-toggle"
+            onclick="document.documentElement.classList.toggle('dark')"
+          >
             <i data-lucide="moon" style="width: 18px"></i>
           </label>
 
@@ -491,8 +1008,10 @@
           </p>
 
           <div class="hero-actions">
-            <a href="TrainingPage.html" class="btn-primary">Start Training</a>
-            <a href="Impact.html" class="btn-outline">View Impact</a>
+            <a href="Pages/TrainingPage.html" class="btn-primary"
+              >Start Training</a
+            >
+            <a href="Pages/Impact.html" class="btn-outline">View Impact</a>
           </div>
 
           <div class="hero-trust">
@@ -510,7 +1029,14 @@
 
         <div class="hero-visual animate-on-scroll fade-in delay-200">
           <div class="main-image-wrap">
-            <img src="../assets/Images/hero-image.png" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" alt="NGO Leadership" />
+            <img
+              src="assets/Images/hero-image.png"
+              onerror="
+                this.src =
+                  'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+              "
+              alt="NGO Leadership"
+            />
           </div>
 
           <div class="floating-stat s-top">
@@ -546,22 +1072,34 @@
         <div class="feature-card animate-on-scroll fade-in-up">
           <i data-lucide="graduation-cap"></i>
           <h3>Smart Paths</h3>
-          <p>Expert-designed learning tracks tailored to your NGO's specific mission and goals.</p>
+          <p>
+            Expert-designed learning tracks tailored to your NGO's specific
+            mission and goals.
+          </p>
         </div>
         <div class="feature-card animate-on-scroll fade-in-up delay-100">
           <i data-lucide="layout-dashboard"></i>
           <h3>Impact Insights</h3>
-          <p>Measure progress with powerful dashboards that track team completion and skill application.</p>
+          <p>
+            Measure progress with powerful dashboards that track team completion
+            and skill application.
+          </p>
         </div>
         <div class="feature-card animate-on-scroll fade-in-up delay-200">
           <i data-lucide="users-2"></i>
           <h3>Global Hub</h3>
-          <p>Connect with a worldwide network of peacebuilders to share knowledge and resources.</p>
+          <p>
+            Connect with a worldwide network of peacebuilders to share knowledge
+            and resources.
+          </p>
         </div>
         <div class="feature-card animate-on-scroll fade-in-up delay-300">
           <i data-lucide="video"></i>
           <h3>Live Lab</h3>
-          <p>Engage in real-time simulations and role-plays facilitated by mediation professionals.</p>
+          <p>
+            Engage in real-time simulations and role-plays facilitated by
+            mediation professionals.
+          </p>
         </div>
       </div>
     </section>
@@ -572,22 +1110,34 @@
         <div class="mission-text animate-on-scroll fade-in-up">
           <span class="section-label">Our Philosophy</span>
           <h2>Conflict is inevitable. <br />Escalation is not.</h2>
-          <p style="color: var(--muted); line-height: 1.7; max-width: 500px;">
+          <p style="color: var(--muted); line-height: 1.7; max-width: 500px">
             Beyond basic skills, we provide the psychological and tactical
             framework your team needs to lead in complex environments.
           </p>
 
           <ul class="check-list">
-            <li><i data-lucide="check-circle-2"></i> Verified certification by international networks</li>
-            <li><i data-lucide="check-circle-2"></i> Case studies from real-world operations</li>
-            <li><i data-lucide="check-circle-2"></i> Mobile-first learning for field operators</li>
+            <li>
+              <i data-lucide="check-circle-2"></i> Verified certification by
+              international networks
+            </li>
+            <li>
+              <i data-lucide="check-circle-2"></i> Case studies from real-world
+              operations
+            </li>
+            <li>
+              <i data-lucide="check-circle-2"></i> Mobile-first learning for
+              field operators
+            </li>
           </ul>
 
-          <a href="login.html" class="btn-primary">Register Your NGO</a>
+          <a href="Pages/login.html" class="btn-primary">Register Your NGO</a>
         </div>
 
         <div class="mission-image animate-on-scroll fade-in-up delay-200">
-          <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team impact" />
+          <img
+            src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            alt="Team impact"
+          />
         </div>
       </div>
     </section>
@@ -605,28 +1155,151 @@
           <div class="prog-card animate-on-scroll fade-in-up">
             <span class="card-label">Advanced</span>
             <h3>Advanced Conflict Resolution</h3>
-            <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights...</p>
-            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-              <span style="font-size: 0.85rem; font-weight: 600; color: var(--muted); display:flex; align-items:center; gap:5px;"><i data-lucide="clock" style="width:14px;"></i> 6 Weeks</span>
-              <a href="TrainingPage.html" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem; display:flex; align-items:center; gap:5px;">View Track <i data-lucide="arrow-right" style="width:16px;"></i></a>
+            <p
+              style="
+                color: var(--muted);
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+              "
+            >
+              Master techniques to de-escalate crisis situations in vulnerable
+              regions. Gain actionable insights...
+            </p>
+            <div
+              style="
+                margin-top: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid var(--border);
+                padding-top: 1.5rem;
+              "
+            >
+              <span
+                style="
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  color: var(--muted);
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                ><i data-lucide="clock" style="width: 14px"></i> 6 Weeks</span
+              >
+              <a
+                href="Pages/TrainingPage.html"
+                style="
+                  color: var(--primary);
+                  font-weight: 700;
+                  text-decoration: none;
+                  font-size: 0.9rem;
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                >View Track <i data-lucide="arrow-right" style="width: 16px"></i
+              ></a>
             </div>
           </div>
           <div class="prog-card animate-on-scroll fade-in-up delay-100">
             <span class="card-label">Beginner</span>
             <h3>Foundations of Mediation</h3>
-            <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders...</p>
-            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-              <span style="font-size: 0.85rem; font-weight: 600; color: var(--muted); display:flex; align-items:center; gap:5px;"><i data-lucide="clock" style="width:14px;"></i> 3 Weeks</span>
-              <a href="TrainingPage.html" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem; display:flex; align-items:center; gap:5px;">View Track <i data-lucide="arrow-right" style="width:16px;"></i></a>
+            <p
+              style="
+                color: var(--muted);
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+              "
+            >
+              Learn the core basics of mediating community disputes effectively.
+              Perfect for aspiring community leaders...
+            </p>
+            <div
+              style="
+                margin-top: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid var(--border);
+                padding-top: 1.5rem;
+              "
+            >
+              <span
+                style="
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  color: var(--muted);
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                ><i data-lucide="clock" style="width: 14px"></i> 3 Weeks</span
+              >
+              <a
+                href="Pages/TrainingPage.html"
+                style="
+                  color: var(--primary);
+                  font-weight: 700;
+                  text-decoration: none;
+                  font-size: 0.9rem;
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                >View Track <i data-lucide="arrow-right" style="width: 16px"></i
+              ></a>
             </div>
           </div>
           <div class="prog-card animate-on-scroll fade-in-up delay-200">
             <span class="card-label">Intermediate</span>
             <h3>Cross-Cultural Communication</h3>
-            <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">Bridge the gap between diverse cultural backgrounds safely and effectively in active zones...</p>
-            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-              <span style="font-size: 0.85rem; font-weight: 600; color: var(--muted); display:flex; align-items:center; gap:5px;"><i data-lucide="clock" style="width:14px;"></i> 4 Weeks</span>
-              <a href="TrainingPage.html" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem; display:flex; align-items:center; gap:5px;">View Track <i data-lucide="arrow-right" style="width:16px;"></i></a>
+            <p
+              style="
+                color: var(--muted);
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+              "
+            >
+              Bridge the gap between diverse cultural backgrounds safely and
+              effectively in active zones...
+            </p>
+            <div
+              style="
+                margin-top: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid var(--border);
+                padding-top: 1.5rem;
+              "
+            >
+              <span
+                style="
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  color: var(--muted);
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                ><i data-lucide="clock" style="width: 14px"></i> 4 Weeks</span
+              >
+              <a
+                href="Pages/TrainingPage.html"
+                style="
+                  color: var(--primary);
+                  font-weight: 700;
+                  text-decoration: none;
+                  font-size: 0.9rem;
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                "
+                >View Track <i data-lucide="arrow-right" style="width: 16px"></i
+              ></a>
             </div>
           </div>
         </div>
@@ -634,7 +1307,13 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="home-section" style="background: rgba(128, 128, 128, 0.02); border-top: 1px solid var(--border);">
+    <section
+      class="home-section"
+      style="
+        background: rgba(128, 128, 128, 0.02);
+        border-top: 1px solid var(--border);
+      "
+    >
       <div class="container">
         <div class="section-header animate-on-scroll fade-in-up">
           <span class="section-label">Success Stories</span>
@@ -645,13 +1324,20 @@
           <div class="test-card animate-on-scroll fade-in-up">
             <div class="quote-mark">“</div>
             <p style="line-height: 1.7; position: relative; z-index: 1">
-              The advanced mediation techniques our field operators learned here completely changed how we handle community disputes. It's an invaluable resource.
+              The advanced mediation techniques our field operators learned here
+              completely changed how we handle community disputes. It's an
+              invaluable resource.
             </p>
             <div class="test-author">
-              <img src="https://ui-avatars.com/api/?name=Emma+Wallace&background=6366f1&color=fff" alt="Emma" />
+              <img
+                src="https://ui-avatars.com/api/?name=Emma+Wallace&background=6366f1&color=fff"
+                alt="Emma"
+              />
               <div>
                 <strong style="display: block">Emma Wallace</strong>
-                <small style="color: var(--muted)">Director, Global Peace</small>
+                <small style="color: var(--muted)"
+                  >Director, Global Peace</small
+                >
               </div>
             </div>
           </div>
@@ -659,10 +1345,15 @@
           <div class="test-card animate-on-scroll fade-in-up delay-100">
             <div class="quote-mark">“</div>
             <p style="line-height: 1.7; position: relative; z-index: 1">
-              Having a central hub to assign specific training tracks to my volunteers and track their progress has saved us hundreds of administrative hours.
+              Having a central hub to assign specific training tracks to my
+              volunteers and track their progress has saved us hundreds of
+              administrative hours.
             </p>
             <div class="test-author">
-              <img src="https://ui-avatars.com/api/?name=David+Chen&background=0ea5e9&color=fff" alt="David" />
+              <img
+                src="https://ui-avatars.com/api/?name=David+Chen&background=0ea5e9&color=fff"
+                alt="David"
+              />
               <div>
                 <strong style="display: block">David Chen</strong>
                 <small style="color: var(--muted)">Ops Manager, HelpNet</small>
@@ -673,13 +1364,20 @@
           <div class="test-card animate-on-scroll fade-in-up delay-200">
             <div class="quote-mark">“</div>
             <p style="line-height: 1.7; position: relative; z-index: 1">
-              The Crisis Communication course was exactly what our leadership team needed before deploying. Highly practical and deeply impactful.
+              The Crisis Communication course was exactly what our leadership
+              team needed before deploying. Highly practical and deeply
+              impactful.
             </p>
             <div class="test-author">
-              <img src="https://ui-avatars.com/api/?name=Sarah+Mensah&background=10b981&color=fff" alt="Sarah" />
+              <img
+                src="https://ui-avatars.com/api/?name=Sarah+Mensah&background=10b981&color=fff"
+                alt="Sarah"
+              />
               <div>
                 <strong style="display: block">Sarah Mensah</strong>
-                <small style="color: var(--muted)">Field Coordinator, Action Aid</small>
+                <small style="color: var(--muted)"
+                  >Field Coordinator, Action Aid</small
+                >
               </div>
             </div>
           </div>
@@ -692,8 +1390,25 @@
       <div class="container">
         <div class="cta-card animate-on-scroll fade-in-up">
           <h2>Ready to measure impact?</h2>
-          <p>Join the movement of organizations building a more peaceful, resilient world through education.</p>
-          <a href="login.html" style="background: white; color: var(--primary); padding: 1rem 2.5rem; border-radius: 12px; font-weight: 800; text-decoration: none; cursor: pointer; display: inline-block; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">Join the Platform</a>
+          <p>
+            Join the movement of organizations building a more peaceful,
+            resilient world through education.
+          </p>
+          <a
+            href="Pages/login.html"
+            style="
+              background: white;
+              color: var(--primary);
+              padding: 1rem 2.5rem;
+              border-radius: 12px;
+              font-weight: 800;
+              text-decoration: none;
+              cursor: pointer;
+              display: inline-block;
+              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            "
+            >Join the Platform</a
+          >
         </div>
       </div>
     </section>
@@ -703,48 +1418,72 @@
       <div class="container">
         <div class="footer-grid">
           <div class="footer-col">
-            <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-            <p style="color: var(--muted); line-height: 1.6;">
-              Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+            <h4
+              style="
+                color: var(--primary);
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                font-family: &quot;Outfit&quot;, sans-serif;
+              "
+            >
+              🌍 NGO Training
+            </h4>
+            <p style="color: var(--muted); line-height: 1.6">
+              Empowering individuals and organizations with conflict resolution
+              skills for a more peaceful world. Our platform provides
+              high-quality, accessible training for everyone.
             </p>
           </div>
           <div class="footer-col">
             <h4>Quick Links</h4>
             <ul>
               <li><a href="index.html">Home</a></li>
-              
-              <li><a href="TrainingPage.html">Programs</a></li>
-              <li><a href="Impact.html">Our Impact</a></li>
-              <li><a href="Community.html">Community</a></li>
-              <li><a href="404.html">404</a></li>
-              <li><a href="Comingsoon.html">Coming Soon</a></li>
+
+              <li><a href="Pages/TrainingPage.html">Programs</a></li>
+              <li><a href="Pages/Impact.html">Our Impact</a></li>
+              <li><a href="Pages/Community.html">Community</a></li>
+              <li><a href="Pages/404.html">404</a></li>
+              <li><a href="Pages/Comingsoon.html">Coming Soon</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Support</h4>
             <ul>
-              <li><a href="Contact.html">Help Center</a></li>
-              <li><a href="wishlist.html">Wishlist</a></li>
-              <li><a href="Settings.html">Settings</a></li>
-              <li><a href="login.html">Login / Register</a></li>
+              <li><a href="Pages/Contact.html">Help Center</a></li>
+              <li><a href="Pages/wishlist.html">Wishlist</a></li>
+              <li><a href="Pages/Settings.html">Settings</a></li>
+              <li><a href="Pages/login.html">Login / Register</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Follow Us</h4>
-            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <p style="margin-bottom: 1.5rem; color: var(--muted)">
+              Join our community on social media to stay updated.
+            </p>
             <div class="social-links">
-              <a href="#"><i data-lucide="facebook"></i></a>
-              <a href="#"><i data-lucide="twitter"></i></a>
-              <a href="#"><i data-lucide="instagram"></i></a>
-              <a href="#"><i data-lucide="linkedin"></i></a>
+              <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+              <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+              <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+              <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+          <p>
+            &copy; <span id="year">2026</span> NGO Training Platform. All rights
+            reserved.
+          </p>
           <div class="footer-legal">
-            <a href="#" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
-            <a href="#" style="color: var(--muted); text-decoration: none;">Terms of Service</a>
+            <a
+              href="javascript:void(0)"
+              style="color: var(--muted); text-decoration: none"
+              >Privacy Policy</a
+            >
+            <a
+              href="javascript:void(0)"
+              style="color: var(--muted); text-decoration: none"
+              >Terms of Service</a
+            >
           </div>
         </div>
       </div>
@@ -753,10 +1492,10 @@
     <!-- Scripts -->
     <script>
       // Initialize Icons
-      if (typeof lucide !== 'undefined') {
+      if (typeof lucide !== "undefined") {
         lucide.createIcons();
       }
-      
+
       // Set Year
       document.getElementById("year").innerText = new Date().getFullYear();
 
@@ -767,14 +1506,16 @@
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
-                observer.unobserve(entry.target); 
+                observer.unobserve(entry.target);
               }
             });
           },
-          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
         );
 
-        document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
+        document
+          .querySelectorAll(".animate-on-scroll")
+          .forEach((el) => observer.observe(el));
       });
 
       // Mobile Menu Toggle
@@ -803,6 +1544,6 @@
         });
       }
     </script>
-    <script src="../assets/js/theme.js"></script>
+    <script src="assets/js/theme.js"></script>
   </body>
 </html>

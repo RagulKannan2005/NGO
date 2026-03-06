@@ -664,21 +664,21 @@
     <div class="dash-wrapper">
       <!-- FLOATING SIDEBAR -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = 'index.html'">
+        <div class="nav-logo" onclick="window.location.href = '../index.html'">
           <i data-lucide="shield"></i>
         </div>
 
         <div class="nav-items">
-          <a href="#" onclick="switchView('dashboard')" class="nav-btn active" id="nav-dashboard">
+          <a href="javascript:void(0)" onclick="switchView('dashboard')" class="nav-btn active" id="nav-dashboard">
             <i data-lucide="layout-grid"></i> <span>Dashboard</span>
           </a>
-          <a href="#" onclick="switchView('explore')" class="nav-btn" id="nav-explore">
+          <a href="javascript:void(0)" onclick="switchView('explore')" class="nav-btn" id="nav-explore">
             <i data-lucide="compass"></i> <span>Explore Programs</span>
           </a>
-          <a href="#" onclick="switchView('wishlist')" class="nav-btn" id="nav-wishlist">
+          <a href="javascript:void(0)" onclick="switchView('wishlist')" class="nav-btn" id="nav-wishlist">
             <i data-lucide="bookmark"></i> <span>Saved Training</span>
           </a>
-          <a href="" onclick="switchView('certificate')" class="nav-btn">
+          <a href="javascript:void(0)" onclick="switchView('certificate')" class="nav-btn">
             <i data-lucide="award"></i> <span>My Certificates</span>
           </a>
           <a href="LearningStats.html" class="nav-btn">
@@ -696,11 +696,11 @@
           <a href="Settings.html" class="nav-btn">
             <i data-lucide="settings"></i> <span>Account Settings</span>
           </a>
-          <a href="Help.html" class="nav-btn">
+          <a href="Contact.html" class="nav-btn">
             <i data-lucide="help-circle"></i> <span>Help & Support</span>
           </a>
           <div style="flex: 1"></div>
-          <a href="#" class="nav-btn" style="color: var(--danger); margin-top: auto">
+          <a href="javascript:void(0)" class="nav-btn" style="color: var(--danger); margin-top: auto">
             <i data-lucide="log-out"></i> <span>Logout</span>
           </a>
         </div>
@@ -711,7 +711,7 @@
         <!-- HEADER -->
         <header class="top-nav">
           <div class="greeting">
-            <h2 id="dash-title" onclick="window.location.href = 'index.html'">Overview</h2>
+            <h2 id="dash-title" onclick="window.location.href = '../index.html'">Overview</h2>
             <p id="dash-subtitle">Here's what is happening with your training today.</p>
           </div>
 
@@ -752,54 +752,57 @@
             <!-- Initial content will be loaded by script -->
           </div>
 
-          <!-- FOOTER -->
-          <footer class="footer">
-            <div class="footer-grid">
-              <div class="footer-col">
-                <h4 style="color: var(--primary); font-size: 1.5rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-                <p style="color: var(--muted); line-height: 1.6;">
-                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
-                </p>
-              </div>
-              <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-            <li><a href="/NGO/index.html">Home</a></li>
-            <li><a href="/NGO/Pages/TrainingPage.html">Programs</a></li>
-            <li><a href="/NGO/Pages/Impact.html">Our Impact</a></li>
-            <li><a href="/NGO/Pages/Community.html">Community</a></li>
-            <li><a href="/NGO/Pages/404.html">404 Page</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Support</h4>
-                <ul>
-            <li><a href="/NGO/Pages/Contact.html">Help Center</a></li>
-            <li><a href="/NGO/Pages/wishlist.html">Wishlist</a></li>
-            <li><a href="/NGO/Pages/Settings.html">Settings</a></li>
-            <li><a href="/NGO/Pages/login.html">Login / Register</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Follow Us</h4>
-          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
-                <div class="social-links">
-            <a href="#"><i data-lucide="facebook"></i></a>
-            <a href="#"><i data-lucide="twitter"></i></a>
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-            <div class="footer-bottom">
-              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
-              <div class="footer-legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-              </div>
-            </div>
-          </footer>
+          
+          
+        
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+          <p>
+            Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+          </p>
         </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="TrainingPage.html">Programs</a></li>
+            <li><a href="Impact.html">Our Impact</a></li>
+            <li><a href="Community.html">Community</a></li>
+            <li><a href="404.html">404 Page</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="Contact.html">Help Center</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="Settings.html">Settings</a></li>
+            <li><a href="login.html">Login / Register</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+          <div class="social-links">
+            <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+            <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+            <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+            <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
+          <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
       </main>
     </div>
 

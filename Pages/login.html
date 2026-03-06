@@ -3,14 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
-    
-
-        
-    
-
-        
-    
 
     <script>
       (function () {
@@ -190,7 +182,24 @@
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
-    <div class="login-card">
+    <div class="login-card" style="position: relative">
+      <a
+        href="../index.html"
+        style="
+          position: absolute;
+          top: 1.5rem;
+          left: 1.5rem;
+          color: var(--muted);
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 0.85rem;
+          transition: 0.2s;
+        "
+      >
+        <i data-lucide="arrow-left" style="width: 14px; height: 14px"></i> Back
+      </a>
       <h2>Welcome Back</h2>
       <p>Login to access your NGO training dashboard</p>
 
@@ -213,24 +222,17 @@
 
         <div class="form-options">
           <label><input type="checkbox" /> Remember me</label>
-          <a href="#">Forgot password?</a>
+          <a href="javascript:void(0)">Forgot password?</a>
         </div>
 
         <button type="submit" class="login-btn">Login</button>
       </form>
 
       <div class="login-footer">
-        Don’t have an account? <a href="#">Register</a>
+        Don’t have an account? <a href="javascript:void(0)">Register</a>
       </div>
     </div>
 
-    
-    
-    
-
-
     <script src="../assets/js/theme.js"></script>
-  
-
   </body>
 </html>
