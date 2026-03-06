@@ -596,15 +596,57 @@
       </main>
     </div>
 
-    <!-- MOCK DATA FILE -->
+    <!-- MOCK DATA FILE WITH REAL IMAGES -->
     <script>
       const programs = [
-        { id: 1, title: "Advanced Conflict Resolution", level: "Advanced", description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", duration: "6 Weeks" },
-        { id: 2, title: "Foundations of Mediation", level: "Beginner", description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", duration: "3 Weeks" },
-        { id: 3, title: "Cross-Cultural Communication", level: "Intermediate", description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", duration: "4 Weeks" },
-        { id: 4, title: "Negotiation Strategies", level: "Advanced", description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", duration: "8 Weeks" },
-        { id: 5, title: "Trauma-Informed Care", level: "Intermediate", description: "Understand psychological impacts and learn how to appropriately support affected populations.", duration: "5 Weeks" },
-        { id: 6, title: "Local Leadership Basics", level: "Beginner", description: "Empower local voices and build resilient communities from the ground up.", duration: "2 Weeks" }
+        { 
+          id: 1, 
+          title: "Advanced Conflict Resolution", 
+          level: "Advanced", 
+          description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", 
+          duration: "6 Weeks",
+          image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        },
+        { 
+          id: 2, 
+          title: "Foundations of Mediation", 
+          level: "Beginner", 
+          description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", 
+          duration: "3 Weeks",
+          image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        },
+        { 
+          id: 3, 
+          title: "Cross-Cultural Communication", 
+          level: "Intermediate", 
+          description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", 
+          duration: "4 Weeks",
+          image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        },
+        { 
+          id: 4, 
+          title: "Negotiation Strategies", 
+          level: "Advanced", 
+          description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", 
+          duration: "8 Weeks",
+          image: "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        },
+        { 
+          id: 5, 
+          title: "Trauma-Informed Care", 
+          level: "Intermediate", 
+          description: "Understand psychological impacts and learn how to appropriately support affected populations.", 
+          duration: "5 Weeks",
+          image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        },
+        { 
+          id: 6, 
+          title: "Local Leadership Basics", 
+          level: "Beginner", 
+          description: "Empower local voices and build resilient communities from the ground up.", 
+          duration: "2 Weeks",
+          image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+        }
       ];
     </script>
     
@@ -763,7 +805,8 @@
           
           grid.innerHTML += `
             <div class="bento-card ${isHero ? 'bento-hero explore-hero' : ''}" style="height: auto;">
-              ${!isHero ? `<img src="${placeholderImg}" class="card-img" alt="${p.title}">` : '<div class="hero-graphics"></div>'}
+              <!-- Using real images from the updated mock data -->
+              ${!isHero ? `<img src="${p.image || placeholderImg}" class="card-img" alt="${p.title}">` : '<div class="hero-graphics"></div>'}
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; position: relative; z-index: 2;">
                 <span class="badge-premium">${p.level}</span>
                 <button onclick="toggleWishlist(${p.id})" style="background: ${isHero ? 'rgba(255,255,255,0.1)' : 'var(--card)'}; border: 1px solid ${isHero ? 'rgba(255,255,255,0.2)' : 'var(--border)'}; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; color: ${isSaved ? 'var(--danger)' : (isHero ? 'white' : 'var(--muted)')}; transition: 0.3s; display: flex; align-items: center; justify-content: center;">
@@ -799,8 +842,11 @@
           grid.style.display = "grid";
           empty.style.display = "none";
           savedPrograms.forEach((p) => {
+            const placeholderImg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" style="background:%23e2e8f0"></svg>`;
             grid.innerHTML += `
               <div class="bento-card" style="height: auto;">
+                <!-- Wishlist cards pulling the real images -->
+                <img src="${p.image || placeholderImg}" class="card-img" alt="${p.title}" style="height: 140px; margin-bottom: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                   <span class="badge" style="background: rgba(124, 58, 237, 0.1); color: var(--secondary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${p.level}</span>
                   <button onclick="toggleWishlist(${p.id}, true)" style="background: none; border: none; cursor: pointer; color: var(--danger)">

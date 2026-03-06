@@ -295,6 +295,48 @@
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
       .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
+      /* BACK TO TOP BUTTON */
+      .back-to-top {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+      }
+
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(124, 58, 237, 0.4);
+      }
+
+      /* Push it up on mobile so it doesn't overlap your bottom navbar */
+      @media (max-width: 768px) {
+        .back-to-top {
+          bottom: calc(90px + env(safe-area-inset-bottom));
+          right: 20px;
+        }
+      }
+
       /* =========================================
          RESPONSIVE BREAKPOINTS 
          ========================================= */
@@ -537,7 +579,13 @@
             </div>
           </footer>
           
-        </div>
+        </div> <!-- End of content-scroll -->
+
+        <!-- BACK TO TOP BUTTON (Fixed Placement) -->
+        <button class="back-to-top" id="backToTopBtn" title="Back to top">
+          <i data-lucide="arrow-up"></i>
+        </button>
+
       </main>
     </div>
 
@@ -617,7 +665,6 @@
     </div>
 
     <!-- SCRIPTS -->
-    <!-- Optional: If you rely on external scripts not loaded yet, ensure the path is correct -->
     <script src="../assets/js/theme.js"></script>
 
     <script>
@@ -673,6 +720,31 @@
         renderBadges();
         renderLeaderboard();
         setupEventListeners();
+
+        // ============================================
+        // BACK TO TOP LOGIC
+        // ============================================
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        const scrollContainer = document.querySelector(".content-scroll");
+
+        if (backToTopBtn && scrollContainer) {
+          // Show button when user scrolls down inside the content area
+          scrollContainer.addEventListener("scroll", function () {
+            if (scrollContainer.scrollTop > 300) {
+              backToTopBtn.classList.add("show");
+            } else {
+              backToTopBtn.classList.remove("show");
+            }
+          });
+
+          // Smooth scroll to top on click
+          backToTopBtn.addEventListener("click", function () {
+            scrollContainer.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          });
+        }
       });
 
       function initializeCategoryFilters() {
