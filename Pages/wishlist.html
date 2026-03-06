@@ -21,7 +21,7 @@
     <title>My Saved Trainings | NGO Training</title>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
@@ -63,7 +63,41 @@
         box-sizing: border-box;
       }
 
-      /* Mobile Navigation Support */
+      /* =========================================
+         REFERENCE NAVBAR STYLES
+         ========================================= */
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: inline-block;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        border: none;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      
       .navbar {
         position: fixed;
         top: 0;
@@ -84,7 +118,7 @@
         background: var(--card) !important;
         backdrop-filter: none;
       }
-
+      
       .navbar-container {
         display: flex;
         justify-content: space-between;
@@ -93,15 +127,16 @@
         max-width: 1400px;
         margin: 0 auto;
       }
-
+      
       .navbar-logo {
         font-size: 1.4rem;
         font-weight: 800;
         font-family: "Outfit", sans-serif;
         text-decoration: none;
         color: var(--text);
+        white-space: nowrap;
       }
-
+      
       .navbar-menu {
         display: flex;
         gap: 2rem;
@@ -110,25 +145,25 @@
         padding: 0;
         align-items: center;
       }
-
+      
       .navbar-link {
         color: var(--muted);
         text-decoration: none;
         font-weight: 500;
         transition: 0.3s;
       }
-
+      
       .navbar-link:hover,
       .navbar-link.active {
         color: var(--primary);
       }
-
+      
       .nav-actions {
         display: flex;
         align-items: center;
         gap: 15px;
       }
-
+      
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -141,31 +176,124 @@
         cursor: pointer;
         color: var(--text);
       }
-      .theme-toggle input { display: none; }
-
-      .mobile-menu-btn {
+      
+      .theme-toggle input {
         display: none;
-        background: transparent;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--text);
-        cursor: pointer;
-        padding: 8px;
-        align-items: center;
-        justify-content: center;
       }
 
-      /* Dropdown */
-      .dropdown { position: relative; }
-      .dropdown-menu {
-        position: absolute; top: 100%; left: 0; background: var(--card); border: 1px solid var(--border);
-        border-radius: 16px; padding: 10px; min-width: 200px; opacity: 0; visibility: hidden;
-        transform: translateY(10px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        display: flex; flex-direction: column; gap: 5px;
+      /* DROPDOWN MENU */
+      .dropdown {
+        position: relative;
       }
-      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-      .dropdown-menu a { padding: 10px 15px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.95rem; transition: 0.2s; }
-      .dropdown-menu a:hover { background: rgba(128,128,128,0.05); color: var(--primary); }
+      
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 10px;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 100;
+      }
+      
+      .dropdown:hover .dropdown-menu,
+      .dropdown:focus-within .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      
+      .dropdown-menu a {
+        padding: 10px 15px;
+        color: var(--text);
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: 0.2s;
+      }
+      
+      .dropdown-menu a:hover,
+      .dropdown-menu a:focus {
+        background: rgba(128, 128, 128, 0.05);
+        color: var(--primary);
+      }
+
+      /* NAVBAR RESPONSIVE */
+      @media (max-width: 950px) {
+        .navbar-menu {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          flex-direction: column;
+          background: var(--card);
+          width: 100%;
+          text-align: center;
+          transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          padding: 1.5rem 0;
+          border-bottom: 1px solid var(--border);
+          max-height: calc(100vh - 70px);
+          overflow-y: auto;
+        }
+        .navbar-menu.active {
+          left: 0;
+        }
+        .navbar-menu li {
+          margin: 10px 0;
+          width: 100%;
+        }
+        .dropdown {
+          width: 100%;
+        }
+        .dropdown-menu {
+          position: static;
+          opacity: 1;
+          visibility: visible;
+          transform: none !important;
+          background: rgba(128, 128, 128, 0.04);
+          box-shadow: none;
+          border: none;
+          padding: 10px;
+          margin: 10px auto 0;
+          width: 90%;
+        }
+        .dropdown-menu a {
+          display: block;
+          text-align: center;
+        }
+        .mobile-menu-btn {
+          display: flex;
+        }
+        .nav-actions .btn-primary {
+          display: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .navbar-container {
+          padding: 15px 1rem;
+        }
+        .navbar-logo {
+          font-size: 1.2rem;
+        }
+        #dirToggle span {
+          display: none;
+        }
+      }
+
+      /* =========================================
+         WISHLIST PAGE SPECIFIC STYLES
+         ========================================= */
 
       /* Modern Hero Header */
       .wishlist-header {
@@ -375,7 +503,7 @@
       /* Footer */
       .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; }
       .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); font-family: 'Outfit', sans-serif;}
       .footer-col ul { list-style: none; padding: 0; margin: 0; }
       .footer-col ul li { margin-bottom: 12px; }
       .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
@@ -385,32 +513,9 @@
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
       .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
-      /* =========================================
-         RESPONSIVE BREAKPOINTS 
-         ========================================= */
-         
+      /* CONTENT RESPONSIVE BREAKPOINTS */
       @media (max-width: 1024px) {
         .wishlist-header h1 { font-size: 3rem; }
-      }
-
-      /* Navbar Breakpoint */
-      @media (max-width: 900px) {
-        .navbar-menu {
-          position: fixed; top: 70px; left: -100%; display: flex !important;
-          flex-direction: column; background: var(--card); width: 100%; text-align: center;
-          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-          padding: 2rem 0; border-bottom: 1px solid var(--border); z-index: 99;
-          max-height: calc(100vh - 70px); overflow-y: auto;
-        }
-        .navbar-menu.active { left: 0; }
-        .navbar-menu li { margin: 15px 0; width: 100%; }
-        
-        .dropdown:hover .dropdown-menu { position: static; box-shadow: none; border: none; transform: none; visibility: visible; opacity: 1; background: transparent; padding: 0; margin-top: 10px;}
-        .dropdown-menu a { display: block; text-align: center; }
-        
-        .mobile-menu-btn { display: flex; order: 3; }
-        .navbar-logo { flex: 1; }
-        .nav-actions { order: 2; margin-right: 15px; gap: 10px; }
       }
 
       @media (max-width: 768px) {
@@ -420,7 +525,6 @@
         .btn-action { width: 100%; }
         .training-grid { grid-template-columns: 1fr; }
         
-        /* Newsletter overrides for tablet/mobile */
         .newsletter-section { padding: 60px 1.5rem; }
         .newsletter-box {
           flex-direction: column;
@@ -446,11 +550,6 @@
         .wishlist-header h1 { font-size: 2rem; }
         .wishlist-header p { font-size: 1rem; }
         .program-card { padding: 1.5rem; }
-        
-        /* Compact top nav for tiny screens */
-        .navbar-container { padding: 15px 1rem; }
-        #dirToggle span { display: none; }
-        
         .newsletter-content h2 { font-size: 1.5rem; }
       }
     </style>
@@ -468,9 +567,8 @@
     <nav class="navbar">
       <div class="navbar-container">
         <a href="../index.html" class="navbar-logo">🌍 NGO</a>
-
         <ul class="navbar-menu">
-          <!-- Dropdown Update -->
+          <!-- Dropdown -->
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Home ▾</a>
             <div class="dropdown-menu">
@@ -479,6 +577,7 @@
             </div>
           </li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
+          <!-- Highlighted Active Link for Wishlist Page -->
           <li><a href="wishlist.html" class="navbar-link active">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
@@ -493,19 +592,44 @@
         </ul>
 
         <div class="nav-actions">
-          <button id="dirToggle" style="padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text);">
+          <button
+            class="btn-primary"
+            style="padding: 8px 16px; font-size: 0.9rem"
+            onclick="window.location.href = 'login.html'"
+          >
+            Get Started
+          </button>
+
+          <button
+            id="dirToggle"
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              color: var(--text);
+              padding: 8px 12px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-weight: 600;
+              cursor: pointer;
+            "
+          >
             <i data-lucide="languages" style="width: 18px"></i>
             <span>LTR</span>
           </button>
-          
-          <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+
+          <label
+            class="theme-toggle"
+            onclick="document.documentElement.classList.toggle('dark')"
+          >
             <i data-lucide="moon" style="width: 18px"></i>
           </label>
+
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i data-lucide="menu"></i>
+          </button>
         </div>
-        
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-          <i data-lucide="menu"></i>
-        </button>
       </div>
     </nav>
 
@@ -733,7 +857,7 @@
       // Initial Render
       renderWishlist();
 
-      // Mobile Menu Toggle
+      // Exact Mobile Menu Toggle Logic from Reference
       const mobileBtn = document.getElementById("mobileMenuBtn");
       const navMenu = document.querySelector(".navbar-menu");
       const navbar = document.querySelector(".navbar");
