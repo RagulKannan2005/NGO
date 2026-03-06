@@ -503,12 +503,72 @@
         margin-right: auto;
       }
 
+      /* Newsletter Section */
+      .newsletter-section {
+        padding: 60px 2rem;
+        background: rgba(128, 128, 128, 0.02);
+        border-top: 1px solid var(--border);
+      }
+      .newsletter-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        transition: 0.3s;
+      }
+      .newsletter-box:hover {
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      }
+      .newsletter-content h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+      }
+      .newsletter-content p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 1rem;
+        max-width: 500px;
+        line-height: 1.6;
+      }
+      .newsletter-form {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        max-width: 480px;
+      }
+      .newsletter-form input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+      }
+      .newsletter-form input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+      .newsletter-form button {
+        padding: 1rem 2rem;
+      }
+
       /* Footer */
       .footer {
         background: var(--card);
         border-top: 1px solid var(--border);
         padding: 60px 2rem 40px;
-        margin-top: 40px;
       }
       .footer-grid {
         display: grid;
@@ -827,12 +887,28 @@
         .features,
         .mission,
         .home-section,
-        .cta-section {
+        .cta-section,
+        .newsletter-section {
           padding: 60px 1.5rem;
         }
+        
         .cta-card {
           padding: 4rem 1.5rem;
           border-radius: 32px;
+        }
+
+        /* Newsletter Responsive Overrides */
+        .newsletter-box {
+          flex-direction: column;
+          text-align: center;
+          padding: 2.5rem 1.5rem;
+        }
+        .newsletter-form {
+          flex-direction: column;
+          max-width: 100%;
+        }
+        .newsletter-form button {
+          width: 100%;
         }
 
         .footer {
@@ -889,6 +965,9 @@
         .section-header h2 {
           font-size: 1.8rem;
         }
+        .newsletter-content h2 {
+          font-size: 1.5rem;
+        }
       }
 
       /* Scroll Animations */
@@ -930,10 +1009,16 @@
     <!-- Navigation -->
     <nav class="navbar">
       <div class="navbar-container">
-        <a href="index.html" class="navbar-logo">🌍 NGO Training</a>
+        <a href="index.html" class="navbar-logo">🌍 NGO</a>
         <ul class="navbar-menu">
-          <li><a href="index.html" class="navbar-link active">Home</a></li>
-          <li><a href="Pages/Home2.html" class="navbar-link">Home 2</a></li>
+          <!-- Dropdown for Homes Added Here -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="navbar-link active">Home ▾</a>
+            <div class="dropdown-menu">
+              <a href="index.html">Home 1</a>
+              <a href="Pages/Home2.html">Home 2</a>
+            </div>
+          </li>
           <li>
             <a href="Pages/TrainingPage.html" class="navbar-link">Trainings</a>
           </li>
@@ -1151,7 +1236,6 @@
         </div>
 
         <div id="popularGrid" class="programs-grid">
-          <!-- Rendered via JS, fallback for demo -->
           <div class="prog-card animate-on-scroll fade-in-up">
             <span class="card-label">Advanced</span>
             <h3>Advanced Conflict Resolution</h3>
@@ -1413,6 +1497,22 @@
       </div>
     </section>
 
+    <!-- Newsletter Section (New Added Here) -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-box animate-on-scroll fade-in-up">
+          <div class="newsletter-content">
+            <h2>Stay up to date</h2>
+            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+          </div>
+          <form class="newsletter-form" onsubmit="event.preventDefault();">
+            <input type="email" placeholder="Enter your email address" required />
+            <button type="submit" class="btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
@@ -1438,7 +1538,6 @@
             <h4>Quick Links</h4>
             <ul>
               <li><a href="index.html">Home</a></li>
-
               <li><a href="Pages/TrainingPage.html">Programs</a></li>
               <li><a href="Pages/Impact.html">Our Impact</a></li>
               <li><a href="Pages/Community.html">Community</a></li>

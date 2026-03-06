@@ -379,14 +379,69 @@
         font-size: 0.95rem;
       }
 
-      /* Mobile Responsive HUD */
+      /* Logout Button */
+      .sidebar-footer {
+        padding: 16px 12px;
+        border-top: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        color: #ef4444;
+        background: transparent;
+        border: none;
+        width: 100%;
+        text-align: start;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .logout-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+      /* Overlay for mobile */
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      /* Hamburger toggle button (mobile only) */
+      .menu-toggle {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        width: 38px;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text);
+        flex-shrink: 0;
+      }
+
+      /* Tablet: icon-only collapsed sidebar */
       @media (max-width: 1024px) {
         .sidebar {
           width: var(--sidebar-collapsed-width);
           align-items: center;
         }
         .logo-text,
-        .nav-item span {
+        .nav-item span,
+        .logout-btn span {
           display: none;
         }
         .sidebar-header {
@@ -400,46 +455,69 @@
           width: 50px;
           height: 50px;
         }
+        .logout-btn {
+          padding: 12px;
+          justify-content: center;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+        }
+        .sidebar-footer {
+          padding: 16px 0;
+          display: flex;
+          justify-content: center;
+        }
       }
 
-      @media (max-width: 768px) {
+      /* Mobile: slide-in overlay sidebar */
+      @media (max-width: 640px) {
+        .menu-toggle {
+          display: flex;
+        }
         .sidebar {
           position: fixed;
-          bottom: 0;
+          top: 0;
           left: 0;
-          width: 100%;
-          height: 60px;
-          flex-direction: row;
-          padding: 0;
-          border-top: 1px solid var(--border);
-          border-inline-end: none;
+          width: var(--sidebar-width);
+          height: 100vh;
+          transform: translateX(-100%);
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 1000;
+          align-items: unset;
         }
-        .sidebar-header {
-          display: none;
+        .sidebar.open {
+          transform: translateX(0);
         }
-        .nav-list {
-          flex-direction: row;
+        /* Restore full labels on mobile when open */
+        .sidebar.open .logo-text,
+        .sidebar.open .nav-item span,
+        .sidebar.open .logout-btn span {
+          display: inline;
+        }
+        .sidebar.open .sidebar-header {
           justify-content: flex-start;
-          padding: 0;
+          padding: 0 24px;
+        }
+        .sidebar.open .nav-item {
+          padding: 12px 16px;
+          justify-content: flex-start;
+          border-radius: 12px;
           width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
+          height: auto;
         }
-        .nav-list::-webkit-scrollbar {
-          display: none; /* Chrome, Safari and Opera */
+        .sidebar.open .logout-btn {
+          padding: 12px 16px;
+          justify-content: flex-start;
+          border-radius: 12px;
+          width: 100%;
+          height: auto;
         }
-        .nav-item {
-          border-radius: 0;
-          height: 100%;
-          width: auto;
-          min-width: 70px; /* slightly larger hit area */
-          flex: 0 0 auto;
+        .sidebar.open .sidebar-footer {
+          padding: 16px 12px;
+          display: block;
         }
         .main-content {
-          margin-bottom: 60px;
+          margin-left: 0 !important;
         }
         .tab-content {
           padding: 16px;
@@ -447,30 +525,22 @@
         .main-header {
           padding: 0 16px;
         }
-        .mobile-logo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          cursor: pointer;
-        }
-        .mobile-logo .logo-box {
-          width: 32px;
-          height: 32px;
-        }
-        .mobile-logo span {
-          font-weight: 800;
-          font-size: 1.1rem;
-        }
         .desktop-only {
+          display: block;
+        }
+        .mobile-logo {
           display: none;
         }
       }
     </style>
   </head>
   <body>
+    <!-- MOBILE OVERLAY BACKDROP -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-header" onClick="window.location.href='../index.html'">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header" onClick="window.location.href='../index.html'" style="cursor:pointer;">
         <div class="logo-box">
           <i data-lucide="shield"></i>
         </div>
@@ -515,22 +585,24 @@
           <span>Notifications</span>
         </button>
       </nav>
+
+      <!-- LOGOUT BUTTON -->
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="alert('Logging out...')">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
     </aside>
 
     <!-- MAIN -->
     <main class="main-content">
       <header class="main-header">
-        <div class="header-title-box">
-          <h1 id="tabTitle" class="desktop-only">User Directory</h1>
-          <div
-            class="mobile-logo"
-            onclick="window.location.href = '../index.html'"
-          >
-            <div class="logo-box">
-              <i data-lucide="shield"></i>
-            </div>
-            <span>Admin</span>
-          </div>
+        <div class="header-title-box" style="display:flex; align-items:center; gap:12px;">
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            <i data-lucide="menu" style="width:18px;"></i>
+          </button>
+          <h1 id="tabTitle">User Directory</h1>
         </div>
 
         <div class="user-actions">
@@ -1140,10 +1212,12 @@
                 "
               >
                 <div style="display: flex; align-items: center; gap: 10px">
+                  <!-- FIX 1a: Removed misplaced `/` before alt attribute -->
                   <img
                     src="https://ui-avatars.com/api/?name=John+Doe&background=cbd5e1&color=333"
+                    alt="John Doe avatar"
                     style="width: 36px; border-radius: 50%"
-                  / alt="NGO Image">
+                  >
                   <div>
                     <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
                       John Doe
@@ -1250,10 +1324,12 @@
                 "
               >
                 <div style="display: flex; align-items: center; gap: 10px">
+                  <!-- FIX 1b: Removed misplaced `/` before alt attribute -->
                   <img
                     src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=f472b6&color=fff"
+                    alt="Sarah Jenkins avatar"
                     style="width: 36px; border-radius: 50%"
-                  / alt="NGO Image">
+                  >
                   <div>
                     <h4 style="font-weight: 600; font-size: 0.95rem; margin: 0">
                       Sarah Jenkins
@@ -1330,6 +1406,60 @@
               </div>
             </div>
           </div>
+
+          <!-- FIX 2: Added missing Moderation Queue table (was referenced by JS but absent from HTML) -->
+          <div class="table-card" style="grid-column: span 2">
+            <div class="table-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700">Moderation Queue</h3>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Content</th>
+                    <th>User</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="moderationTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FIX 3: Added missing Active Circles list (was referenced by JS but absent from HTML) -->
+          <div class="chart-container">
+            <div class="chart-header"><h3>Active Circles</h3></div>
+            <div style="display: flex; flex-direction: column; gap: 12px" id="circlesList">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- FIX 4: Added missing Discussions table (was referenced by JS but absent from HTML) -->
+          <div class="table-card" style="grid-column: span 2">
+            <div class="table-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700">Discussion Threads</h3>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Topic</th>
+                    <th>Author</th>
+                    <th>Engagement</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="discussionsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1364,7 +1494,6 @@
                 overflow: hidden;
               "
             >
-              <!-- Placeholder for a real map visualization -->
               <i
                 data-lucide="map"
                 style="
@@ -1516,7 +1645,6 @@
       <!-- TAB: CONTENT (CMS) -->
       <section id="tab-content" class="tab-content">
         <div class="content-grid">
-          <!-- CMS Overview Stats -->
           <div class="bento-card bento-metric">
             <div class="metric-icon icon-purple">
               <i data-lucide="layout-template"></i>
@@ -1536,7 +1664,6 @@
             </div>
           </div>
 
-          <!-- Content Editor Section -->
           <div class="bento-card bento-list" style="grid-column: span 2">
             <div
               class="list-header"
@@ -1599,7 +1726,6 @@
             </div>
 
             <div style="padding: 24px">
-              <!-- Homepage Banner Edit -->
               <div style="margin-bottom: 24px">
                 <h4 style="font-weight: 600; margin-bottom: 12px">
                   Hero Banner Text
@@ -1658,7 +1784,6 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
                 "
               />
 
-              <!-- Testimonials Manager -->
               <div>
                 <div
                   style="
@@ -1703,7 +1828,6 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
       <!-- TAB: NOTIFICATIONS -->
       <section id="tab-notifications" class="tab-content">
         <div class="content-grid">
-          <!-- Notification Stats -->
           <div class="bento-card bento-metric">
             <div
               class="metric-icon"
@@ -1726,7 +1850,6 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
             </div>
           </div>
 
-          <!-- Notification Feed -->
           <div class="bento-card bento-list" style="grid-column: span 2">
             <div
               class="list-header"
@@ -1735,7 +1858,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
                 padding-bottom: 16px;
               "
             >
-              Recent Activity & Alerts
+              Recent Activity &amp; Alerts
               <button
                 class="btn btn-light"
                 style="
@@ -1878,7 +2001,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DUMMY USER DATA
@@ -1980,7 +2103,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DUMMY CMS DATA
@@ -2027,7 +2150,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DUMMY NOTIFICATIONS DATA
@@ -2133,7 +2256,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `;
           })
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DUMMY SECURITY DATA
@@ -2180,7 +2303,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DUMMY COMMUNITY DATA
@@ -2256,7 +2379,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // DISCUSSIONS DATA
@@ -2317,7 +2440,7 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       function renderUsers() {
@@ -2328,7 +2451,8 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
             (u) => `
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 15px 10px; display: flex; align-items: center; gap: 10px;">
-              <img src="${u.avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" / alt="NGO Image">
+              <!-- FIX 1c: Removed misplaced '/' before alt attribute -->
+              <img src="${u.avatar}" alt="${u.name} avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
               <strong style="color: var(--text);">${u.name}</strong>
             </td>
             <td style="padding: 15px 10px; color: var(--muted);">${u.email}</td>
@@ -2350,7 +2474,8 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         `,
           )
           .join("");
-        lucide.createIcons();
+        // FIX 5: Added typeof guard to match pattern used in all other render functions
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // TAB SWITCHING LOGIC
@@ -2362,11 +2487,9 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
         btn.addEventListener("click", () => {
           const target = btn.dataset.tab;
 
-          // Update Buttons
           tabBtns.forEach((b) => b.classList.remove("active"));
           btn.classList.add("active");
 
-          // Update Content
           tabContents.forEach((content) => {
             content.classList.remove("active");
             if (content.id === `tab-${target}`) {
@@ -2374,7 +2497,6 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
             }
           });
 
-          // Update Header Title
           const titles = {
             users: "User Directory",
             analytics: "Platform Analytics",
@@ -2389,6 +2511,32 @@ Join our global initiative to foster peace, resolve conflicts, and build sustain
           tabTitle.innerText = titles[target] || "Dashboard";
 
           if (typeof lucide !== "undefined") lucide.createIcons();
+        });
+      });
+
+      // MOBILE SIDEBAR TOGGLE
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+
+      function openSidebar() {
+        sidebar.classList.add("open");
+        overlay.classList.add("active");
+      }
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("active");
+      }
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+      });
+      overlay.addEventListener("click", closeSidebar);
+
+      // Close sidebar on nav item click (mobile)
+      document.querySelectorAll(".nav-item[data-tab]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (window.innerWidth <= 640) closeSidebar();
         });
       });
 

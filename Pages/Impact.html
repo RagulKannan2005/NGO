@@ -64,6 +64,14 @@
         max-width: 100%;
       }
 
+      /* Container for reused structures */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        width: 100%;
+      }
+
       /* --- NAVBAR BASE --- */
       .navbar {
         position: fixed;
@@ -139,7 +147,7 @@
         background: var(--card);
         color: var(--text);
         cursor: pointer;
-        flex-shrink: 0; /* CRITICAL: Prevents squishing */
+        flex-shrink: 0; 
         transition: 0.2s;
         font-size: 0.85rem;
         font-weight: 500;
@@ -155,7 +163,6 @@
         padding: 0;
       }
 
-      /* Ensure SVGs strictly retain their size */
       .nav-btn svg, .icon-wrapper svg {
         width: 18px;
         height: 18px;
@@ -165,11 +172,11 @@
 
       /* Theme Toggle Specifics */
       .theme-toggle {
-        margin: 0; /* Clear label defaults */
+        margin: 0; 
       }
 
       .switch-input {
-        display: none; /* Hide the native checkbox */
+        display: none; 
       }
       
       .icon-wrapper {
@@ -184,7 +191,7 @@
       html:not(.dark) .sun-icon { display: none; }
 
       .mobile-menu-btn {
-        display: none; /* Hidden on desktop */
+        display: none; 
       }
 
       /* Dropdown Menu */
@@ -573,6 +580,88 @@
         box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
       }
 
+      /* --- NEWSLETTER SECTION --- */
+      .newsletter-section {
+        padding: clamp(60px, 8vw, 100px) 0;
+        background: rgba(128, 128, 128, 0.02);
+        border-top: 1px solid var(--border);
+      }
+      
+      .newsletter-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: clamp(2rem, 5vw, 3rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        transition: 0.3s;
+      }
+
+      .newsletter-box:hover {
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      }
+
+      .newsletter-content h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+      }
+
+      .newsletter-content p {
+        color: var(--muted);
+        margin: 0;
+        font-size: clamp(0.95rem, 1.5vw, 1rem);
+        max-width: 500px;
+        line-height: 1.6;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .newsletter-form input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .newsletter-form button {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 12px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .newsletter-form button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+      }
+
       /* Footer Fallbacks */
       .footer {
         background: var(--card);
@@ -664,32 +753,22 @@
         }
 
         .mobile-menu-btn {
-          display: flex; /* Display hamburger icon on mobile */
+          display: flex; 
         }
       }
 
-      /* Specific adjustments for very small phones (Mobile S / 320px) to prevent layout break */
-      @media (max-width: 400px) {
-        .navbar {
-          padding: 0.7rem 1rem; /* Shrink horizontal padding */
+      @media (max-width: 768px) {
+        /* Newsletter mobile override */
+        .newsletter-box {
+          flex-direction: column;
+          text-align: center;
         }
-        .navbar-logo {
-          font-size: 1.1rem; /* Shrink logo slightly */
+        .newsletter-form {
+          flex-direction: column;
+          max-width: 100%;
         }
-        .nav-btn {
-          height: 36px; /* Slightly smaller button hitboxes */
-        }
-        .nav-btn.icon-only {
-          width: 36px;
-        }
-        .nav-actions {
-          gap: 0.35rem; /* Tighter gap between buttons */
-        }
-        .nav-actions .nav-btn span {
-          display: none; /* Hide 'LTR' text to save horizontal space */
-        }
-        .nav-btn.icon-only {
-          padding: 0;
+        .newsletter-form button {
+          width: 100%;
         }
       }
 
@@ -727,7 +806,31 @@
           width: 100%;
         }
         .nav-actions .nav-btn span {
-          display: none; /* Hide 'LTR' text on phones */
+          display: none;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .navbar {
+          padding: 0.7rem 1rem;
+        }
+        .navbar-logo {
+          font-size: 1.1rem; 
+        }
+        .nav-btn {
+          height: 36px; 
+        }
+        .nav-btn.icon-only {
+          width: 36px;
+        }
+        .nav-actions {
+          gap: 0.35rem; 
+        }
+        .nav-actions .nav-btn span {
+          display: none; 
+        }
+        .nav-btn.icon-only {
+          padding: 0;
         }
       }
     </style>
@@ -747,7 +850,14 @@
         <a href="../index.html" class="navbar-logo">🌍 NGO Training</a>
 
         <ul class="navbar-menu">
-          <li><a href="../index.html" class="navbar-link">Home</a></li>
+          <!-- Dropdown Update -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="navbar-link">Home ▾</a>
+            <div class="dropdown-menu">
+              <a href="../index.html">Home 1</a>
+              <a href="Home2.html">Home 2</a>
+            </div>
+          </li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
@@ -867,6 +977,22 @@
           platform.
         </p>
         <a href="login.html" class="btn-light">Register Your Team</a>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-box">
+          <div class="newsletter-content">
+            <h2>Stay up to date</h2>
+            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+          </div>
+          <form class="newsletter-form" onsubmit="event.preventDefault();">
+            <input type="email" placeholder="Enter your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
       </div>
     </section>
 

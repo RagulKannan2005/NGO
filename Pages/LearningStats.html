@@ -70,6 +70,23 @@
         background-attachment: fixed;
       }
 
+      /* MOBILE OVERLAY */
+      .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      body.sidebar-open .mobile-overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
       /* CORE LAYOUT */
       .dash-wrapper {
         display: flex;
@@ -78,6 +95,7 @@
         padding: 24px;
         gap: 24px;
         box-sizing: border-box;
+        position: relative;
       }
 
       .dash-main {
@@ -96,7 +114,7 @@
       /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border: 1px solid var(--border);
@@ -105,88 +123,122 @@
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.03),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        z-index: 100;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 1000;
+        transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+        overflow-y: auto;
         flex-shrink: 0;
       }
+      .floating-sidebar::-webkit-scrollbar { display: none; }
+      .floating-sidebar { -ms-overflow-style: none; scrollbar-width: none; }
 
       html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.2),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
 
       .floating-sidebar:hover { width: 280px; align-items: flex-start; }
+
+      /* SIDEBAR HEADER */
+      .sidebar-header {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        transition: padding 0.4s;
+        box-sizing: border-box;
+      }
+      .floating-sidebar:hover .sidebar-header {
+        justify-content: flex-start;
+        padding-left: 24px;
+      }
 
       .nav-logo {
         width: 48px; height: 48px; border-radius: 16px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         display: flex; align-items: center; justify-content: center;
-        color: white; margin-bottom: 40px; flex-shrink: 0; transition: 0.4s; cursor: pointer;
+        color: white; flex-shrink: 0; cursor: pointer;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
       }
-      .floating-sidebar:hover .nav-logo { margin-left: 24px; }
+      
+      .mobile-close {
+        display: none;
+        background: rgba(128, 128, 128, 0.1);
+        border: none;
+        color: var(--text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .mobile-close:hover { background: var(--danger); color: white; }
 
       .nav-items {
-        display: flex; flex-direction: column; gap: 16px;
+        display: flex; flex-direction: column; gap: 8px;
         width: 100%; padding: 0 24px; box-sizing: border-box;
       }
 
       .nav-btn {
-        width: 100%; display: flex; align-items: center; gap: 16px;
-        padding: 12px 16px; border-radius: 16px; color: var(--muted);
-        text-decoration: none; transition: all 0.3s ease;
-        white-space: nowrap; position: relative; overflow: hidden;
-      }
-      
-      .nav-icon-wrap {
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
+        width: 100%; display: flex; align-items: center; gap: 16px;
+        padding: 14px 16px; border-radius: 16px; color: var(--muted);
+        text-decoration: none; transition: all 0.3s ease;
+        white-space: nowrap;
       }
-      .nav-icon-wrap i, .nav-icon-wrap svg { transition: 0.3s transform; }
-      .nav-badge {
-        background: var(--danger);
-        color: white;
-        border-radius: 50%;
-        font-size: 0.65rem;
-        padding: 2px 6px;
-        position: absolute;
-        top: -6px;
-        right: -10px;
-        font-weight: 700;
-      }
-
-      .nav-text {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s;
-        font-weight: 500;
-        font-size: 0.95rem;
+      .nav-btn i, .nav-btn svg {
+        min-width: 24px; width: 24px; height: 24px; transition: 0.3s transform;
       }
       
-      .floating-sidebar:hover .nav-text { opacity: 1; transform: translateX(0); }
+      .nav-text-container {
+        display: flex; align-items: center; justify-content: space-between; 
+        width: 100%; opacity: 0; transform: translateX(-10px); 
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-text-container span { font-weight: 500; font-size: 0.95rem; }
+      
+      .floating-sidebar:hover .nav-text-container { opacity: 1; transform: translateX(0); }
       .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
       .nav-btn:hover i, .nav-btn:hover svg { transform: scale(1.1); }
       
-      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); font-weight: 600; }
+      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); }
       html.dark .nav-btn.active { background: rgba(37, 99, 235, 0.15); }
 
       /* DASHBOARD HEADER */
       .top-nav {
         display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-        padding: 20px 40px; border-bottom: 1px solid var(--border); gap: 20px; z-index: 10;
+        padding: 30px 40px; border-bottom: 1px solid var(--border); gap: 20px; z-index: 10;
         background: var(--bg);
       }
-      .greeting h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
+
+      .header-left-cluster {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      }
+      .menu-toggle:hover { background: rgba(128,128,128,0.05); transform: translateY(-2px); }
+
+      .greeting { cursor: pointer; }
+      .greeting h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
       .greeting p { color: var(--muted); font-size: 0.95rem; margin: 0; }
 
       .top-actions { display: flex; align-items: center; gap: 15px; }
@@ -272,40 +324,46 @@
         .timeline-bento { grid-column: span 2; }
       }
 
+      /* TABLET & MOBILE - OFF-CANVAS SIDEBAR LOGIC */
       @media (max-width: 1024px) {
-        .dash-wrapper { padding: 16px; gap: 16px; }
+        .dash-wrapper { padding: 16px; gap: 0; }
         .bento-scroll { padding: 24px; }
         .bento-grid { grid-template-columns: repeat(2, 1fr); }
-      }
+        
+        .menu-toggle { display: flex; }
+        .mobile-close { display: flex; }
 
-      /* Tablet & Mobile Break (Bottom Fixed Navigation) */
-      @media (max-width: 850px) {
-        body { height: 100dvh; }
-        .dash-wrapper { padding: 0; flex-direction: column; gap: 0; }
-        
-        .top-nav { padding: 20px 24px; }
-        
-        /* Transform Sidebar into Fixed Bottom Bar */
+        /* Transform Sidebar into Professional Off-Canvas Left Drawer */
         .floating-sidebar {
-          position: fixed; bottom: 0; top: auto; left: 0; width: 100%; height: 70px; flex-direction: row;
-          padding: 0 15px; border-radius: 24px 24px 0 0; border: none; border-top: 1px solid var(--border);
-          background: var(--card); box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1); z-index: 1000;
-          align-items: center; justify-content: flex-start; box-sizing: border-box; flex-shrink: 0;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+          width: 280px !important; 
+          border-radius: 0 24px 24px 0;
+          border: none;
+          background: var(--card);
+          padding: 24px 0;
+          box-shadow: 20px 0 60px rgba(0, 0, 0, 0.15);
+          transform: translateX(-100%);
+          align-items: flex-start;
+          z-index: 999;
         }
-        .floating-sidebar:hover { width: 100%; align-items: center; } 
-        
-        .nav-logo { display: none; }
-        
-        .nav-items {
-          flex-direction: row; padding: 0; margin: 0; height: 100%; width: 100%; overflow-x: auto;
-          gap: 15px; align-items: center; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-        }
-        .nav-items::-webkit-scrollbar { display: none; }
-        
-        .nav-btn { padding: 10px; border-radius: 12px; width: auto; scroll-snap-align: center; flex-shrink: 0; }
-        .nav-text { display: none !important; }
 
-        .dash-main { border-radius: 0; border: none; height: calc(100vh - 70px); }
+        body.sidebar-open { overflow: hidden; } /* Lock background scroll */
+        body.sidebar-open .floating-sidebar { transform: translateX(0); } /* Slide In */
+
+        /* Force Nav Elements to show text on Mobile */
+        .nav-text-container { opacity: 1; transform: none; }
+        
+        /* Clean Header Formatting for Mobile Sidebar */
+        .sidebar-header { 
+          justify-content: space-between; 
+          padding: 0 24px; 
+          margin-bottom: 40px; 
+        }
+        .sidebar-header:hover { padding-left: 24px; }
       }
 
       /* Mobile Grid Overrides */
@@ -342,8 +400,8 @@
         .profile-pill span { display: none; } 
         .profile-pill { padding: 4px; border-radius: 50%; }
         
-        .bento-scroll { padding: 20px; padding-bottom: 90px; } 
-        .bento-card { border-radius: 28px; }
+        .bento-scroll { padding: 16px; } 
+        .bento-card { padding: 24px; border-radius: 28px; }
         
         .metric-value { font-size: 2.2rem; margin-bottom: 0; }
         .metric-label { font-size: 0.85rem; }
@@ -351,6 +409,9 @@
     </style>
   </head>
   <body>
+    <!-- MOBILE OVERLAY BACKDROP -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+
     <!-- PAGE LOADER (Hidden by default) -->
     <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
@@ -361,57 +422,69 @@
     <!-- WRAPPER -->
     <div class="dash-wrapper">
       
-      <!-- FLOATING SIDEBAR / BOTTOM NAV -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = '../index.html'">
-          <i data-lucide="shield"></i>
+      <!-- FLOATING / OFF-CANVAS SIDEBAR -->
+      <aside class="floating-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="nav-logo" onclick="window.location.href = '../index.html'">
+            <i data-lucide="shield"></i>
+          </div>
+          <!-- Close button for mobile -->
+          <button class="mobile-close" onclick="toggleSidebar()">
+            <i data-lucide="x"></i>
+          </button>
         </div>
 
         <div class="nav-items">
           <a href="UserDashboard.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="layout-grid"></i></div>
-            <span class="nav-text">Dashboard</span>
+            <i data-lucide="layout-grid"></i>
+            <div class="nav-text-container"><span>Dashboard</span></div>
           </a>
           <a href="TrainingPage.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="compass"></i></div>
-            <span class="nav-text">Explore Programs</span>
+            <i data-lucide="compass"></i>
+            <div class="nav-text-container"><span>Explore Programs</span></div>
           </a>
           <a href="wishlist.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="bookmark"></i></div>
-            <span class="nav-text">Saved Training</span>
+            <i data-lucide="bookmark"></i>
+            <div class="nav-text-container"><span>Saved Training</span></div>
           </a>
           <a href="MyCertificates.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="award"></i></div>
-            <span class="nav-text">My Certificates</span>
+            <i data-lucide="award"></i>
+            <div class="nav-text-container"><span>My Certificates</span></div>
           </a>
           <!-- Active Nav Link -->
           <a href="LearningStats.html" class="nav-btn active">
-            <div class="nav-icon-wrap"><i data-lucide="bar-chart-2"></i></div>
-            <span class="nav-text">Learning Stats</span>
+            <i data-lucide="bar-chart-2"></i>
+            <div class="nav-text-container"><span>Learning Stats</span></div>
           </a>
           <a href="CommunityForums.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="users"></i></div>
-            <span class="nav-text">Community Forums</span>
+            <i data-lucide="users"></i>
+            <div class="nav-text-container"><span>Community Forums</span></div>
           </a>
+          
+          <!-- FIXED MESSAGE BADGE -->
           <a href="Messages.html" class="nav-btn">
-            <div class="nav-icon-wrap">
-              <i data-lucide="mail"></i>
-              <span class="nav-badge">3</span>
+            <i data-lucide="mail"></i>
+            <div class="nav-text-container">
+              <span>Messages</span>
+              <span style="background: var(--danger); color: white; border-radius: 50px; font-size: 0.75rem; padding: 2px 8px; font-weight: 700;">3</span>
             </div>
-            <span class="nav-text">Messages</span>
           </a>
+
           <a href="Settings.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="settings"></i></div>
-            <span class="nav-text">Account Settings</span>
+            <i data-lucide="settings"></i>
+            <div class="nav-text-container"><span>Account Settings</span></div>
           </a>
           <a href="javascript:void(0)" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="help-circle"></i></div>
-            <span class="nav-text">Help & Support</span>
+            <i data-lucide="help-circle"></i>
+            <div class="nav-text-container"><span>Help & Support</span></div>
           </a>
-          <div style="flex: 1" class="nav-text"></div>
-          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
-            <div class="nav-icon-wrap"><i data-lucide="log-out"></i></div>
-            <span class="nav-text">Logout</span>
+          
+          <!-- Spacer to push logout down -->
+          <div style="flex: 1; min-height: 40px;"></div>
+          
+          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-bottom: 20px;">
+            <i data-lucide="log-out"></i>
+            <div class="nav-text-container"><span>Logout</span></div>
           </a>
         </div>
       </aside>
@@ -420,9 +493,16 @@
       <main class="dash-main">
         <!-- HEADER -->
         <header class="top-nav">
-          <div class="greeting" onclick="window.location.href = '../index.html'">
-            <h2>Learning Analytics</h2>
-            <p>Track your milestone progress and skill development.</p>
+          <div class="header-left-cluster">
+            <!-- HAMBURGER BUTTON (Mobile Only) -->
+            <button class="menu-toggle" onclick="toggleSidebar()">
+              <i data-lucide="menu"></i>
+            </button>
+            
+            <div class="greeting" onclick="window.location.href = '../index.html'">
+              <h2>Learning Analytics</h2>
+              <p>Track your milestone progress and skill development.</p>
+            </div>
           </div>
 
           <div class="top-actions">
@@ -627,7 +707,12 @@
 
     <!-- Scripts -->
     <script>
-      // Initialize Lucide Icons
+      // --- SIDEBAR TOGGLE FUNCTION ---
+      function toggleSidebar() {
+        document.body.classList.toggle('sidebar-open');
+      }
+
+      // Initialize Lucide Icons & Setup
       document.addEventListener("DOMContentLoaded", function() {
         if (typeof lucide !== "undefined") {
           lucide.createIcons();

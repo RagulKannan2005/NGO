@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <script>
       // Run this immediately to prevent CSS flashing on page load
       (function () {
@@ -50,12 +50,18 @@
         --border: rgba(255, 255, 255, 0.1);
       }
 
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       body {
         font-family: "Poppins", sans-serif;
         background: var(--bg);
         color: var(--text);
         overflow-x: hidden;
-        margin: 0;
+        width: 100%;
       }
 
       .container {
@@ -107,8 +113,6 @@
         gap: 2rem;
         list-style: none;
         align-items: center;
-        margin: 0;
-        padding: 0;
       }
 
       .navbar-link {
@@ -158,8 +162,10 @@
       .nav-btn svg { width: 18px; height: 18px; flex-shrink: 0; display: block; }
       .switch-input { display: none; }
       .icon-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-      html.dark .moon-icon { display: none; }
-      html:not(.dark) .sun-icon { display: none; }
+      
+      html.dark .moon-icon { display: none !important; }
+      html:not(.dark) .sun-icon { display: none !important; }
+      
       .mobile-menu-btn { display: none; }
 
       /* Dropdown */
@@ -244,13 +250,22 @@
         box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
       }
 
+      .search-input-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+
       .search-icon {
         color: var(--muted);
         margin: 0 15px;
+        flex-shrink: 0;
       }
 
       .search-input {
         flex: 1;
+        min-width: 0;
         border: none;
         background: transparent;
         font-family: inherit;
@@ -258,6 +273,7 @@
         color: var(--text);
         outline: none;
         padding: 10px 0;
+        width: 100%;
       }
 
       .search-btn {
@@ -269,6 +285,8 @@
         font-weight: 600;
         cursor: pointer;
         transition: 0.3s;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
 
       .search-btn:hover {
@@ -290,7 +308,6 @@
       .section-head h2 {
         font-family: "Outfit", sans-serif;
         font-size: clamp(2rem, 3vw, 2.5rem);
-        margin: 0;
       }
 
       .view-all {
@@ -301,6 +318,7 @@
         align-items: center;
         gap: 5px;
         transition: 0.2s;
+        white-space: nowrap;
       }
       .view-all:hover { gap: 8px; }
 
@@ -349,7 +367,6 @@
 
       .cat-card p {
         color: var(--muted);
-        margin: 0;
         font-size: 0.9rem;
       }
 
@@ -417,6 +434,7 @@
         color: var(--muted);
         font-size: 0.85rem;
         margin-bottom: 1rem;
+        flex-wrap: wrap;
       }
 
       .course-meta span {
@@ -487,36 +505,65 @@
       }
 
       .stat-item p {
-        margin: 0;
         font-size: 1.1rem;
         opacity: 0.9;
       }
 
       /* --- FOOTER --- */
-      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; margin-top: 40px; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 70px 0 40px; margin-top: 40px; }
+      
+      /* Slightly wider columns so the newsletter fits beautifully */
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 50px; }
+      
+      .footer-col h4 { margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; }
       .footer-col ul li { margin-bottom: 12px; }
       .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
       .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 15px; }
+      
+      .social-links { display: flex; gap: 12px; flex-wrap: wrap; }
       .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      
       .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
 
+      /* Newsletter Styles */
+      .newsletter-form { display: flex; gap: 8px; margin-bottom: 1.5rem; width: 100%; }
+      .newsletter-input {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.9rem;
+        outline: none;
+        transition: 0.3s;
+      }
+      .newsletter-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+      .newsletter-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .newsletter-btn:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,99,235,0.2); }
+
       /* --- RTL OVERRIDES --- */
-      html[dir="rtl"] .dropdown-menu {
-        left: auto;
-        right: 0;
-      }
-      
-      html[dir="rtl"] .course-badge {
-        left: auto;
-        right: 15px;
-      }
+      html[dir="rtl"] .dropdown-menu { left: auto; right: 0; }
+      html[dir="rtl"] .course-badge { left: auto; right: 15px; }
 
       /* --- RESPONSIVE ADJUSTMENTS --- */
+      
+      /* Tablet & Small Desktop */
       @media (max-width: 950px) {
         .navbar-container { padding: 0 1.5rem; }
         .navbar-menu {
@@ -540,19 +587,65 @@
         .dropdown-menu a { display: block; text-align: center; }
         .mobile-menu-btn { display: flex; }
 
-        /* Mobile RTL Support */
         html[dir="rtl"] .navbar-menu { left: auto; right: -100%; }
         html[dir="rtl"] .navbar-menu.active { left: auto; right: 0; }
       }
 
+      /* Tablets & Large Phones */
+      @media (max-width: 768px) {
+        .discovery-hero { padding: 130px 0 70px; }
+        .section-wrap { padding: 60px 0; }
+        .stats-banner { padding: 3rem 0; }
+        .footer { padding: 50px 0 20px; }
+        .course-grid { gap: 1.5rem; }
+        /* Make the footer grid 2 columns max on tablet */
+        .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      }
+
+      /* Standard Mobile Phones */
       @media (max-width: 650px) {
-        .search-container { flex-direction: column; background: transparent; border: none; box-shadow: none; padding: 0; gap: 10px; }
-        .search-input-wrapper { display: flex; align-items: center; background: var(--card); border: 2px solid var(--border); border-radius: 16px; width: 100%; }
-        .search-input { padding: 15px 0; }
-        .search-btn { width: 100%; padding: 15px; border-radius: 16px; }
+        /* Optimize Nav Buttons */
         .nav-actions .nav-btn span { display: none; }
+        .nav-actions .nav-btn { width: 40px; padding: 0; border-radius: 50%; justify-content: center; }
+        
+        /* Adjust Search Bar */
+        .search-container { 
+          flex-direction: column; 
+          background: transparent; 
+          border: none; 
+          box-shadow: none; 
+          padding: 0; 
+          gap: 10px; 
+        }
+        .search-input-wrapper { 
+          background: var(--card); 
+          border: 2px solid var(--border); 
+          border-radius: 16px; 
+          padding: 5px; 
+        }
+        .search-btn { 
+          width: 100%; 
+          padding: 15px; 
+          border-radius: 16px; 
+          font-size: 1rem; 
+        }
+        
+        /* Footer Single Column */
+        .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+        .social-links { justify-content: center; }
         .footer-bottom { flex-direction: column; text-align: center; }
         .footer-legal { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+      }
+
+      /* Small Mobile */
+      @media (max-width: 480px) {
+        .discovery-hero h1 { font-size: 2.2rem; }
+        .section-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        
+        /* Make quick stats a 2x2 grid on small screens */
+        .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .stat-item h3 { font-size: 2rem; }
+        .stat-item p { font-size: 0.9rem; }
       }
     </style>
   </head>
@@ -561,16 +654,25 @@
     <!-- Navigation -->
     <nav class="navbar">
       <div class="navbar-container">
-        <a href="../index.html" class="navbar-logo">🌍 NGO Training</a>
+        <a href="../index.html" class="navbar-logo">🌍 NGO</a>
         
         <ul class="navbar-menu">
-          <li><a href="Home2.html" class="navbar-link active">Home2</a></li>
-          <li><a href="../index.html" class="navbar-link">Home1</a></li>
+          <!-- Home Dropdown -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="navbar-link active">Home ▾</a>
+            <div class="dropdown-menu">
+              <a href="../index.html">Home 1</a>
+              <a href="Home2.html">Home 2</a>
+            </div>
+          </li>
+          
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
+          
+          <!-- Dashboard Dropdown -->
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
             <div class="dropdown-menu">
@@ -610,7 +712,7 @@
         <p>Access world-class training in mediation, crisis management, and community building from industry experts.</p>
         
         <div class="search-container">
-          <div class="search-input-wrapper" style="flex:1; display:flex; align-items:center;">
+          <div class="search-input-wrapper">
             <i data-lucide="search" class="search-icon"></i>
             <input type="text" class="search-input" placeholder="What do you want to learn today?" />
           </div>
@@ -750,12 +852,16 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
-          <div class="footer-col">
+          
+          <!-- Brand Column -->
+          <div class="footer-col" style="grid-column: span 1;">
             <h4 style="color: var(--primary); font-size: 1.5rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
             <p style="color: var(--muted); line-height: 1.6;">
               Empowering individuals and organizations with conflict resolution skills for a more peaceful world.
             </p>
           </div>
+          
+          <!-- Links Column -->
           <div class="footer-col">
             <h4>Quick Links</h4>
             <ul>
@@ -765,6 +871,8 @@
               <li><a href="Community.html">Community</a></li>
             </ul>
           </div>
+          
+          <!-- Support Column -->
           <div class="footer-col">
             <h4>Support</h4>
             <ul>
@@ -774,9 +882,21 @@
               <li><a href="login.html">Login / Register</a></li>
             </ul>
           </div>
+          
+          <!-- Newsletter & Social Column -->
           <div class="footer-col">
-            <h4>Follow Us</h4>
-            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <h4>Stay Updated</h4>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 15px;">
+              Subscribe to our newsletter for the latest training updates.
+            </p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+              <input type="email" class="newsletter-input" placeholder="Email address" required />
+              <button type="submit" class="newsletter-btn">
+                <i data-lucide="send" style="width: 16px;"></i>
+              </button>
+            </form>
+            
+            <h4 style="margin-top: 25px; margin-bottom: 15px; font-size: 1rem;">Follow Us</h4>
             <div class="social-links">
               <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
               <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
@@ -784,7 +904,10 @@
               <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
             </div>
           </div>
+          
         </div>
+        
+        <!-- Footer Bottom -->
         <div class="footer-bottom">
           <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
           <div class="footer-legal">
@@ -830,7 +953,7 @@
       }
 
       /* ----------------------------------------------------
-         THEME TOGGLE LOGIC (Fixed to save to localStorage)
+         THEME TOGGLE LOGIC 
       ---------------------------------------------------- */
       const themeToggle = document.querySelector(".theme-toggle");
       if (themeToggle) {

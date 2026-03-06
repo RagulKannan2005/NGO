@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -25,26 +25,58 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      /* DASHBOARD BASE STYLES */
+      /* OVERRIDE GLOBALS FOR DASHBOARD ONLY */
+      :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --danger: #ef4444;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(128, 128, 128, 0.15);
+      }
+      
+      html.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+      }
+
       body {
         font-family: "Outfit", sans-serif;
         background: var(--bg);
+        color: var(--text);
         display: flex;
         height: 100vh;
         overflow: hidden;
+        margin: 0;
         background-image:
-          radial-gradient(
-            circle at 0% 0%,
-            rgba(37, 99, 235, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 100% 100%,
-            rgba(124, 58, 237, 0.08) 0%,
-            transparent 50%
-          );
+          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
         background-attachment: fixed;
       }
+
+      /* MOBILE OVERLAY */
+      .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      body.sidebar-open .mobile-overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* CORE LAYOUT */
       .dash-wrapper {
         display: flex;
         width: 100%;
@@ -52,177 +84,154 @@
         padding: 24px;
         gap: 24px;
         box-sizing: border-box;
+        position: relative;
       }
 
-      /* SIDEBAR */
+      .dash-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        background: var(--bg);
+        border-radius: 32px;
+        border: 1px solid var(--border);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
+      }
+
+      /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid var(--border);
         border-radius: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.03),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        z-index: 100;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 1000;
+        transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-shrink: 0;
       }
+      .floating-sidebar::-webkit-scrollbar { display: none; }
+      .floating-sidebar { -ms-overflow-style: none; scrollbar-width: none; }
+
       html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.2),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
-      .floating-sidebar:hover {
-        width: 280px;
-        align-items: flex-start;
+
+      .floating-sidebar:hover { width: 280px; align-items: flex-start; }
+
+      /* SIDEBAR HEADER */
+      .sidebar-header {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        transition: padding 0.4s;
+        box-sizing: border-box;
+      }
+      .floating-sidebar:hover .sidebar-header {
+        justify-content: flex-start;
+        padding-left: 24px;
       }
 
       .nav-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
+        width: 48px; height: 48px; border-radius: 16px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
+        display: flex; align-items: center; justify-content: center;
+        color: white; flex-shrink: 0; cursor: pointer;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+      
+      .mobile-close {
+        display: none;
+        background: rgba(128, 128, 128, 0.1);
+        border: none;
+        color: var(--text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
         align-items: center;
         justify-content: center;
-        color: white;
-        margin-bottom: 40px;
-        flex-shrink: 0;
-        transition: 0.4s;
-      }
-      .floating-sidebar:hover .nav-logo {
-        margin-left: 24px;
-      }
-
-      .nav-items {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 100%;
-        padding: 0 24px;
-        box-sizing: border-box;
-      }
-      .nav-btn {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 12px 16px;
-        border-radius: 16px;
-        color: var(--muted);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-      .nav-btn i {
-        min-width: 24px;
-        transition: 0.3s transform;
-      }
-      .nav-btn span {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s;
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
-      .floating-sidebar:hover .nav-btn span {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .nav-btn:hover {
-        color: var(--text);
-        background: rgba(128, 128, 128, 0.08);
-      }
-      .nav-btn:hover i {
-        transform: scale(1.1);
-      }
-      .nav-btn.active {
-        color: var(--primary);
-        background: rgba(37, 99, 235, 0.1);
-      }
-      html.dark .nav-btn.active {
-        background: rgba(37, 99, 235, 0.15);
-      }
-
-      /* MAIN CONTENT */
-      .dash-main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        border-radius: 32px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.02);
-        overflow: hidden;
-      }
-      html.dark .dash-main {
-        background: rgba(15, 23, 42, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.03);
-      }
-
-      /* HEADER */
-      .top-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 30px 40px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
-      }
-      .greeting h2 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.5px;
-      }
-      .greeting p {
-        color: var(--muted);
-        font-size: 0.95rem;
-        font-weight: 400;
-      }
-      .top-actions {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-      .profile-pill {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 6px 16px 6px 6px;
-        background: var(--card);
-        border: 1px solid rgba(128, 128, 128, 0.1);
-        border-radius: 50px;
         cursor: pointer;
         transition: 0.3s;
       }
-      .profile-pill:hover {
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
-        transform: translateY(-2px);
-      }
-      .avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
-          center/cover;
+      .mobile-close:hover { background: var(--danger); color: white; }
+
+      .nav-items {
+        display: flex; flex-direction: column; gap: 8px;
+        width: 100%; padding: 0 24px; box-sizing: border-box;
       }
 
-      /* FORUM BENTO LAYOUT */
-      .bento-scroll {
-        flex: 1;
-        overflow-y: auto;
-        padding: 40px;
+      .nav-btn {
+        position: relative;
+        width: 100%; display: flex; align-items: center; gap: 16px;
+        padding: 14px 16px; border-radius: 16px; color: var(--muted);
+        text-decoration: none; transition: all 0.3s ease;
+        white-space: nowrap;
       }
+      .nav-btn i, .nav-btn svg {
+        min-width: 24px; width: 24px; height: 24px; transition: 0.3s transform;
+      }
+      
+      .nav-text-container {
+        display: flex; align-items: center; justify-content: space-between; 
+        width: 100%; opacity: 0; transform: translateX(-10px); 
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-text-container span { font-weight: 500; font-size: 0.95rem; }
+      
+      .floating-sidebar:hover .nav-text-container { opacity: 1; transform: translateX(0); }
+      .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
+      .nav-btn:hover i, .nav-btn:hover svg { transform: scale(1.1); }
+      
+      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); }
+      html.dark .nav-btn.active { background: rgba(37, 99, 235, 0.15); }
+
+      /* DASHBOARD HEADER */
+      .top-nav {
+        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+        padding: 30px 40px; border-bottom: 1px solid var(--border); gap: 20px; z-index: 10;
+        background: var(--bg);
+      }
+
+      .header-left-cluster {
+        display: flex; align-items: center; gap: 20px;
+      }
+
+      .menu-toggle {
+        display: none; background: var(--card); border: 1px solid var(--border);
+        color: var(--text); width: 48px; height: 48px; border-radius: 14px;
+        align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      }
+      .menu-toggle:hover { background: rgba(128,128,128,0.05); transform: translateY(-2px); }
+
+      .greeting { cursor: pointer; }
+      .greeting h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
+      .greeting p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+
+      .top-actions { display: flex; align-items: center; gap: 15px; }
+      .profile-pill {
+        display: flex; align-items: center; gap: 12px;
+        padding: 6px 16px 6px 6px; background: var(--card); border: 1px solid var(--border);
+        border-radius: 50px; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
+      }
+      .profile-pill:hover { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05); transform: translateY(-2px); }
+      .avatar { width: 36px; height: 36px; border-radius: 50%; background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff") center/cover; }
+
+      /* FORUM BENTO LAYOUT */
+      .bento-scroll { flex: 1; overflow-y: auto; padding: 40px; -webkit-overflow-scrolling: touch; }
+      
       .forum-grid {
         display: grid;
         grid-template-columns: 2fr 1fr;
@@ -232,378 +241,292 @@
         align-items: start;
       }
 
-      @media (max-width: 1024px) {
-        .forum-grid {
-          grid-template-columns: 1fr;
-        }
-        .dash-wrapper {
-          padding: 10px;
-          flex-direction: column;
-        }
-        .floating-sidebar {
-          width: 100%;
-          flex-direction: row;
-          padding: 15px;
-          border-radius: 20px;
-          height: auto;
-        }
-        .nav-logo {
-          margin-bottom: 0;
-          margin-right: 20px;
-        }
-        .nav-items {
-          flex-direction: row;
-          padding: 0;
-          overflow-x: auto;
-        }
-        .nav-btn span {
-          display: none;
-        }
-        .floating-sidebar:hover {
-          width: 100%;
-          align-items: center;
-        }
-      }
-
       /* BENTO CARDS */
       .bento-card {
-        background: var(--card);
-        border-radius: 32px;
-        border: 1px solid rgba(128, 128, 128, 0.1);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-        overflow: hidden;
+        background: var(--card); border-radius: 32px; border: 1px solid var(--border);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02); overflow: hidden;
       }
-      .card-header {
-        padding: 25px 30px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
-      }
-      .card-header h3 {
-        font-size: 1.2rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .card-body {
-        padding: 30px;
-      }
+      .card-header { padding: 25px 30px; border-bottom: 1px solid var(--border); }
+      .card-header h3 { font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 10px; margin: 0; }
+      .card-body { padding: 30px; }
 
       /* MAIN FEED (Left Column) */
       .create-post {
-        padding: 25px 30px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
-        display: flex;
-        gap: 15px;
-        background: rgba(128, 128, 128, 0.02);
+        padding: 25px 30px; border-bottom: 1px solid var(--border); display: flex; gap: 15px; background: rgba(128, 128, 128, 0.02);
       }
       .create-input {
-        flex: 1;
-        border: none;
-        background: var(--bg);
-        padding: 15px 20px;
-        border-radius: 20px;
-        font-family: "Outfit";
-        font-size: 1rem;
-        color: var(--text);
-        border: 1px solid rgba(128, 128, 128, 0.1);
-        transition: 0.3s;
+        flex: 1; border: none; background: var(--bg); padding: 15px 20px; border-radius: 20px;
+        font-family: "Outfit", sans-serif; font-size: 1rem; color: var(--text); border: 1px solid var(--border); transition: 0.3s;
       }
-      .create-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      .create-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+      .btn-primary {
+        background: var(--primary); color: white; border: none; border-radius: 16px; padding: 0 25px;
+        display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
       }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2); }
 
-      .feed-list {
-        display: flex;
-        flex-direction: column;
-      }
-      .post-item {
-        padding: 30px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.05);
-      }
-      .post-item:last-child {
-        border-bottom: none;
-      }
+      .feed-list { display: flex; flex-direction: column; }
+      .post-item { padding: 30px; border-bottom: 1px solid var(--border); }
+      .post-item:last-child { border-bottom: none; }
 
-      .post-author {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 15px;
-      }
-      .author-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: var(--border);
-        background-size: cover;
-        background-position: center;
-      }
-      .author-info strong {
-        display: block;
-        font-size: 1.05rem;
-      }
-      .author-info span {
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
+      .post-author { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+      .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--border); background-size: cover; background-position: center; }
+      .author-info strong { display: block; font-size: 1.05rem; }
+      .author-info span { color: var(--muted); font-size: 0.85rem; }
 
-      .post-content h4 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-      }
-      .post-content p {
-        color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-      .post-tags {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-      .p-tag {
-        font-size: 0.8rem;
-        background: rgba(128, 128, 128, 0.1);
-        color: var(--muted);
-        padding: 4px 10px;
-        border-radius: 12px;
-      }
+      .post-content h4 { font-size: 1.2rem; margin-top: 0; margin-bottom: 10px; font-weight: 700;}
+      .post-content p { color: var(--muted); line-height: 1.6; margin-top: 0; margin-bottom: 15px; }
+      
+      .post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+      .p-tag { font-size: 0.8rem; background: rgba(128, 128, 128, 0.1); color: var(--muted); padding: 4px 10px; border-radius: 12px; font-weight: 500;}
 
-      .post-actions {
-        display: flex;
-        gap: 20px;
-      }
+      .post-actions { display: flex; gap: 20px; flex-wrap: wrap;}
       .action-btn {
-        background: transparent;
-        border: none;
-        font-family: "Outfit";
-        color: var(--muted);
-        font-size: 0.95rem;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: 0.2s;
+        background: transparent; border: none; font-family: "Outfit", sans-serif; color: var(--muted);
+        font-size: 0.95rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; padding: 0;
       }
-      .action-btn:hover {
-        color: var(--primary);
-      }
+      .action-btn:hover { color: var(--primary); }
 
       /* SIDEBAR WIDGETS (Right Column) */
-      .side-widgets {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
+      .side-widgets { display: flex; flex-direction: column; gap: 24px; }
+
+      .topic-list { display: flex; flex-direction: column; gap: 15px; }
+      .topic-item { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+      .topic-item span { font-weight: 500; transition: 0.3s;}
+      .topic-item:hover span { color: var(--primary); }
+      .topic-count { font-size: 0.8rem; color: var(--muted); background: rgba(128, 128, 128, 0.1); padding: 2px 8px; border-radius: 10px; }
+
+      .circle-list { display: flex; flex-direction: column; gap: 15px; }
+      .circle-item { display: flex; align-items: center; gap: 12px; }
+      .circle-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
+      .circle-info strong { display: block; font-size: 0.95rem; }
+      .circle-info span { color: var(--muted); font-size: 0.8rem; }
+      .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); font-family: 'Outfit'; font-weight: 600; padding: 10px; cursor: pointer; transition: 0.3s;}
+      .btn-outline:hover { background: rgba(128,128,128,0.05); }
+
+      .contrib-list { display: flex; flex-direction: column; gap: 15px; }
+      .contrib-item { display: flex; align-items: center; gap: 12px; }
+      .contrib-avatar { width: 36px; height: 36px; border-radius: 50%; background-size: cover; background-position: center; flex-shrink: 0;}
+      .contrib-info strong { display: block; font-size: 0.95rem; }
+      .contrib-info span { color: var(--secondary); font-size: 0.8rem; font-weight: 600; }
+
+      /* FOOTER */
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px; margin-top: 40px; border-radius: 32px 32px 0 0; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer-col ul { list-style: none; padding: 0; margin: 0; }
+      .footer-col ul li { margin-bottom: 12px; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a:hover { color: var(--primary); }
+      .social-links { display: flex; gap: 15px; }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
+      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer-bottom p { margin: 0; }
+
+      /* -------------------------------------
+         RESPONSIVE BREAKPOINTS 
+         ------------------------------------- */
+
+      /* TABLET & MOBILE - OFF-CANVAS SIDEBAR LOGIC */
+      @media (max-width: 1024px) {
+        .dash-wrapper { padding: 16px; gap: 0; }
+        .bento-scroll { padding: 24px; }
+        .forum-grid { grid-template-columns: 1fr; }
+        
+        .menu-toggle { display: flex; }
+        .mobile-close { display: flex; }
+
+        /* Transform Sidebar into Professional Off-Canvas Left Drawer */
+        .floating-sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+          width: 280px !important; 
+          border-radius: 0 24px 24px 0;
+          border: none;
+          background: var(--card);
+          padding: 24px 0;
+          box-shadow: 20px 0 60px rgba(0, 0, 0, 0.15);
+          transform: translateX(-100%);
+          align-items: flex-start;
+          z-index: 999;
+        }
+
+        body.sidebar-open { overflow: hidden; } /* Lock background scroll */
+        body.sidebar-open .floating-sidebar { transform: translateX(0); } /* Slide In */
+
+        /* Force Nav Elements to show text on Mobile */
+        .nav-text-container { opacity: 1; transform: none; }
+        
+        /* Clean Header Formatting for Mobile Sidebar */
+        .sidebar-header { 
+          justify-content: space-between; 
+          padding: 0 24px; 
+          margin-bottom: 40px; 
+        }
+        .sidebar-header:hover { padding-left: 24px; }
       }
 
-      .topic-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .topic-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-      }
-      .topic-item span {
-        font-weight: 500;
-      }
-      .topic-item:hover span {
-        color: var(--primary);
-      }
-      .topic-count {
-        font-size: 0.8rem;
-        color: var(--muted);
-        background: rgba(128, 128, 128, 0.1);
-        padding: 2px 8px;
-        border-radius: 10px;
+      /* MOBILE CONTENT ADJUSTMENTS */
+      @media (max-width: 768px) {
+        .top-nav { padding: 20px 24px; }
+        .greeting h2 { font-size: 1.6rem !important; }
+        .greeting p { font-size: 1rem !important; }
+        
+        .create-post { flex-direction: column; }
+        .create-input { width: 100%; box-sizing: border-box; }
+        .btn-primary { padding: 12px; }
+        
+        .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
+        .footer-grid { gap: 30px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .footer-legal { margin-top: 10px; }
+        .footer-legal a { margin: 0 10px; color: var(--muted); text-decoration: none; }
       }
 
-      .circle-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .circle-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .circle-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        background: rgba(37, 99, 235, 0.1);
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .circle-info strong {
-        display: block;
-        font-size: 0.95rem;
-      }
-      .circle-info span {
-        color: var(--muted);
-        font-size: 0.8rem;
-      }
-
-      .contrib-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .contrib-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .contrib-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
-      }
-      .contrib-info strong {
-        display: block;
-        font-size: 0.95rem;
-      }
-      .contrib-info span {
-        color: var(--secondary);
-        font-size: 0.8rem;
-        font-weight: 600;
+      /* SMALL MOBILE REFINEMENTS */
+      @media (max-width: 500px) {
+        .top-nav { padding: 15px 20px; }
+        .greeting p { display: none; }
+        .greeting h2 { font-size: 1.4rem !important; margin: 0; }
+        
+        .top-actions #dirToggle { display: none; } 
+        .profile-pill span { display: none; } 
+        .profile-pill { padding: 4px; border-radius: 50%; }
+        
+        .bento-scroll { padding: 16px; } 
+        
+        .post-item { padding: 20px; }
+        .post-author { margin-bottom: 10px; }
+        .post-actions { gap: 15px; }
       }
     </style>
   </head>
   <body>
+    <!-- MOBILE OVERLAY BACKDROP -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader">
+    <div class="cssloader" id="page-loader" style="display: none;">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
 
+    <!-- WRAPPER -->
     <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo"><i data-lucide="shield"></i></div>
+      
+      <!-- FLOATING / OFF-CANVAS SIDEBAR -->
+      <aside class="floating-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="nav-logo" onclick="window.location.href = '../index.html'">
+            <i data-lucide="shield"></i>
+          </div>
+          <!-- Close button for mobile -->
+          <button class="mobile-close" onclick="toggleSidebar()">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
         <div class="nav-items">
-          <a href="UserDashboard.html" class="nav-btn"
-            ><i data-lucide="layout-grid"></i> <span>Dashboard</span></a
-          >
-          <a href="TrainingPage.html" class="nav-btn"
-            ><i data-lucide="compass"></i> <span>Explore Programs</span></a
-          >
-          <a href="wishlist.html" class="nav-btn"
-            ><i data-lucide="bookmark"></i> <span>Saved Training</span></a
-          >
-          <a href="MyCertificates.html" class="nav-btn"
-            ><i data-lucide="award"></i> <span>My Certificates</span></a
-          >
-          <a href="LearningStats.html" class="nav-btn"
-            ><i data-lucide="bar-chart-2"></i> <span>Learning Stats</span></a
-          >
-          <a href="CommunityForums.html" class="nav-btn active"
-            ><i data-lucide="users"></i> <span>Community Forums</span></a
-          >
+          <a href="UserDashboard.html" class="nav-btn">
+            <i data-lucide="layout-grid"></i>
+            <div class="nav-text-container"><span>Dashboard</span></div>
+          </a>
+          <a href="TrainingPage.html" class="nav-btn">
+            <i data-lucide="compass"></i>
+            <div class="nav-text-container"><span>Explore Programs</span></div>
+          </a>
+          <a href="wishlist.html" class="nav-btn">
+            <i data-lucide="bookmark"></i>
+            <div class="nav-text-container"><span>Saved Training</span></div>
+          </a>
+          <a href="MyCertificates.html" class="nav-btn">
+            <i data-lucide="award"></i>
+            <div class="nav-text-container"><span>My Certificates</span></div>
+          </a>
+          <a href="LearningStats.html" class="nav-btn">
+            <i data-lucide="bar-chart-2"></i>
+            <div class="nav-text-container"><span>Learning Stats</span></div>
+          </a>
+          <!-- Active Nav Link -->
+          <a href="CommunityForums.html" class="nav-btn active">
+            <i data-lucide="users"></i>
+            <div class="nav-text-container"><span>Community Forums</span></div>
+          </a>
+          
+          <!-- FIXED MESSAGE BADGE -->
           <a href="Messages.html" class="nav-btn">
             <i data-lucide="mail"></i>
-            <span
-              >Messages
-              <span
-                class="badge"
-                style="
-                  background: var(--danger);
-                  color: white;
-                  border-radius: 50%;
-                  font-size: 0.65rem;
-                  padding: 2px 6px;
-                  position: absolute;
-                  right: 15px;
-                  top: 10px;
-                "
-                >3</span
-              ></span
-            >
+            <div class="nav-text-container">
+              <span>Messages</span>
+              <span style="background: var(--danger); color: white; border-radius: 50px; font-size: 0.75rem; padding: 2px 8px; font-weight: 700;">3</span>
+            </div>
           </a>
-          <a href="Settings.html" class="nav-btn"
-            ><i data-lucide="settings"></i> <span>Account Settings</span></a
-          >
-          <a href="javascript:void(0)" class="nav-btn"
-            ><i data-lucide="help-circle"></i> <span>Help & Support</span></a
-          >
-          <div style="flex: 1"></div>
-          <a
-            href="../index.html"
-            class="nav-btn"
-            style="color: var(--admin-danger); margin-top: auto"
-            ><i data-lucide="log-out"></i> <span>Logout</span></a
-          >
+
+          <a href="Settings.html" class="nav-btn">
+            <i data-lucide="settings"></i>
+            <div class="nav-text-container"><span>Account Settings</span></div>
+          </a>
+          <a href="javascript:void(0)" class="nav-btn">
+            <i data-lucide="help-circle"></i>
+            <div class="nav-text-container"><span>Help & Support</span></div>
+          </a>
+          
+          <!-- Spacer to push logout down -->
+          <div style="flex: 1; min-height: 40px;"></div>
+          
+          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-bottom: 20px;">
+            <i data-lucide="log-out"></i>
+            <div class="nav-text-container"><span>Logout</span></div>
+          </a>
         </div>
       </aside>
 
       <!-- MAIN AREA -->
       <main class="dash-main">
+        <!-- HEADER -->
         <header class="top-nav">
-          <div class="greeting">
-            <h2>Community Forums</h2>
-            <p>
-              Connect, share, and learn with other NGO professionals globally.
-            </p>
+          <div class="header-left-cluster">
+            <!-- HAMBURGER BUTTON (Mobile Only) -->
+            <button class="menu-toggle" onclick="toggleSidebar()">
+              <i data-lucide="menu"></i>
+            </button>
+            
+            <div class="greeting" onclick="window.location.href = '../index.html'">
+              <h2>Community Forums</h2>
+              <p>Connect, share, and learn with other NGO professionals globally.</p>
+            </div>
           </div>
+
           <div class="top-actions">
-            <button
-              id="dirToggle"
-              class="btn"
-              style="
-                background: var(--card);
-                border: 1px solid rgba(128, 128, 128, 0.1);
-                color: var(--text);
-                padding: 8px 12px;
-                border-radius: 12px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: 0.3s;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
-              "
-            >
-              <i data-lucide="languages" style="width: 18px"></i>
+            <button id="dirToggle" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.02);">
+              <i data-lucide="languages" style="width: 18px;"></i>
               <span>LTR</span>
             </button>
-            <!-- Theme Toggle -->
-            <label class="theme-toggle">
-              <input type="checkbox" class="switch-input" id="themeSwitch" />
-              <div class="icon-wrapper">
-                <i data-lucide="sun" class="sun-icon"></i>
-                <i data-lucide="moon" class="moon-icon"></i>
-              </div>
-            </label>
+
+            <!-- Consistent Theme Toggle Button -->
+            <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')" style="background: var(--card); color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; cursor:pointer;">
+              <i data-lucide="moon" style="width: 18px;"></i>
+            </button>
+
             <div class="profile-pill">
               <div class="avatar"></div>
-              <span style="font-weight: 600; font-size: 0.95rem"
-                >Sarah Jenkins</span
-              >
-              <i
-                data-lucide="chevron-down"
-                style="width: 18px; color: var(--muted)"
-              ></i>
+              <span style="font-weight: 600; font-size: 0.95rem">Sarah J.</span>
+              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted)"></i>
             </div>
           </div>
         </header>
 
+        <!-- Scrollable Dashboard Content -->
         <div class="bento-scroll">
           <div class="forum-grid">
+            
             <!-- MAIN FEED (Left, 2fr) -->
-            <div class="bento-card">
+            <div class="bento-card" style="padding: 0;">
               <div class="create-post">
                 <div class="avatar" style="flex-shrink: 0"></div>
                 <input
@@ -611,11 +534,8 @@
                   class="create-input"
                   placeholder="Share an insight or ask a question to the community..."
                 />
-                <button
-                  class="btn btn-primary"
-                  style="border-radius: 16px; padding: 0 25px"
-                >
-                  <i data-lucide="send" size="18"></i>
+                <button class="btn-primary">
+                  <i data-lucide="send" style="width: 18px; height: 18px;"></i>
                 </button>
               </div>
 
@@ -625,9 +545,7 @@
                   <div class="post-author">
                     <div
                       class="author-avatar"
-                      style="
-                        background-image: url(&quot;https://ui-avatars.com/api/?name=David+Chen&background=0ea5e9&color=fff&quot;);
-                      "
+                      style="background-image: url(&quot;https://ui-avatars.com/api/?name=David+Chen&background=0ea5e9&color=fff&quot;);"
                     ></div>
                     <div class="author-info">
                       <strong>David Chen</strong>
@@ -635,9 +553,7 @@
                     </div>
                   </div>
                   <div class="post-content">
-                    <h4>
-                      Tips for executing a rapid Crisis Communication plan?
-                    </h4>
+                    <h4>Tips for executing a rapid Crisis Communication plan?</h4>
                     <p>
                       We are deploying a team to the flood zones next week and
                       I'm reviewing Module 3. Does anyone have a standardized
@@ -646,19 +562,19 @@
                       questioning during supply distribution.
                     </p>
                     <div class="post-tags">
-                      <span class="p-tag">#CrisisManagement</span
-                      ><span class="p-tag">#FieldOps</span>
+                      <span class="p-tag">#CrisisManagement</span>
+                      <span class="p-tag">#FieldOps</span>
                     </div>
                   </div>
                   <div class="post-actions">
                     <button class="action-btn">
-                      <i data-lucide="heart" size="18"></i> 24 Likes
+                      <i data-lucide="heart" style="width: 18px; height: 18px;"></i> 24 Likes
                     </button>
                     <button class="action-btn">
-                      <i data-lucide="message-square" size="18"></i> 8 Replies
+                      <i data-lucide="message-square" style="width: 18px; height: 18px;"></i> 8 Replies
                     </button>
                     <button class="action-btn">
-                      <i data-lucide="share-2" size="18"></i> Share
+                      <i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share
                     </button>
                   </div>
                 </div>
@@ -668,9 +584,7 @@
                   <div class="post-author">
                     <div
                       class="author-avatar"
-                      style="
-                        background-image: url(&quot;https://ui-avatars.com/api/?name=Elena+Rios&background=10b981&color=fff&quot;);
-                      "
+                      style="background-image: url(&quot;https://ui-avatars.com/api/?name=Elena+Rios&background=10b981&color=fff&quot;);"
                     ></div>
                     <div class="author-info">
                       <strong>Elena Rios</strong>
@@ -678,9 +592,7 @@
                     </div>
                   </div>
                   <div class="post-content">
-                    <h4>
-                      Success! Secured our first major international grant! 🎉
-                    </h4>
+                    <h4>Success! Secured our first major international grant! 🎉</h4>
                     <p>
                       Just wanted to share a massive win with this community.
                       The "Fundraising Strategies" course we took last month
@@ -689,17 +601,17 @@
                       paid off immediately with the Global Health Fund.
                     </p>
                     <div class="post-tags">
-                      <span class="p-tag">#Fundraising</span
-                      ><span class="p-tag">#SuccessStory</span>
+                      <span class="p-tag">#Fundraising</span>
+                      <span class="p-tag">#SuccessStory</span>
                     </div>
                   </div>
                   <div class="post-actions">
                     <button class="action-btn" style="color: var(--primary)">
-                      <i data-lucide="heart" size="18" fill="currentColor"></i>
+                      <i data-lucide="heart" style="width: 18px; height: 18px;" fill="currentColor"></i>
                       112 Likes
                     </button>
                     <button class="action-btn">
-                      <i data-lucide="message-square" size="18"></i> 34 Replies
+                      <i data-lucide="message-square" style="width: 18px; height: 18px;"></i> 34 Replies
                     </button>
                   </div>
                 </div>
@@ -709,9 +621,7 @@
                   <div class="post-author">
                     <div
                       class="author-avatar"
-                      style="
-                        background-image: url(&quot;https://ui-avatars.com/api/?name=Michael+Okoro&background=f59e0b&color=fff&quot;);
-                      "
+                      style="background-image: url(&quot;https://ui-avatars.com/api/?name=Michael+Okoro&background=f59e0b&color=fff&quot;);"
                     ></div>
                     <div class="author-info">
                       <strong>Michael Okoro</strong>
@@ -731,10 +641,10 @@
                   </div>
                   <div class="post-actions">
                     <button class="action-btn">
-                      <i data-lucide="heart" size="18"></i> 2 Likes
+                      <i data-lucide="heart" style="width: 18px; height: 18px;"></i> 2 Likes
                     </button>
                     <button class="action-btn">
-                      <i data-lucide="message-square" size="18"></i> 1 Reply
+                      <i data-lucide="message-square" style="width: 18px; height: 18px;"></i> 1 Reply
                     </button>
                   </div>
                 </div>
@@ -744,14 +654,10 @@
             <!-- RIGHT SIDEBAR (1fr) -->
             <div class="side-widgets">
               <!-- Trending Topics -->
-              <div class="bento-card">
+              <div class="bento-card" style="padding: 0;">
                 <div class="card-header">
                   <h3>
-                    <i
-                      data-lucide="trending-up"
-                      size="20"
-                      style="color: var(--primary)"
-                    ></i>
+                    <i data-lucide="trending-up" style="width: 20px; color: var(--primary)"></i>
                     Trending Topics
                   </h3>
                 </div>
@@ -782,35 +688,25 @@
               </div>
 
               <!-- Learning Circles -->
-              <div class="bento-card">
+              <div class="bento-card" style="padding: 0;">
                 <div class="card-header">
                   <h3>
-                    <i
-                      data-lucide="users"
-                      size="20"
-                      style="color: var(--secondary)"
-                    ></i>
+                    <i data-lucide="users" style="width: 20px; color: var(--secondary)"></i>
                     Learning Circles
                   </h3>
                 </div>
                 <div class="card-body">
                   <div class="circle-list">
                     <div class="circle-item">
-                      <div class="circle-icon"><i data-lucide="globe"></i></div>
+                      <div class="circle-icon"><i data-lucide="globe" style="width: 20px"></i></div>
                       <div class="circle-info">
                         <strong>Global Peace Alliance</strong>
                         <span>Your NGO • 42 Members</span>
                       </div>
                     </div>
                     <div class="circle-item">
-                      <div
-                        class="circle-icon"
-                        style="
-                          background: rgba(16, 185, 129, 0.1);
-                          color: var(--admin-success);
-                        "
-                      >
-                        <i data-lucide="book-open"></i>
+                      <div class="circle-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i data-lucide="book-open" style="width: 20px"></i>
                       </div>
                       <div class="circle-info">
                         <strong>Mediation Cohort 2026</strong>
@@ -818,68 +714,109 @@
                       </div>
                     </div>
                   </div>
-                  <button
-                    class="btn btn-outline"
-                    style="width: 100%; margin-top: 20px; border-radius: 12px"
-                  >
+                  <button class="btn-outline" style="width: 100%; margin-top: 20px; border-radius: 12px">
                     Discover Circles
                   </button>
                 </div>
               </div>
 
               <!-- Top Contributors -->
-              <div class="bento-card">
+              <div class="bento-card" style="padding: 0;">
                 <div class="card-header">
                   <h3>
-                    <i
-                      data-lucide="award"
-                      size="20"
-                      style="color: var(--admin-warning)"
-                    ></i>
+                    <i data-lucide="award" style="width: 20px; color: #f59e0b"></i>
                     Top Contributors
                   </h3>
                 </div>
                 <div class="card-body">
                   <div class="contrib-list">
                     <div class="contrib-item">
-                      <div
-                        class="contrib-avatar"
-                        style="
-                          background-image: url(&quot;https://ui-avatars.com/api/?name=Dr+Webb&background=10b981&color=fff&quot;);
-                        "
-                      ></div>
+                      <div class="contrib-avatar" style="background-image: url(&quot;https://ui-avatars.com/api/?name=Dr+Webb&background=10b981&color=fff&quot;);"></div>
                       <div class="contrib-info">
                         <strong>Dr. Marcus Webb</strong>
                         <span>Community Leader</span>
                       </div>
                     </div>
                     <div class="contrib-item">
-                      <div
-                        class="contrib-avatar"
-                        style="
-                          background-image: url(&quot;https://ui-avatars.com/api/?name=Elena+Rios&background=10b981&color=fff&quot;);
-                        "
-                      ></div>
+                      <div class="contrib-avatar" style="background-image: url(&quot;https://ui-avatars.com/api/?name=Elena+Rios&background=10b981&color=fff&quot;);"></div>
                       <div class="contrib-info">
                         <strong>Elena Rios</strong>
-                        <span style="color: var(--primary)"
-                          >Helpful Member</span
-                        >
+                        <span style="color: var(--primary)">Helpful Member</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          
-    
-    
 
-    
+          </div>
 
+          <!-- FOOTER -->
+          <footer class="footer">
+            <div class="footer-grid">
+              <div class="footer-col">
+                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+                <p style="color: var(--muted); line-height: 1.6;">
+                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+                </p>
+              </div>
+              <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                  <li><a href="../index.html">Home</a></li>
+                  <li><a href="TrainingPage.html">Programs</a></li>
+                  <li><a href="Impact.html">Our Impact</a></li>
+                  <li><a href="CommunityForums.html">Community</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="Contact.html">Help Center</a></li>
+                  <li><a href="wishlist.html">Wishlist</a></li>
+                  <li><a href="Settings.html">Settings</a></li>
+                  <li><a href="login.html">Login / Register</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Follow Us</h4>
+                <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+                <div class="social-links">
+                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <div class="footer-legal">
+                <a href="javascript:void(0)">Privacy Policy</a>
+                <a href="javascript:void(0)">Terms of Service</a>
+              </div>
+            </div>
+          </footer>
+        </div>
       </main>
     </div>
 
+    <!-- Scripts -->
+    <script>
+      // --- SIDEBAR TOGGLE FUNCTION ---
+      function toggleSidebar() {
+        document.body.classList.toggle('sidebar-open');
+      }
+
+      // Initialize Lucide Icons & Setup
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+        // Set Copyright Year
+        document.getElementById('year').innerText = new Date().getFullYear();
+      });
+    </script>
     <script src="../assets/js/theme.js"></script>
   </body>
 </html>

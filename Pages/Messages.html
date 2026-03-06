@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -36,7 +39,7 @@
         --muted: #64748b;
         --border: rgba(128, 128, 128, 0.1);
       }
-      
+
       html.dark {
         --bg: #0f172a;
         --card: #1e293b;
@@ -68,6 +71,23 @@
         background-attachment: fixed;
       }
 
+      /* MOBILE OVERLAY */
+      .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      body.sidebar-open .mobile-overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
       /* CORE LAYOUT */
       .dash-wrapper {
         display: flex;
@@ -76,6 +96,7 @@
         padding: 24px;
         gap: 24px;
         box-sizing: border-box;
+        position: relative;
       }
 
       .dash-main {
@@ -94,7 +115,7 @@
       /* FLOATING SIDEBAR (Desktop) */
       .floating-sidebar {
         width: 100px;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border: 1px solid var(--border);
@@ -106,13 +127,24 @@
         box-shadow:
           0 30px 60px rgba(0, 0, 0, 0.03),
           inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        z-index: 100;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        z-index: 1000;
+        transition:
+          width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+      .floating-sidebar::-webkit-scrollbar {
+        display: none;
+      }
+      .floating-sidebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
 
       html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
+        background: rgba(15, 23, 42, 0.7);
         box-shadow:
           0 30px 60px rgba(0, 0, 0, 0.2),
           inset 0 0 0 1px rgba(255, 255, 255, 0.02);
@@ -121,6 +153,21 @@
       .floating-sidebar:hover {
         width: 280px;
         align-items: flex-start;
+      }
+
+      /* SIDEBAR HEADER */
+      .sidebar-header {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        transition: padding 0.4s;
+        box-sizing: border-box;
+      }
+      .floating-sidebar:hover .sidebar-header {
+        justify-content: flex-start;
+        padding-left: 24px;
       }
 
       .nav-logo {
@@ -132,77 +179,61 @@
         align-items: center;
         justify-content: center;
         color: white;
-        margin-bottom: 40px;
         flex-shrink: 0;
-        transition: 0.4s;
         cursor: pointer;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
       }
-      .floating-sidebar:hover .nav-logo {
-        margin-left: 24px;
-      }
+
+      
 
       .nav-items {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
         width: 100%;
         padding: 0 24px;
         box-sizing: border-box;
       }
 
       .nav-btn {
+        position: relative;
         width: 100%;
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 12px 16px;
+        padding: 14px 16px;
         border-radius: 16px;
         color: var(--muted);
         text-decoration: none;
         transition: all 0.3s ease;
         white-space: nowrap;
-        position: relative;
-        overflow: hidden;
       }
-      
-      .nav-icon-wrap {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .nav-btn i,
+      .nav-btn svg {
         min-width: 24px;
         width: 24px;
         height: 24px;
-      }
-      .nav-icon-wrap i,
-      .nav-icon-wrap svg {
         transition: 0.3s transform;
       }
-      .nav-badge {
-        background: var(--danger);
-        color: white;
-        border-radius: 50%;
-        font-size: 0.65rem;
-        padding: 2px 6px;
-        position: absolute;
-        top: -6px;
-        right: -10px;
-        font-weight: 700;
-      }
 
-      .nav-text {
+      .nav-text-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
         opacity: 0;
         transform: translateX(-10px);
-        transition: all 0.3s;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-text-container span {
         font-weight: 500;
         font-size: 0.95rem;
       }
 
-      .floating-sidebar:hover .nav-text {
+      .floating-sidebar:hover .nav-text-container {
         opacity: 1;
         transform: translateX(0);
       }
-
       .nav-btn:hover {
         color: var(--text);
         background: rgba(128, 128, 128, 0.08);
@@ -226,14 +257,40 @@
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        padding: 20px 40px;
+        padding: 30px 40px;
         border-bottom: 1px solid var(--border);
         gap: 20px;
-        background: var(--bg);
         z-index: 10;
+        background: var(--bg);
       }
+
+      .header-left-cluster {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      }
+      .menu-toggle:hover {
+        background: rgba(128, 128, 128, 0.05);
+        transform: translateY(-2px);
+      }
+
       .greeting h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         font-weight: 800;
         letter-spacing: -0.5px;
         margin-bottom: 4px;
@@ -468,7 +525,7 @@
         color: var(--muted);
       }
       html.dark .msg-bubble {
-        color: var(--text); /* Brighter text in dark mode for legibility */
+        color: var(--text);
       }
       .msg-bubble p {
         margin-top: 0;
@@ -508,78 +565,71 @@
          RESPONSIVE BREAKPOINTS 
          ------------------------------------- */
 
-      /* Desktop / Large Tablet */
+      /* TABLET & MOBILE - OFF-CANVAS SIDEBAR LOGIC */
       @media (max-width: 1024px) {
-        .dash-wrapper { padding: 16px; gap: 16px; }
-        .inbox-list { width: 300px; }
-      }
-
-      /* Tablet Portrait & Mobile (Trigger Bottom Nav) */
-      @media (max-width: 850px) {
-        body { height: 100dvh; }
         .dash-wrapper {
-          padding: 0;
-          flex-direction: column;
+          padding: 16px;
           gap: 0;
         }
-        
-        .top-nav { padding: 20px 24px; }
+        .inbox-list {
+          width: 300px;
+        }
 
-        /* Transform Sidebar into Fixed Bottom Bar */
+        .menu-toggle {
+          display: flex;
+        }
+        .mobile-close {
+          display: flex;
+        }
+
+        /* Transform Sidebar into Professional Off-Canvas Left Drawer */
         .floating-sidebar {
           position: fixed;
-          bottom: 0;
-          top: auto;
+          top: 0;
           left: 0;
-          width: 100%;
-          height: 70px;
-          flex-direction: row;
-          padding: 0 15px;
-          border-radius: 24px 24px 0 0;
-          border: none;
-          border-top: 1px solid var(--border);
-          background: var(--card);
-          box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-          z-index: 1000;
-          align-items: center;
-          justify-content: flex-start;
-          box-sizing: border-box;
-        }
-        .floating-sidebar:hover { width: 100%; align-items: center; } 
-        
-        .nav-logo { display: none; }
-        
-        .nav-items {
-          flex-direction: row;
-          padding: 0;
-          margin: 0;
+          bottom: 0;
           height: 100%;
-          width: 100%;
-          overflow-x: auto;
-          gap: 15px;
-          align-items: center;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
+          width: 280px !important;
+          border-radius: 0 24px 24px 0;
+          border: none;
+          background: var(--card);
+          padding: 24px 0;
+          box-shadow: 20px 0 60px rgba(0, 0, 0, 0.15);
+          transform: translateX(-100%);
+          align-items: flex-start;
+          z-index: 999;
         }
-        .nav-items::-webkit-scrollbar { display: none; }
-        
-        .nav-btn { 
-          padding: 10px; 
-          border-radius: 12px; 
-          width: auto; 
-          scroll-snap-align: center; 
-          flex-shrink: 0; 
-        }
-        .nav-text { display: none !important; }
 
-        /* Resize main area to not get covered by bottom bar */
-        .dash-main { 
-          border-radius: 0; 
-          border: none; 
-          height: calc(100vh - 70px); 
+        body.sidebar-open {
+          overflow: hidden;
+        } /* Lock background scroll */
+        body.sidebar-open .floating-sidebar {
+          transform: translateX(0);
+        } /* Slide In */
+
+        /* Force Nav Elements to show text on Mobile */
+        .nav-text-container {
+          opacity: 1;
+          transform: none;
         }
-        
+
+        /* Clean Header Formatting for Mobile Sidebar */
+        .sidebar-header {
+          justify-content: space-between;
+          padding: 0 24px;
+          margin-bottom: 40px;
+        }
+        .sidebar-header:hover {
+          padding-left: 24px;
+        }
+      }
+
+      /* Tablet Portrait & Mobile Adjustments */
+      @media (max-width: 850px) {
+        .top-nav {
+          padding: 20px 24px;
+        }
+
         /* Stack the Inbox vertically */
         .inbox-container {
           flex-direction: column;
@@ -595,26 +645,68 @@
           gap: 15px;
           padding: 20px;
         }
-        .action-btns { width: 100%; flex-wrap: wrap; }
-        .detail-body { padding: 20px; }
-        .msg-bubble { max-width: 100%; padding: 20px; }
-        .detail-reply { padding: 20px; }
+        .action-btns {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+        .detail-body {
+          padding: 20px;
+        }
+        .msg-bubble {
+          max-width: 100%;
+          padding: 20px;
+        }
+        .detail-reply {
+          padding: 20px;
+        }
       }
 
+      
       /* Small Mobile Overrides */
       @media (max-width: 500px) {
-        .top-nav { padding: 15px 20px; }
-        .greeting p { display: none; } 
-        .top-actions #dirToggle { display: none; } 
-        .profile-pill span { display: none; } 
-        .profile-pill { padding: 4px; border-radius: 50%; }
-        .inbox-list { height: 30vh; }
+        .top-nav {
+          padding: 15px 20px;
+        }
+        .greeting p {
+          display: none;
+        }
+        .top-actions #dirToggle {
+          display: none;
+        }
+
+        /* RESPONSIVE PROFILE PILL FIX */
+        .profile-pill span,
+        .profile-pill svg,
+        .profile-pill i {
+          display: none !important; /* Hides text AND chevron icon */
+        }
+        .profile-pill {
+          padding: 2px !important; /* Creates a tight ring around the avatar */
+          border-radius: 50%;
+          justify-content: center;
+          background: transparent;
+        }
+        .profile-pill .avatar {
+          width: 38px;
+          height: 38px;
+        }
+
+        .inbox-list {
+          height: 30vh;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- PAGE LOADER (Hidden if no logic exists, visual structure intact) -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <!-- MOBILE OVERLAY BACKDROP -->
+    <div
+      class="mobile-overlay"
+      id="mobileOverlay"
+      onclick="toggleSidebar()"
+    ></div>
+
+    <!-- PAGE LOADER -->
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -622,59 +714,85 @@
 
     <!-- WRAPPER -->
     <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR / BOTTOM NAV -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = '../index.html'">
-          <i data-lucide="shield"></i>
+      <!-- FLOATING / OFF-CANVAS SIDEBAR -->
+      <aside class="floating-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div
+            class="nav-logo"
+            onclick="window.location.href = '../index.html'"
+          >
+            <i data-lucide="shield"></i>
+          </div>
+          <!-- Close button for mobile -->
+          <!-- <button class="mobile-close" onclick="toggleSidebar()">
+            <i data-lucide="x"></i>
+          </button> -->
         </div>
 
         <div class="nav-items">
           <a href="UserDashboard.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="layout-grid"></i></div>
-            <span class="nav-text">Dashboard</span>
+            <i data-lucide="layout-grid"></i>
+            <div class="nav-text-container"><span>Dashboard</span></div>
           </a>
           <a href="TrainingPage.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="compass"></i></div>
-            <span class="nav-text">Explore Programs</span>
+            <i data-lucide="compass"></i>
+            <div class="nav-text-container"><span>Explore Programs</span></div>
           </a>
           <a href="wishlist.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="bookmark"></i></div>
-            <span class="nav-text">Saved Training</span>
+            <i data-lucide="bookmark"></i>
+            <div class="nav-text-container"><span>Saved Training</span></div>
           </a>
           <a href="MyCertificates.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="award"></i></div>
-            <span class="nav-text">My Certificates</span>
+            <i data-lucide="award"></i>
+            <div class="nav-text-container"><span>My Certificates</span></div>
           </a>
           <a href="LearningStats.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="bar-chart-2"></i></div>
-            <span class="nav-text">Learning Stats</span>
+            <i data-lucide="bar-chart-2"></i>
+            <div class="nav-text-container"><span>Learning Stats</span></div>
           </a>
           <a href="CommunityForums.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="users"></i></div>
-            <span class="nav-text">Community Forums</span>
+            <i data-lucide="users"></i>
+            <div class="nav-text-container"><span>Community Forums</span></div>
           </a>
-          
+
           <!-- Active Messages Nav Link -->
           <a href="Messages.html" class="nav-btn active">
-            <div class="nav-icon-wrap">
-              <i data-lucide="mail"></i>
-              <span class="nav-badge">3</span>
+            <i data-lucide="mail"></i>
+            <div class="nav-text-container">
+              <span>Messages</span>
+              <span
+                style="
+                  background: var(--danger);
+                  color: white;
+                  border-radius: 50px;
+                  font-size: 0.75rem;
+                  padding: 2px 8px;
+                  font-weight: 700;
+                "
+                >3</span
+              >
             </div>
-            <span class="nav-text">Messages</span>
           </a>
-          
+
           <a href="Settings.html" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="settings"></i></div>
-            <span class="nav-text">Account Settings</span>
+            <i data-lucide="settings"></i>
+            <div class="nav-text-container"><span>Account Settings</span></div>
           </a>
           <a href="javascript:void(0)" class="nav-btn">
-            <div class="nav-icon-wrap"><i data-lucide="help-circle"></i></div>
-            <span class="nav-text">Help & Support</span>
+            <i data-lucide="help-circle"></i>
+            <div class="nav-text-container"><span>Help & Support</span></div>
           </a>
-          <div style="flex: 1" class="nav-text"></div>
-          <a href="../index.html" class="nav-btn" style="color: var(--danger); margin-top: auto">
-            <div class="nav-icon-wrap"><i data-lucide="log-out"></i></div>
-            <span class="nav-text">Logout</span>
+
+          <!-- Spacer to push logout down -->
+          <div style="flex: 1; min-height: 40px"></div>
+
+          <a
+            href="../index.html"
+            class="nav-btn"
+            style="color: var(--danger); margin-bottom: 20px"
+          >
+            <i data-lucide="log-out"></i>
+            <div class="nav-text-container"><span>Logout</span></div>
           </a>
         </div>
       </aside>
@@ -683,28 +801,64 @@
       <main class="dash-main">
         <!-- GLOBAL HEADER -->
         <header class="top-nav">
-          <div class="greeting">
-            <h2>Messages</h2>
-            <p>You have 3 unread messages in your inbox.</p>
+          <div class="header-left-cluster">
+            <!-- HAMBURGER BUTTON (Mobile Only) -->
+            <button class="menu-toggle" onclick="toggleSidebar()">
+              <i data-lucide="menu"></i>
+            </button>
+            <div class="greeting">
+              <h2>Messages</h2>
+              <p>You have 3 unread messages in your inbox.</p>
+            </div>
           </div>
 
           <div class="top-actions">
             <!-- LTR / RTL Toggle -->
-            <button id="dirToggle" class="btn btn-outline" style="padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600;">
-              <i data-lucide="languages" style="width: 18px;"></i>
+            <button
+              id="dirToggle"
+              class="btn btn-outline"
+              style="
+                padding: 8px 12px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+              "
+            >
+              <i data-lucide="languages" style="width: 18px"></i>
               <span>LTR</span>
             </button>
 
             <!-- Theme Toggle -->
-            <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')" style="background: var(--card); color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; cursor:pointer;">
-              <i data-lucide="moon" style="width: 18px;"></i>
+            <button
+              class="theme-toggle"
+              onclick="document.documentElement.classList.toggle('dark')"
+              style="
+                background: var(--card);
+                color: var(--text);
+                border: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px;
+                border-radius: 50%;
+                cursor: pointer;
+              "
+            >
+              <i data-lucide="moon" style="width: 18px"></i>
             </button>
 
             <!-- Profile Info -->
             <div class="profile-pill">
               <div class="avatar"></div>
-              <span style="font-weight: 600; font-size: 0.95rem">Sarah Jenkins</span>
-              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted)"></i>
+              <span style="font-weight: 600; font-size: 0.95rem"
+                >Sarah Jenkins</span
+              >
+              <i
+                data-lucide="chevron-down"
+                style="width: 18px; color: var(--muted)"
+              ></i>
             </div>
           </div>
         </header>
@@ -715,16 +869,21 @@
           <div class="inbox-list">
             <div class="inbox-header">
               <h3>Inbox</h3>
-              <button class="btn btn-outline" style="padding: 8px; border-radius: 12px">
-                <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i>
+              <button
+                class="btn btn-outline"
+                style="padding: 8px; border-radius: 12px"
+              >
+                <i data-lucide="edit-3" style="width: 18px; height: 18px"></i>
               </button>
             </div>
-            
+
             <div class="thread-list">
               <!-- Thread 1 -->
               <div class="thread-item active">
                 <div class="thread-top">
-                  <span class="thread-sender"><span class="unread-dot"></span>Dr. Marcus Webb</span>
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>Dr. Marcus Webb</span
+                  >
                   <span class="thread-time">10:42 AM</span>
                 </div>
                 <div class="thread-subject">Feedback on your Assignment</div>
@@ -736,7 +895,9 @@
               <!-- Thread 2 -->
               <div class="thread-item">
                 <div class="thread-top">
-                  <span class="thread-sender"><span class="unread-dot"></span>System Admin</span>
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>System Admin</span
+                  >
                   <span class="thread-time">Yesterday</span>
                 </div>
                 <div class="thread-subject">Certificate Issued!</div>
@@ -748,7 +909,9 @@
               <!-- Thread 3 -->
               <div class="thread-item">
                 <div class="thread-top">
-                  <span class="thread-sender"><span class="unread-dot"></span>Community Team</span>
+                  <span class="thread-sender"
+                    ><span class="unread-dot"></span>Community Team</span
+                  >
                   <span class="thread-time">Tuesday</span>
                 </div>
                 <div class="thread-subject">Webinar Link for Friday</div>
@@ -784,26 +947,51 @@
                   <div
                     class="sender-avatar"
                     style="
-                      background-image: url('https://ui-avatars.com/api/?name=Marcus+Webb&background=10b981&color=fff');
+                      background-image: url(&quot;https://ui-avatars.com/api/?name=Marcus+Webb&background=10b981&color=fff&quot;);
                     "
                   ></div>
                   <div>
                     <span class="sender-name">Dr. Marcus Webb</span>
-                    <span class="sender-email">marcus.webb@ngo-training.edu • Oct 26, 10:42 AM</span>
+                    <span class="sender-email"
+                      >marcus.webb@ngo-training.edu • Oct 26, 10:42 AM</span
+                    >
                   </div>
                 </div>
               </div>
 
               <!-- Message Actions -->
               <div class="action-btns">
-                <button class="btn btn-outline" style="padding: 10px; border-radius: 12px" title="Star Message">
-                  <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                <button
+                  class="btn btn-outline"
+                  style="padding: 10px; border-radius: 12px"
+                  title="Star Message"
+                >
+                  <i data-lucide="star" style="width: 18px; height: 18px"></i>
                 </button>
-                <button class="btn btn-outline" style="padding: 10px; border-radius: 12px" title="Delete">
-                  <i data-lucide="trash-2" style="width: 18px; height: 18px; color: var(--danger);"></i>
+                <button
+                  class="btn btn-outline"
+                  style="padding: 10px; border-radius: 12px"
+                  title="Delete"
+                >
+                  <i
+                    data-lucide="trash-2"
+                    style="width: 18px; height: 18px; color: var(--danger)"
+                  ></i>
                 </button>
-                <button class="btn btn-primary" style="padding: 10px 20px; border-radius: 12px">
-                  <i data-lucide="reply" style="width: 18px; height: 18px; margin-right: 8px; display: inline-block; vertical-align: text-bottom;"></i>
+                <button
+                  class="btn btn-primary"
+                  style="padding: 10px 20px; border-radius: 12px"
+                >
+                  <i
+                    data-lucide="reply"
+                    style="
+                      width: 18px;
+                      height: 18px;
+                      margin-right: 8px;
+                      display: inline-block;
+                      vertical-align: text-bottom;
+                    "
+                  ></i>
                   Reply
                 </button>
               </div>
@@ -837,12 +1025,28 @@
                 class="reply-box"
                 placeholder="Type your reply here..."
               ></textarea>
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="color: var(--muted); cursor: pointer; display: flex; gap: 15px;">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div
+                  style="
+                    color: var(--muted);
+                    cursor: pointer;
+                    display: flex;
+                    gap: 15px;
+                  "
+                >
                   <i data-lucide="paperclip"></i>
                   <i data-lucide="image"></i>
                 </div>
-                <button class="btn btn-primary" style="border-radius: 12px; padding: 10px 30px">
+                <button
+                  class="btn btn-primary"
+                  style="border-radius: 12px; padding: 10px 30px"
+                >
                   Send Message
                 </button>
               </div>
@@ -851,11 +1055,17 @@
         </div>
       </main>
     </div>
-    
-    <!-- Initialize Icons after DOM loads -->
+
+    <!-- Scripts -->
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        if(typeof lucide !== "undefined") {
+      // --- SIDEBAR TOGGLE FUNCTION ---
+      function toggleSidebar() {
+        document.body.classList.toggle("sidebar-open");
+      }
+
+      // Initialize Icons
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof lucide !== "undefined") {
           lucide.createIcons();
         }
       });

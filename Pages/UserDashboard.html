@@ -7,20 +7,14 @@
       (function () {
         const theme = localStorage.getItem("theme");
         const dir = localStorage.getItem("dir") || "ltr";
-        if (
-          theme === "dark" ||
-          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
+        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
           document.documentElement.classList.add("dark");
         }
         document.documentElement.dir = dir;
       })();
     </script>
     <title>Next-Gen Dashboard - NGO Training</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/app.css" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -53,19 +47,27 @@
         height: 100vh;
         overflow: hidden;
         margin: 0;
-        /* Advanced ambient noise/blobs */
         background-image:
-          radial-gradient(
-            circle at 0% 0%,
-            rgba(37, 99, 235, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 100% 100%,
-            rgba(124, 58, 237, 0.08) 0%,
-            transparent 50%
-          );
+          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
         background-attachment: fixed;
+      }
+
+      /* MOBILE OVERLAY */
+      .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      body.sidebar-open .mobile-overlay {
+        opacity: 1;
+        pointer-events: auto;
       }
 
       /* CORE LAYOUT */
@@ -76,6 +78,7 @@
         padding: 24px;
         gap: 24px;
         box-sizing: border-box;
+        position: relative;
       }
 
       .dash-main {
@@ -89,10 +92,10 @@
         border-radius: 32px;
       }
 
-      /* FLOATING SIDEBAR */
+      /* FLOATING SIDEBAR (DESKTOP) */
       .floating-sidebar {
         width: 100px;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border: 1px solid var(--border);
@@ -101,24 +104,38 @@
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.03),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        z-index: 100;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        z-index: 1000;
+        transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+        overflow-y: auto;
       }
+      .floating-sidebar::-webkit-scrollbar { display: none; }
+      .floating-sidebar { -ms-overflow-style: none; scrollbar-width: none; }
 
       html.dark .floating-sidebar {
-        background: rgba(15, 23, 42, 0.5);
-        box-shadow:
-          0 30px 60px rgba(0, 0, 0, 0.2),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
 
       .floating-sidebar:hover {
         width: 280px;
         align-items: flex-start;
+      }
+
+      /* SIDEBAR HEADER */
+      .sidebar-header {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        transition: padding 0.4s;
+        box-sizing: border-box;
+      }
+      .floating-sidebar:hover .sidebar-header {
+        justify-content: flex-start;
+        padding-left: 24px;
       }
 
       .nav-logo {
@@ -130,84 +147,72 @@
         align-items: center;
         justify-content: center;
         color: white;
-        margin-bottom: 40px;
         flex-shrink: 0;
-        transition: 0.4s;
         cursor: pointer;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
       }
-      .floating-sidebar:hover .nav-logo {
-        margin-left: 24px;
+      
+      .mobile-close {
+        display: none;
+        background: rgba(128, 128, 128, 0.1);
+        border: none;
+        color: var(--text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
       }
+      .mobile-close:hover { background: var(--danger); color: white; }
 
       .nav-items {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
         width: 100%;
         padding: 0 24px;
         box-sizing: border-box;
       }
 
       .nav-btn {
+        position: relative;
         width: 100%;
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 12px 16px;
+        padding: 14px 16px;
         border-radius: 16px;
         color: var(--muted);
         text-decoration: none;
         transition: all 0.3s ease;
         white-space: nowrap;
-        position: relative;
-        overflow: hidden;
       }
-      .nav-btn i,
-      .nav-btn svg {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        transition: 0.3s transform;
+      .nav-btn i, .nav-btn svg {
+        min-width: 24px; width: 24px; height: 24px; transition: 0.3s transform;
       }
-      .nav-btn span {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s;
-        font-weight: 500;
-        font-size: 0.95rem;
+      .nav-text-container {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        width: 100%;
+        opacity: 0; 
+        transform: translateX(-10px); 
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
-
-      .floating-sidebar:hover .nav-btn span {
-        opacity: 1;
-        transform: translateX(0);
+      .nav-text-container span {
+        font-weight: 500; font-size: 0.95rem;
       }
 
-      .nav-btn:hover {
-        color: var(--text);
-        background: rgba(128, 128, 128, 0.08);
-      }
-      .nav-btn:hover i,
-      .nav-btn:hover svg {
-        transform: scale(1.1);
+      .floating-sidebar:hover .nav-text-container {
+        opacity: 1; transform: translateX(0);
       }
 
-      .nav-btn.active {
-        color: var(--primary);
-        background: rgba(37, 99, 235, 0.1);
-      }
-      html.dark .nav-btn.active {
-        background: rgba(37, 99, 235, 0.15);
-      }
-
-      /* VIEW TRANSITION */
-      #dash-content {
-        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+      .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
+      .nav-btn:hover i, .nav-btn:hover svg { transform: scale(1.1); }
+      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); }
+      html.dark .nav-btn.active { background: rgba(37, 99, 235, 0.15); }
 
       /* DASHBOARD HEADER */
       .top-nav {
@@ -219,263 +224,99 @@
         border-bottom: 1px solid var(--border);
         gap: 20px;
       }
-      .greeting h2 {
-        font-size: 1.8rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        margin-bottom: 4px;
-        margin-top: 0;
-      }
-      .greeting p {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin: 0;
-      }
-
-      /* HEADER SEARCH & FILTERS */
-      .header-search {
-        display: none;
+      
+      .header-left-cluster {
+        display: flex;
         align-items: center;
-        gap: 12px;
-        background: rgba(128, 128, 128, 0.05);
-        padding: 8px 16px;
-        border-radius: 12px;
+        gap: 20px;
+      }
+      
+      .menu-toggle {
+        display: none;
+        background: var(--card);
         border: 1px solid var(--border);
-        width: 300px;
-        transition: 0.3s;
-      }
-      .header-search:focus-within {
-        border-color: var(--primary);
-        background: rgba(128, 128, 128, 0.08);
-      }
-      .header-search input {
-        background: none;
-        border: none;
         color: var(--text);
-        outline: none;
-        width: 100%;
-        font-size: 0.9rem;
-      }
-      .header-filters {
-        display: none;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .filter-pill {
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 0.85rem;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: 0.3s;
-        border: 1px solid var(--border);
-        background: var(--card);
-        color: var(--muted);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       }
-      .filter-pill.active {
-        background: var(--primary);
-        color: white;
-        border-color: var(--primary);
-      }
+      .menu-toggle:hover { background: rgba(128,128,128,0.05); transform: translateY(-2px); }
 
-      /* TOP ACTIONS */
-      .top-actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-      .profile-pill {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 6px 16px 6px 6px;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 50px;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02);
-      }
-      .profile-pill:hover {
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
-        transform: translateY(-2px);
-      }
-      .avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
-          center/cover;
-      }
+      .greeting h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; margin-top: 0; }
+      .greeting p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+
+      .header-search { display: none; align-items: center; gap: 12px; background: rgba(128, 128, 128, 0.05); padding: 8px 16px; border-radius: 12px; border: 1px solid var(--border); width: 300px; transition: 0.3s; }
+      .header-search:focus-within { border-color: var(--primary); background: rgba(128, 128, 128, 0.08); }
+      .header-search input { background: none; border: none; color: var(--text); outline: none; width: 100%; font-size: 0.9rem; }
+      
+      .header-filters { display: none; gap: 10px; flex-wrap: wrap; }
+      .filter-pill { padding: 6px 14px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); background: var(--card); color: var(--muted); }
+      .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+      .top-actions { display: flex; align-items: center; gap: 15px; }
+      .profile-pill { display: flex; align-items: center; gap: 12px; padding: 6px 16px 6px 6px; background: var(--card); border: 1px solid var(--border); border-radius: 50px; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.02); }
+      .profile-pill:hover { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05); transform: translateY(-2px); }
+      .avatar { width: 36px; height: 36px; border-radius: 50%; background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff") center/cover; }
 
       /* SCROLL AREA & BENTO GRID */
-      .bento-scroll {
-        flex: 1;
-        overflow-y: auto;
-        padding: 40px;
-        -webkit-overflow-scrolling: touch;
-      }
-      .bento-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: minmax(180px, auto);
-        gap: 24px;
-        max-width: 1400px;
-        margin: 0 auto;
-      }
+      .bento-scroll { flex: 1; overflow-y: auto; padding: 40px; -webkit-overflow-scrolling: touch; }
+      #dash-content { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+      @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+      .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(180px, auto); gap: 24px; max-width: 1400px; margin: 0 auto; }
 
       /* BENTO CARDS */
-      .bento-card {
-        background: var(--card);
-        border-radius: 32px;
-        padding: 30px;
-        border: 1px solid var(--border);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        overflow: hidden;
-        transition:
-          transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-          box-shadow 0.4s ease;
-      }
-      .bento-card:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
-        border-color: var(--primary);
-      }
-      html.dark .bento-card:hover {
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      }
+      .bento-card { background: var(--card); border-radius: 32px; padding: 30px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02); display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease; }
+      .bento-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05); border-color: var(--primary); }
+      html.dark .bento-card:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
 
-      .card-img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 18px;
-        margin-bottom: 20px;
-        background: var(--muted);
-        transition: 0.5s;
-      }
-      .bento-card:hover .card-img {
-        transform: scale(1.05);
-      }
+      .card-img { width: 100%; height: 160px; object-fit: cover; border-radius: 18px; margin-bottom: 20px; background: var(--muted); transition: 0.5s; }
+      .bento-card:hover .card-img { transform: scale(1.05); }
 
-      /* SPANS & SPECIAL CARDS */
-      .bento-hero {
-        grid-column: span 2;
-        grid-row: span 1;
-        background: linear-gradient(
-          135deg,
-          rgba(37, 99, 235, 0.05),
-          rgba(124, 58, 237, 0.05)
-        );
-      }
-      html.dark .bento-hero {
-        background: linear-gradient(
-          135deg,
-          rgba(37, 99, 235, 0.1),
-          rgba(124, 58, 237, 0.1)
-        );
-        border-color: rgba(124, 58, 237, 0.2);
-      }
-      .bento-hero.explore-hero {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        border: none;
-      }
-
+      .bento-hero { grid-column: span 2; background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.05)); }
+      html.dark .bento-hero { background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1)); border-color: rgba(124, 58, 237, 0.2); }
+      .bento-hero.explore-hero { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; }
       .bento-chart { grid-column: span 2; grid-row: span 2; }
-      .bento-metric { grid-column: span 1; grid-row: span 1; justify-content: space-between; }
+      .bento-metric { grid-column: span 1; justify-content: space-between; }
       .bento-list { grid-column: span 2; grid-row: span 2; padding: 0; }
 
-      /* BUTTONS & BADGES */
-      .btn-premium {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
-      }
-      .btn-premium:hover {
-        transform: scale(1.03);
-        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
-      }
-      .badge-premium {
-        background: rgba(128, 128, 128, 0.1);
-        color: var(--primary);
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .explore-hero .badge-premium {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(4px);
-        color: white;
-      }
+      /* UI ELEMENTS */
+      .btn-premium { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 12px 24px; border-radius: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+      .btn-premium:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4); }
+      .badge-premium { background: rgba(128, 128, 128, 0.1); color: var(--primary); padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+      .explore-hero .badge-premium { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(4px); color: white; }
 
-      /* HERO CONTENT */
       .hero-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; margin-top: 0; line-height: 1.2; }
       .hero-title span { color: var(--primary); }
       .explore-hero .hero-title span { color: rgba(255, 255, 255, 0.9); text-decoration: underline; text-underline-offset: 4px; }
       .hero-desc { color: var(--muted); font-size: 0.95rem; max-width: 80%; }
-      .hero-graphics {
-        position: absolute; right: -20%; top: -50%;
-        width: 300px; height: 300px;
-        background: radial-gradient(circle, var(--primary), transparent 70%);
-        opacity: 0.1; border-radius: 50%; filter: blur(30px); pointer-events: none;
-      }
+      .hero-graphics { position: absolute; right: -20%; top: -50%; width: 300px; height: 300px; background: radial-gradient(circle, var(--primary), transparent 70%); opacity: 0.1; border-radius: 50%; filter: blur(30px); pointer-events: none; }
 
-      /* METRIC CONTENT */
-      .metric-icon {
-        width: 50px; height: 50px; border-radius: 16px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.4rem; position: relative;
-      }
-      .metric-icon::before {
-        content: ""; position: absolute; inset: 0;
-        border-radius: inherit; background: inherit;
-        filter: blur(10px); opacity: 0.4; z-index: -1;
-      }
+      .metric-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; position: relative; }
+      .metric-icon::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: inherit; filter: blur(10px); opacity: 0.4; z-index: -1; }
       .metric-value { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -1px; }
       .metric-label { color: var(--muted); font-weight: 600; font-size: 0.9rem; margin-top: 8px;}
-
       .icon-blue { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
       .icon-purple { background: rgba(124, 58, 237, 0.1); color: var(--secondary); }
       html.dark .icon-blue { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
 
-      /* BAR CHART */
       .bento-chart h3 { font-size: 1.3rem; margin-bottom: 25px; margin-top: 0; font-weight: 700; }
-      .chart-container {
-        flex: 1; display: flex; align-items: flex-end; gap: 8%;
-        padding-top: 20px; border-bottom: 1px dashed var(--border); position: relative;
-      }
+      .chart-container { flex: 1; display: flex; align-items: flex-end; gap: 8%; padding-top: 20px; border-bottom: 1px dashed var(--border); }
       .bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; height: 100%; justify-content: flex-end; }
-      .bar {
-        width: 100%; border-radius: 12px 12px 0 0; background: var(--primary);
-        position: relative; overflow: hidden; transition: 1s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8;
-      }
+      .bar { width: 100%; border-radius: 12px 12px 0 0; background: var(--primary); position: relative; overflow: hidden; transition: 1s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
       .bar:hover { opacity: 1; transform: scaleY(1.05); transform-origin: bottom; }
       .bar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%); }
-      html.dark .bar::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%); }
       .bar-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
 
-      /* ACTIVE COURSES LIST */
       .list-header { padding: 30px 30px 15px 30px; font-size: 1.3rem; font-weight: 700; border-bottom: 1px solid var(--border); }
       .course-item { padding: 20px 30px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--border); transition: 0.3s; cursor: pointer; }
       .course-item:hover { background: rgba(128, 128, 128, 0.02); }
-      .course-thumb {
-        width: 80px; height: 80px; border-radius: 20px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex; align-items: center; justify-content: center;
-        color: white; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); flex-shrink: 0;
-      }
+      .course-thumb { width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); flex-shrink: 0; }
       .course-info { flex: 1; }
       .course-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
       .course-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
@@ -483,225 +324,174 @@
       .prog-fill { height: 100%; background: var(--primary); border-radius: 3px; }
 
       /* FOOTER */
-      .footer {
-        background: var(--card);
-        border-top: 1px solid var(--border);
-        padding: 40px;
-        margin-top: 40px;
-        border-radius: 32px 32px 0 0;
-      }
-      .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 40px;
-        margin-bottom: 40px;
-      }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px; margin-top: 40px; border-radius: 32px 32px 0 0; }
+      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; }
       .footer-col ul { list-style: none; padding: 0; margin: 0; }
       .footer-col ul li { margin-bottom: 12px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
+      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; }
       .footer-col ul li a:hover { color: var(--primary); }
       .social-links { display: flex; gap: 15px; }
-      .social-links a { 
-        width: 40px; height: 40px; border-radius: 50%;
-        background: rgba(128,128,128,0.05); display: flex; 
-        align-items: center; justify-content: center; 
-        color: var(--text); transition: 0.3s;
-      }
+      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
       .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-      .footer-bottom {
-        display: flex; justify-content: space-between; align-items: center;
-        padding-top: 25px; border-top: 1px solid var(--border);
-        color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px;
-      }
-      .footer-bottom p { margin: 0; }
+      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+
 
       /* -------------------------------------
          RESPONSIVE BREAKPOINTS 
          ------------------------------------- */
       
-      /* Large Desktop / Laptop */
       @media (max-width: 1400px) {
         .bento-grid { grid-template-columns: repeat(2, 1fr); }
       }
 
-      /* Tablet Landscape */
+      /* TABLET & MOBILE - OFF-CANVAS SIDEBAR LOGIC */
       @media (max-width: 1024px) {
-        .dash-wrapper { padding: 16px; gap: 16px; }
+        .dash-wrapper { padding: 16px; gap: 0; }
+        
+        .menu-toggle { display: flex; }
+        .mobile-close { display: flex; }
+
+        /* Transform Sidebar into Professional Off-Canvas Left Drawer */
+        .floating-sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+          width: 280px !important; 
+          border-radius: 0 24px 24px 0;
+          border: none;
+          background: var(--card);
+          padding: 24px 0;
+          box-shadow: 20px 0 60px rgba(0, 0, 0, 0.15);
+          transform: translateX(-100%);
+          align-items: flex-start;
+          z-index: 999;
+        }
+
+        body.sidebar-open { overflow: hidden; } /* Lock background scroll */
+        body.sidebar-open .floating-sidebar { transform: translateX(0); } /* Slide In */
+
+        /* Force Nav Elements to show text on Mobile */
+        .nav-text-container { opacity: 1; transform: none; }
+        
+        /* Clean Header Formatting for Mobile Sidebar */
+        .sidebar-header { 
+          justify-content: space-between; 
+          padding: 0 24px; 
+          margin-bottom: 40px; 
+        }
+        .sidebar-header:hover { padding-left: 24px; }
+        
         .bento-scroll { padding: 24px; }
-        .bento-hero { grid-column: span 2; }
-        .bento-chart, .bento-list { grid-column: span 2; }
+        .bento-hero, .bento-chart, .bento-list { grid-column: span 2; }
         .header-search { width: 220px; }
       }
 
-      /* Tablet Portrait & Small Nav restructuring */
+      /* SEARCH REFLOW */
       @media (max-width: 850px) {
-        .header-search {
-          display: flex !important;
-          width: 100%;
-          order: 3;
-          margin-top: 10px;
-        }
+        .header-search { display: flex !important; width: 100%; order: 3; margin-top: 10px; }
         .header-filters { order: 4; width: 100%; }
         .top-nav { padding: 20px 24px; }
       }
 
-      /* Mobile Layout / Vertical Break */
+      /* MOBILE CONTENT ADJUSTMENTS */
       @media (max-width: 768px) {
-        body { height: 100dvh; }
-        .dash-wrapper {
-          padding: 0;
-          flex-direction: column;
-          gap: 0;
-        }
-        
-        /* Sidebar becomes top sticky horizontal bar */
-        .floating-sidebar {
-          width: 100%;
-          height: auto;
-          flex-direction: row;
-          padding: 10px 20px;
-          border-radius: 0;
-          border-left: none;
-          border-right: none;
-          border-top: none;
-          background: var(--card);
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-        }
-        .floating-sidebar:hover { width: 100%; align-items: center; } 
-        
-        .nav-logo { margin-bottom: 0; width: 40px; height: 40px; margin-right: 15px; }
-        .floating-sidebar:hover .nav-logo { margin-left: 0; }
-        
-        .nav-items {
-          flex-direction: row;
-          padding: 0;
-          overflow-x: auto;
-          gap: 12px;
-          scrollbar-width: none;
-        }
-        .nav-items::-webkit-scrollbar { display: none; }
-        .nav-btn { padding: 8px 12px; border-radius: 12px; width: auto; }
-        .nav-btn span { display: none; }
-        
-        /* Grid Adjustments */
         .bento-grid { grid-template-columns: 1fr; gap: 16px; }
         .bento-hero, .bento-chart, .bento-list, .bento-metric { grid-column: span 1; }
-        
-        /* Dynamic Inline Overrides for Mobile */
         .hero-title { font-size: 1.6rem !important; }
         .hero-desc { max-width: 100% !important; font-size: 1rem !important; }
         .metric-value { font-size: 2.2rem !important; }
-        
         .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
-        .footer-grid { gap: 30px; }
         .footer-bottom { flex-direction: column; text-align: center; }
         .footer-legal { margin-top: 10px; }
-        .footer-legal a { margin: 0 10px; color: var(--muted); text-decoration: none; }
       }
 
-      /* Small Mobile */
+      /* SMALL MOBILE REFINEMENTS */
       @media (max-width: 500px) {
         .top-nav { padding: 15px 20px; }
         #dash-subtitle { display: none; }
         .greeting h2 { font-size: 1.4rem !important; margin: 0; }
-        
         .top-actions #dirToggle { display: none; } 
         .profile-pill span { display: none; } 
         .profile-pill { padding: 4px; }
-        
-        .bento-scroll { padding: 20px; padding-bottom: 100px; } 
-        
-        /* Bottom Sticky Nav App-Style */
-        .floating-sidebar {
-          position: fixed;
-          bottom: 0;
-          top: auto;
-          border-top: 1px solid var(--border);
-          border-radius: 24px 24px 0 0;
-          padding: 12px;
-          justify-content: center;
-          box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-        }
-        .nav-logo { display: none; }
-        .nav-items {
-          justify-content: flex-start;
-          gap: 20px;
-          padding: 0 10px;
-          scroll-snap-type: x mandatory;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-        }
-        .nav-btn { scroll-snap-align: center; flex-shrink: 0; }
-        
-        /* Cards inner padding */
+        .bento-scroll { padding: 16px; } 
         .bento-card { padding: 24px; border-radius: 28px; }
-        .bento-hero { padding: 24px; }
         .hero-graphics { display: none; }
-        
-        /* Course Items adjustments */
         .list-header { padding: 20px 20px 10px 20px; }
         .course-item { padding: 15px 20px; gap: 15px; }
         .course-thumb { width: 60px; height: 60px; border-radius: 14px; }
-        
-        /* Charts */
-        .chart-container { gap: 4%; }
-        .bar-label { font-size: 0.7rem; }
       }
     </style>
   </head>
   <body>
-    <!-- PAGE LOADER (Optional: if your app.css defines it, otherwise it stays hidden) -->
-    <div class="cssloader" id="page-loader" style="display: none;">
-      <div class="triangle1"></div>
-      <div class="triangle2"></div>
-      <p class="text">Please Wait</p>
-    </div>
+    <!-- MOBILE OVERLAY BACKDROP -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
     <!-- WRAPPER -->
     <div class="dash-wrapper">
-      <!-- FLOATING SIDEBAR -->
-      <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href = '../index.html'">
-          <i data-lucide="shield"></i>
+      
+      <!-- FLOATING / OFF-CANVAS SIDEBAR -->
+      <aside class="floating-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="nav-logo" onclick="window.location.href = '../index.html'">
+            <i data-lucide="shield"></i>
+          </div>
+          <!-- Close button for mobile -->
+          
         </div>
 
         <div class="nav-items">
           <a href="javascript:void(0)" onclick="switchView('dashboard')" class="nav-btn active" id="nav-dashboard">
-            <i data-lucide="layout-grid"></i> <span>Dashboard</span>
+            <i data-lucide="layout-grid"></i> 
+            <div class="nav-text-container"><span>Dashboard</span></div>
           </a>
           <a href="javascript:void(0)" onclick="switchView('explore')" class="nav-btn" id="nav-explore">
-            <i data-lucide="compass"></i> <span>Explore Programs</span>
+            <i data-lucide="compass"></i> 
+            <div class="nav-text-container"><span>Explore Programs</span></div>
           </a>
           <a href="javascript:void(0)" onclick="switchView('wishlist')" class="nav-btn" id="nav-wishlist">
-            <i data-lucide="bookmark"></i> <span>Saved Training</span>
+            <i data-lucide="bookmark"></i> 
+            <div class="nav-text-container"><span>Saved Training</span></div>
           </a>
           <a href="javascript:void(0)" onclick="switchView('certificate')" class="nav-btn">
-            <i data-lucide="award"></i> <span>My Certificates</span>
+            <i data-lucide="award"></i> 
+            <div class="nav-text-container"><span>My Certificates</span></div>
           </a>
           <a href="LearningStats.html" class="nav-btn">
-            <i data-lucide="bar-chart-2"></i> <span>Learning Stats</span>
+            <i data-lucide="bar-chart-2"></i> 
+            <div class="nav-text-container"><span>Learning Stats</span></div>
           </a>
           <a href="Community.html" class="nav-btn">
-            <i data-lucide="users"></i> <span>Community Forums</span>
+            <i data-lucide="users"></i> 
+            <div class="nav-text-container"><span>Community Forums</span></div>
           </a>
+          
+          <!-- FIXED MESSAGE BADGE -->
           <a href="Messages.html" class="nav-btn">
             <i data-lucide="mail"></i>
-            <span>Messages
-              <span class="badge" style="background: var(--danger); color: white; border-radius: 50%; font-size: 0.65rem; padding: 2px 6px; position: absolute; right: 15px; top: 10px;">3</span>
-            </span>
+            <div class="nav-text-container">
+              <span>Messages</span>
+              <span style="background: var(--danger); color: white; border-radius: 50px; font-size: 0.75rem; padding: 2px 8px; font-weight: 700;">3</span>
+            </div>
           </a>
+
           <a href="Settings.html" class="nav-btn">
-            <i data-lucide="settings"></i> <span>Account Settings</span>
+            <i data-lucide="settings"></i> 
+            <div class="nav-text-container"><span>Account Settings</span></div>
           </a>
           <a href="Contact.html" class="nav-btn">
-            <i data-lucide="help-circle"></i> <span>Help & Support</span>
+            <i data-lucide="help-circle"></i> 
+            <div class="nav-text-container"><span>Help & Support</span></div>
           </a>
-          <div style="flex: 1"></div>
-          <a href="javascript:void(0)" class="nav-btn" style="color: var(--danger); margin-top: auto">
-            <i data-lucide="log-out"></i> <span>Logout</span>
+          
+          <!-- Spacer to push logout down -->
+          <div style="flex: 1; min-height: 40px;"></div>
+          
+          <a href="javascript:void(0)" class="nav-btn" style="color: var(--danger); margin-bottom: 20px;">
+            <i data-lucide="log-out"></i> 
+            <div class="nav-text-container"><span>Logout</span></div>
           </a>
         </div>
       </aside>
@@ -710,9 +500,16 @@
       <main class="dash-main">
         <!-- HEADER -->
         <header class="top-nav">
-          <div class="greeting">
-            <h2 id="dash-title" onclick="window.location.href = '../index.html'">Overview</h2>
-            <p id="dash-subtitle">Here's what is happening with your training today.</p>
+          <div class="header-left-cluster">
+            <!-- HAMBURGER BUTTON (Mobile Only) -->
+            <button class="menu-toggle" onclick="toggleSidebar()">
+              <i data-lucide="menu"></i>
+            </button>
+            
+            <div class="greeting">
+              <h2 id="dash-title" onclick="window.location.href = '../index.html'">Overview</h2>
+              <p id="dash-subtitle">Here's what is happening with your training today.</p>
+            </div>
           </div>
 
           <div class="header-search" id="headerSearch">
@@ -733,7 +530,6 @@
               <span>LTR</span>
             </button>
 
-            <!-- Optional theme toggle (simplified) -->
             <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')" style="background: var(--card); color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; cursor:pointer;">
               <i data-lucide="moon" style="width: 18px;"></i>
             </button>
@@ -752,57 +548,51 @@
             <!-- Initial content will be loaded by script -->
           </div>
 
-          
-          
-        
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-          <p>
-            Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
-          </p>
+          <!-- FOOTER -->
+          <footer class="footer">
+            <div class="footer-grid">
+              <div class="footer-col">
+                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+                <p>Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.</p>
+              </div>
+              <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                  <li><a href="../index.html">Home</a></li>
+                  <li><a href="TrainingPage.html">Programs</a></li>
+                  <li><a href="Impact.html">Our Impact</a></li>
+                  <li><a href="Community.html">Community</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="Contact.html">Help Center</a></li>
+                  <li><a href="wishlist.html">Wishlist</a></li>
+                  <li><a href="Settings.html">Settings</a></li>
+                  <li><a href="login.html">Login</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <h4>Follow Us</h4>
+                <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+                <div class="social-links">
+                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
+                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <div class="footer-legal">
+                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
+                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+              </div>
+            </div>
+          </footer>
         </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="TrainingPage.html">Programs</a></li>
-            <li><a href="Impact.html">Our Impact</a></li>
-            <li><a href="Community.html">Community</a></li>
-            <li><a href="404.html">404 Page</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="Contact.html">Help Center</a></li>
-            <li><a href="wishlist.html">Wishlist</a></li>
-            <li><a href="Settings.html">Settings</a></li>
-            <li><a href="login.html">Login / Register</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
-          <div class="social-links">
-            <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
-            <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
-            <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
-            <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
-          <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
-        </div>
-      </div>
-    </footer>
-
       </main>
     </div>
 
@@ -822,6 +612,11 @@
     <script>
       let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
       let currentFilter = 'All';
+
+      // --- SIDEBAR TOGGLE FUNCTION ---
+      function toggleSidebar() {
+        document.body.classList.toggle('sidebar-open');
+      }
 
       const dashboardTemplate = `
           <div class="bento-grid">
@@ -883,13 +678,17 @@
       `;
 
       function switchView(viewId) {
+        // Auto-close sidebar on mobile when navigating
+        if (window.innerWidth <= 1024) {
+          document.body.classList.remove('sidebar-open');
+        }
+
         const content = document.getElementById("dash-content");
         const title = document.getElementById("dash-title");
         const subtitle = document.getElementById("dash-subtitle");
         const headerSearch = document.getElementById("headerSearch");
         const headerFilters = document.getElementById("headerFilters");
 
-        // UI Reset
         headerSearch.style.setProperty("display", "none", "important");
         headerFilters.style.setProperty("display", "none", "important");
         document.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
@@ -897,9 +696,8 @@
         const activeBtn = document.getElementById("nav-" + viewId);
         if (activeBtn) activeBtn.classList.add("active");
 
-        // Content Switch with Animation trigger
         content.style.animation = 'none';
-        content.offsetHeight; // trigger reflow
+        content.offsetHeight; 
         content.style.animation = null;
 
         if (viewId === "dashboard") {
@@ -910,11 +708,8 @@
         } else if (viewId === "explore") {
           title.innerText = "Explore Programs";
           subtitle.innerText = "Discover new skills and specialized tracks.";
-          
-          // Use CSS empty property reset to rely on media queries for display formatting
           headerSearch.style.setProperty("display", "");
           headerFilters.style.setProperty("display", "");
-          
           content.innerHTML = `<div class="bento-grid" id="trainingGrid"></div>`;
           renderTrainingGrid();
         } else if (viewId === "wishlist") {
@@ -964,8 +759,6 @@
         filtered.forEach((p, index) => {
           const isSaved = wishlist.includes(p.id);
           const isHero = index === 0 && query === ''; 
-          
-          // Image logic mock
           const placeholderImg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" style="background:%23e2e8f0"></svg>`;
           
           grid.innerHTML += `
@@ -1051,6 +844,7 @@
       window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("year").innerText = new Date().getFullYear();
         switchView('dashboard');
+        if (typeof lucide !== "undefined") lucide.createIcons();
       });
     </script>
   </body>
