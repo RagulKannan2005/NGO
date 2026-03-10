@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -13,18 +16,23 @@
           (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
         ) {
           document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
         }
         document.documentElement.dir = dir;
       })();
     </script>
     <title>Settings - NGO Training</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../assets/css/app.css" />
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
       /* ==========================================
          BASE & FALLBACK VARIABLES
@@ -65,8 +73,16 @@
         height: 100vh;
         overflow: hidden;
         background-image:
-          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.08) 0%,
+            transparent 50%
+          );
         background-attachment: fixed;
         color: var(--text);
       }
@@ -93,7 +109,9 @@
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
         z-index: 100;
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
@@ -103,7 +121,9 @@
       html.dark .floating-sidebar {
         background: rgba(15, 23, 42, 0.5);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
 
       .floating-sidebar:hover {
@@ -125,7 +145,9 @@
         transition: 0.4s;
       }
 
-      .floating-sidebar:hover .nav-logo { margin-left: 24px; }
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
 
       .nav-items {
         display: flex;
@@ -187,17 +209,27 @@
         transform: translateX(0);
       }
 
-      .nav-btn:hover { color: var(--text); background: rgba(128, 128, 128, 0.08); }
-      .nav-btn:hover i { transform: scale(1.1); }
-      .nav-btn.active { color: var(--primary); background: rgba(37, 99, 235, 0.1); }
-      html.dark .nav-btn.active { background: rgba(37, 99, 235, 0.15); }
+      .nav-btn:hover {
+        color: var(--text);
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .nav-btn:hover i {
+        transform: scale(1.1);
+      }
+      .nav-btn.active {
+        color: var(--primary);
+        background: rgba(37, 99, 235, 0.1);
+      }
+      html.dark .nav-btn.active {
+        background: rgba(37, 99, 235, 0.15);
+      }
 
       /* ==========================================
          MAIN CONTENT AREA
          ========================================== */
       .dash-main {
         flex: 1;
-        min-width: 0; 
+        min-width: 0;
         display: flex;
         flex-direction: column;
         border-radius: 32px;
@@ -224,10 +256,22 @@
         gap: 15px;
       }
 
-      .greeting h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
-      .greeting p { color: var(--muted); font-size: 0.95rem; }
+      .greeting h2 {
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+      }
+      .greeting p {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
 
-      .top-actions { display: flex; align-items: center; gap: 15px; }
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
 
       .profile-pill {
         display: flex;
@@ -241,8 +285,17 @@
         transition: 0.3s;
       }
 
-      .profile-pill:hover { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05); transform: translateY(-2px); }
-      .avatar { width: 36px; height: 36px; border-radius: 50%; background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff") center/cover; }
+      .profile-pill:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
+          center/cover;
+      }
 
       /* ==========================================
          SETTINGS LAYOUT
@@ -269,10 +322,22 @@
         overflow: hidden;
       }
 
-      .card-header { padding: 30px 40px; border-bottom: 1px solid var(--border); }
-      .card-header h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
-      .card-header p { color: var(--muted); font-size: 0.95rem; }
-      .card-body { padding: 40px; }
+      .card-header {
+        padding: 30px 40px;
+        border-bottom: 1px solid var(--border);
+      }
+      .card-header h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .card-header p {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .card-body {
+        padding: 40px;
+      }
 
       /* FORMS */
       .form-grid {
@@ -281,9 +346,17 @@
         gap: 24px;
       }
 
-      .form-group { display: flex; flex-direction: column; gap: 8px; }
-      .form-group label { font-weight: 600; font-size: 0.95rem; color: var(--text); }
-      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .form-group label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text);
+      }
+
       .form-input {
         width: 100%;
         padding: 14px 20px;
@@ -315,7 +388,8 @@
         height: 100px;
         flex-shrink: 0;
         border-radius: 50%;
-        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff") center/cover;
+        background: url("https://ui-avatars.com/api/?name=Sarah+Jenkins&background=6366f1&color=fff")
+          center/cover;
         border: 4px solid var(--card);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
@@ -330,143 +404,340 @@
         gap: 15px;
       }
 
-      .setting-row:last-child { border-bottom: none; }
-      .setting-info h4 { font-weight: 600; margin-bottom: 4px; }
-      .setting-info p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+      .setting-row:last-child {
+        border-bottom: none;
+      }
+      .setting-info h4 {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .setting-info p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
 
       /* Fallback Buttons */
-      .btn { cursor: pointer; font-family: inherit; font-size: 1rem; font-weight: 600; padding: 12px 24px; transition: 0.3s; border: none; }
-      .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
-      .btn-primary:hover { box-shadow: 0 10px 20px rgba(37,99,235,0.3); transform: translateY(-2px); }
-      .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
-      .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+      .btn {
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 24px;
+        transition: 0.3s;
+        border: none;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+      }
+      .btn-primary:hover {
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--border);
+        color: var(--text);
+      }
+      .btn-outline:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
 
       /* Hide native checkbox */
-      .switch-input { display: none; }
+      .switch-input {
+        display: none;
+      }
 
       /* Basic fallback for 3D switch if CSS missing */
       .switch-3d-cyan {
-        width: 50px; height: 26px; background: var(--border); border-radius: 50px; position: relative; cursor: pointer;
+        width: 50px;
+        height: 26px;
+        background: var(--border);
+        border-radius: 50px;
+        position: relative;
+        cursor: pointer;
       }
-      .switch-3d-cyan input:checked + .switch-track { background: var(--primary); }
-      .switch-track { width: 100%; height: 100%; border-radius: 50px; transition: 0.3s; }
-      .switch-knob { width: 22px; height: 22px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; }
-      .switch-3d-cyan input:checked + .switch-track .switch-knob { transform: translateX(24px); }
-      .cube { display: none; } 
+      .switch-3d-cyan input:checked + .switch-track {
+        background: var(--primary);
+      }
+      .switch-track {
+        width: 100%;
+        height: 100%;
+        border-radius: 50px;
+        transition: 0.3s;
+      }
+      .switch-knob {
+        width: 22px;
+        height: 22px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: 0.3s;
+      }
+      .switch-3d-cyan input:checked + .switch-track .switch-knob {
+        transform: translateX(24px);
+      }
 
-      /* Theme Toggle Fallbacks */
-      .theme-toggle {
-        display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
-        background: var(--card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+      /* ==========================================
+         SETTINGS NOTIFICATION TOGGLES (Check/X)
+         ========================================== */
+      .setting-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
       }
-      .icon-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-      html.dark .moon-icon { display: none; }
-      html:not(.dark) .sun-icon { display: none; }
+
+      /* Hide icons based on checkbox state */
+      .switch-input:not(:checked) + .icon-wrapper .check-icon {
+        display: none;
+      }
+      .switch-input:checked + .icon-wrapper .x-icon {
+        display: none;
+      }
+
+      /* Icon Colors */
+      .switch-input:checked + .icon-wrapper .check-icon {
+        color: var(--primary);
+      }
+      .switch-input:not(:checked) + .icon-wrapper .x-icon {
+        color: var(--muted);
+      }
 
       /* ==========================================
          FOOTER STYLES
          ========================================== */
-      .footer { background: var(--card); border: 1px solid var(--border); border-radius: 32px; padding: 40px; margin-top: 20px; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 15px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
-      .footer-col ul li { margin-bottom: 10px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.2s; font-size: 0.95rem; }
-      .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 10px; }
-      .social-links a { width: 36px; height: 36px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
-      .social-links a:hover { background: var(--primary); color: white; border-color: var(--primary); }
-      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 32px;
+        padding: 40px;
+        margin-top: 20px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-col ul li {
+        margin-bottom: 10px;
+      }
+      .footer-col ul li a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: 0.2s;
+        font-size: 0.95rem;
+      }
+      .footer-col ul li a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 10px;
+      }
+      .social-links a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
       /* ==========================================
-         RESPONSIVE MEDIA QUERIES (MOBILE BOTTOM BAR)
+         RESPONSIVE MEDIA QUERIES
          ========================================== */
       @media (max-width: 1024px) {
-        .dash-wrapper { padding: 16px; gap: 16px; }
-        .bento-scroll { padding: 20px; }
-        .card-header { padding: 20px 30px; }
-        .card-body { padding: 30px; }
+        .dash-wrapper {
+          padding: 16px;
+          gap: 16px;
+        }
+        .bento-scroll {
+          padding: 20px;
+        }
+        .card-header {
+          padding: 20px 30px;
+        }
+        .card-body {
+          padding: 30px;
+        }
       }
 
       @media (max-width: 768px) {
         /* Dashboard Layout shifts to Vertical */
-        .dash-wrapper { flex-direction: column; padding: 12px; gap: 12px; }
-        
-        /* 1. Main content goes to top */
-        .dash-main { order: 1; border-radius: 24px; min-height: 0; }
-        
-        /* 2. Sidebar goes to bottom, styled as an app dock */
-        .floating-sidebar {
-          order: 2; 
-          width: 100%; 
-          height: auto; 
-          flex-direction: row; 
+        .dash-wrapper {
+          flex-direction: column;
           padding: 12px;
-          border-radius: 24px; 
-          overflow-x: auto; 
+          gap: 12px;
+        }
+
+        .dash-main {
+          order: 1;
+          border-radius: 24px;
+          min-height: 0;
+        }
+
+        .floating-sidebar {
+          order: 2;
+          width: 100%;
+          height: auto;
+          flex-direction: row;
+          padding: 12px;
+          border-radius: 24px;
+          overflow-x: auto;
           justify-content: flex-start;
           align-items: center;
-          /* Hide scrollbar for clean dock look */
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
-        
-        /* Webkit specific scrollbar hiding */
-        .floating-sidebar::-webkit-scrollbar { display: none; }
-        
-        .floating-sidebar:hover { width: 100%; align-items: center; }
-        
-        /* Hide Logo on mobile */
-        .nav-logo { display: none; }
-        
-        /* Arrange buttons horizontally */
-        .nav-items { flex-direction: row; padding: 0; gap: 12px; width: max-content; }
-        
-        /* Make buttons square/icons only */
-        .nav-btn { padding: 12px; border-radius: 16px; justify-content: center; }
-        .nav-text { display: none; /* Hide text */ }
-        
-        /* Readjust top header */
-        .top-nav { padding: 20px; }
-        
-        /* Settings Forms */
-        .form-grid { grid-template-columns: 1fr; gap: 16px; }
-        .avatar-upload { flex-direction: column; text-align: center; gap: 15px; }
-        .setting-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-        
-        /* Footer */
-        .footer { padding: 30px 20px; border-radius: 24px; }
-        .footer-bottom { flex-direction: column; text-align: center; }
-        .footer-legal a { margin: 0 10px !important; }
+
+        .floating-sidebar::-webkit-scrollbar {
+          display: none;
+        }
+        .floating-sidebar:hover {
+          width: 100%;
+          align-items: center;
+        }
+        .nav-logo {
+          display: none;
+        }
+        .nav-items {
+          flex-direction: row;
+          padding: 0;
+          gap: 12px;
+          width: max-content;
+        }
+        .nav-btn {
+          padding: 12px;
+          border-radius: 16px;
+          justify-content: center;
+        }
+        .nav-text {
+          display: none;
+        }
+
+        .top-nav {
+          padding: 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .avatar-upload {
+          flex-direction: column;
+          text-align: center;
+          gap: 15px;
+        }
+        .setting-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .footer {
+          padding: 30px 20px;
+          border-radius: 24px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-legal a {
+          margin: 0 10px !important;
+        }
       }
 
       @media (max-width: 480px) {
-        /* Compress Header on very small phones */
-        .top-actions { gap: 8px; }
-        #dirToggle span { display: none; } /* Hide 'LTR' text */
-        .profile-pill span { display: none; } /* Hide user name */
-        .profile-pill { padding: 4px; }
-        .avatar { width: 32px; height: 32px; }
-        
-        .card-header { padding: 20px; }
-        .card-body { padding: 20px; }
-        .bento-scroll { padding: 10px; }
-        .footer-grid { grid-template-columns: 1fr; text-align: center; }
-        .social-links { justify-content: center; }
+        .top-actions {
+          gap: 8px;
+        }
+        #dirToggle span {
+          display: none;
+        }
+        .profile-pill span {
+          display: none;
+        }
+        .profile-pill {
+          padding: 4px;
+        }
+        .avatar {
+          width: 32px;
+          height: 32px;
+        }
+
+        .card-header {
+          padding: 20px;
+        }
+        .card-body {
+          padding: 20px;
+        }
+        .bento-scroll {
+          padding: 10px;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .social-links {
+          justify-content: center;
+        }
       }
     </style>
   </head>
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
     </div>
 
     <div class="dash-wrapper">
-      
-      <!-- FLOATING SIDEBAR (Moves to bottom on mobile) -->
+      <!-- FLOATING SIDEBAR -->
       <aside class="floating-sidebar">
         <div class="nav-logo"><i data-lucide="shield"></i></div>
         <div class="nav-items">
@@ -510,7 +781,11 @@
             <span class="nav-text">Help & Support</span>
           </a>
           <div style="flex: 1"></div>
-          <a href="../index.html" class="nav-btn" style="color: var(--admin-danger); margin-top: auto">
+          <a
+            href="../index.html"
+            class="nav-btn"
+            style="color: var(--admin-danger); margin-top: auto"
+          >
             <div class="icon-box"><i data-lucide="log-out"></i></div>
             <span class="nav-text">Logout</span>
           </a>
@@ -521,17 +796,33 @@
       <main class="dash-main">
         <header class="top-nav">
           <div class="greeting">
-            <h2 onclick="window.location.href='../index.html'">Account Settings</h2>
+            <h2 onclick="window.location.href = '../index.html'">
+              Account Settings
+            </h2>
             <p>Manage your personal profile and platform preferences.</p>
           </div>
           <div class="top-actions">
             <!-- Dir Toggle -->
-            <button id="dirToggle" class="btn" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600;">
-              <i data-lucide="languages" style="width: 18px;"></i>
+            <button
+              id="dirToggle"
+              class="btn"
+              style="
+                background: var(--card);
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 8px 12px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+              "
+            >
+              <i data-lucide="languages" style="width: 18px"></i>
               <span>LTR</span>
             </button>
-            
-            <!-- Theme Toggle -->
+
+            <!-- Theme Toggle (Only Sun and Moon icons here) -->
             <label class="theme-toggle">
               <input type="checkbox" class="switch-input" id="themeSwitch" />
               <div class="icon-wrapper">
@@ -539,33 +830,45 @@
                 <i data-lucide="moon" class="moon-icon"></i>
               </div>
             </label>
-            
+
             <!-- Profile -->
             <div class="profile-pill">
               <div class="avatar"></div>
-              <span style="font-weight: 600; font-size: 0.95rem">Sarah Jenkins</span>
-              <i data-lucide="chevron-down" style="width: 18px; color: var(--muted); margin-right: 4px;"></i>
+              <span style="font-weight: 600; font-size: 0.95rem"
+                >Sarah Jenkins</span
+              >
+              <i
+                data-lucide="chevron-down"
+                style="width: 18px; color: var(--muted); margin-right: 4px"
+              ></i>
             </div>
           </div>
         </header>
 
         <div class="bento-scroll">
           <div class="settings-container">
-            
             <!-- PROFILE SETTINGS -->
             <div class="settings-card">
               <div class="card-header">
                 <h3>Public Profile</h3>
-                <p>This information will be displayed publicly on community forums.</p>
+                <p>
+                  This information will be displayed publicly on community
+                  forums.
+                </p>
               </div>
               <div class="card-body">
                 <div class="avatar-upload">
                   <div class="avatar-preview"></div>
                   <div>
-                    <button class="btn btn-primary" style="border-radius: 12px; margin-bottom: 10px">
+                    <button
+                      class="btn btn-primary"
+                      style="border-radius: 12px; margin-bottom: 10px"
+                    >
                       Upload New Avatar
                     </button>
-                    <p style="color: var(--muted); font-size: 0.85rem">JPG, GIF or PNG. Max size of 800K</p>
+                    <p style="color: var(--muted); font-size: 0.85rem">
+                      JPG, GIF or PNG. Max size of 800K
+                    </p>
                   </div>
                 </div>
 
@@ -580,15 +883,26 @@
                   </div>
                   <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" class="form-input" value="sarah.jenkins@example-ngo.org" />
+                    <input
+                      type="email"
+                      class="form-input"
+                      value="sarah.jenkins@example-ngo.org"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Affiliated NGO</label>
-                    <input type="text" class="form-input" value="Global Peace Alliance" />
+                    <input
+                      type="text"
+                      class="form-input"
+                      value="Global Peace Alliance"
+                    />
                   </div>
                 </div>
 
-                <button class="btn btn-primary" style="margin-top: 30px; border-radius: 12px; width: 100%">
+                <button
+                  class="btn btn-primary"
+                  style="margin-top: 30px; border-radius: 12px; width: 100%"
+                >
                   Save Profile Changes
                 </button>
               </div>
@@ -601,34 +915,41 @@
                 <p>Manage how we communicate training updates to you.</p>
               </div>
               <div class="card-body">
+                <!-- NOTIFICATION 1: Custom Check/X Toggle -->
                 <div class="setting-row">
                   <div class="setting-info">
                     <h4>New Course Announcements</h4>
-                    <p>Receive emails when new NGO training tracks are added.</p>
+                    <p>
+                      Receive emails when new NGO training tracks are added.
+                    </p>
                   </div>
-                  <label class="theme-toggle">
+                  <label class="setting-toggle">
                     <input type="checkbox" class="switch-input" checked />
                     <div class="icon-wrapper">
-                      <i data-lucide="check" class="sun-icon"></i>
-                      <i data-lucide="x" class="moon-icon"></i>
+                      <i data-lucide="check" class="check-icon"></i>
+                      <i data-lucide="x" class="x-icon"></i>
                     </div>
                   </label>
                 </div>
 
+                <!-- NOTIFICATION 2: Custom Check/X Toggle -->
                 <div class="setting-row">
                   <div class="setting-info">
                     <h4>Forum Mentions</h4>
-                    <p>Get notified when someone replies to your community post.</p>
+                    <p>
+                      Get notified when someone replies to your community post.
+                    </p>
                   </div>
-                  <label class="theme-toggle">
+                  <label class="setting-toggle">
                     <input type="checkbox" class="switch-input" checked />
                     <div class="icon-wrapper">
-                      <i data-lucide="check" class="sun-icon"></i>
-                      <i data-lucide="x" class="moon-icon"></i>
+                      <i data-lucide="check" class="check-icon"></i>
+                      <i data-lucide="x" class="x-icon"></i>
                     </div>
                   </label>
                 </div>
 
+                <!-- NOTIFICATION 3: Standard sliding switch toggle -->
                 <div class="setting-row">
                   <div class="setting-info">
                     <h4>Weekly Progress Reports</h4>
@@ -654,25 +975,42 @@
                 <div class="form-grid">
                   <div class="form-group">
                     <label>Current Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" />
+                    <input
+                      type="password"
+                      class="form-input"
+                      placeholder="••••••••"
+                    />
                   </div>
-                  <div class="form-group" style="display: none; /* Spacer for desktop grid */"></div>
-                  
+                  <div
+                    class="form-group"
+                    style="display: none; /* Spacer for desktop grid */"
+                  ></div>
+
                   <div class="form-group">
                     <label>New Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" />
+                    <input
+                      type="password"
+                      class="form-input"
+                      placeholder="••••••••"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Confirm New Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" />
+                    <input
+                      type="password"
+                      class="form-input"
+                      placeholder="••••••••"
+                    />
                   </div>
                 </div>
-                <button class="btn btn-outline" style="margin-top: 30px; border-radius: 12px; width: 100%;">
+                <button
+                  class="btn btn-outline"
+                  style="margin-top: 30px; border-radius: 12px; width: 100%"
+                >
                   Update Password
                 </button>
               </div>
-            </div> 
-
+            </div>
           </div>
           <!-- END SETTINGS CONTAINER -->
 
@@ -680,9 +1018,20 @@
           <footer class="footer">
             <div class="footer-grid">
               <div class="footer-col">
-                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
+                <h4
+                  style="
+                    color: var(--primary);
+                    font-size: 1.5rem;
+                    margin-bottom: 1rem;
+                    font-family: &quot;Outfit&quot;, sans-serif;
+                  "
+                >
+                  🌍 NGO Training
+                </h4>
                 <p>
-                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+                  Empowering individuals and organizations with conflict
+                  resolution skills for a more peaceful world. Our platform
+                  provides high-quality, accessible training for everyone.
                 </p>
               </div>
               <div class="footer-col">
@@ -704,24 +1053,50 @@
               </div>
               <div class="footer-col">
                 <h4>Follow Us</h4>
-                <p style="margin-bottom: 1.5rem;">Join our community on social media to stay updated.</p>
+                <p style="margin-bottom: 1.5rem">
+                  Join our community on social media to stay updated.
+                </p>
                 <div class="social-links">
-                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="facebook"></i
+                  ></a>
                   <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
-                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
-                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="instagram"></i
+                  ></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="linkedin"></i
+                  ></a>
                 </div>
               </div>
             </div>
             <div class="footer-bottom">
-              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <p>
+                &copy; <span id="year">2026</span> NGO Training Platform. All
+                rights reserved.
+              </p>
               <div class="footer-legal">
-                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Privacy Policy</a>
-                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+                <a
+                  href="javascript:void(0)"
+                  style="
+                    color: var(--muted);
+                    text-decoration: none;
+                    margin-left: 20px;
+                  "
+                  >Privacy Policy</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  style="
+                    color: var(--muted);
+                    text-decoration: none;
+                    margin-left: 20px;
+                  "
+                  >Terms of Service</a
+                >
               </div>
             </div>
           </footer>
-
         </div>
       </main>
     </div>
@@ -729,31 +1104,14 @@
     <script src="../assets/js/theme.js"></script>
     <script>
       // Initialize Lucide Icons
-      if (typeof lucide !== 'undefined') {
+      if (typeof lucide !== "undefined") {
         lucide.createIcons();
       }
-      
+
       // Auto-update Footer Year
       const yearSpan = document.getElementById("year");
       if (yearSpan) {
         yearSpan.innerText = new Date().getFullYear();
-      }
-
-      // Theme Switcher Logic fallback (if theme.js is missing)
-      const themeSwitch = document.getElementById('themeSwitch');
-      if(themeSwitch) {
-        // Match switch state to current theme
-        themeSwitch.checked = document.documentElement.classList.contains('dark');
-        
-        themeSwitch.addEventListener('change', (e) => {
-          if(e.target.checked) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-          }
-        });
       }
     </script>
   </body>

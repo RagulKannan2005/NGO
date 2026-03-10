@@ -6,6 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
+
+    <!-- Theme Initialization Script -->
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -21,17 +23,22 @@
         document.documentElement.dir = dir;
       })();
     </script>
-    <title>Contact Us | NGO Training</title>
+    <title>About Us | NGO Training</title>
 
+    <!-- Fonts & Global CSS -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-      /* --- BASE & VARIABLES --- */
+      /* ==========================================
+         BASE & VARIABLES
+         ========================================== */
       :root {
         --primary: #2563eb;
         --secondary: #0ea5e9;
@@ -58,7 +65,7 @@
 
       body {
         font-family: "Poppins", sans-serif;
-        background: var(--bg);
+        background-color: var(--bg);
         color: var(--text);
         overflow-x: hidden;
       }
@@ -70,8 +77,28 @@
         width: 100%;
       }
 
+      /* Utility */
+      .text-gradient {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .img-fluid {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Navbar Spacer */
+      .pt-navbar {
+        padding-top: 120px;
+      }
+
       /* =========================================
-         REFERENCE NAVBAR STYLES
+         RESPONSIVE NAVBAR STYLES
          ========================================= */
       .btn-primary {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -184,10 +211,6 @@
         color: var(--text);
       }
 
-      .theme-toggle input {
-        display: none;
-      }
-
       /* DROPDOWN MENU */
       .dropdown {
         position: relative;
@@ -298,344 +321,201 @@
         }
       }
 
-      /* =========================================
-         CONTACT PAGE CONTENT STYLES
-         ========================================= */
-
-      /* --- CONTACT HERO --- */
-      .contact-hero {
-        padding: clamp(140px, 15vw, 180px) 1.5rem clamp(60px, 10vw, 80px);
-        text-align: center;
-        background:
-          radial-gradient(
-            circle at 50% 0%,
-            rgba(37, 99, 235, 0.08),
-            transparent 50%
-          ),
-          var(--bg);
+      /* ==========================================
+         ABOUT PAGE SECTIONS
+         ========================================== */
+      /* HERO SECTION */
+      .hero-section {
+        padding: 4rem 0 6rem;
+        position: relative;
+        overflow: hidden;
       }
-
-      .contact-hero h1 {
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .hero-content h1 {
         font-family: "Outfit", sans-serif;
         font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
         font-weight: 800;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        line-height: 1.2;
       }
-
-      .contact-hero p {
-        font-size: clamp(1rem, 2vw, 1.2rem);
+      .hero-content p {
+        font-size: 1.1rem;
         color: var(--muted);
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
-      }
-
-      /* --- MAIN GRID (INFO + FORM) --- */
-      .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.5fr;
-        gap: clamp(2rem, 5vw, 4rem);
-        max-width: 1200px;
-        margin: 0 auto clamp(60px, 10vw, 100px);
-        padding: 0 1.5rem;
-        align-items: start;
-      }
-
-      /* Left Side - Info */
-      .info-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: clamp(1.5rem, 3vw, 2.5rem);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.02);
+        line-height: 1.7;
         margin-bottom: 2rem;
       }
+      .hero-img-wrapper {
+        position: relative;
+        height: 500px;
+        border-radius: 24px;
+        overflow: hidden;
+      }
 
-      .info-card h3 {
-        font-family: "Outfit", sans-serif;
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-        display: flex;
+      /* MISSION & VISION SECTIONS */
+      .split-section {
+        padding: 5rem 0;
+      }
+      .split-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
         align-items: center;
-        gap: 0.75rem;
       }
-
-      .contact-method {
-        display: flex;
-        gap: 1rem;
+      .split-grid.reverse .split-text {
+        order: 2;
+      }
+      .split-grid.reverse .split-img {
+        order: 1;
+      }
+      .split-text h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.5rem;
         margin-bottom: 1.5rem;
-        align-items: flex-start;
       }
-      .contact-method:last-child {
-        margin-bottom: 0;
+      .split-text p {
+        font-size: 1.1rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .split-img {
+        height: 400px;
       }
 
-      .method-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
+      /* WHAT WE DO SECTION */
+      .what-we-do {
+        padding: 6rem 0;
+        background: rgba(128, 128, 128, 0.03);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .section-header {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+      }
+      .section-header h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .section-header p {
+        color: var(--muted);
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      .service-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+        transition: 0.3s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        border-color: var(--primary);
+      }
+      .service-icon {
+        width: 60px;
+        height: 60px;
         background: rgba(37, 99, 235, 0.1);
         color: var(--primary);
+        border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
+        margin: 0 auto 1.5rem;
       }
-
-      .method-details h4 {
-        font-size: 0.9rem;
-        color: var(--muted);
-        font-weight: 500;
-        margin-bottom: 0.25rem;
+      .service-icon i {
+        width: 28px;
+        height: 28px;
       }
-
-      .method-details p {
-        font-weight: 600;
-        color: var(--text);
-        word-break: break-word;
-      }
-
-      .map-wrapper {
-        border-radius: 24px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        height: 250px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.02);
-      }
-      .map-wrapper iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      /* Right Side - Form */
-      .form-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: clamp(2rem, 4vw, 3.5rem);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
-      }
-
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-      }
-
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .form-group.full {
-        grid-column: 1 / -1;
-      }
-
-      .form-group label {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text);
-      }
-
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-        width: 100%;
-        padding: 1rem 1.25rem;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        background: var(--bg);
-        color: var(--text);
-        font-family: inherit;
-        font-size: 0.95rem;
-        transition: 0.3s;
-      }
-
-      .form-group input:focus,
-      .form-group select:focus,
-      .form-group textarea:focus {
-        border-color: var(--primary);
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-      }
-
-      .form-group textarea {
-        min-height: 140px;
-        resize: vertical;
-      }
-
-      .btn-submit {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        font-weight: 700;
-        font-size: 1rem;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-        margin-top: 1rem;
-        font-family: inherit;
-      }
-      .btn-submit:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-      }
-
-      /* --- SUPPORT SECTIONS (FAQ & Shortcuts) --- */
-      .support-section {
-        background: rgba(128, 128, 128, 0.02);
-        border-top: 1px solid var(--border);
-        padding: clamp(60px, 8vw, 100px) 1.5rem;
-      }
-
-      .support-grid {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1.5fr 1fr;
-        gap: clamp(3rem, 6vw, 6rem);
-      }
-
-      .section-label {
-        color: var(--primary);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-size: 0.8rem;
+      .service-card h3 {
+        font-size: 1.2rem;
         margin-bottom: 1rem;
-        display: block;
       }
 
-      .support-grid h2 {
+      /* IMPACT SECTION */
+      .impact-section {
+        padding: 6rem 0;
+      }
+      .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        text-align: center;
+      }
+      .impact-card {
+        padding: 3rem 2rem;
+        background: linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.05),
+          rgba(124, 58, 237, 0.05)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+      }
+      .impact-number {
         font-family: "Outfit", sans-serif;
-        font-size: clamp(1.8rem, 3vw, 2.2rem);
-        margin-bottom: 2rem;
-      }
-
-      .faq-item {
-        margin-bottom: 2rem;
-      }
-      .faq-item h4 {
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-size: 3.5rem;
+        font-weight: 700;
         margin-bottom: 0.5rem;
       }
-      .faq-item p {
+      .impact-text {
+        font-size: 1.1rem;
         color: var(--muted);
-        line-height: 1.6;
-        font-size: 0.95rem;
+        font-weight: 500;
       }
 
-      .shortcut-card {
+      /* TEAM SECTION */
+      .team-section {
+        padding: 5rem 0 8rem;
+      }
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2.5rem;
+      }
+      .team-card {
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: 20px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+        overflow: hidden;
         transition: 0.3s;
       }
-      .shortcut-card:hover {
-        transform: translateX(8px);
-        border-color: var(--primary);
+      .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
       }
-      .shortcut-card h4 {
-        font-size: 1rem;
-        margin-bottom: 0.25rem;
-      }
-      .shortcut-card p {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin-bottom: 1rem;
-      }
-      .shortcut-link {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      /* --- NEWSLETTER SECTION --- */
-      .newsletter-section {
-        padding: clamp(60px, 8vw, 100px) 0;
-        background: rgba(128, 128, 128, 0.02);
-        border-top: 1px solid var(--border);
-      }
-
-      .newsletter-box {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: clamp(2rem, 5vw, 4rem);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-        transition: 0.3s;
-      }
-      .newsletter-box:hover {
-        border-color: var(--primary);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      }
-      .newsletter-content h2 {
-        font-family: "Outfit", sans-serif;
-        font-size: clamp(1.5rem, 3vw, 2rem);
-        margin-bottom: 0.5rem;
-      }
-      .newsletter-content p {
-        color: var(--muted);
-        font-size: clamp(0.95rem, 1.5vw, 1rem);
-        max-width: 500px;
-        line-height: 1.6;
-      }
-      .newsletter-form {
-        display: flex;
-        gap: 12px;
+      .team-img {
         width: 100%;
-        max-width: 480px;
+        height: 300px;
+        object-fit: cover;
       }
-      .newsletter-form input {
-        flex: 1;
-        padding: 1rem 1.5rem;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        background: var(--bg);
-        color: var(--text);
-        font-size: 1rem;
-        outline: none;
-        transition: 0.3s;
+      .team-info {
+        padding: 1.5rem;
+        text-align: center;
       }
-      .newsletter-form input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      .team-info h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.2rem;
       }
-      .newsletter-form button {
-        padding: 1rem 2rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        border-radius: 12px;
-        font-weight: 700;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-        font-family: "Poppins", sans-serif;
-      }
-      .newsletter-form button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+      .team-info p {
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 500;
       }
 
-      /* --- FOOTER --- */
+      /* GLOBAL FOOTER */
       .footer {
         background: var(--card);
         border-top: 1px solid var(--border);
@@ -712,44 +592,33 @@
         color: var(--primary);
       }
 
-      /* --- RESPONSIVE CONTENT QUERIES --- */
+      /* Content Responsive Adjustments */
       @media (max-width: 1024px) {
-        .contact-grid {
-          grid-template-columns: 1fr;
-        }
-        .support-grid {
-          grid-template-columns: 1fr;
-          gap: 3rem;
-        }
         .footer-grid {
           grid-template-columns: 1fr 1fr;
         }
       }
-
-      @media (max-width: 768px) {
-        .form-grid {
+      @media (max-width: 900px) {
+        .hero-grid,
+        .split-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .split-grid.reverse .split-text {
+          order: 1;
+        }
+        .split-grid.reverse .split-img {
+          order: 2;
+        }
+        .hero-img-wrapper,
+        .split-img {
+          height: 350px;
+        }
+        .impact-grid {
           grid-template-columns: 1fr;
         }
-        .form-card {
-          padding: 1.5rem;
-        }
-        .info-card {
-          padding: 1.5rem;
-        }
-
-        .newsletter-box {
-          flex-direction: column;
-          text-align: center;
-          padding: 2.5rem 1.5rem;
-        }
-        .newsletter-form {
-          flex-direction: column;
-          max-width: 100%;
-        }
-        .newsletter-form button {
-          width: 100%;
-        }
-
+      }
+      @media (max-width: 768px) {
         .footer-grid {
           grid-template-columns: 1fr;
           gap: 2rem;
@@ -770,7 +639,6 @@
       }
     </style>
   </head>
-
   <body>
     <!-- PAGE LOADER -->
     <div class="cssloader" id="page-loader" style="display: none">
@@ -779,7 +647,7 @@
       <p class="text">Please Wait</p>
     </div>
 
-    <!-- Navigation -->
+    <!-- RESPONSIVE NAVBAR -->
     <nav class="navbar">
       <div class="navbar-container">
         <a href="../index.html" class="navbar-logo">🌍 NGO</a>
@@ -792,13 +660,15 @@
               <a href="Home2.html">Home 2</a>
             </div>
           </li>
+          <!-- Highlighted Active Link for About Us -->
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
-          <li><a href="About_us.html" class="navbar-link">About Us</a></li>
-          <!-- Highlighted Active Link for Contact Page -->
-          <li><a href="Contact.html" class="navbar-link active">Contact</a></li>
+          <li>
+            <a href="About_us.html" class="navbar-link active">About Us</a>
+          </li>
+          <li><a href="Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
             <div class="dropdown-menu">
@@ -836,6 +706,7 @@
             <span>LTR</span>
           </button>
 
+          <!-- Theme Toggle -->
           <label
             class="theme-toggle"
             onclick="document.documentElement.classList.toggle('dark')"
@@ -843,6 +714,7 @@
             <i data-lucide="moon" style="width: 18px"></i>
           </label>
 
+          <!-- Mobile Menu Button -->
           <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i data-lucide="menu"></i>
           </button>
@@ -850,210 +722,231 @@
       </div>
     </nav>
 
-    <!-- Header -->
-    <header class="contact-hero">
-      <span class="section-label">Get in Touch</span>
-      <h1>Let's build something meaningful together</h1>
-      <p>
-        Whether you're looking for expert-led training paths for your team or
-        have questions about our global initiatives, we're here to help.
-      </p>
-    </header>
-
-    <!-- Main Grid (Info + Form) -->
-    <section class="contact-grid">
-      <!-- Info Column -->
-      <aside>
-        <div class="info-card">
-          <h3><i data-lucide="mail"></i> Contact Info</h3>
-          <div class="contact-method">
-            <div class="method-icon"><i data-lucide="help-circle"></i></div>
-            <div class="method-details">
-              <h4>General Support</h4>
-              <p>support@ngotraining.org</p>
-            </div>
-          </div>
-          <div class="contact-method">
-            <div class="method-icon"><i data-lucide="award"></i></div>
-            <div class="method-details">
-              <h4>Partnerships</h4>
-              <p>partners@ngotraining.org</p>
-            </div>
-          </div>
-          <div class="contact-method">
-            <div class="method-icon"><i data-lucide="clock"></i></div>
-            <div class="method-details">
-              <h4>Office Hours</h4>
-              <p>Mon–Fri, 09:00–18:00 (CET)</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-card" style="padding: 1.5rem">
-          <h3 style="margin-bottom: 1rem">
-            <i data-lucide="globe"></i> Our Presence
-          </h3>
-          <div class="map-wrapper">
-            <iframe
-              src="https://maps.google.com/maps?q=Geneva,%20Switzerland&t=&z=12&ie=UTF8&iwloc=&output=embed"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Global presence map"
-            >
-            </iframe>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Form Column -->
-      <div class="form-card">
-        <form
-          onsubmit="
-            event.preventDefault();
-            alert(
-              'Message sent successfully! Our team will contact you shortly.',
-            );
-          "
-        >
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">Work Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="email@organization.org"
-                required
-              />
-            </div>
-            <div class="form-group full">
-              <label for="org">Organization</label>
-              <input type="text" id="org" placeholder="NGO / Network name" />
-            </div>
-            <div class="form-group full">
-              <label for="topic">Topic</label>
-              <select id="topic">
-                <option>Training Programs</option>
-                <option>Partnerships</option>
-                <option>Pricing & Cohorts</option>
-                <option>Technical Support</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group full">
-              <label for="message">How can we help?</label>
-              <textarea
-                id="message"
-                placeholder="Tell us more about your needs..."
-                required
-              ></textarea>
-            </div>
-          </div>
-          <button type="submit" class="btn-submit">Send Message</button>
-          <p
-            style="
-              font-size: 0.85rem;
-              color: var(--muted);
-              margin-top: 1.5rem;
-              text-align: center;
-            "
-          >
-            We typically reply within 24–48 hours. Your data is protected by our
-            privacy policy.
-          </p>
-        </form>
-      </div>
-    </section>
-
-    <!-- Support Sections -->
-    <section class="support-section">
-      <div class="support-grid">
-        <!-- FAQ -->
-        <div>
-          <span class="section-label">FAQ</span>
-          <h2>Common Questions</h2>
-
-          <div class="faq-item">
-            <h4>Can you onboard our whole staff at once?</h4>
-            <p>
-              Yes. We specialize in coordinated cohort-based onboarding for
-              large-scale NGO teams across multiple regions.
-            </p>
-          </div>
-          <div class="faq-item">
-            <h4>Do you offer custom training pathways?</h4>
-            <p>
-              Our curriculum experts can combine modules from various programs
-              to perfectly match your organization's context.
-            </p>
-          </div>
-          <div class="faq-item">
-            <h4>Will our team receive certificates?</h4>
-            <p>
-              Learners who successfully complete their assigned training tracks
-              will receive globally recognized digital certificates.
-            </p>
-          </div>
-        </div>
-
-        <!-- Shortcuts -->
-        <aside>
-          <span class="section-label">Shortcuts</span>
-          <h2>Quick Links</h2>
-
-          <div class="shortcut-card">
-            <h4>Explore Tracks</h4>
-            <p>Browse every training program we offer.</p>
-            <a href="TrainingPage.html" class="shortcut-link"
-              >Go to trainings <i data-lucide="arrow-right"></i
-            ></a>
-          </div>
-          <div class="shortcut-card">
-            <h4>Impact Map</h4>
-            <p>See the real-world results of our work.</p>
-            <a href="Impact.html" class="shortcut-link"
-              >View impact <i data-lucide="arrow-right"></i
-            ></a>
-          </div>
-          <div class="shortcut-card">
-            <h4>Forum</h4>
-            <p>Connect with other NGO leaders.</p>
-            <a href="Community.html" class="shortcut-link"
-              >Visit community <i data-lucide="arrow-right"></i
-            ></a>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- NEWSLETTER SECTION -->
-    <section class="newsletter-section">
+    <!-- 1. HERO SECTION -->
+    <section class="hero-section pt-navbar">
       <div class="container">
-        <div class="newsletter-box">
-          <div class="newsletter-content">
-            <h2>Stay up to date</h2>
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h1>
+              Empowering People. <br /><span class="text-gradient"
+                >Resolving Conflict.</span
+              >
+            </h1>
             <p>
-              Subscribe to our newsletter and get the latest training updates,
-              resources, and community news delivered directly to your inbox.
+              We are dedicated to empowering individuals and organizations with
+              the skills needed to manage and resolve conflicts effectively.
+              Through professional training, workshops, and community programs,
+              we help build peaceful and productive environments.
+            </p>
+            <button
+              class="btn-primary"
+              style="padding: 1rem 2rem; font-size: 1rem"
+            >
+              Discover Our Programs
+            </button>
+          </div>
+          <div class="hero-img-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+              alt="Team Discussion"
+              class="img-fluid"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. OUR MISSION -->
+    <section class="split-section">
+      <div class="container">
+        <div class="split-grid">
+          <div class="split-img">
+            <img
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+              alt="People Shaking Hands"
+              class="img-fluid"
+            />
+          </div>
+          <div class="split-text">
+            <h2 class="text-gradient">Our Mission</h2>
+            <p>
+              Our mission is to promote peaceful communication, strengthen
+              relationships, and provide practical conflict-resolution training
+              that helps individuals and communities grow together. We believe
+              that conflict, when managed well, can be a catalyst for positive
+              change.
             </p>
           </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault()">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              required
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. OUR VISION -->
+    <section class="split-section">
+      <div class="container">
+        <div class="split-grid reverse">
+          <div class="split-text">
+            <h2 class="text-gradient">Our Vision</h2>
+            <p>
+              Our vision is to create a world where conflicts are resolved
+              through understanding, dialogue, and collaboration rather than
+              division. We envision communities and workplaces thriving on
+              mutual respect and active listening.
+            </p>
+          </div>
+          <div class="split-img">
+            <img
+              src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80"
+              alt="Community Gathering"
+              class="img-fluid"
             />
-            <button type="submit">Subscribe</button>
-          </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WHAT WE DO -->
+    <section class="what-we-do">
+      <div class="container">
+        <div class="section-header">
+          <h2>What We Do</h2>
+          <p>
+            We provide a comprehensive suite of resources and programs designed
+            to equip you with the best tools for peace-building and mediation.
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon"><i data-lucide="users"></i></div>
+            <h3>Conflict Resolution Training</h3>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Interactive training sessions designed to teach mediation and
+              de-escalation skills.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i data-lucide="briefcase"></i></div>
+            <h3>Professional Workshops</h3>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Tailored corporate workshops to improve workplace communication
+              and harmony.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i data-lucide="globe"></i></div>
+            <h3>Community Programs</h3>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Local initiatives aimed at fostering dialogue and understanding in
+              diverse neighborhoods.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i data-lucide="book-open"></i></div>
+            <h3>Educational Resources</h3>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Access to a wide library of books, articles, and case studies on
+              peace-building.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i data-lucide="laptop"></i></div>
+            <h3>Online Learning Modules</h3>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Self-paced digital courses available 24/7 for individuals around
+              the globe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. OUR IMPACT -->
+    <section class="impact-section">
+      <div class="container">
+        <div class="section-header" style="margin-bottom: 3rem">
+          <h2>Our Impact</h2>
+          <p>
+            We measure our success by the communities we help build and the
+            individuals we empower.
+          </p>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-number text-gradient">500+</div>
+            <div class="impact-text">Individuals Trained</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-number text-gradient">50+</div>
+            <div class="impact-text">Workshops Conducted</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-number text-gradient">20+</div>
+            <div class="impact-text">Community Programs Organized</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. OUR TEAM -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Meet Our Team</h2>
+          <p>
+            Our team consists of experienced trainers, mediators, and educators
+            dedicated to building stronger communities through conflict
+            resolution education.
+          </p>
+        </div>
+        <div class="team-grid">
+          <!-- Member 1 -->
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
+              alt="Sarah Jenkins"
+              class="team-img"
+            />
+            <div class="team-info">
+              <h4>Sarah Jenkins</h4>
+              <p>Executive Director</p>
+            </div>
+          </div>
+          <!-- Member 2 -->
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"
+              alt="David Chen"
+              class="team-img"
+            />
+            <div class="team-info">
+              <h4>David Chen</h4>
+              <p>Lead Mediator</p>
+            </div>
+          </div>
+          <!-- Member 3 -->
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"
+              alt="Elena Rodriguez"
+              class="team-img"
+            />
+            <div class="team-info">
+              <h4>Elena Rodriguez</h4>
+              <p>Community Outreach Head</p>
+            </div>
+          </div>
+          <!-- Member 4 -->
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80"
+              alt="Michael Brooks"
+              class="team-img"
+            />
+            <div class="team-info">
+              <h4>Michael Brooks</h4>
+              <p>Senior Trainer</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1114,6 +1007,7 @@
       </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="../assets/js/theme.js"></script>
     <script>
       // Initialize Lucide Icons
@@ -1124,7 +1018,7 @@
       // Set copyright year
       document.getElementById("year").innerText = new Date().getFullYear();
 
-      // Exact Mobile Menu Toggle Logic from Reference
+      // Mobile Menu Toggle Logic
       const mobileBtn = document.getElementById("mobileMenuBtn");
       const navMenu = document.querySelector(".navbar-menu");
       const navbar = document.querySelector(".navbar");

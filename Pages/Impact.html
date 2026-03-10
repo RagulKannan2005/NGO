@@ -60,7 +60,8 @@
         overflow-x: hidden;
       }
 
-      img, svg {
+      img,
+      svg {
         max-width: 100%;
       }
 
@@ -106,7 +107,7 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       .navbar {
         position: fixed;
         top: 0;
@@ -118,16 +119,16 @@
         border-bottom: 1px solid var(--border);
         transition: 0.3s;
       }
-      
+
       html.dark .navbar {
         background: rgba(15, 23, 42, 0.8);
       }
-      
+
       .navbar.solid-bg {
         background: var(--card) !important;
         backdrop-filter: none;
       }
-      
+
       .navbar-container {
         display: flex;
         justify-content: space-between;
@@ -136,7 +137,7 @@
         max-width: 1400px;
         margin: 0 auto;
       }
-      
+
       .navbar-logo {
         font-size: 1.4rem;
         font-weight: 800;
@@ -145,7 +146,7 @@
         color: var(--text);
         white-space: nowrap;
       }
-      
+
       .navbar-menu {
         display: flex;
         gap: 2rem;
@@ -154,25 +155,25 @@
         padding: 0;
         align-items: center;
       }
-      
+
       .navbar-link {
         color: var(--muted);
         text-decoration: none;
         font-weight: 500;
         transition: 0.3s;
       }
-      
+
       .navbar-link:hover,
       .navbar-link.active {
         color: var(--primary);
       }
-      
+
       .nav-actions {
         display: flex;
         align-items: center;
         gap: 15px;
       }
-      
+
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -185,7 +186,7 @@
         cursor: pointer;
         color: var(--text);
       }
-      
+
       .theme-toggle input {
         display: none;
       }
@@ -194,7 +195,7 @@
       .dropdown {
         position: relative;
       }
-      
+
       .dropdown-menu {
         position: absolute;
         top: 100%;
@@ -214,14 +215,14 @@
         gap: 5px;
         z-index: 100;
       }
-      
+
       .dropdown:hover .dropdown-menu,
       .dropdown:focus-within .dropdown-menu {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
       }
-      
+
       .dropdown-menu a {
         padding: 10px 15px;
         color: var(--text);
@@ -230,7 +231,7 @@
         font-size: 0.95rem;
         transition: 0.2s;
       }
-      
+
       .dropdown-menu a:hover,
       .dropdown-menu a:focus {
         background: rgba(128, 128, 128, 0.05);
@@ -661,7 +662,7 @@
         background: rgba(128, 128, 128, 0.02);
         border-top: 1px solid var(--border);
       }
-      
+
       .newsletter-box {
         background: var(--card);
         border: 1px solid var(--border);
@@ -751,12 +752,27 @@
         gap: 3rem;
         margin-bottom: 3rem;
       }
-      .footer-col ul { list-style: none; }
-      .footer-col ul li { margin-bottom: 0.75rem; }
-      .footer-col a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
-      .footer-col a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 1rem; }
-      .social-links a { color: var(--text); }
+      .footer-col ul {
+        list-style: none;
+      }
+      .footer-col ul li {
+        margin-bottom: 0.75rem;
+      }
+      .footer-col a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+      .footer-col a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+      .social-links a {
+        color: var(--text);
+      }
       .footer-bottom {
         max-width: 1200px;
         margin: 0 auto;
@@ -800,7 +816,7 @@
         .year-row {
           grid-template-columns: 1fr;
           gap: 0.5rem;
-          background: rgba(0,0,0,0.02);
+          background: rgba(0, 0, 0, 0.02);
           padding: 1rem;
           border-radius: 12px;
         }
@@ -857,7 +873,8 @@
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
-          <li><a href="Impact.html" class="navbar-link active">Impact</a></li>
+          <li><a href="Impact.html" class="navbar-link">Impact</a></li>
+          <li><a href="About_us.html" class="navbar-link">About Us</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
@@ -942,11 +959,7 @@
         </div>
 
         <div class="timeline-box">
-          <h3
-            style="
-              font-family: &quot;Outfit&quot;, sans-serif;
-            "
-          >
+          <h3 style="font-family: &quot;Outfit&quot;, sans-serif">
             Learner Completion Trend
           </h3>
           <div id="growthTimeline">
@@ -1000,10 +1013,17 @@
         <div class="newsletter-box">
           <div class="newsletter-content">
             <h2>Stay up to date</h2>
-            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+            <p>
+              Subscribe to our newsletter and get the latest training updates,
+              resources, and community news delivered directly to your inbox.
+            </p>
           </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault();">
-            <input type="email" placeholder="Enter your email address" required />
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
             <button type="submit">Subscribe</button>
           </form>
         </div>
@@ -1025,14 +1045,14 @@
           >
             🌍 NGO Training
           </h4>
-          <p style="color: var(--muted); line-height: 1.6;">
+          <p style="color: var(--muted); line-height: 1.6">
             Empowering individuals and organizations with conflict resolution
             skills for a more peaceful world. Our platform provides
             high-quality, accessible training for everyone.
           </p>
         </div>
         <div class="footer-col">
-          <h4 style="margin-top:0;">Quick Links</h4>
+          <h4 style="margin-top: 0">Quick Links</h4>
           <ul>
             <li><a href="../index.html">Home</a></li>
             <li><a href="TrainingPage.html">Programs</a></li>
@@ -1043,7 +1063,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4 style="margin-top:0;">Support</h4>
+          <h4 style="margin-top: 0">Support</h4>
           <ul>
             <li><a href="Contact.html">Help Center</a></li>
             <li><a href="wishlist.html">Wishlist</a></li>
@@ -1052,8 +1072,8 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4 style="margin-top:0;">Follow Us</h4>
-          <p style="margin-bottom: 1.5rem; color: var(--muted);">
+          <h4 style="margin-top: 0">Follow Us</h4>
+          <p style="margin-bottom: 1.5rem; color: var(--muted)">
             Join our community on social media to stay updated.
           </p>
           <div class="social-links">
@@ -1065,7 +1085,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="margin: 0;">
+        <p style="margin: 0">
           &copy; <span id="year">2026</span> NGO Training Platform. All rights
           reserved.
         </p>
@@ -1083,36 +1103,87 @@
       document.getElementById("year").innerText = new Date().getFullYear();
 
       // Ensure data variables exist for responsive testing (Mock Fallback if data.js missing)
-      const mockImpactStats = typeof impactStats !== 'undefined' ? impactStats : [
-        { label: "Active Learners", value: "32,450", change: "15%" },
-        { label: "Partner NGOs", value: "480", change: "8%" },
-        { label: "Countries", value: "34", change: "12%" },
-        { label: "Certifications", value: "89,000", change: "20%" },
-        { label: "Course Satisfaction", value: "4.9/5" },
-        { label: "Completion Rate", value: "85%" }
-      ];
+      const mockImpactStats =
+        typeof impactStats !== "undefined"
+          ? impactStats
+          : [
+              { label: "Active Learners", value: "32,450", change: "15%" },
+              { label: "Partner NGOs", value: "480", change: "8%" },
+              { label: "Countries", value: "34", change: "12%" },
+              { label: "Certifications", value: "89,000", change: "20%" },
+              { label: "Course Satisfaction", value: "4.9/5" },
+              { label: "Completion Rate", value: "85%" },
+            ];
 
-      const mockTimeline = typeof impactTimeline !== 'undefined' ? impactTimeline : [
-        { year: 2021, learners: 12000 },
-        { year: 2022, learners: 18500 },
-        { year: 2023, learners: 26000 },
-        { year: 2024, learners: 32450 }
-      ];
+      const mockTimeline =
+        typeof impactTimeline !== "undefined"
+          ? impactTimeline
+          : [
+              { year: 2021, learners: 12000 },
+              { year: 2022, learners: 18500 },
+              { year: 2023, learners: 26000 },
+              { year: 2024, learners: 32450 },
+            ];
 
-      const mockStories = typeof impactStories !== 'undefined' ? impactStories : [
-        { programId: 1, headline: "Resolving water access disputes", summary: "Community leaders utilized our advanced negotiation frameworks to settle a decade-long conflict over local reservoirs.", quote: "The curriculum gave us the exact words we needed.", orgName: "Peace Builders", country: "Kenya" },
-        { programId: 2, headline: "Empowering youth mediators", summary: "A local group deployed teen mediators trained on our platform, successfully de-escalating urban gang tensions.", quote: "Young people are the most effective peacemakers.", orgName: "Youth Front", country: "Colombia" }
-      ];
+      const mockStories =
+        typeof impactStories !== "undefined"
+          ? impactStories
+          : [
+              {
+                programId: 1,
+                headline: "Resolving water access disputes",
+                summary:
+                  "Community leaders utilized our advanced negotiation frameworks to settle a decade-long conflict over local reservoirs.",
+                quote: "The curriculum gave us the exact words we needed.",
+                orgName: "Peace Builders",
+                country: "Kenya",
+              },
+              {
+                programId: 2,
+                headline: "Empowering youth mediators",
+                summary:
+                  "A local group deployed teen mediators trained on our platform, successfully de-escalating urban gang tensions.",
+                quote: "Young people are the most effective peacemakers.",
+                orgName: "Youth Front",
+                country: "Colombia",
+              },
+            ];
 
-      const mockPrograms = typeof programs !== 'undefined' ? programs : [
-        { id: 1, title: "Resource Conflict" }, { id: 2, title: "Youth Leadership" }
-      ];
+      const mockPrograms =
+        typeof programs !== "undefined"
+          ? programs
+          : [
+              { id: 1, title: "Resource Conflict" },
+              { id: 2, title: "Youth Leadership" },
+            ];
 
-      const mockRegions = typeof regionalImpact !== 'undefined' ? regionalImpact : [
-        { region: "Sub-Saharan Africa", ngos: 150, learners: 14500, highlight: "Highest engagement in resource management tracking.", focusAreas: ["Water rights", "Land disputes"] },
-        { region: "Latin America", ngos: 120, learners: 12000, highlight: "Rapid expansion of youth mentorship systems.", focusAreas: ["Youth empowerment", "Urban safety"] },
-        { region: "Southeast Asia", ngos: 80, learners: 5950, highlight: "Strongest growth in crisis response programs.", focusAreas: ["Disaster relief", "Crisis mediation"] }
-      ];
+      const mockRegions =
+        typeof regionalImpact !== "undefined"
+          ? regionalImpact
+          : [
+              {
+                region: "Sub-Saharan Africa",
+                ngos: 150,
+                learners: 14500,
+                highlight:
+                  "Highest engagement in resource management tracking.",
+                focusAreas: ["Water rights", "Land disputes"],
+              },
+              {
+                region: "Latin America",
+                ngos: 120,
+                learners: 12000,
+                highlight: "Rapid expansion of youth mentorship systems.",
+                focusAreas: ["Youth empowerment", "Urban safety"],
+              },
+              {
+                region: "Southeast Asia",
+                ngos: 80,
+                learners: 5950,
+                highlight: "Strongest growth in crisis response programs.",
+                focusAreas: ["Disaster relief", "Crisis mediation"],
+              },
+            ];
 
       // Data Rendering Logic
       const quickKPIs = document.getElementById("quickKPIs");

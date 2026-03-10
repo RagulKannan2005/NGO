@@ -891,7 +891,7 @@
         .newsletter-section {
           padding: 60px 1.5rem;
         }
-        
+
         .cta-card {
           padding: 4rem 1.5rem;
           border-radius: 32px;
@@ -1029,6 +1029,9 @@
             <a href="Pages/Community.html" class="navbar-link">Community</a>
           </li>
           <li><a href="Pages/Impact.html" class="navbar-link">Impact</a></li>
+          <li>
+            <a href="Pages/About_us.html" class="navbar-link">About Us</a>
+          </li>
           <li><a href="Pages/Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
@@ -1067,11 +1070,12 @@
             <span>LTR</span>
           </button>
 
-          <label
-            class="theme-toggle"
-            onclick="document.documentElement.classList.toggle('dark')"
-          >
-            <i data-lucide="moon" style="width: 18px"></i>
+          <label class="theme-toggle">
+            <input type="checkbox" class="switch-input" id="themeSwitch" />
+            <div class="icon-wrapper">
+              <i data-lucide="sun" class="sun-icon"></i>
+              <i data-lucide="moon" class="moon-icon"></i>
+            </div>
           </label>
 
           <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -1503,10 +1507,17 @@
         <div class="newsletter-box animate-on-scroll fade-in-up">
           <div class="newsletter-content">
             <h2>Stay up to date</h2>
-            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+            <p>
+              Subscribe to our newsletter and get the latest training updates,
+              resources, and community news delivered directly to your inbox.
+            </p>
           </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault();">
-            <input type="email" placeholder="Enter your email address" required />
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
             <button type="submit" class="btn-primary">Subscribe</button>
           </form>
         </div>

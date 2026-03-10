@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
 
     <script>
       (function () {
@@ -20,14 +23,14 @@
       })();
     </script>
     <title>Community Hub - NGO Training</title>
-    
+
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
       /* ROOT VARIABLES */
       :root {
@@ -63,8 +66,16 @@
         overflow: hidden;
         margin: 0;
         background-image:
-          radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.08) 0%,
+            transparent 50%
+          );
         background-attachment: fixed;
       }
 
@@ -89,7 +100,9 @@
         flex-direction: column;
         align-items: center;
         padding: 40px 0;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.03),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
         z-index: 100;
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
@@ -97,203 +110,798 @@
       }
       html.dark .floating-sidebar {
         background: rgba(15, 23, 42, 0.5);
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.2),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
-      .floating-sidebar:hover { width: 280px; align-items: flex-start; }
+      .floating-sidebar:hover {
+        width: 280px;
+        align-items: flex-start;
+      }
 
       .nav-logo {
-        width: 48px; height: 48px; border-radius: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex; align-items: center; justify-content: center;
-        color: white; margin-bottom: 40px; flex-shrink: 0; transition: 0.4s;
-        font-weight: 700; font-size: 1.3rem; cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+        transition: 0.4s;
+        font-weight: 700;
+        font-size: 1.3rem;
+        cursor: pointer;
       }
-      .floating-sidebar:hover .nav-logo { margin-left: 24px; }
+      .floating-sidebar:hover .nav-logo {
+        margin-left: 24px;
+      }
 
       .nav-items {
-        display: flex; flex-direction: column; gap: 16px;
-        width: 100%; padding: 0 24px; flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        padding: 0 24px;
+        flex-grow: 1;
       }
 
       .nav-btn {
-        width: 48px; height: 48px; border-radius: 12px; background: transparent;
-        border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-        color: var(--muted); transition: 0.3s; flex-shrink: 0; position: relative;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        transition: 0.3s;
+        flex-shrink: 0;
+        position: relative;
       }
-      .floating-sidebar:hover .nav-btn { width: 100%; justify-content: flex-start; padding-left: 12px; }
-      
-      .nav-btn:hover { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
-      .nav-btn.active { background: rgba(37, 99, 235, 0.15); color: var(--primary); }
+      .floating-sidebar:hover .nav-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 12px;
+      }
 
-      .nav-label { display: none; margin-left: 12px; font-size: 0.95rem; font-weight: 600; white-space: nowrap; }
-      .floating-sidebar:hover .nav-label { display: block; }
-      .nav-spacer { flex-grow: 1; }
+      .nav-btn:hover {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+      }
+      .nav-btn.active {
+        background: rgba(37, 99, 235, 0.15);
+        color: var(--primary);
+      }
+
+      .nav-label {
+        display: none;
+        margin-left: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .floating-sidebar:hover .nav-label {
+        display: block;
+      }
+      .nav-spacer {
+        flex-grow: 1;
+      }
 
       /* MAIN CONTENT AREA */
       .main-content {
-        flex: 1; display: flex; flex-direction: column; overflow: hidden;
-        background: var(--bg); border-radius: 32px; position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--bg);
+        border-radius: 32px;
+        position: relative;
       }
 
       .content-header {
-        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
-        padding: 30px 40px; border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 30px 40px;
+        border-bottom: 1px solid var(--border);
       }
-      .content-header h1 { font-size: 2rem; font-weight: 800; margin: 0; letter-spacing: -0.5px; cursor: pointer; }
+      .content-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -0.5px;
+        cursor: pointer;
+      }
 
-      .header-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-      
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
       .btn-create {
-        padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;
-        display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        padding: 10px 20px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
         white-space: nowrap;
       }
-      .btn-create:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3); }
+      .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
+      }
 
       .theme-toggle {
-        display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
-        border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        color: var(--text);
         flex-shrink: 0;
       }
 
       /* SCROLLABLE CONTENT */
-      .content-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 40px; -webkit-overflow-scrolling: touch; }
-      .content-scroll::-webkit-scrollbar { width: 8px; }
-      .content-scroll::-webkit-scrollbar-track { background: transparent; }
-      .content-scroll::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.2); border-radius: 4px; }
+      .content-scroll {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 40px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .content-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+      .content-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .content-scroll::-webkit-scrollbar-thumb {
+        background: rgba(128, 128, 128, 0.2);
+        border-radius: 4px;
+      }
 
       /* SECTION LAYOUT */
-      .community-section { margin-bottom: 50px; max-width: 1400px; margin-left: auto; margin-right: auto; }
-      .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
-      .section-subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 25px; margin-top: 0; line-height: 1.5; }
+      .community-section {
+        margin-bottom: 50px;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-subtitle {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+        margin-top: 0;
+        line-height: 1.5;
+      }
 
       /* FILTER TABS */
       .filter-tabs {
-        display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: none;
       }
-      .filter-tabs::-webkit-scrollbar { display: none; }
-      
+      .filter-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
       .filter-tab {
-        padding: 10px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 50px;
-        cursor: pointer; transition: 0.3s; color: var(--muted); font-weight: 600; font-size: 0.9rem; white-space: nowrap;
+        padding: 10px 20px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.9rem;
+        white-space: nowrap;
       }
-      .filter-tab:hover { border-color: var(--primary); color: var(--text); }
-      .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+      .filter-tab:hover {
+        border-color: var(--primary);
+        color: var(--text);
+      }
+      .filter-tab.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
 
       /* DISCUSSION CARDS */
-      .discussion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); gap: 24px; }
-      
-      .discussion-card {
-        background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px;
-        cursor: pointer; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.02); display: flex; flex-direction: column;
+      .discussion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+        gap: 24px;
       }
-      .discussion-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+      .discussion-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+      }
+      .discussion-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      }
 
       .card-category {
-        display: inline-block; padding: 6px 14px; background: rgba(37, 99, 235, 0.1); color: var(--primary);
-        border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; align-self: flex-start;
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        align-self: flex-start;
       }
 
-      .card-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; line-height: 1.4; }
-      
-      .card-author { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; font-size: 0.9rem; color: var(--muted); }
-      .author-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 15px;
+        line-height: 1.4;
+      }
 
-      .card-stats { display: flex; gap: 16px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }
-      .stat-item { display: flex; align-items: center; gap: 6px; }
+      .card-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .author-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
 
-      .card-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+      .card-stats {
+        display: flex;
+        gap: 16px;
+        margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+      }
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+      }
       .action-btn {
-        flex: 1; padding: 10px; background: transparent; border: 1px solid var(--border); border-radius: 12px;
-        cursor: pointer; color: var(--text); font-size: 0.85rem; font-weight: 600; transition: 0.3s;
-        display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 100px;
+        flex: 1;
+        padding: 10px;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        color: var(--text);
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 100px;
       }
-      .action-btn:hover { background: rgba(37, 99, 235, 0.05); border-color: var(--primary); color: var(--primary); }
+      .action-btn:hover {
+        background: rgba(37, 99, 235, 0.05);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
 
       /* EXPERT SECTION */
-      .expert-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; }
-      
-      .expert-faq { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px; max-height: 600px; overflow-y: auto; }
-      .faq-item { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); cursor: pointer; transition: 0.3s; }
-      .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-      .faq-item:hover .faq-question { color: var(--primary); }
-      .faq-question { font-weight: 600; font-size: 1.05rem; margin-bottom: 6px; transition: 0.3s; line-height: 1.4; }
-      .faq-meta { font-size: 0.85rem; color: var(--muted); }
-
-      .expert-answer { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 30px; height: fit-content; }
-      .expert-badge {
-        display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); color: var(--admin-success);
-        padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 20px;
+      .expert-container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 30px;
       }
-      .expert-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-      .expert-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem; flex-shrink: 0; }
-      .expert-info h4 { font-weight: 800; font-size: 1.2rem; margin: 0 0 4px 0; }
-      .expert-info p { font-size: 0.9rem; color: var(--muted); margin: 0; }
-      .expert-answer-text { font-size: 1rem; line-height: 1.7; margin-bottom: 25px; color: var(--text); }
-      .answer-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+      .expert-faq {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+      .faq-item {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed var(--border);
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .faq-item:hover .faq-question {
+        color: var(--primary);
+      }
+      .faq-question {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+        transition: 0.3s;
+        line-height: 1.4;
+      }
+      .faq-meta {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .expert-answer {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 30px;
+        height: fit-content;
+      }
+      .expert-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--admin-success);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .expert-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .expert-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .expert-info h4 {
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin: 0 0 4px 0;
+      }
+      .expert-info p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin: 0;
+      }
+      .expert-answer-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 25px;
+        color: var(--text);
+      }
+      .answer-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
       /* BADGES SECTION */
-      .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; margin-bottom: 40px; }
-      .badge-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px 15px; text-align: center; transition: 0.3s; position: relative; }
-      .badge-card:hover { background: rgba(37, 99, 235, 0.02); border-color: var(--primary); transform: translateY(-5px); }
-      .badge-earned { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: var(--admin-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
-      .badge-icon { width: 64px; height: 64px; margin: 0 auto 15px; border-radius: 16px; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(124,58,237,0.1)); border: 1px solid rgba(124,58,237,0.2); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
-      .badge-name { font-weight: 800; font-size: 1rem; margin-bottom: 6px; line-height: 1.2; }
-      .badge-description { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+      .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      .badge-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px 15px;
+        text-align: center;
+        transition: 0.3s;
+        position: relative;
+      }
+      .badge-card:hover {
+        background: rgba(37, 99, 235, 0.02);
+        border-color: var(--primary);
+        transform: translateY(-5px);
+      }
+      .badge-earned {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 28px;
+        height: 28px;
+        background: var(--admin-success);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+      }
+      .badge-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 15px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.1),
+          rgba(124, 58, 237, 0.1)
+        );
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      .badge-name {
+        font-weight: 800;
+        font-size: 1rem;
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+      .badge-description {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.4;
+      }
 
       /* LEADERBOARD */
-      .leaderboard-container { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      .leaderboard-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-      .leaderboard-table th { text-align: left; padding: 15px; border-bottom: 2px solid var(--border); font-weight: 700; font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-      .leaderboard-table td { padding: 15px; border-bottom: 1px dashed var(--border); }
-      .leaderboard-table tr:last-child td { border-bottom: none; }
-      .leaderboard-table tr:hover td { background: rgba(128,128,128,0.02); }
+      .leaderboard-container {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+      }
+      .leaderboard-table th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid var(--border);
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .leaderboard-table td {
+        padding: 15px;
+        border-bottom: 1px dashed var(--border);
+      }
+      .leaderboard-table tr:last-child td {
+        border-bottom: none;
+      }
+      .leaderboard-table tr:hover td {
+        background: rgba(128, 128, 128, 0.02);
+      }
 
-      .rank-badge { width: 36px; height: 36px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--text); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; }
-      .rank-1 { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; border: none; }
-      .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: white; border: none; }
-      .rank-3 { background: linear-gradient(135deg, #b45309, #78350f); color: white; border: none; }
+      .rank-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1rem;
+      }
+      .rank-1 {
+        background: linear-gradient(135deg, #f59e0b, #ea580c);
+        color: white;
+        border: none;
+      }
+      .rank-2 {
+        background: linear-gradient(135deg, #94a3b8, #64748b);
+        color: white;
+        border: none;
+      }
+      .rank-3 {
+        background: linear-gradient(135deg, #b45309, #78350f);
+        color: white;
+        border: none;
+      }
 
-      .member-info { display: flex; align-items: center; gap: 12px; font-weight: 600; }
-      .member-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
+      .member-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+      }
+      .member-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
 
       /* MODALS */
-      .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-      .modal.active { display: flex; }
-      
-      .modal-content { background: var(--card); border-radius: 24px; padding: 40px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.2); position: relative; }
-      
-      .modal-header { margin-bottom: 25px; padding-right: 30px; }
-      .modal-header h2 { font-size: 1.8rem; font-weight: 800; margin: 0; font-family: "Outfit", sans-serif; line-height: 1.2; }
-      .modal-close { position: absolute; top: 30px; right: 30px; background: var(--bg); border: 1px solid var(--border); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); transition: 0.2s; }
-      .modal-close:hover { background: var(--danger); color: white; border-color: var(--danger); }
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal.active {
+        display: flex;
+      }
 
-      .form-group { margin-bottom: 20px; }
-      .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
-      .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: inherit; font-size: 0.95rem; box-sizing: border-box; transition: 0.3s; }
-      .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-      .form-group textarea { resize: vertical; min-height: 120px; }
+      .modal-content {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
 
-      .form-actions { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
-      .form-actions button { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; min-width: 120px; }
-      .btn-submit { background: var(--primary); color: white; }
-      .btn-submit:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37,99,235,0.2); }
-      .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--text); }
-      .btn-cancel:hover { background: var(--bg); }
+      .modal-header {
+        margin-bottom: 25px;
+        padding-right: 30px;
+      }
+      .modal-header h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0;
+        font-family: "Outfit", sans-serif;
+        line-height: 1.2;
+      }
+      .modal-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text);
+        transition: 0.2s;
+      }
+      .modal-close:hover {
+        background: var(--danger);
+        color: white;
+        border-color: var(--danger);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 14px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+        transition: 0.3s;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+      .form-actions button {
+        flex: 1;
+        padding: 14px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1rem;
+        min-width: 120px;
+      }
+      .btn-submit {
+        background: var(--primary);
+        color: white;
+      }
+      .btn-submit:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+      .btn-cancel {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn-cancel:hover {
+        background: var(--bg);
+      }
 
       /* FOOTER */
-      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px; margin-top: 40px; border-radius: 32px 32px 0 0; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
-      .footer-col ul li { margin-bottom: 12px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
-      .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
-      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
-      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer {
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        padding: 40px;
+        margin-top: 40px;
+        border-radius: 32px 32px 0 0;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.95rem;
+      }
+      .footer-col ul li a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 25px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
       /* BACK TO TOP BUTTON */
       .back-to-top {
@@ -343,83 +951,194 @@
 
       /* Desktop / Large Tablets */
       @media (max-width: 1200px) {
-        .expert-container { grid-template-columns: 1fr; }
+        .expert-container {
+          grid-template-columns: 1fr;
+        }
       }
 
       /* Tablet */
       @media (max-width: 1024px) {
-        .dash-wrapper { padding: 16px; gap: 16px; }
-        .content-scroll { padding: 24px; }
-        .content-header { padding: 20px 24px; }
-        
-        .floating-sidebar { width: 80px; }
-        .floating-sidebar:hover { width: 240px; }
+        .dash-wrapper {
+          padding: 16px;
+          gap: 16px;
+        }
+        .content-scroll {
+          padding: 24px;
+        }
+        .content-header {
+          padding: 20px 24px;
+        }
+
+        .floating-sidebar {
+          width: 80px;
+        }
+        .floating-sidebar:hover {
+          width: 240px;
+        }
       }
 
       /* Mobile - Bottom Navigation */
       @media (max-width: 768px) {
-        body { flex-direction: column; }
-        .dash-wrapper { flex-direction: column; padding: 0; gap: 0; }
+        body {
+          flex-direction: column;
+        }
+        .dash-wrapper {
+          flex-direction: column;
+          padding: 0;
+          gap: 0;
+        }
 
         /* Sidebar turns into Bottom Nav App Bar */
         .floating-sidebar {
-          position: fixed; bottom: 0; left: 0; width: 100% !important; 
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100% !important;
           height: calc(70px + env(safe-area-inset-bottom));
-          flex-direction: row; padding: 0; padding-bottom: env(safe-area-inset-bottom);
+          flex-direction: row;
+          padding: 0;
+          padding-bottom: env(safe-area-inset-bottom);
           border-radius: 20px 20px 0 0;
-          border-top: 1px solid var(--border); border-bottom: none; border-left: none; border-right: none;
-          z-index: 1000; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); background: var(--card);
+          border-top: 1px solid var(--border);
+          border-bottom: none;
+          border-left: none;
+          border-right: none;
+          z-index: 1000;
+          box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+          background: var(--card);
         }
-        
-        .nav-logo, .nav-spacer { display: none !important; }
-        .nav-items { flex-direction: row; justify-content: space-around; align-items: center; height: 100%; padding: 0 10px; gap: 0; }
-        .nav-btn { width: 50px; height: 50px; }
-        .floating-sidebar:hover .nav-btn { width: 50px; padding: 0; justify-content: center; }
-        .nav-label { display: none !important; } 
+
+        .nav-logo,
+        .nav-spacer {
+          display: none !important;
+        }
+        .nav-items {
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          height: 100%;
+          padding: 0 10px;
+          gap: 0;
+        }
+        .nav-btn {
+          width: 50px;
+          height: 50px;
+        }
+        .floating-sidebar:hover .nav-btn {
+          width: 50px;
+          padding: 0;
+          justify-content: center;
+        }
+        .nav-label {
+          display: none !important;
+        }
 
         /* Leave space for bottom nav */
-        .main-content { border-radius: 0; margin-bottom: calc(70px + env(safe-area-inset-bottom)); }
-        
-        .content-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-        .content-header h1 { font-size: 1.8rem; width: 100%; }
-        .header-actions { width: 100%; justify-content: flex-start; }
-        
-        .badges-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-        
-        .modal-content { padding: 30px 20px; border-radius: 20px; width: 95%; max-height: 85vh; }
-        .modal-close { top: 20px; right: 20px; }
+        .main-content {
+          border-radius: 0;
+          margin-bottom: calc(70px + env(safe-area-inset-bottom));
+        }
 
-        .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
-        .footer-bottom { flex-direction: column; text-align: center; }
+        .content-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+        }
+        .content-header h1 {
+          font-size: 1.8rem;
+          width: 100%;
+        }
+        .header-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .badges-grid {
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        }
+
+        .modal-content {
+          padding: 30px 20px;
+          border-radius: 20px;
+          width: 95%;
+          max-height: 85vh;
+        }
+        .modal-close {
+          top: 20px;
+          right: 20px;
+        }
+
+        .footer {
+          padding: 30px 20px;
+          border-radius: 0;
+          margin-top: 20px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
       }
-      
+
       /* Small Mobile */
       @media (max-width: 480px) {
-        .content-header { padding: 15px 20px; }
-        .content-scroll { padding: 15px 20px; }
-        
-        #dirToggle span { display: none; }
-        .btn-text { display: none; } /* Hide text on standard buttons to save space */
-        .btn-create { padding: 10px 14px; justify-content: center; }
-        .btn-create i { margin: 0 !important; }
+        .content-header {
+          padding: 15px 20px;
+        }
+        .content-scroll {
+          padding: 15px 20px;
+        }
 
-        .expert-profile { flex-direction: column; text-align: center; gap: 10px; }
-        .answer-actions { flex-direction: column; }
-        .answer-actions .action-btn { width: 100%; }
-        
-        .card-stats .stat-item:last-child { margin-left: 0 !important; width: 100%; }
-        
-        .badges-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-        
-        .modal-header h2 { font-size: 1.4rem; }
-        .leaderboard-container { padding: 15px 10px; }
-        .leaderboard-table th, .leaderboard-table td { padding: 10px; }
+        #dirToggle span {
+          display: none;
+        }
+        .btn-text {
+          display: none;
+        } /* Hide text on standard buttons to save space */
+        .btn-create {
+          padding: 10px 14px;
+          justify-content: center;
+        }
+        .btn-create i {
+          margin: 0 !important;
+        }
+
+        .expert-profile {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+        .answer-actions {
+          flex-direction: column;
+        }
+        .answer-actions .action-btn {
+          width: 100%;
+        }
+
+        .card-stats .stat-item:last-child {
+          margin-left: 0 !important;
+          width: 100%;
+        }
+
+        .badges-grid {
+          grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        }
+
+        .modal-header h2 {
+          font-size: 1.4rem;
+        }
+        .leaderboard-container {
+          padding: 15px 10px;
+        }
+        .leaderboard-table th,
+        .leaderboard-table td {
+          padding: 10px;
+        }
       }
     </style>
   </head>
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -427,10 +1146,9 @@
 
     <!-- MAIN WRAPPER -->
     <div class="dash-wrapper">
-      
       <!-- FLOATING SIDEBAR / BOTTOM NAV ON MOBILE -->
       <aside class="floating-sidebar">
-        <div class="nav-logo" onclick="window.location.href='../index.html'">
+        <div class="nav-logo" onclick="window.location.href = '../index.html'">
           <i data-lucide="shield"></i>
         </div>
         <div class="nav-items">
@@ -446,8 +1164,12 @@
             <i data-lucide="award"></i>
             <span class="nav-label">Badges</span>
           </button>
-          
-          <button class="nav-btn" title="Dashboard" onclick="window.location.href='UserDashboard.html'">
+
+          <button
+            class="nav-btn"
+            title="Dashboard"
+            onclick="window.location.href = 'UserDashboard.html'"
+          >
             <i data-lucide="layout-grid"></i>
             <span class="nav-label">Dashboard</span>
           </button>
@@ -458,34 +1180,57 @@
       <!-- MAIN CONTENT -->
       <main class="main-content">
         <div class="content-header">
-          <h1 onclick="window.location.href='../index.html'">Community Hub</h1>
+          <h1 onclick="window.location.href = '../index.html'">
+            Community Hub
+          </h1>
           <div class="header-actions">
-            <button id="dirToggle" class="btn" style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
+            <button
+              id="dirToggle"
+              class="btn"
+              style="
+                background: var(--card);
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 8px 12px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                cursor: pointer;
+              "
+            >
               <i data-lucide="languages" style="width: 18px"></i>
               <span>LTR</span>
             </button>
-            
-            <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+
+            <label
+              class="theme-toggle"
+              onclick="document.documentElement.classList.toggle('dark')"
+            >
               <i data-lucide="moon" style="width: 18px"></i>
             </label>
-            
+
             <button class="btn-create" id="btnCreateDiscussion">
-              <i data-lucide="plus" style="width: 18px; margin-right: 4px;"></i>
+              <i data-lucide="plus" style="width: 18px; margin-right: 4px"></i>
               <span class="btn-text">New Topic</span>
             </button>
           </div>
         </div>
 
         <div class="content-scroll">
-          
           <!-- DISCUSSION FORUM SECTION -->
           <section class="community-section" id="forumSection">
             <div class="section-title">
-              <i data-lucide="messages-square" style="color: var(--primary);"></i>
+              <i
+                data-lucide="messages-square"
+                style="color: var(--primary)"
+              ></i>
               Discussion Forum
             </div>
             <p class="section-subtitle">
-              Connect with the community, share ideas, and find solutions to challenges in the field.
+              Connect with the community, share ideas, and find solutions to
+              challenges in the field.
             </p>
 
             <div class="filter-tabs" id="categoryFilters"></div>
@@ -493,17 +1238,37 @@
           </section>
 
           <!-- ASK AN EXPERT SECTION -->
-          <section class="community-section" id="expertSection" style="display: none">
+          <section
+            class="community-section"
+            id="expertSection"
+            style="display: none"
+          >
             <div class="section-title">
-              <i data-lucide="user-check" style="color: var(--primary); cursor: pointer;" onclick="window.location.href='../index.html'"></i>
+              <i
+                data-lucide="user-check"
+                style="color: var(--primary); cursor: pointer"
+                onclick="window.location.href = '../index.html'"
+              ></i>
               Ask an Expert
             </div>
             <p class="section-subtitle">
-              Get verified answers from certified trainers and experienced professionals in real-time.
+              Get verified answers from certified trainers and experienced
+              professionals in real-time.
             </p>
 
-            <button class="btn-create" id="btnAskQuestion" style="margin-bottom: 30px; display: inline-flex; width: fit-content;">
-              <i data-lucide="help-circle" style="width: 18px; margin-right: 4px;"></i> 
+            <button
+              class="btn-create"
+              id="btnAskQuestion"
+              style="
+                margin-bottom: 30px;
+                display: inline-flex;
+                width: fit-content;
+              "
+            >
+              <i
+                data-lucide="help-circle"
+                style="width: 18px; margin-right: 4px"
+              ></i>
               <span class="btn-text">Ask Question</span>
             </button>
 
@@ -514,19 +1279,40 @@
           </section>
 
           <!-- BADGES & RECOGNITION SECTION -->
-          <section class="community-section" id="badgesSection" style="display: none">
+          <section
+            class="community-section"
+            id="badgesSection"
+            style="display: none"
+          >
             <div class="section-title">
-              <i data-lucide="medal" style="color: var(--primary);"></i>
+              <i data-lucide="medal" style="color: var(--primary)"></i>
               Recognition & Badges
             </div>
             <p class="section-subtitle">
-              Earn badges for your contributions and see where you stand on the community leaderboard.
+              Earn badges for your contributions and see where you stand on the
+              community leaderboard.
             </p>
 
-            <h3 style="margin: 20px 0 15px; font-weight: 800; font-family: 'Outfit', sans-serif;">Your Earned Badges</h3>
+            <h3
+              style="
+                margin: 20px 0 15px;
+                font-weight: 800;
+                font-family: &quot;Outfit&quot;, sans-serif;
+              "
+            >
+              Your Earned Badges
+            </h3>
             <div class="badges-grid" id="badgesGrid"></div>
 
-            <h3 style="margin: 40px 0 15px; font-weight: 800; font-family: 'Outfit', sans-serif;">Community Leaderboard</h3>
+            <h3
+              style="
+                margin: 40px 0 15px;
+                font-weight: 800;
+                font-family: &quot;Outfit&quot;, sans-serif;
+              "
+            >
+              Community Leaderboard
+            </h3>
             <div class="leaderboard-container">
               <table class="leaderboard-table" id="leaderboard"></table>
             </div>
@@ -536,9 +1322,20 @@
           <footer class="footer">
             <div class="footer-grid">
               <div class="footer-col">
-                <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-                <p style="color: var(--muted); line-height: 1.6;">
-                  Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+                <h4
+                  style="
+                    color: var(--primary);
+                    font-size: 1.5rem;
+                    margin-bottom: 1rem;
+                    font-family: &quot;Outfit&quot;, sans-serif;
+                  "
+                >
+                  🌍 NGO Training
+                </h4>
+                <p style="color: var(--muted); line-height: 1.6">
+                  Empowering individuals and organizations with conflict
+                  resolution skills for a more peaceful world. Our platform
+                  provides high-quality, accessible training for everyone.
                 </p>
               </div>
               <div class="footer-col">
@@ -561,31 +1358,53 @@
               </div>
               <div class="footer-col">
                 <h4>Follow Us</h4>
-                <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+                <p style="margin-bottom: 1.5rem; color: var(--muted)">
+                  Join our community on social media to stay updated.
+                </p>
                 <div class="social-links">
-                  <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="facebook"></i
+                  ></a>
                   <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
-                  <a href="javascript:void(0)"><i data-lucide="instagram"></i></a>
-                  <a href="javascript:void(0)"><i data-lucide="linkedin"></i></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="instagram"></i
+                  ></a>
+                  <a href="javascript:void(0)"
+                    ><i data-lucide="linkedin"></i
+                  ></a>
                 </div>
               </div>
             </div>
             <div class="footer-bottom">
-              <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+              <p>
+                &copy; <span id="year">2026</span> NGO Training Platform. All
+                rights reserved.
+              </p>
               <div class="footer-legal">
-                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
-                <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+                <a
+                  href="javascript:void(0)"
+                  style="color: var(--muted); text-decoration: none"
+                  >Privacy Policy</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  style="
+                    color: var(--muted);
+                    text-decoration: none;
+                    margin-left: 20px;
+                  "
+                  >Terms of Service</a
+                >
               </div>
             </div>
           </footer>
-          
-        </div> <!-- End of content-scroll -->
+        </div>
+        <!-- End of content-scroll -->
 
         <!-- BACK TO TOP BUTTON (Fixed Placement) -->
         <button class="back-to-top" id="backToTopBtn" title="Back to top">
           <i data-lucide="arrow-up"></i>
         </button>
-
       </main>
     </div>
 
@@ -601,7 +1420,12 @@
         <form id="discussionForm">
           <div class="form-group">
             <label>Title</label>
-            <input type="text" id="topicTitle" placeholder="Enter topic title" required />
+            <input
+              type="text"
+              id="topicTitle"
+              placeholder="Enter topic title"
+              required
+            />
           </div>
           <div class="form-group">
             <label>Category</label>
@@ -609,18 +1433,34 @@
               <option value="">Select a category</option>
               <option value="Community Conflicts">Community Conflicts</option>
               <option value="Gender-Based Issues">Gender-Based Issues</option>
-              <option value="Youth & School Mediation">Youth & School Mediation</option>
+              <option value="Youth & School Mediation">
+                Youth & School Mediation
+              </option>
               <option value="Workplace Disputes">Workplace Disputes</option>
-              <option value="Peacebuilding Strategies">Peacebuilding Strategies</option>
-              <option value="Legal & Policy Questions">Legal & Policy Questions</option>
+              <option value="Peacebuilding Strategies">
+                Peacebuilding Strategies
+              </option>
+              <option value="Legal & Policy Questions">
+                Legal & Policy Questions
+              </option>
             </select>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea id="topicDescription" placeholder="Describe your question or topic..." required></textarea>
+            <textarea
+              id="topicDescription"
+              placeholder="Describe your question or topic..."
+              required
+            ></textarea>
           </div>
           <div class="form-actions">
-            <button type="button" class="btn-cancel" onclick="closeModal('discussionModal')">Cancel</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              onclick="closeModal('discussionModal')"
+            >
+              Cancel
+            </button>
             <button type="submit" class="btn-submit">Post Topic</button>
           </div>
         </form>
@@ -638,7 +1478,12 @@
         <form id="questionForm">
           <div class="form-group">
             <label>Question</label>
-            <input type="text" id="expertQuestion" placeholder="What is your question?" required />
+            <input
+              type="text"
+              id="expertQuestion"
+              placeholder="What is your question?"
+              required
+            />
           </div>
           <div class="form-group">
             <label>Topic Area</label>
@@ -654,10 +1499,20 @@
           </div>
           <div class="form-group">
             <label>Additional Details</label>
-            <textarea id="expertDescription" placeholder="Provide more context so the expert can help you better..." required></textarea>
+            <textarea
+              id="expertDescription"
+              placeholder="Provide more context so the expert can help you better..."
+              required
+            ></textarea>
           </div>
           <div class="form-actions">
-            <button type="button" class="btn-cancel" onclick="closeModal('questionModal')">Cancel</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              onclick="closeModal('questionModal')"
+            >
+              Cancel
+            </button>
             <button type="submit" class="btn-submit">Submit Question</button>
           </div>
         </form>
@@ -671,43 +1526,212 @@
       // ============================================
       // INIT ICONS & YEAR
       // ============================================
-      if (typeof lucide !== 'undefined') {
+      if (typeof lucide !== "undefined") {
         lucide.createIcons();
       }
-      document.getElementById('year').innerText = new Date().getFullYear();
+      document.getElementById("year").innerText = new Date().getFullYear();
 
       // ============================================
       // MOCK DATA
       // ============================================
       const discussionTopics = [
-        { id: 1, title: "How to resolve conflicts between NGOs with different priorities?", author: "Priya Sharma", ngoName: "Peace Trust India", category: "Community Conflicts", replies: 12, views: 245, lastActivity: "2 hours ago", content: "We're struggling with coordination when organizations have overlapping but different goals...", authorInitial: "PS" },
-        { id: 2, title: "Gender-sensitive mediation techniques for rural communities", author: "Aisha Mohammed", ngoName: "Women's Voice Foundation", category: "Gender-Based Issues", replies: 8, views: 156, lastActivity: "4 hours ago", content: "Looking for best practices for training mediators who work with rural women...", authorInitial: "AM" },
-        { id: 3, title: "Youth engagement in peacebuilding programs", author: "Raj Patel", ngoName: "Youth Leaders Initiative", category: "Youth & School Mediation", replies: 15, views: 398, lastActivity: "1 hour ago", content: "What strategies have worked best for you to engage school-going youth?", authorInitial: "RP" },
-        { id: 4, title: "Workplace mediation: When employees refuse to participate", author: "Michael Chen", ngoName: "Corporate Peace Solutions", category: "Workplace Disputes", replies: 5, views: 89, lastActivity: "6 hours ago", content: "How do we handle situations where key employees won't attend mediation sessions?", authorInitial: "MC" },
-        { id: 5, title: "Building sustainable peace initiatives at grassroots level", author: "Dr. Emily Watson", ngoName: "Global Peace Network", category: "Peacebuilding Strategies", replies: 22, views: 567, lastActivity: "30 min ago", content: "What are the key factors for long-term success in grassroots peacebuilding?", authorInitial: "EW" },
-        { id: 6, title: "Understanding the new mediation policy framework", author: "Sarah Johnson", ngoName: "Policy & Law Center", category: "Legal & Policy Questions", replies: 9, views: 201, lastActivity: "3 hours ago", content: "Can someone explain the implications of the new mediation certification requirements?", authorInitial: "SJ" }
+        {
+          id: 1,
+          title:
+            "How to resolve conflicts between NGOs with different priorities?",
+          author: "Priya Sharma",
+          ngoName: "Peace Trust India",
+          category: "Community Conflicts",
+          replies: 12,
+          views: 245,
+          lastActivity: "2 hours ago",
+          content:
+            "We're struggling with coordination when organizations have overlapping but different goals...",
+          authorInitial: "PS",
+        },
+        {
+          id: 2,
+          title: "Gender-sensitive mediation techniques for rural communities",
+          author: "Aisha Mohammed",
+          ngoName: "Women's Voice Foundation",
+          category: "Gender-Based Issues",
+          replies: 8,
+          views: 156,
+          lastActivity: "4 hours ago",
+          content:
+            "Looking for best practices for training mediators who work with rural women...",
+          authorInitial: "AM",
+        },
+        {
+          id: 3,
+          title: "Youth engagement in peacebuilding programs",
+          author: "Raj Patel",
+          ngoName: "Youth Leaders Initiative",
+          category: "Youth & School Mediation",
+          replies: 15,
+          views: 398,
+          lastActivity: "1 hour ago",
+          content:
+            "What strategies have worked best for you to engage school-going youth?",
+          authorInitial: "RP",
+        },
+        {
+          id: 4,
+          title: "Workplace mediation: When employees refuse to participate",
+          author: "Michael Chen",
+          ngoName: "Corporate Peace Solutions",
+          category: "Workplace Disputes",
+          replies: 5,
+          views: 89,
+          lastActivity: "6 hours ago",
+          content:
+            "How do we handle situations where key employees won't attend mediation sessions?",
+          authorInitial: "MC",
+        },
+        {
+          id: 5,
+          title: "Building sustainable peace initiatives at grassroots level",
+          author: "Dr. Emily Watson",
+          ngoName: "Global Peace Network",
+          category: "Peacebuilding Strategies",
+          replies: 22,
+          views: 567,
+          lastActivity: "30 min ago",
+          content:
+            "What are the key factors for long-term success in grassroots peacebuilding?",
+          authorInitial: "EW",
+        },
+        {
+          id: 6,
+          title: "Understanding the new mediation policy framework",
+          author: "Sarah Johnson",
+          ngoName: "Policy & Law Center",
+          category: "Legal & Policy Questions",
+          replies: 9,
+          views: 201,
+          lastActivity: "3 hours ago",
+          content:
+            "Can someone explain the implications of the new mediation certification requirements?",
+          authorInitial: "SJ",
+        },
       ];
 
       const expertAnswers = [
-        { id: 1, questionId: 1, question: "How to resolve conflicts between NGOs with different priorities?", expert: "Dr. Sarah Jenkins", credentials: "PhD in Conflict Resolution, 15+ years experience", response: "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.", verified: true, upvotes: 45, authorInitial: "SJ" },
-        { id: 2, questionId: 2, question: "Gender-sensitive mediation techniques for rural communities", expert: "Elena Rodriguez", credentials: "Certified Gender Mediator, Award-winning Trainer", response: "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.", verified: true, upvotes: 67, authorInitial: "ER" }
+        {
+          id: 1,
+          questionId: 1,
+          question:
+            "How to resolve conflicts between NGOs with different priorities?",
+          expert: "Dr. Sarah Jenkins",
+          credentials: "PhD in Conflict Resolution, 15+ years experience",
+          response:
+            "The key is to establish a common ground first. Even organizations with different priorities often share the same values. I recommend creating a stakeholder analysis to identify overlapping interests, then building collaborative frameworks around those areas. Trust-building through transparent communication is essential.",
+          verified: true,
+          upvotes: 45,
+          authorInitial: "SJ",
+        },
+        {
+          id: 2,
+          questionId: 2,
+          question:
+            "Gender-sensitive mediation techniques for rural communities",
+          expert: "Elena Rodriguez",
+          credentials: "Certified Gender Mediator, Award-winning Trainer",
+          response:
+            "Gender-sensitive mediation requires understanding local cultural contexts while upholding gender equality principles. Key techniques include: 1) Private caucusing to ensure women's voices are heard, 2) Addressing power imbalances directly, 3) Training mediators on gender bias recognition, 4) Creating safe spaces for women to speak. Cultural sensitivity is crucial but never compromise on fundamental rights.",
+          verified: true,
+          upvotes: 67,
+          authorInitial: "ER",
+        },
       ];
 
       const communityBadges = [
-        { id: 1, name: "Active Contributor", icon: "✨", description: "Posted 10+ discussion topics", earned: true, earnedDate: "Mar 1, 2026" },
-        { id: 2, name: "Peace Champion", icon: "🕊️", description: "100+ community contributions", earned: true, earnedDate: "Feb 15, 2026" },
-        { id: 5, name: "Top Mediator", icon: "⚖️", description: "Rated helpful by 50+ members", earned: true, earnedDate: "Jan 28, 2026" },
-        { id: 3, name: "Expert Mentor", icon: "🎓", description: "Helped 20+ members find solutions", earned: false, earnedDate: null },
-        { id: 4, name: "Case Study Pro", icon: "📖", description: "Shared 5+ detailed case studies", earned: false, earnedDate: null },
-        { id: 6, name: "Network Builder", icon: "🤝", description: "Connected 15+ community members", earned: false, earnedDate: null }
+        {
+          id: 1,
+          name: "Active Contributor",
+          icon: "✨",
+          description: "Posted 10+ discussion topics",
+          earned: true,
+          earnedDate: "Mar 1, 2026",
+        },
+        {
+          id: 2,
+          name: "Peace Champion",
+          icon: "🕊️",
+          description: "100+ community contributions",
+          earned: true,
+          earnedDate: "Feb 15, 2026",
+        },
+        {
+          id: 5,
+          name: "Top Mediator",
+          icon: "⚖️",
+          description: "Rated helpful by 50+ members",
+          earned: true,
+          earnedDate: "Jan 28, 2026",
+        },
+        {
+          id: 3,
+          name: "Expert Mentor",
+          icon: "🎓",
+          description: "Helped 20+ members find solutions",
+          earned: false,
+          earnedDate: null,
+        },
+        {
+          id: 4,
+          name: "Case Study Pro",
+          icon: "📖",
+          description: "Shared 5+ detailed case studies",
+          earned: false,
+          earnedDate: null,
+        },
+        {
+          id: 6,
+          name: "Network Builder",
+          icon: "🤝",
+          description: "Connected 15+ community members",
+          earned: false,
+          earnedDate: null,
+        },
       ];
 
       const communityLeaderboard = [
-        { rank: 1, name: "Dr. Sarah Jenkins", organization: "Peace Institute", points: 2450, badge: "Expert Mentor" },
-        { rank: 2, name: "Priya Sharma", organization: "Peace Trust India", points: 1890, badge: "Peace Champion" },
-        { rank: 3, name: "Elena Rodriguez", organization: "Gender Center", points: 1567, badge: "Top Mediator" },
-        { rank: 4, name: "Michael Chen", organization: "Corporate Peace", points: 1234, badge: "Active Contributor" },
-        { rank: 5, name: "Raj Patel", organization: "Youth Leaders", points: 1045, badge: "Network Builder" }
+        {
+          rank: 1,
+          name: "Dr. Sarah Jenkins",
+          organization: "Peace Institute",
+          points: 2450,
+          badge: "Expert Mentor",
+        },
+        {
+          rank: 2,
+          name: "Priya Sharma",
+          organization: "Peace Trust India",
+          points: 1890,
+          badge: "Peace Champion",
+        },
+        {
+          rank: 3,
+          name: "Elena Rodriguez",
+          organization: "Gender Center",
+          points: 1567,
+          badge: "Top Mediator",
+        },
+        {
+          rank: 4,
+          name: "Michael Chen",
+          organization: "Corporate Peace",
+          points: 1234,
+          badge: "Active Contributor",
+        },
+        {
+          rank: 5,
+          name: "Raj Patel",
+          organization: "Youth Leaders",
+          points: 1045,
+          badge: "Network Builder",
+        },
       ];
 
       // ============================================
@@ -741,14 +1765,22 @@
           backToTopBtn.addEventListener("click", function () {
             scrollContainer.scrollTo({
               top: 0,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         }
       });
 
       function initializeCategoryFilters() {
-        const categories = ["All", "Community Conflicts", "Gender-Based Issues", "Youth & School Mediation", "Workplace Disputes", "Peacebuilding Strategies", "Legal & Policy Questions"];
+        const categories = [
+          "All",
+          "Community Conflicts",
+          "Gender-Based Issues",
+          "Youth & School Mediation",
+          "Workplace Disputes",
+          "Peacebuilding Strategies",
+          "Legal & Policy Questions",
+        ];
         const filterContainer = document.getElementById("categoryFilters");
 
         categories.forEach((category) => {
@@ -761,7 +1793,9 @@
       }
 
       function filterDiscussions(category, tabElement) {
-        document.querySelectorAll(".filter-tab").forEach(tab => tab.classList.remove("active"));
+        document
+          .querySelectorAll(".filter-tab")
+          .forEach((tab) => tab.classList.remove("active"));
         tabElement.classList.add("active");
         renderDiscussionCards(category);
       }
@@ -770,9 +1804,12 @@
         const grid = document.getElementById("discussionGrid");
         grid.innerHTML = "";
 
-        const filtered = filter === "All" ? discussionTopics : discussionTopics.filter((t) => t.category === filter);
+        const filtered =
+          filter === "All"
+            ? discussionTopics
+            : discussionTopics.filter((t) => t.category === filter);
 
-        if(filtered.length === 0) {
+        if (filtered.length === 0) {
           grid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align: center; color: var(--muted); background: var(--card); border-radius: 24px; border: 2px dashed var(--border);">No topics found for this category. Be the first to start a discussion!</div>`;
           return;
         }
@@ -801,13 +1838,14 @@
             </div>
           `;
         });
-        
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       function renderExpertFAQ() {
         const faqContainer = document.getElementById("expertFAQ");
-        faqContainer.innerHTML = "<h3 style='margin-top: 0; margin-bottom: 20px; font-family: Outfit, sans-serif;'>Previously Answered</h3>";
+        faqContainer.innerHTML =
+          "<h3 style='margin-top: 0; margin-bottom: 20px; font-family: Outfit, sans-serif;'>Previously Answered</h3>";
 
         expertAnswers.forEach((answer) => {
           const item = document.createElement("div");
@@ -839,7 +1877,7 @@
             <button class="action-btn"><i data-lucide="message-square" style="width: 16px;"></i> Follow Up</button>
           </div>
         `;
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       function renderBadges() {
@@ -848,15 +1886,15 @@
 
         communityBadges.forEach((badge) => {
           badgesGrid.innerHTML += `
-            <div class="badge-card" style="${badge.earned ? 'border-color: var(--primary); background: rgba(37,99,235,0.02);' : 'opacity: 0.6;'}">
+            <div class="badge-card" style="${badge.earned ? "border-color: var(--primary); background: rgba(37,99,235,0.02);" : "opacity: 0.6;"}">
               ${badge.earned ? `<div class="badge-earned"><i data-lucide="check" style="width: 16px;"></i></div>` : ""}
-              <div class="badge-icon" style="${badge.earned ? '' : 'filter: grayscale(1);'}">${badge.icon}</div>
+              <div class="badge-icon" style="${badge.earned ? "" : "filter: grayscale(1);"}">${badge.icon}</div>
               <div class="badge-name">${badge.name}</div>
               <div class="badge-description">${badge.description}</div>
             </div>
           `;
         });
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       function renderLeaderboard() {
@@ -872,12 +1910,17 @@
             </tr>
           </thead>
           <tbody>
-            ${communityLeaderboard.map((member) => `
+            ${communityLeaderboard
+              .map(
+                (member) => `
               <tr>
                 <td><div class="rank-badge rank-${member.rank}">${member.rank}</div></td>
                 <td>
                   <div class="member-info">
-                    <div class="member-avatar">${member.name.split(" ").map((n) => n[0]).join("")}</div>
+                    <div class="member-avatar">${member.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}</div>
                     <span>${member.name}</span>
                   </div>
                 </td>
@@ -889,7 +1932,9 @@
                   </span>
                 </td>
               </tr>
-            `).join("")}
+            `,
+              )
+              .join("")}
           </tbody>
         `;
       }
@@ -901,76 +1946,101 @@
         // Section navigation
         document.querySelectorAll(".nav-btn").forEach((btn) => {
           btn.addEventListener("click", function () {
-            if(this.dataset.section) {
+            if (this.dataset.section) {
               switchSection(this.dataset.section);
-              document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
+              document
+                .querySelectorAll(".nav-btn")
+                .forEach((b) => b.classList.remove("active"));
               this.classList.add("active");
             }
           });
         });
 
         // Modals
-        document.getElementById("btnCreateDiscussion").addEventListener("click", () => openModal("discussionModal"));
-        document.getElementById("btnAskQuestion").addEventListener("click", () => openModal("questionModal"));
+        document
+          .getElementById("btnCreateDiscussion")
+          .addEventListener("click", () => openModal("discussionModal"));
+        document
+          .getElementById("btnAskQuestion")
+          .addEventListener("click", () => openModal("questionModal"));
 
         // Forms
-        document.getElementById("discussionForm").addEventListener("submit", function (e) {
-          e.preventDefault();
-          const newTopic = {
-            id: discussionTopics.length + 1,
-            title: document.getElementById("topicTitle").value,
-            author: "Sarah J.",
-            ngoName: "Your Organization",
-            category: document.getElementById("topicCategory").value,
-            replies: 0, views: 0, lastActivity: "just now",
-            content: document.getElementById("topicDescription").value,
-            authorInitial: "SJ",
-          };
-          discussionTopics.unshift(newTopic);
-          // Reset Filter to All to see new topic
-          const allTab = Array.from(document.querySelectorAll('.filter-tab')).find(t => t.textContent === 'All');
-          filterDiscussions("All", allTab);
-          closeModal("discussionModal");
-          this.reset();
-        });
+        document
+          .getElementById("discussionForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const newTopic = {
+              id: discussionTopics.length + 1,
+              title: document.getElementById("topicTitle").value,
+              author: "Sarah J.",
+              ngoName: "Your Organization",
+              category: document.getElementById("topicCategory").value,
+              replies: 0,
+              views: 0,
+              lastActivity: "just now",
+              content: document.getElementById("topicDescription").value,
+              authorInitial: "SJ",
+            };
+            discussionTopics.unshift(newTopic);
+            // Reset Filter to All to see new topic
+            const allTab = Array.from(
+              document.querySelectorAll(".filter-tab"),
+            ).find((t) => t.textContent === "All");
+            filterDiscussions("All", allTab);
+            closeModal("discussionModal");
+            this.reset();
+          });
 
-        document.getElementById("questionForm").addEventListener("submit", function (e) {
-          e.preventDefault();
-          closeModal("questionModal");
-          this.reset();
-          alert("Question submitted! An expert will review and respond soon.");
-        });
+        document
+          .getElementById("questionForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            closeModal("questionModal");
+            this.reset();
+            alert(
+              "Question submitted! An expert will review and respond soon.",
+            );
+          });
       }
 
       function switchSection(section) {
-        document.getElementById("forumSection").style.display = section === "forum" ? "block" : "none";
-        document.getElementById("expertSection").style.display = section === "expert" ? "block" : "none";
-        document.getElementById("badgesSection").style.display = section === "badges" ? "block" : "none";
-        
+        document.getElementById("forumSection").style.display =
+          section === "forum" ? "block" : "none";
+        document.getElementById("expertSection").style.display =
+          section === "expert" ? "block" : "none";
+        document.getElementById("badgesSection").style.display =
+          section === "badges" ? "block" : "none";
+
         // Update Mobile Top Header Title
-        const headerTitle = document.querySelector('.content-header h1');
+        const headerTitle = document.querySelector(".content-header h1");
         if (section === "forum") headerTitle.innerText = "Community Hub";
         if (section === "expert") headerTitle.innerText = "Ask an Expert";
-        if (section === "badges") headerTitle.innerText = "Badges & Leaderboard";
+        if (section === "badges")
+          headerTitle.innerText = "Badges & Leaderboard";
 
         // Update actions based on section
-        const btnCreate = document.getElementById('btnCreateDiscussion');
-        if (section === 'forum') {
-          btnCreate.style.display = 'flex';
-          btnCreate.innerHTML = '<i data-lucide="plus" style="width: 18px; margin-right: 4px;"></i> <span class="btn-text">New Topic</span>';
-          btnCreate.onclick = () => openModal('discussionModal');
-        } else if (section === 'expert') {
-          btnCreate.style.display = 'none'; // Replaced by inline button in section
+        const btnCreate = document.getElementById("btnCreateDiscussion");
+        if (section === "forum") {
+          btnCreate.style.display = "flex";
+          btnCreate.innerHTML =
+            '<i data-lucide="plus" style="width: 18px; margin-right: 4px;"></i> <span class="btn-text">New Topic</span>';
+          btnCreate.onclick = () => openModal("discussionModal");
+        } else if (section === "expert") {
+          btnCreate.style.display = "none"; // Replaced by inline button in section
         } else {
-          btnCreate.style.display = 'none';
+          btnCreate.style.display = "none";
         }
 
         document.querySelector(".content-scroll").scrollTop = 0;
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
-      function openModal(modalId) { document.getElementById(modalId).classList.add("active"); }
-      function closeModal(modalId) { document.getElementById(modalId).classList.remove("active"); }
+      function openModal(modalId) {
+        document.getElementById(modalId).classList.add("active");
+      }
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove("active");
+      }
 
       document.querySelectorAll(".modal").forEach((modal) => {
         modal.addEventListener("click", function (e) {

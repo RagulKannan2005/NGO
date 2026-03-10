@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -67,45 +70,158 @@
 
       /* NAVIGATION */
       .navbar {
-        position: fixed; top: 0; width: 100%; z-index: 1000;
-        background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: 0.3s;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        transition: 0.3s;
       }
-      html.dark .navbar { background: rgba(15, 23, 42, 0.8); }
-      .navbar.solid-bg { background: var(--card) !important; backdrop-filter: none; }
-      
-      .navbar-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 2rem; max-width: 1400px; margin: 0 auto; }
-      .navbar-logo { font-size: 1.4rem; font-weight: 800; font-family: "Outfit", sans-serif; text-decoration: none; color: var(--text); }
-      
-      .navbar-menu { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; align-items: center; }
-      .navbar-link { color: var(--muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
-      .navbar-link:hover, .navbar-link.active { color: var(--primary); }
-      
-      .nav-actions { display: flex; align-items: center; gap: 15px; }
-      .mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text); cursor: pointer; padding: 8px; align-items: center; justify-content: center; }
+      html.dark .navbar {
+        background: rgba(15, 23, 42, 0.8);
+      }
+      .navbar.solid-bg {
+        background: var(--card) !important;
+        backdrop-filter: none;
+      }
 
-      .theme-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); cursor: pointer; color: var(--text); }
-      .theme-toggle input { display: none; }
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .navbar-logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        font-family: "Outfit", sans-serif;
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .navbar-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+      .navbar-link {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+      .navbar-link:hover,
+      .navbar-link.active {
+        color: var(--primary);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        color: var(--text);
+      }
+      .theme-toggle input {
+        display: none;
+      }
 
       /* Dropdown */
-      .dropdown { position: relative; }
-      .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 10px; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 5px; }
-      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-      .dropdown-menu a { padding: 10px 15px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.95rem; transition: 0.2s; }
-      .dropdown-menu a:hover { background: rgba(128,128,128,0.05); color: var(--primary); }
+      .dropdown {
+        position: relative;
+      }
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 10px;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .dropdown-menu a {
+        padding: 10px 15px;
+        color: var(--text);
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: 0.2s;
+      }
+      .dropdown-menu a:hover {
+        background: rgba(128, 128, 128, 0.05);
+        color: var(--primary);
+      }
 
       /* HERO SECTION */
       .hero {
         background:
           linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)),
-          url("https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+          url("https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80")
+            center/cover no-repeat;
         color: white;
         padding: 180px 2rem 120px;
         text-align: center;
         background-attachment: fixed;
       }
-      .hero h1 { font-family: "Outfit", sans-serif; font-size: 3.5rem; font-weight: 800; margin-top: 0; margin-bottom: 20px; line-height: 1.2; }
-      .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+      .hero h1 {
+        font-family: "Outfit", sans-serif;
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-top: 0;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+      .hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
 
       /* FILTER BAR */
       .filter-container {
@@ -116,26 +232,62 @@
         padding: 0 2rem;
       }
       .filter-bar {
-        display: flex; gap: 15px; padding: 20px;
-        background: var(--card); border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        border: 1px solid var(--border); flex-wrap: wrap;
+        display: flex;
+        gap: 15px;
+        padding: 20px;
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--border);
+        flex-wrap: wrap;
       }
-      .filter-bar input, .filter-bar select {
-        padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border);
-        background: var(--bg); color: var(--text); outline: none; flex: 1;
-        min-width: 200px; font-family: inherit; font-size: 0.95rem; transition: 0.3s;
+      .filter-bar input,
+      .filter-bar select {
+        padding: 14px 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        outline: none;
+        flex: 1;
+        min-width: 200px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: 0.3s;
       }
-      .filter-bar input:focus, .filter-bar select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-      
+      .filter-bar input:focus,
+      .filter-bar select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
       .wishlist-pill {
-        display: flex; align-items: center; justify-content: center; gap: 8px;
-        padding: 14px 24px; background: rgba(37,99,235,0.1); color: var(--primary);
-        border-radius: 12px; font-weight: 600; text-decoration: none; border: 1px solid rgba(37,99,235,0.2);
-        transition: 0.3s; white-space: nowrap; cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 24px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        transition: 0.3s;
+        white-space: nowrap;
+        cursor: pointer;
       }
-      .wishlist-pill:hover { background: var(--primary); color: white; }
-      .wishlist-count { background: var(--admin-danger); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; }
+      .wishlist-pill:hover {
+        background: var(--primary);
+        color: white;
+      }
+      .wishlist-count {
+        background: var(--admin-danger);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+      }
 
       /* TRAINING GRID & CARDS */
       .training-grid {
@@ -146,80 +298,235 @@
       }
 
       .program-card {
-        background: var(--card); border: 1px solid var(--border); border-radius: 24px;
-        padding: 2.5rem; display: flex; flex-direction: column;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
       }
-      .program-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+      .program-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
 
       .card-badge {
-        display: inline-block; padding: 6px 14px; background: rgba(128,128,128,0.1);
-        color: var(--text); border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-        text-transform: uppercase; margin-bottom: 1.5rem; align-self: flex-start;
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(128, 128, 128, 0.1);
+        color: var(--text);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        align-self: flex-start;
       }
-      .badge-Advanced { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-      .badge-Intermediate { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-      .badge-Beginner { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+      .badge-Advanced {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+      .badge-Intermediate {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+      .badge-Beginner {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
 
-      .program-card h3 { font-family: "Outfit", sans-serif; font-size: 1.4rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.3; }
-      
-      .card-meta { display: flex; align-items: center; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
-      .card-meta span { display: flex; align-items: center; gap: 0.5rem; }
+      .program-card h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.4rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
 
-      .card-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
-      
+      .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .card-actions {
+        margin-top: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 0.5rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+      }
+
       .btn-enroll {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white; border: none; padding: 0.8rem; border-radius: 12px; font-weight: 600;
-        cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none;
+        color: white;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: center;
+        text-decoration: none;
       }
-      .btn-enroll:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
-      
+      .btn-enroll:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+
       .btn-details {
-        background: transparent; color: var(--text); border: 1px solid var(--border);
-        padding: 0.8rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; text-align: center;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 0.8rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: center;
       }
-      .btn-details:hover { background: var(--bg); border-color: var(--primary); color: var(--primary); }
+      .btn-details:hover {
+        background: var(--bg);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
 
       .btn-save {
-        background: var(--bg); color: var(--muted); border: 1px solid var(--border); width: 45px; height: 45px;
-        border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+        background: var(--bg);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s;
       }
-      .btn-save:hover { border-color: var(--primary); color: var(--primary); }
-      .btn-save.saved { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.2); }
-      .btn-save.saved svg { fill: currentColor; }
+      .btn-save:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .btn-save.saved {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.2);
+      }
+      .btn-save.saved svg {
+        fill: currentColor;
+      }
 
       /* MODAL */
       .modal {
-        position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);
-        display: none; align-items: center; justify-content: center; z-index: 2000;
-        opacity: 0; transition: opacity 0.3s ease; padding: 20px;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 20px;
       }
-      .modal.show { display: flex; opacity: 1; }
-      
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
       .modal-content {
-        background: var(--card); padding: 40px; border-radius: 24px;
-        width: 100%; max-width: 600px; border: 1px solid var(--border);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); transform: translateY(20px);
-        transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; position: relative;
+        background: var(--card);
+        padding: 40px;
+        border-radius: 24px;
+        width: 100%;
+        max-width: 600px;
+        border: 1px solid var(--border);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
       }
-      .modal.show .modal-content { transform: translateY(0); }
-      
-      .modal-header { margin-bottom: 25px; padding-right: 30px; }
+      .modal.show .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        margin-bottom: 25px;
+        padding-right: 30px;
+      }
       .modal-close {
-        position: absolute; top: 30px; right: 30px; background: var(--bg); border: 1px solid var(--border);
-        width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        cursor: pointer; color: var(--text); transition: 0.2s;
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text);
+        transition: 0.2s;
       }
-      .modal-close:hover { background: var(--admin-danger); color: white; border-color: var(--admin-danger); }
-      
-      .modal-title { font-family: "Outfit", sans-serif; font-size: 1.8rem; margin: 0 0 10px 0; }
-      
-      .modal-body { color: var(--text); line-height: 1.7; }
-      .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: var(--bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-      .modal-grid div { display: flex; flex-direction: column; gap: 5px; }
-      .modal-grid label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
-      .modal-grid span { font-weight: 600; }
+      .modal-close:hover {
+        background: var(--admin-danger);
+        color: white;
+        border-color: var(--admin-danger);
+      }
+
+      .modal-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+      }
+
+      .modal-body {
+        color: var(--text);
+        line-height: 1.7;
+      }
+      .modal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
+        background: var(--bg);
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+      }
+      .modal-grid div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .modal-grid label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .modal-grid span {
+        font-weight: 600;
+      }
 
       /* NEWSLETTER SECTION */
       .newsletter-section {
@@ -295,55 +602,171 @@
       }
 
       /* FOOTER */
-      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; margin-top: auto; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
-      .footer-col ul li { margin-bottom: 12px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
-      .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 15px; }
-      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
-      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer {
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        padding: 60px 0 40px;
+        margin-top: auto;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.95rem;
+      }
+      .footer-col ul li a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 25px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
       /* RESPONSIVE MEDIA QUERIES */
       @media (max-width: 1024px) {
-        .hero h1 { font-size: 3rem; }
+        .hero h1 {
+          font-size: 3rem;
+        }
       }
 
       @media (max-width: 900px) {
         .navbar-menu {
-          position: fixed; top: 70px; left: -100%; display: flex !important;
-          flex-direction: column; background: var(--card); width: 100%; text-align: center;
-          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-          padding: 2rem 0; border-bottom: 1px solid var(--border); z-index: 99;
-          max-height: calc(100vh - 70px); overflow-y: auto;
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          display: flex !important;
+          flex-direction: column;
+          background: var(--card);
+          width: 100%;
+          text-align: center;
+          transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          padding: 2rem 0;
+          border-bottom: 1px solid var(--border);
+          z-index: 99;
+          max-height: calc(100vh - 70px);
+          overflow-y: auto;
         }
-        .navbar-menu.active { left: 0; }
-        .navbar-menu li { margin: 15px 0; width: 100%; }
-        
-        .dropdown:hover .dropdown-menu { position: static; box-shadow: none; border: none; transform: none; visibility: visible; opacity: 1; background: transparent; padding: 0; margin-top: 10px;}
-        .dropdown-menu a { display: block; text-align: center; }
-        
-        .mobile-menu-btn { display: flex; order: 3; }
-        .navbar-logo { flex: 1; }
-        .nav-actions { order: 2; margin-right: 15px; gap: 10px; }
-        .nav-actions .btn-donate { display: none; }
+        .navbar-menu.active {
+          left: 0;
+        }
+        .navbar-menu li {
+          margin: 15px 0;
+          width: 100%;
+        }
+
+        .dropdown:hover .dropdown-menu {
+          position: static;
+          box-shadow: none;
+          border: none;
+          transform: none;
+          visibility: visible;
+          opacity: 1;
+          background: transparent;
+          padding: 0;
+          margin-top: 10px;
+        }
+        .dropdown-menu a {
+          display: block;
+          text-align: center;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+          order: 3;
+        }
+        .navbar-logo {
+          flex: 1;
+        }
+        .nav-actions {
+          order: 2;
+          margin-right: 15px;
+          gap: 10px;
+        }
+        .nav-actions .btn-donate {
+          display: none;
+        }
       }
 
       @media (max-width: 768px) {
-        .hero { padding: 140px 1.5rem 80px; }
-        .hero h1 { font-size: 2.5rem; }
-        .filter-container { padding: 0 1.5rem; margin-top: -20px; }
-        .filter-bar { flex-direction: column; padding: 15px; }
-        .wishlist-pill { width: 100%; justify-content: center; }
-        
-        .training-grid { grid-template-columns: 1fr; }
-        .card-actions { grid-template-columns: 1fr 1fr auto; }
-        
+        .hero {
+          padding: 140px 1.5rem 80px;
+        }
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .filter-container {
+          padding: 0 1.5rem;
+          margin-top: -20px;
+        }
+        .filter-bar {
+          flex-direction: column;
+          padding: 15px;
+        }
+        .wishlist-pill {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .training-grid {
+          grid-template-columns: 1fr;
+        }
+        .card-actions {
+          grid-template-columns: 1fr 1fr auto;
+        }
+
         /* Newsletter overrides for tablet/mobile */
-        .newsletter-section { padding: 60px 1.5rem; }
+        .newsletter-section {
+          padding: 60px 1.5rem;
+        }
         .newsletter-box {
           flex-direction: column;
           text-align: center;
@@ -356,34 +779,67 @@
         .newsletter-form button {
           width: 100%;
         }
-        
-        .footer { padding: 40px 0 30px; }
-        .footer-grid { gap: 30px; }
-        .footer-bottom { flex-direction: column; text-align: center; }
-        .footer-legal { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
+
+        .footer {
+          padding: 40px 0 30px;
+        }
+        .footer-grid {
+          gap: 30px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-legal {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          flex-wrap: wrap;
+          margin-top: 10px;
+        }
       }
 
       @media (max-width: 480px) {
-        .hero h1 { font-size: 2rem; }
-        .hero p { font-size: 1rem; }
-        .program-card { padding: 1.5rem; }
-        .card-actions { grid-template-columns: 1fr; }
-        .btn-save { width: 100%; }
-        
-        .navbar-container { padding: 15px 1rem; }
-        #dirToggle span { display: none; }
-        
-        .modal-content { padding: 25px 20px; }
-        .modal-grid { grid-template-columns: 1fr; }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .hero p {
+          font-size: 1rem;
+        }
+        .program-card {
+          padding: 1.5rem;
+        }
+        .card-actions {
+          grid-template-columns: 1fr;
+        }
+        .btn-save {
+          width: 100%;
+        }
 
-        .newsletter-content h2 { font-size: 1.5rem; }
+        .navbar-container {
+          padding: 15px 1rem;
+        }
+        #dirToggle span {
+          display: none;
+        }
+
+        .modal-content {
+          padding: 25px 20px;
+        }
+        .modal-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .newsletter-content h2 {
+          font-size: 1.5rem;
+        }
       }
     </style>
   </head>
 
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -403,10 +859,13 @@
               <a href="Home2.html">Home 2</a>
             </div>
           </li>
-          <li><a href="TrainingPage.html" class="navbar-link active">Trainings</a></li>
+          <li>
+            <a href="TrainingPage.html" class="navbar-link active">Trainings</a>
+          </li>
           <li><a href="wishlist.html" class="navbar-link">Wishlist</a></li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
+          <li><a href="About_us.html" class="navbar-link">About Us</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
@@ -418,18 +877,52 @@
         </ul>
 
         <div class="nav-actions">
-          <button class="btn-donate" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 8px 16px; border-radius: 10px; font-weight: 600; border: none; cursor: pointer;" onclick="window.location.href = 'login.html'">Get Started</button>
-          
-          <button id="dirToggle" style="padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text);">
+          <button
+            class="btn-donate"
+            style="
+              background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+              );
+              color: white;
+              padding: 8px 16px;
+              border-radius: 10px;
+              font-weight: 600;
+              border: none;
+              cursor: pointer;
+            "
+            onclick="window.location.href = 'login.html'"
+          >
+            Get Started
+          </button>
+
+          <button
+            id="dirToggle"
+            style="
+              padding: 8px 12px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              cursor: pointer;
+              border: 1px solid var(--border);
+              background: var(--card);
+              color: var(--text);
+            "
+          >
             <i data-lucide="languages" style="width: 18px"></i>
             <span>LTR</span>
           </button>
-          
-          <label class="theme-toggle" onclick="document.documentElement.classList.toggle('dark')">
+
+          <label
+            class="theme-toggle"
+            onclick="document.documentElement.classList.toggle('dark')"
+          >
             <i data-lucide="moon" style="width: 18px"></i>
           </label>
         </div>
-        
+
         <button class="mobile-menu-btn" id="mobileMenuBtn">
           <i data-lucide="menu"></i>
         </button>
@@ -438,24 +931,34 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
-      <div class="container" style="max-width: 800px;">
+      <div class="container" style="max-width: 800px">
         <h1>Conflict Resolution<br />Training Programs</h1>
-        <p>Compare programs, acquire new skills tailored to high-impact NGO environments, and save your favorites to your wishlist.</p>
+        <p>
+          Compare programs, acquire new skills tailored to high-impact NGO
+          environments, and save your favorites to your wishlist.
+        </p>
       </div>
     </section>
 
     <!-- FILTER BAR -->
     <div class="filter-container">
       <div class="filter-bar">
-        <input type="text" id="searchInput" placeholder="Search course by name or topic..." />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search course by name or topic..."
+        />
         <select id="levelFilter">
           <option value="All">All Levels</option>
           <option value="Beginner">Beginner Tracks</option>
           <option value="Intermediate">Intermediate Tracks</option>
           <option value="Advanced">Advanced Tracks</option>
         </select>
-        <button class="wishlist-pill" onclick="window.location.href='wishlist.html'">
-          <i data-lucide="bookmark" style="width: 18px;"></i> Saved
+        <button
+          class="wishlist-pill"
+          onclick="window.location.href = 'wishlist.html'"
+        >
+          <i data-lucide="bookmark" style="width: 18px"></i> Saved
           <span class="wishlist-count" id="wishlistCount">0</span>
         </button>
       </div>
@@ -471,23 +974,45 @@
     <!-- COURSE DETAILS MODAL -->
     <div class="modal" id="detailsModal">
       <div class="modal-content">
-        <button class="modal-close" onclick="closeDetails()"><i data-lucide="x" style="width: 20px;"></i></button>
+        <button class="modal-close" onclick="closeDetails()">
+          <i data-lucide="x" style="width: 20px"></i>
+        </button>
         <div class="modal-header">
-          <span class="card-badge" id="modalLevel" style="margin-bottom: 10px;">Level</span>
+          <span class="card-badge" id="modalLevel" style="margin-bottom: 10px"
+            >Level</span
+          >
           <h2 class="modal-title" id="modalTitle">Course Title</h2>
         </div>
         <div class="modal-body">
           <div class="modal-grid">
             <div><label>Duration</label> <span id="modalDuration"></span></div>
-            <div><label>Instructor</label> <span id="modalInstructor"></span></div>
+            <div>
+              <label>Instructor</label> <span id="modalInstructor"></span>
+            </div>
             <div><label>Modules</label> <span id="modalModules"></span></div>
             <div><label>Format</label> <span>100% Online</span></div>
           </div>
-          <h4 style="margin-bottom: 10px; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">About this program</h4>
-          <p id="modalDesc" style="color: var(--muted); margin-bottom: 30px;">Course Description</p>
-          
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-enroll" style="flex: 1; padding: 12px;" onclick="window.location.href='login.html'">Enroll Now</button>
+          <h4
+            style="
+              margin-bottom: 10px;
+              font-family: &quot;Outfit&quot;, sans-serif;
+              font-size: 1.2rem;
+            "
+          >
+            About this program
+          </h4>
+          <p id="modalDesc" style="color: var(--muted); margin-bottom: 30px">
+            Course Description
+          </p>
+
+          <div style="display: flex; gap: 10px">
+            <button
+              class="btn-enroll"
+              style="flex: 1; padding: 12px"
+              onclick="window.location.href = 'login.html'"
+            >
+              Enroll Now
+            </button>
           </div>
         </div>
       </div>
@@ -499,10 +1024,17 @@
         <div class="newsletter-box">
           <div class="newsletter-content">
             <h2>Stay up to date</h2>
-            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+            <p>
+              Subscribe to our newsletter and get the latest training updates,
+              resources, and community news delivered directly to your inbox.
+            </p>
           </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault();">
-            <input type="email" placeholder="Enter your email address" required />
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
             <button type="submit">Subscribe</button>
           </form>
         </div>
@@ -513,10 +1045,22 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
-          <div class="footer-col">
-            <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-            <p style="color: var(--muted); line-height: 1.6;">
-              Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+          <div class="footer-col" style="cursor: pointer">
+            <h4
+              style="
+                color: var(--primary);
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                font-family: &quot;Outfit&quot;, sans-serif;
+              "
+              onclick="window.location.href = '../index.html'"
+            >
+              🌍 NGO Training
+            </h4>
+            <p style="color: var(--muted); line-height: 1.6">
+              Empowering individuals and organizations with conflict resolution
+              skills for a more peaceful world. Our platform provides
+              high-quality, accessible training for everyone.
             </p>
           </div>
           <div class="footer-col">
@@ -539,7 +1083,9 @@
           </div>
           <div class="footer-col">
             <h4>Follow Us</h4>
-            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <p style="margin-bottom: 1.5rem; color: var(--muted)">
+              Join our community on social media to stay updated.
+            </p>
             <div class="social-links">
               <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
               <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
@@ -549,10 +1095,25 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+          <p>
+            &copy; <span id="year">2026</span> NGO Training Platform. All rights
+            reserved.
+          </p>
           <div class="footer-legal">
-            <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
-            <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+            <a
+              href="javascript:void(0)"
+              style="color: var(--muted); text-decoration: none"
+              >Privacy Policy</a
+            >
+            <a
+              href="javascript:void(0)"
+              style="
+                color: var(--muted);
+                text-decoration: none;
+                margin-left: 20px;
+              "
+              >Terms of Service</a
+            >
           </div>
         </div>
       </div>
@@ -561,24 +1122,79 @@
     <!-- SCRIPTS -->
     <script>
       // Initialize Icons
-      if (typeof lucide !== 'undefined') {
+      if (typeof lucide !== "undefined") {
         lucide.createIcons();
       }
-      
+
       // Set Year
       document.getElementById("year").innerText = new Date().getFullYear();
 
       // Fallback Data in case data.js is missing
       const programsFallback = [
-        { id: 1, title: "Advanced Conflict Resolution", level: "Advanced", instructor: "Dr. Sarah Jenkins", description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", duration: "6 Weeks", modules: 12 },
-        { id: 2, title: "Foundations of Mediation", level: "Beginner", instructor: "Michael Torres", description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", duration: "3 Weeks", modules: 5 },
-        { id: 3, title: "Cross-Cultural Communication", level: "Intermediate", instructor: "Aisha Rahman", description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", duration: "4 Weeks", modules: 8 },
-        { id: 4, title: "Negotiation Strategies", level: "Advanced", instructor: "David Chen", description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", duration: "8 Weeks", modules: 16 },
-        { id: 5, title: "Trauma-Informed Care", level: "Intermediate", instructor: "Dr. Elena Rossi", description: "Understand psychological impacts and learn how to appropriately support affected populations post-conflict.", duration: "5 Weeks", modules: 10 },
-        { id: 6, title: "Local Leadership Basics", level: "Beginner", instructor: "Michael Torres", description: "Empower local voices and build resilient communities from the ground up.", duration: "2 Weeks", modules: 4 }
+        {
+          id: 1,
+          title: "Advanced Conflict Resolution",
+          level: "Advanced",
+          instructor: "Dr. Sarah Jenkins",
+          description:
+            "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.",
+          duration: "6 Weeks",
+          modules: 12,
+        },
+        {
+          id: 2,
+          title: "Foundations of Mediation",
+          level: "Beginner",
+          instructor: "Michael Torres",
+          description:
+            "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.",
+          duration: "3 Weeks",
+          modules: 5,
+        },
+        {
+          id: 3,
+          title: "Cross-Cultural Communication",
+          level: "Intermediate",
+          instructor: "Aisha Rahman",
+          description:
+            "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.",
+          duration: "4 Weeks",
+          modules: 8,
+        },
+        {
+          id: 4,
+          title: "Negotiation Strategies",
+          level: "Advanced",
+          instructor: "David Chen",
+          description:
+            "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.",
+          duration: "8 Weeks",
+          modules: 16,
+        },
+        {
+          id: 5,
+          title: "Trauma-Informed Care",
+          level: "Intermediate",
+          instructor: "Dr. Elena Rossi",
+          description:
+            "Understand psychological impacts and learn how to appropriately support affected populations post-conflict.",
+          duration: "5 Weeks",
+          modules: 10,
+        },
+        {
+          id: 6,
+          title: "Local Leadership Basics",
+          level: "Beginner",
+          instructor: "Michael Torres",
+          description:
+            "Empower local voices and build resilient communities from the ground up.",
+          duration: "2 Weeks",
+          modules: 4,
+        },
       ];
 
-      const activePrograms = typeof programs !== 'undefined' ? programs : programsFallback;
+      const activePrograms =
+        typeof programs !== "undefined" ? programs : programsFallback;
 
       let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
@@ -601,21 +1217,22 @@
         }
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
         updateWishlistCount();
-        renderGrid(); 
+        renderGrid();
       }
 
       function openDetails(id) {
         const p = activePrograms.find((p) => p.id === id);
         if (!p) return;
-        
+
         document.getElementById("modalTitle").innerText = p.title;
-        
+
         const badgeElement = document.getElementById("modalLevel");
         badgeElement.innerText = p.level;
         badgeElement.className = `card-badge badge-${p.level}`;
-        
+
         document.getElementById("modalDuration").innerText = p.duration;
-        document.getElementById("modalInstructor").innerText = p.instructor || "NGO Expert Team";
+        document.getElementById("modalInstructor").innerText =
+          p.instructor || "NGO Expert Team";
         document.getElementById("modalModules").innerText = p.modules || "6";
         document.getElementById("modalDesc").innerText = p.description;
 
@@ -629,11 +1246,11 @@
       }
 
       // Close modal on outside click
-      window.onclick = function(event) {
+      window.onclick = function (event) {
         if (event.target == modal) {
           closeDetails();
         }
-      }
+      };
 
       // Render Grid Logic
       function renderGrid() {
@@ -643,7 +1260,9 @@
         grid.innerHTML = "";
 
         const filtered = activePrograms.filter((p) => {
-          const matchesSearch = p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
+          const matchesSearch =
+            p.title.toLowerCase().includes(query) ||
+            p.description.toLowerCase().includes(query);
           const matchesLevel = level === "All" || p.level === level;
           return matchesSearch && matchesLevel;
         });
@@ -659,7 +1278,7 @@
           filtered.forEach((p) => {
             const isSaved = wishlist.includes(p.id);
             const saveBtnClass = isSaved ? "btn-save saved" : "btn-save";
-            const saveIconProps = isSaved ? 'fill="currentColor"' : '';
+            const saveIconProps = isSaved ? 'fill="currentColor"' : "";
 
             grid.innerHTML += `
               <div class="program-card">
@@ -673,7 +1292,7 @@
                 <div class="card-actions">
                   <button class="btn-details" onclick="openDetails(${p.id})">Details</button>
                   <button class="btn-enroll" onclick="window.location.href='login.html'">Enroll</button>
-                  <button class="${saveBtnClass}" onclick="toggleWishlist(${p.id})" title="${isSaved ? 'Remove from saved' : 'Save program'}">
+                  <button class="${saveBtnClass}" onclick="toggleWishlist(${p.id})" title="${isSaved ? "Remove from saved" : "Save program"}">
                     <i data-lucide="bookmark" style="width: 20px" ${saveIconProps}></i>
                   </button>
                 </div>
@@ -681,8 +1300,8 @@
             `;
           });
         }
-        
-        if (typeof lucide !== 'undefined') {
+
+        if (typeof lucide !== "undefined") {
           lucide.createIcons();
         }
       }
@@ -716,7 +1335,7 @@
           const icon = mobileBtn.querySelector("i");
           if (icon) {
             icon.setAttribute("data-lucide", isExpanded ? "x" : "menu");
-            if (typeof lucide !== 'undefined') {
+            if (typeof lucide !== "undefined") {
               lucide.createIcons();
             }
           }

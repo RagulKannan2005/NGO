@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script>
       (function () {
         const theme = localStorage.getItem("theme");
@@ -97,7 +100,7 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       .navbar {
         position: fixed;
         top: 0;
@@ -109,16 +112,16 @@
         border-bottom: 1px solid var(--border);
         transition: 0.3s;
       }
-      
+
       html.dark .navbar {
         background: rgba(15, 23, 42, 0.8);
       }
-      
+
       .navbar.solid-bg {
         background: var(--card) !important;
         backdrop-filter: none;
       }
-      
+
       .navbar-container {
         display: flex;
         justify-content: space-between;
@@ -127,7 +130,7 @@
         max-width: 1400px;
         margin: 0 auto;
       }
-      
+
       .navbar-logo {
         font-size: 1.4rem;
         font-weight: 800;
@@ -136,7 +139,7 @@
         color: var(--text);
         white-space: nowrap;
       }
-      
+
       .navbar-menu {
         display: flex;
         gap: 2rem;
@@ -145,25 +148,25 @@
         padding: 0;
         align-items: center;
       }
-      
+
       .navbar-link {
         color: var(--muted);
         text-decoration: none;
         font-weight: 500;
         transition: 0.3s;
       }
-      
+
       .navbar-link:hover,
       .navbar-link.active {
         color: var(--primary);
       }
-      
+
       .nav-actions {
         display: flex;
         align-items: center;
         gap: 15px;
       }
-      
+
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -176,7 +179,7 @@
         cursor: pointer;
         color: var(--text);
       }
-      
+
       .theme-toggle input {
         display: none;
       }
@@ -185,7 +188,7 @@
       .dropdown {
         position: relative;
       }
-      
+
       .dropdown-menu {
         position: absolute;
         top: 100%;
@@ -205,14 +208,14 @@
         gap: 5px;
         z-index: 100;
       }
-      
+
       .dropdown:hover .dropdown-menu,
       .dropdown:focus-within .dropdown-menu {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
       }
-      
+
       .dropdown-menu a {
         padding: 10px 15px;
         color: var(--text);
@@ -221,7 +224,7 @@
         font-size: 0.95rem;
         transition: 0.2s;
       }
-      
+
       .dropdown-menu a:hover,
       .dropdown-menu a:focus {
         background: rgba(128, 128, 128, 0.05);
@@ -363,13 +366,30 @@
         font-size: 1rem;
       }
 
-      .btn-share { background: white; color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-      .btn-share:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
-      .btn-clear { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px); }
-      .btn-clear:hover { background: rgba(239, 68, 68, 0.3); transform: translateY(-3px); }
+      .btn-share {
+        background: white;
+        color: var(--primary);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .btn-share:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+      .btn-clear {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        backdrop-filter: blur(10px);
+      }
+      .btn-clear:hover {
+        background: rgba(239, 68, 68, 0.3);
+        transform: translateY(-3px);
+      }
 
       /* Training Grid */
-      .wishlist-main { margin: 0 auto 100px; }
+      .wishlist-main {
+        margin: 0 auto 100px;
+      }
       .training-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
@@ -378,54 +398,147 @@
 
       /* Modern Bento Card */
       .program-card {
-        background: var(--card); border: 1px solid var(--border); border-radius: 24px;
-        padding: 2.5rem; display: flex; flex-direction: column;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
       }
-      .program-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); }
+      .program-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
 
       .card-badge {
-        display: inline-block; padding: 6px 14px; background: rgba(37, 99, 235, 0.1);
-        color: var(--primary); border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-        text-transform: uppercase; margin-bottom: 1.5rem; align-self: flex-start;
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        align-self: flex-start;
       }
 
-      .program-card h3 { font-family: "Outfit", sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; line-height: 1.3; }
-      
-      .card-meta { display: flex; align-items: center; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
-      .card-meta span { display: flex; align-items: center; gap: 0.5rem; }
+      .program-card h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
 
-      .card-actions { margin-top: auto; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+      .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .card-actions {
+        margin-top: auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+      }
       .btn-enroll {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white; border: none; padding: 0.9rem; border-radius: 12px; font-weight: 600;
-        cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none;
+        color: white;
+        border: none;
+        padding: 0.9rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: center;
+        text-decoration: none;
       }
-      .btn-enroll:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
-      
+      .btn-enroll:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+
       .btn-remove {
-        background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; width: 48px; height: 48px;
-        border-radius: 12px; display: flex; align-items: center; justify-content: center;
-        cursor: pointer; transition: 0.2s;
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s;
       }
-      .btn-remove:hover { background: #ef4444; color: white; }
+      .btn-remove:hover {
+        background: #ef4444;
+        color: white;
+      }
 
       /* Empty State */
       .empty-state {
-        text-align: center; padding: 80px 2rem; background: var(--card);
-        border: 2px dashed var(--border); border-radius: 32px; max-width: 650px; margin: 0 auto;
+        text-align: center;
+        padding: 80px 2rem;
+        background: var(--card);
+        border: 2px dashed var(--border);
+        border-radius: 32px;
+        max-width: 650px;
+        margin: 0 auto;
       }
       .empty-icon {
-        width: 80px; height: 80px; background: rgba(37, 99, 235, 0.05); color: var(--primary);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2.5rem;
+        width: 80px;
+        height: 80px;
+        background: rgba(37, 99, 235, 0.05);
+        color: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2.5rem;
       }
-      .empty-state h2 { font-family: "Outfit", sans-serif; font-size: 2rem; margin-top: 0; margin-bottom: 1rem; }
-      .empty-state p { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.6; }
+      .empty-state h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+      .empty-state p {
+        font-size: 1.1rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+      }
       .btn-browse {
-        background: var(--primary); color: white; padding: 1rem 2.5rem; border-radius: 12px;
-        text-decoration: none; font-weight: 600; display: inline-block; transition: 0.3s;
+        background: var(--primary);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+        transition: 0.3s;
       }
-      .btn-browse:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+      .btn-browse:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
 
       /* NEWSLETTER SECTION */
       .newsletter-section {
@@ -501,31 +614,101 @@
       }
 
       /* Footer */
-      .footer { background: var(--card); border-top: 1px solid var(--border); padding: 60px 0 40px; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-      .footer-col h4 { margin-top: 0; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; color: var(--text); font-family: 'Outfit', sans-serif;}
-      .footer-col ul { list-style: none; padding: 0; margin: 0; }
-      .footer-col ul li { margin-bottom: 12px; }
-      .footer-col ul li a { color: var(--muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; }
-      .footer-col ul li a:hover { color: var(--primary); }
-      .social-links { display: flex; gap: 15px; }
-      .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(128,128,128,0.05); display: flex; align-items: center; justify-content: center; color: var(--text); transition: 0.3s; }
-      .social-links a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-      .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 25px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; flex-wrap: wrap; gap: 15px; }
+      .footer {
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        padding: 60px 0 40px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+      }
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.95rem;
+      }
+      .footer-col ul li a:hover {
+        color: var(--primary);
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 25px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
       /* CONTENT RESPONSIVE BREAKPOINTS */
       @media (max-width: 1024px) {
-        .wishlist-header h1 { font-size: 3rem; }
+        .wishlist-header h1 {
+          font-size: 3rem;
+        }
       }
 
       @media (max-width: 768px) {
-        .wishlist-header { padding: 140px 1.5rem 80px; }
-        .wishlist-header h1 { font-size: 2.5rem; }
-        .wishlist-actions { flex-direction: column; }
-        .btn-action { width: 100%; }
-        .training-grid { grid-template-columns: 1fr; }
-        
-        .newsletter-section { padding: 60px 1.5rem; }
+        .wishlist-header {
+          padding: 140px 1.5rem 80px;
+        }
+        .wishlist-header h1 {
+          font-size: 2.5rem;
+        }
+        .wishlist-actions {
+          flex-direction: column;
+        }
+        .btn-action {
+          width: 100%;
+        }
+        .training-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .newsletter-section {
+          padding: 60px 1.5rem;
+        }
         .newsletter-box {
           flex-direction: column;
           text-align: center;
@@ -538,26 +721,49 @@
         .newsletter-form button {
           width: 100%;
         }
-        
-        .footer { padding: 40px 0 30px; }
-        .footer-grid { gap: 30px; }
-        .footer-bottom { flex-direction: column; text-align: center; }
-        .footer-legal { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
+
+        .footer {
+          padding: 40px 0 30px;
+        }
+        .footer-grid {
+          gap: 30px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-legal {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          flex-wrap: wrap;
+          margin-top: 10px;
+        }
       }
 
       @media (max-width: 480px) {
-        .wishlist-header { padding: 120px 1.5rem 60px; }
-        .wishlist-header h1 { font-size: 2rem; }
-        .wishlist-header p { font-size: 1rem; }
-        .program-card { padding: 1.5rem; }
-        .newsletter-content h2 { font-size: 1.5rem; }
+        .wishlist-header {
+          padding: 120px 1.5rem 60px;
+        }
+        .wishlist-header h1 {
+          font-size: 2rem;
+        }
+        .wishlist-header p {
+          font-size: 1rem;
+        }
+        .program-card {
+          padding: 1.5rem;
+        }
+        .newsletter-content h2 {
+          font-size: 1.5rem;
+        }
       }
     </style>
   </head>
 
   <body>
     <!-- PAGE LOADER -->
-    <div class="cssloader" id="page-loader" style="display: none;">
+    <div class="cssloader" id="page-loader" style="display: none">
       <div class="triangle1"></div>
       <div class="triangle2"></div>
       <p class="text">Please Wait</p>
@@ -578,9 +784,12 @@
           </li>
           <li><a href="TrainingPage.html" class="navbar-link">Trainings</a></li>
           <!-- Highlighted Active Link for Wishlist Page -->
-          <li><a href="wishlist.html" class="navbar-link active">Wishlist</a></li>
+          <li>
+            <a href="wishlist.html" class="navbar-link active">Wishlist</a>
+          </li>
           <li><a href="Community.html" class="navbar-link">Community</a></li>
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
+          <li><a href="About_us.html" class="navbar-link">About Us</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
           <li class="dropdown">
             <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
@@ -679,10 +888,17 @@
         <div class="newsletter-box">
           <div class="newsletter-content">
             <h2>Stay up to date</h2>
-            <p>Subscribe to our newsletter and get the latest training updates, resources, and community news delivered directly to your inbox.</p>
+            <p>
+              Subscribe to our newsletter and get the latest training updates,
+              resources, and community news delivered directly to your inbox.
+            </p>
           </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault();">
-            <input type="email" placeholder="Enter your email address" required />
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
             <button type="submit">Subscribe</button>
           </form>
         </div>
@@ -694,9 +910,20 @@
       <div class="container">
         <div class="footer-grid">
           <div class="footer-col">
-            <h4 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">🌍 NGO Training</h4>
-            <p style="color: var(--muted); line-height: 1.6;">
-              Empowering individuals and organizations with conflict resolution skills for a more peaceful world. Our platform provides high-quality, accessible training for everyone.
+            <h4
+              style="
+                color: var(--primary);
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                font-family: &quot;Outfit&quot;, sans-serif;
+              "
+            >
+              🌍 NGO Training
+            </h4>
+            <p style="color: var(--muted); line-height: 1.6">
+              Empowering individuals and organizations with conflict resolution
+              skills for a more peaceful world. Our platform provides
+              high-quality, accessible training for everyone.
             </p>
           </div>
           <div class="footer-col">
@@ -719,7 +946,9 @@
           </div>
           <div class="footer-col">
             <h4>Follow Us</h4>
-            <p style="margin-bottom: 1.5rem; color: var(--muted);">Join our community on social media to stay updated.</p>
+            <p style="margin-bottom: 1.5rem; color: var(--muted)">
+              Join our community on social media to stay updated.
+            </p>
             <div class="social-links">
               <a href="javascript:void(0)"><i data-lucide="facebook"></i></a>
               <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
@@ -729,10 +958,25 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; <span id="year">2026</span> NGO Training Platform. All rights reserved.</p>
+          <p>
+            &copy; <span id="year">2026</span> NGO Training Platform. All rights
+            reserved.
+          </p>
           <div class="footer-legal">
-            <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
-            <a href="javascript:void(0)" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Terms of Service</a>
+            <a
+              href="javascript:void(0)"
+              style="color: var(--muted); text-decoration: none"
+              >Privacy Policy</a
+            >
+            <a
+              href="javascript:void(0)"
+              style="
+                color: var(--muted);
+                text-decoration: none;
+                margin-left: 20px;
+              "
+              >Terms of Service</a
+            >
           </div>
         </div>
       </div>
@@ -741,29 +985,62 @@
     <!-- Scripts -->
     <script>
       // Initialize Icons
-      if (typeof lucide !== 'undefined') {
+      if (typeof lucide !== "undefined") {
         lucide.createIcons();
       }
-      
+
       // Set Year
       document.getElementById("year").innerText = new Date().getFullYear();
 
       // Fallback Programs Mock Data (In case data.js is missing or slow)
       const programsFallback = [
-        { id: 1, title: "Advanced Conflict Resolution", level: "Advanced", description: "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.", duration: "6 Weeks", modules: 12 },
-        { id: 2, title: "Foundations of Mediation", level: "Beginner", description: "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.", duration: "3 Weeks", modules: 5 },
-        { id: 3, title: "Cross-Cultural Communication", level: "Intermediate", description: "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.", duration: "4 Weeks", modules: 8 },
-        { id: 4, title: "Negotiation Strategies", level: "Advanced", description: "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.", duration: "8 Weeks", modules: 16 }
+        {
+          id: 1,
+          title: "Advanced Conflict Resolution",
+          level: "Advanced",
+          description:
+            "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.",
+          duration: "6 Weeks",
+          modules: 12,
+        },
+        {
+          id: 2,
+          title: "Foundations of Mediation",
+          level: "Beginner",
+          description:
+            "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.",
+          duration: "3 Weeks",
+          modules: 5,
+        },
+        {
+          id: 3,
+          title: "Cross-Cultural Communication",
+          level: "Intermediate",
+          description:
+            "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.",
+          duration: "4 Weeks",
+          modules: 8,
+        },
+        {
+          id: 4,
+          title: "Negotiation Strategies",
+          level: "Advanced",
+          description:
+            "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.",
+          duration: "8 Weeks",
+          modules: 16,
+        },
       ];
 
       // Use defined programs array or fallback
-      const activePrograms = typeof programs !== 'undefined' ? programs : programsFallback;
+      const activePrograms =
+        typeof programs !== "undefined" ? programs : programsFallback;
 
       let wishlist = JSON.parse(localStorage.getItem("wishlist"));
-      
+
       // If local storage is empty, populate 2 dummy items so the user can see the design
       if (!wishlist || !Array.isArray(wishlist)) {
-        wishlist = [1, 3]; 
+        wishlist = [1, 3];
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
       }
 
@@ -777,15 +1054,15 @@
           emptyState.style.display = "block";
           container.style.display = "none";
           // Disable clear/share buttons if empty
-          document.querySelector('.btn-share').style.opacity = '0.5';
-          document.querySelector('.btn-clear').style.opacity = '0.5';
+          document.querySelector(".btn-share").style.opacity = "0.5";
+          document.querySelector(".btn-clear").style.opacity = "0.5";
           return;
         }
 
         emptyState.style.display = "none";
         container.style.display = "grid";
-        document.querySelector('.btn-share').style.opacity = '1';
-        document.querySelector('.btn-clear').style.opacity = '1';
+        document.querySelector(".btn-share").style.opacity = "1";
+        document.querySelector(".btn-clear").style.opacity = "1";
 
         wishlist.forEach((id) => {
           const program = activePrograms.find((p) => p.id === id);
@@ -809,8 +1086,8 @@
             `;
           }
         });
-        
-        if (typeof lucide !== 'undefined') {
+
+        if (typeof lucide !== "undefined") {
           lucide.createIcons();
         }
       }
