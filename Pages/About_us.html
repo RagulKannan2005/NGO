@@ -39,24 +39,6 @@
       /* ==========================================
          BASE & VARIABLES
          ========================================== */
-      :root {
-        --primary: #2563eb;
-        --secondary: #0ea5e9;
-        --bg: #f8fafc;
-        --card: #ffffff;
-        --text: #0f172a;
-        --muted: #64748b;
-        --border: rgba(128, 128, 128, 0.15);
-      }
-
-      html.dark {
-        --bg: #0f172a;
-        --card: #1e293b;
-        --text: #f8fafc;
-        --muted: #94a3b8;
-        --border: rgba(255, 255, 255, 0.1);
-      }
-
       * {
         box-sizing: border-box;
         margin: 0;
@@ -64,9 +46,6 @@
       }
 
       body {
-        font-family: "Poppins", sans-serif;
-        background-color: var(--bg);
-        color: var(--text);
         overflow-x: hidden;
       }
 
@@ -81,6 +60,7 @@
       .text-gradient {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
       }
 
@@ -337,7 +317,6 @@
         align-items: center;
       }
       .hero-content h1 {
-        font-family: "Outfit", sans-serif;
         font-size: clamp(2.5rem, 5vw, 4rem);
         line-height: 1.1;
         margin-bottom: 1.5rem;
@@ -373,7 +352,6 @@
         order: 1;
       }
       .split-text h2 {
-        font-family: "Outfit", sans-serif;
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
       }
@@ -399,7 +377,6 @@
         margin: 0 auto 4rem;
       }
       .section-header h2 {
-        font-family: "Outfit", sans-serif;
         font-size: 2.5rem;
         margin-bottom: 1rem;
       }
@@ -465,7 +442,6 @@
         border-radius: 24px;
       }
       .impact-number {
-        font-family: "Outfit", sans-serif;
         font-size: 3.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
@@ -532,7 +508,6 @@
         font-weight: 700;
         font-size: 1.1rem;
         margin-bottom: 1.25rem;
-        font-family: "Outfit", sans-serif;
       }
       .footer-col ul {
         list-style: none;
@@ -709,7 +684,6 @@
           <!-- Theme Toggle -->
           <label
             class="theme-toggle"
-            onclick="document.documentElement.classList.toggle('dark')"
           >
             <i data-lucide="moon" style="width: 18px"></i>
           </label>
@@ -747,7 +721,7 @@
           </div>
           <div class="hero-img-wrapper">
             <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+              src="../assets/Images/course/image1.jpg"
               alt="Team Discussion"
               class="img-fluid"
             />
@@ -762,7 +736,7 @@
         <div class="split-grid">
           <div class="split-img">
             <img
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+              src="../assets/Images/course/aa6027ec63c51e5c43db202a197f4024.jpg"
               alt="People Shaking Hands"
               class="img-fluid"
             />
@@ -796,7 +770,7 @@
           </div>
           <div class="split-img">
             <img
-              src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80"
+              src="../assets/Images/course/b3c09c551d074584ed5ebfa7b6a3784.jpg"
               alt="Community Gathering"
               class="img-fluid"
             />
@@ -902,7 +876,7 @@
           <!-- Member 1 -->
           <div class="team-card">
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
+              src="../assets/Images/course/01f27c063961fc7cc9c08fc54c1373b3.jpg"
               alt="Sarah Jenkins"
               class="team-img"
             />
@@ -914,7 +888,7 @@
           <!-- Member 2 -->
           <div class="team-card">
             <img
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"
+              src="../assets/Images/course/0d3e2ca4b12354654337ab9907f31320.jpg"
               alt="David Chen"
               class="team-img"
             />
@@ -926,7 +900,7 @@
           <!-- Member 3 -->
           <div class="team-card">
             <img
-              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"
+              src="../assets/Images/course/2f9632555bdb0a024a5ace2216d18e06.jpg"
               alt="Elena Rodriguez"
               class="team-img"
             />
@@ -938,7 +912,7 @@
           <!-- Member 4 -->
           <div class="team-card">
             <img
-              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80"
+              src="../assets/Images/course/30f5ff011967496bb257f8c03360b616.jpg"
               alt="Michael Brooks"
               class="team-img"
             />

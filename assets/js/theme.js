@@ -1,29 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const switchInput = document.getElementById("themeSwitch");
-
-  // Sync toggle state with current theme (class already applied by head script)
-  if (switchInput) {
-    switchInput.checked = document.documentElement.classList.contains("dark");
+  const themeToggles = document.querySelectorAll('.theme-toggle input[type="checkbox"], #themeSwitch');
+  
+  // Apply theme from localStorage immediately if not already handled by head script
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "dark") {
+    document.documentElement.classList.add("dark");
+  } else if (currentTheme === "light") {
+    document.documentElement.classList.remove("dark");
   }
 
-  // Initialize Lucide icons
-  if (typeof lucide !== "undefined") {
-    lucide.createIcons();
-  }
+  // Sync all toggle states
+  const isDark = document.documentElement.classList.contains("dark");
+  themeToggles.forEach(toggle => {
+    toggle.checked = isDark;
+  });
 
-  // Handle theme toggle logic
-  if (switchInput) {
-    switchInput.addEventListener("change", () => {
-      if (switchInput.checked) {
+  // Handle theme toggle logic for all matched elements
+  themeToggles.forEach(toggle => {
+    toggle.addEventListener("change", () => {
+      const shouldBeDark = toggle.checked;
+      
+      if (shouldBeDark) {
         document.documentElement.classList.add("dark");
         localStorage.setItem("theme", "dark");
       } else {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("theme", "light");
       }
+
+      // Sync other toggles on the page
+      themeToggles.forEach(t => { if (t !== toggle) t.checked = shouldBeDark; });
+      
       if (typeof lucide !== "undefined") lucide.createIcons();
     });
-  }
+  });
+
+  // Also support simple button/label toggles without inputs (using .theme-toggle class)
+  const simpleToggles = document.querySelectorAll('.theme-toggle:not(input):not(:has(input))');
+  simpleToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const isNowDark = document.documentElement.classList.toggle('dark');
+      const newTheme = isNowDark ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme);
+      
+      // Update any checkbox toggles
+      themeToggles.forEach(t => t.checked = isNowDark);
+      
+      if (typeof lucide !== "undefined") lucide.createIcons();
+    });
+  });
 
   // Handle Direction Toggle Logic
   const dirToggle = document.getElementById("dirToggle");

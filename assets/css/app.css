@@ -1,12 +1,29 @@
 :root {
+  /* Brand Colors */
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary: #7c3aed;
   --bg: #f8fafc;
   --text: #0f172a;
   --card: #ffffff;
   --nav: rgba(255, 255, 255, 0.9);
-  --primary: #2563eb;
-  --secondary: #7c3aed;
-  --muted: #475569;
-  --border: #e5e7eb;
+  --muted: #64748b;
+  --border: rgba(128, 128, 128, 0.15);
+
+  /* Font Families */
+  --font-primary: "Poppins", "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Outfit", "Poppins", sans-serif;
+
+  /* Font Sizes */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 2rem;
+  --fs-4xl: 2.5rem;
+  --fs-5xl: 3rem;
 
   /* Admin Brand Colors */
   --admin-danger: #ef4444;
@@ -18,29 +35,30 @@
 
 html.dark {
   --bg: #0f172a;
-  --text: #e2e8f0;
-  --card: rgba(255, 255, 255, 0.05);
-  /* also #1e293b */
-  --nav: rgba(15, 23, 42, 0.7);
+  --text: #f8fafc;
+  --card: #1e293b;
+  --nav: rgba(15, 23, 42, 0.8);
   --primary: #38bdf8;
   --secondary: #6366f1;
   --muted: #94a3b8;
-  --border: #334155;
+  --border: rgba(255, 255, 255, 0.1);
 
-  /* Dark mode overrides for admin brands if needed (keeping same for now) */
+  /* Dark mode overrides for admin brands */
   --admin-danger: #f87171;
-  /* lighter red */
   --admin-success: #34d399;
-  /* lighter green */
   --admin-warning: #fbbf24;
-  /* lighter amber */
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", "Inter", sans-serif;
+  font-family: var(--font-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text);
 }
 
 /* HIGH-END SNAPPY DIRECTION TRANSITION */

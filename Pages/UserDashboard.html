@@ -23,41 +23,17 @@
     </script>
     <title>Next-Gen Dashboard - NGO Training</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/app.css" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      /* OVERRIDE GLOBALS FOR DASHBOARD ONLY */
-      :root {
-        --primary: #2563eb;
-        --secondary: #7c3aed;
-        --danger: #ef4444;
-        --bg: #f8fafc;
-        --card: #ffffff;
-        --text: #0f172a;
-        --muted: #64748b;
-        --border: rgba(128, 128, 128, 0.1);
-      }
-
-      html.dark {
-        --bg: #0f172a;
-        --card: #1e293b;
-        --text: #f8fafc;
-        --muted: #94a3b8;
-        --border: rgba(255, 255, 255, 0.1);
-      }
-
       body {
-        font-family: "Outfit", sans-serif;
-        background: var(--bg);
-        color: var(--text);
         display: flex;
         height: 100vh;
         overflow: hidden;
-        margin: 0;
         background-image:
           radial-gradient(
             circle at 0% 0%,
@@ -786,6 +762,151 @@
         transform: translateX(0);
       }
 
+      /* CERTIFICATES & MASTERY */
+      .skills-bento {
+        grid-column: span 4;
+        background: var(--card);
+        border-radius: 32px;
+        padding: 40px;
+        border: 1px solid var(--border);
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .skills-info {
+        flex: 1;
+      }
+      .skills-info h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        margin-top: 0;
+      }
+      .skills-info h3 span {
+        color: var(--primary);
+      }
+      .skills-info p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      .skill-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .s-bar-wrap {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .s-bar-label {
+        width: 110px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text);
+      }
+      .s-bar-track {
+        flex: 1;
+        height: 8px;
+        background: rgba(128, 128, 128, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .s-bar-fill {
+        height: 100%;
+        border-radius: 4px;
+      }
+
+      .cert-card {
+        background: var(--card);
+        border-radius: 32px;
+        border: 1px solid var(--border);
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+      }
+      .cert-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: var(--primary);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+      }
+      html.dark .cert-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .cert-cover {
+        height: 160px;
+        background: linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.1),
+          rgba(124, 58, 237, 0.1)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cert-badge {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      }
+
+      .cert-body {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .cert-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        margin-top: 0;
+        color: var(--text);
+      }
+      .cert-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 25px;
+      }
+      .cert-meta span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .cert-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: auto;
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: var(--card);
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn-outline:hover {
+        background: rgba(128, 128, 128, 0.05);
+      }
+
       /* -------------------------------------
          RESPONSIVE BREAKPOINTS 
          ------------------------------------- */
@@ -971,6 +1092,15 @@
         .course-item {
           padding: 15px 20px;
           gap: 15px;
+        }
+        .skills-bento {
+          flex-direction: column;
+          text-align: center;
+          gap: 30px;
+          grid-column: span 1;
+        }
+        .s-bar-wrap {
+          text-align: left;
         }
         .course-thumb {
           width: 60px;
@@ -1165,7 +1295,6 @@
             <!-- THEME TOGGLE BUTTON -->
             <button
               class="theme-toggle"
-              onclick="document.documentElement.classList.toggle('dark')"
               style="
                 background: var(--card);
                 color: var(--text);
@@ -1200,90 +1329,6 @@
             <!-- Initial content will be loaded by script -->
           </div>
 
-          <!-- FOOTER -->
-          <footer class="footer">
-            <div class="footer-grid">
-              <div class="footer-col">
-                <h4
-                  style="
-                    color: var(--primary);
-                    font-size: 1.5rem;
-                    margin-bottom: 1rem;
-                    font-family: &quot;Outfit&quot;, sans-serif;
-                  "
-                >
-                  🌍 NGO Training
-                </h4>
-                <p>
-                  Empowering individuals and organizations with conflict
-                  resolution skills for a more peaceful world. Our platform
-                  provides high-quality, accessible training for everyone.
-                </p>
-              </div>
-              <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                  <li><a href="../index.html">Home</a></li>
-                  <li><a href="TrainingPage.html">Programs</a></li>
-                  <li><a href="Impact.html">Our Impact</a></li>
-                  <li><a href="Community.html">Community</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Support</h4>
-                <ul>
-                  <li><a href="Contact.html">Help Center</a></li>
-                  <li><a href="wishlist.html">Wishlist</a></li>
-                  <li><a href="Settings.html">Settings</a></li>
-                  <li><a href="login.html">Login</a></li>
-                </ul>
-              </div>
-              <div class="footer-col">
-                <h4>Follow Us</h4>
-                <p style="margin-bottom: 1.5rem">
-                  Join our community on social media to stay updated.
-                </p>
-                <div class="social-links">
-                  <a href="javascript:void(0)"
-                    ><i data-lucide="facebook"></i
-                  ></a>
-                  <a href="javascript:void(0)"><i data-lucide="twitter"></i></a>
-                  <a href="javascript:void(0)"
-                    ><i data-lucide="instagram"></i
-                  ></a>
-                  <a href="javascript:void(0)"
-                    ><i data-lucide="linkedin"></i
-                  ></a>
-                </div>
-              </div>
-            </div>
-            <div class="footer-bottom">
-              <p>
-                &copy; <span id="year">2026</span> NGO Training Platform. All
-                rights reserved.
-              </p>
-              <div class="footer-legal">
-                <a
-                  href="javascript:void(0)"
-                  style="
-                    color: var(--muted);
-                    text-decoration: none;
-                    margin-inline-start: 20px;
-                  "
-                  >Privacy Policy</a
-                >
-                <a
-                  href="javascript:void(0)"
-                  style="
-                    color: var(--muted);
-                    text-decoration: none;
-                    margin-inline-start: 20px;
-                  "
-                  >Terms of Service</a
-                >
-              </div>
-            </div>
-          </footer>
         </div>
       </main>
     </div>
@@ -1299,7 +1344,7 @@
             "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.",
           duration: "6 Weeks",
           image:
-            "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/01f27c063961fc7cc9c08fc54c1373b3.jpg",
         },
         {
           id: 2,
@@ -1309,7 +1354,7 @@
             "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.",
           duration: "3 Weeks",
           image:
-            "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/0d3e2ca4b12354654337ab9907f31320.jpg",
         },
         {
           id: 3,
@@ -1319,7 +1364,7 @@
             "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.",
           duration: "4 Weeks",
           image:
-            "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/2f9632555bdb0a024a5ace2216d18e06.jpg",
         },
         {
           id: 4,
@@ -1329,7 +1374,7 @@
             "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.",
           duration: "8 Weeks",
           image:
-            "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/30f5ff011967496bb257f8c03360b616.jpg",
         },
         {
           id: 5,
@@ -1339,7 +1384,7 @@
             "Understand psychological impacts and learn how to appropriately support affected populations.",
           duration: "5 Weeks",
           image:
-            "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/6cc494b1f032da5fe77b286f6449e9be.jpg",
         },
         {
           id: 6,
@@ -1349,7 +1394,7 @@
             "Empower local voices and build resilient communities from the ground up.",
           duration: "2 Weeks",
           image:
-            "https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "../assets/Images/course/9e0d012e9b61b82dbd38cb28888cc264.jpg",
         },
       ];
     </script>
@@ -1423,6 +1468,90 @@
           </div>
       `;
 
+      const certificateTemplate = `
+          <div class="bento-grid">
+            <div class="skills-bento">
+              <div class="skills-info">
+                <h3>Your <span>Mastery Summary</span></h3>
+                <p>Based on your completed courses and certificate tracks, here is a breakdown of your core competencies. You are excelling in Mediation!</p>
+                <div class="skill-bars">
+                  <div class="s-bar-wrap">
+                    <span class="s-bar-label">Mediation</span>
+                    <div class="s-bar-track"><div class="s-bar-fill" style="width: 95%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div></div>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">95%</span>
+                  </div>
+                  <div class="s-bar-wrap">
+                    <span class="s-bar-label">Crisis Comms</span>
+                    <div class="s-bar-track"><div class="s-bar-fill" style="width: 70%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div></div>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">70%</span>
+                  </div>
+                  <div class="s-bar-wrap">
+                    <span class="s-bar-label">Field Ops</span>
+                    <div class="s-bar-track"><div class="s-bar-fill" style="width: 45%; background: linear-gradient(90deg, var(--secondary), var(--primary));"></div></div>
+                    <span style="font-weight: 700; width: 40px; text-align: right;">45%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="radar-placeholder" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(37, 99, 235, 0.1), transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(128, 128, 128, 0.2); flex-shrink: 0;">
+                <div style="position: relative; width: 140px; height: 140px; border: 2px solid var(--primary); transform: rotate(45deg); background: rgba(37, 99, 235, 0.2); box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);"></div>
+              </div>
+            </div>
+
+            <div class="cert-card">
+              <div class="cert-cover">
+                <div class="cert-badge"><i data-lucide="shield-check" style="width: 32px; height: 32px;"></i></div>
+              </div>
+              <div class="cert-body">
+                <h4 class="cert-title">Conflict Resolution Fundamentals</h4>
+                <div class="cert-meta">
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Aug 12, 2025</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: CR-8942-JS</span>
+                </div>
+                <div class="cert-actions">
+                  <button class="btn-premium" style="flex: 1;">Download PDF</button>
+                  <button class="btn-outline" style="width: 45px; padding: 0;"><i data-lucide="share-2" style="width: 18px;"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="cert-card">
+              <div class="cert-cover" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(37, 99, 235, 0.1));">
+                <div class="cert-badge" style="background: linear-gradient(135deg, #10b981, var(--primary));">
+                  <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+                </div>
+              </div>
+              <div class="cert-body">
+                <h4 class="cert-title">Negotiation Tactics Masterclass</h4>
+                <div class="cert-meta">
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Nov 05, 2025</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: NT-1044-SJ</span>
+                </div>
+                <div class="cert-actions">
+                  <button class="btn-premium" style="flex: 1;">Download PDF</button>
+                  <button class="btn-outline" style="width: 45px; padding: 0;"><i data-lucide="share-2" style="width: 18px;"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="cert-card">
+              <div class="cert-cover">
+                <div class="cert-badge"><i data-lucide="shield-check" style="width: 32px; height: 32px;"></i></div>
+              </div>
+              <div class="cert-body">
+                <h4 class="cert-title">Stress Management for Mediators</h4>
+                <div class="cert-meta">
+                  <span><i data-lucide="calendar" style="width: 14px;"></i> Issued: Jan 22, 2026</span>
+                  <span><i data-lucide="hash" style="width: 14px;"></i> ID: SM-9931-KL</span>
+                </div>
+                <div class="cert-actions">
+                  <button class="btn-premium" style="flex: 1;">Download PDF</button>
+                  <button class="btn-outline" style="width: 45px; padding: 0;"><i data-lucide="share-2" style="width: 18px;"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+      `;
+
       function switchView(viewId) {
         if (window.innerWidth <= 1024) {
           document.body.classList.remove("sidebar-open");
@@ -1456,8 +1585,8 @@
         } else if (viewId === "explore") {
           title.innerText = "Explore Programs";
           subtitle.innerText = "Discover new skills and specialized tracks.";
-          headerSearch.style.setProperty("display", "");
-          headerFilters.style.setProperty("display", "");
+          headerSearch.style.setProperty("display", "flex");
+          headerFilters.style.setProperty("display", "flex");
           content.innerHTML = `<div class="bento-grid" id="trainingGrid"></div>`;
           renderTrainingGrid();
         } else if (viewId === "wishlist") {
@@ -1477,6 +1606,10 @@
             </div>
           `;
           renderWishlist();
+        } else if (viewId === "certificate") {
+          title.innerText = "My Certificates";
+          subtitle.innerText = "View and download your earned credentials.";
+          content.innerHTML = certificateTemplate;
         }
 
         if (typeof lucide !== "undefined") lucide.createIcons();
@@ -1602,8 +1735,9 @@
 
       // Initial View Loader & DirToggle Initialization
       window.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("year").innerText = new Date().getFullYear();
-        switchView("dashboard");
+        const urlParams = new URLSearchParams(window.location.search);
+        const view = urlParams.get("view") || "dashboard";
+        switchView(view);
 
         // --- ADDED LTR / RTL TOGGLE LOGIC ---
         const dirToggleBtn = document.getElementById("dirToggle");
@@ -1634,5 +1768,6 @@
         if (typeof lucide !== "undefined") lucide.createIcons();
       });
     </script>
+    <script src="../assets/js/theme.js"></script>
   </body>
 </html>
