@@ -987,6 +987,11 @@
          RESPONSIVE BREAKPOINTS
          ════════════════════════════════════════ */
 
+      .nav-menu-btn {
+        display: none;
+        padding: 0 20px 20px;
+      }
+
       /* Large Laptop — 1280px */
       @media (max-width: 1280px) {
         .features-grid {
@@ -1007,7 +1012,9 @@
           display: flex;
         }
         .nav-actions .btn-primary {
-          display: none;
+          display: flex;
+          padding: 8px 16px;
+          font-size: 0.85rem;
         }
         .navbar-container {
           padding: 0 1.5rem;
@@ -1244,6 +1251,19 @@
         }
       }
 
+      /* Tablet/Mobile — 768px Moving Button Inside Menu */
+      @media (max-width: 768px) {
+        .nav-actions .btn-primary {
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .navbar-menu {
+          padding-bottom: 30px;
+        }
+      }
+
       /* Small Phone — 480px */
       @media (max-width: 480px) {
         :root {
@@ -1379,6 +1399,15 @@
               <a href="Pages/UserDashboard.html">User Dashboard</a>
               <a href="Pages/AdminDashboard.html">Admin Dashboard</a>
             </div>
+          </li>
+          <li class="nav-menu-btn">
+            <button
+              class="btn-primary"
+              style="width: 100%; margin-top: 15px; padding: 12px; font-weight: 700;"
+              onclick="window.location.href = 'Pages/login.html'"
+            >
+              Get Started
+            </button>
           </li>
         </ul>
 

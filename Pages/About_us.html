@@ -254,6 +254,11 @@
         color: var(--primary);
       }
 
+      .nav-menu-btn {
+        display: none;
+        padding: 0 20px 20px;
+      }
+
       /* NAVBAR RESPONSIVE */
       @media (max-width: 950px) {
         .navbar-menu {
@@ -301,7 +306,9 @@
           display: flex;
         }
         .nav-actions .btn-primary {
-          display: none;
+          display: flex;
+          padding: 8px 16px;
+          font-size: 0.85rem;
         }
       }
 
@@ -610,6 +617,15 @@
         }
       }
       @media (max-width: 768px) {
+        .nav-actions .btn-primary {
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .navbar-menu {
+          padding-bottom: 30px;
+        }
         .footer-grid {
           grid-template-columns: 1fr;
           gap: 2rem;
@@ -669,6 +685,14 @@
               <a href="UserDashboard.html">User Dashboard</a>
               <a href="AdminDashboard.html">Admin Dashboard</a>
             </div>
+          <li class="nav-menu-btn">
+            <button
+              class="btn-primary"
+              style="width: 100%; margin-top: 15px; padding: 12px; font-weight: 700;"
+              onclick="window.location.href = 'login.html'"
+            >
+              Get Started
+            </button>
           </li>
         </ul>
 
@@ -789,7 +813,7 @@
           </div>
           <div class="split-img">
             <img
-              src="../assets/Images/course/b3c09c551d074584ed5ebfa7b6a3784.jpg"
+              src="../assets/Images/course/da12e070b256c58f1fa4b0532cc0e09b.jpg"
               alt="Community Gathering"
               class="img-fluid"
             />
@@ -841,14 +865,7 @@
               peace-building.
             </p>
           </div>
-          <div class="service-card">
-            <div class="service-icon"><i data-lucide="laptop"></i></div>
-            <h3>Online Learning Modules</h3>
-            <p style="color: var(--muted); font-size: 0.9rem">
-              Self-paced digital courses available 24/7 for individuals around
-              the globe.
-            </p>
-          </div>
+          
         </div>
       </div>
     </section>

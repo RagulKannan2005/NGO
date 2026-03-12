@@ -660,6 +660,11 @@
         gap: 15px;
       }
 
+      .nav-menu-btn {
+        display: none;
+        padding: 0 20px 20px;
+      }
+
       /* RESPONSIVE MEDIA QUERIES */
       @media (max-width: 1024px) {
         .hero h1 {
@@ -722,11 +727,28 @@
           gap: 10px;
         }
         .nav-actions .btn-donate {
-          display: none;
+          display: flex;
+          padding: 8px 16px;
+          font-size: 0.85rem;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          border-radius: 10px;
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
         }
       }
 
       @media (max-width: 768px) {
+        .nav-actions .btn-donate {
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .navbar-menu {
+          padding-bottom: 30px;
+        }
         .hero {
           padding: 140px 1.5rem 80px;
         }
@@ -866,25 +888,20 @@
               <a href="UserDashboard.html">User Dashboard</a>
               <a href="AdminDashboard.html">Admin Dashboard</a>
             </div>
+          <li class="nav-menu-btn">
+            <button
+              class="btn-donate"
+              style="width: 100%; margin-top: 15px; padding: 12px; font-weight: 700;"
+              onclick="window.location.href = 'login.html'"
+            >
+              Get Started
+            </button>
           </li>
         </ul>
 
         <div class="nav-actions">
           <button
             class="btn-donate"
-            style="
-              background: linear-gradient(
-                135deg,
-                var(--primary),
-                var(--secondary)
-              );
-              color: white;
-              padding: 8px 16px;
-              border-radius: 10px;
-              font-weight: 600;
-              border: none;
-              cursor: pointer;
-            "
             onclick="window.location.href = 'login.html'"
           >
             Get Started

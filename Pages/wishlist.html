@@ -226,6 +226,11 @@
         color: var(--primary);
       }
 
+      .nav-menu-btn {
+        display: none;
+        padding: 0 20px 20px;
+      }
+
       /* NAVBAR RESPONSIVE */
       @media (max-width: 950px) {
         .navbar-menu {
@@ -273,7 +278,9 @@
           display: flex;
         }
         .nav-actions .btn-primary {
-          display: none;
+          display: flex;
+          padding: 8px 16px;
+          font-size: 0.85rem;
         }
       }
 
@@ -691,6 +698,15 @@
       }
 
       @media (max-width: 768px) {
+        .nav-actions .btn-primary {
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .navbar-menu {
+          padding-bottom: 30px;
+        }
         .wishlist-header {
           padding: 140px 1.5rem 80px;
         }
@@ -795,12 +811,14 @@
           <li><a href="Impact.html" class="navbar-link">Impact</a></li>
           <li><a href="About_us.html" class="navbar-link">About Us</a></li>
           <li><a href="Contact.html" class="navbar-link">Contact</a></li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" class="navbar-link">Dashboard ▾</a>
-            <div class="dropdown-menu">
-              <a href="UserDashboard.html">User Dashboard</a>
-              <a href="AdminDashboard.html">Admin Dashboard</a>
-            </div>
+          <li class="nav-menu-btn">
+            <button
+              class="btn-primary"
+              style="width: 100%; margin-top: 15px; padding: 12px; font-weight: 700;"
+              onclick="window.location.href = 'login.html'"
+            >
+              Get Started
+            </button>
           </li>
         </ul>
 

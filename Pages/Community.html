@@ -154,6 +154,7 @@
         transition: 0.3s;
       }
       .theme-toggle:hover { background: rgba(128,128,128,0.05); }
+      .mobile-only-get-started { display: none; }
 
       /* ====== NEW MODERN TABS STYLES ====== */
       .hub-tabs-container {
@@ -705,13 +706,16 @@
         .main-content { border-radius: 0; margin-bottom: 0; }
         .hub-tabs-container { padding: 0 20px 15px 20px; }
         .content-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-        .header-actions { width: 100%; justify-content: flex-start; }
+        .header-actions { width: 100%; justify-content: flex-start; gap: 10px; flex-wrap: wrap; }
+        .header-actions .btn-create { flex: 1; min-width: 120px; justify-content: center; }
         .badges-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
         .modal-content { padding: 30px 20px; border-radius: 20px; width: 95%; max-height: 85vh; }
         .modal-close { top: 20px; right: 20px; }
         .footer { padding: 30px 20px; border-radius: 0; margin-top: 20px; }
         .footer-bottom { flex-direction: column; text-align: center; }
         .back-to-top { bottom: 20px; right: 20px; }
+        .nav-menu-btn-desktop { display: none !important; }
+        .mobile-only-get-started { display: flex !important; margin-left: auto; }
       }
       @media (max-width: 480px) {
         .content-header { padding: 15px 20px; }
@@ -737,9 +741,7 @@
       <main class="main-content">
         <div class="content-header">
           <div class="header-left">
-            <button class="btn-back" onclick="window.location.href='UserDashboard.html'" title="Back to Dashboard">
-              <i data-lucide="arrow-left" style="width:20px;"></i>
-            </button>
+
             <h1 onclick="window.location.href='../index.html'">Community Hub</h1>
           </div>
           <div class="header-actions">
@@ -754,6 +756,9 @@
               <i data-lucide="plus" style="width:18px;"></i>
               <span class="btn-text">New Topic</span>
             </button>
+            <button class="btn-create nav-menu-btn-desktop" onclick="window.location.href='login.html'" style="background: var(--primary); color: white; border: none; padding: 10px 18px; font-weight: 700;">
+              Get Started
+            </button>
           </div>
         </div>
 
@@ -767,7 +772,10 @@
               <i data-lucide="help-circle" style="width: 18px;"></i> Ask Expert
             </button>
             <button class="hub-tab" data-section="badges">
-              <i data-lucide="award" style="width: 18px;"></i> Badges & Leaderboard
+              <i data-lucide="award" style="width: 18px;"></i> Ranks
+            </button>
+            <button class="hub-tab mobile-only-get-started" onclick="window.location.href='login.html'" style="background: var(--primary); color: white; border: none; font-weight: 700;">
+              Get Started
             </button>
           </div>
         </div>
