@@ -1,7 +1,9 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="../assets/Images/logo1.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -110,6 +112,9 @@
       }
 
       .navbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         font-size: 1.4rem;
         font-weight: 800;
         font-family: "Outfit", sans-serif;
@@ -169,7 +174,7 @@
 
       .dropdown-menu {
         position: absolute;
-        top: 100%;
+        top: calc(100% + 8px);
         left: 0;
         background: var(--card);
         border: 1px solid var(--border);
@@ -179,12 +184,24 @@
         opacity: 0;
         visibility: hidden;
         transform: translateY(10px);
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition:
+          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        z-index: 100;
+        gap: 4px;
+        z-index: 200;
+      }
+      .dropdown-menu::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        z-index: -1;
       }
 
       .dropdown:hover .dropdown-menu,
@@ -756,7 +773,10 @@
     <!-- Navigation -->
     <nav class="navbar">
       <div class="navbar-container">
-        <a href="../index.html" class="navbar-logo">🌍 NGO</a>
+        <a href="../index.html" class="navbar-logo">
+          <img src="../assets/Images/logo.png" alt="NGO Logo" style="height: 32px; object-fit: contain; border-radius: 20px;">
+          NGO
+        </a>
         <ul class="navbar-menu">
           <!-- Dropdown -->
           <li class="dropdown">
@@ -901,7 +921,8 @@
                 font-family: &quot;Outfit&quot;, sans-serif;
               "
             >
-              🌍 NGO Training
+              <img src="../assets/Images/logo.png" alt="NGO Logo" style="height: 24px; vertical-align: middle; margin-right: 8px;">
+              NGO Training
             </h4>
             <p style="color: var(--muted); line-height: 1.6">
               Empowering individuals and organizations with conflict resolution

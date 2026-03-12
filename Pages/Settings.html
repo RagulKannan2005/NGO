@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="../assets/Images/logo1.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -143,6 +144,68 @@
         margin-bottom: 40px;
         flex-shrink: 0;
         transition: 0.4s;
+      }
+
+      /* ── SIDEBAR LOGO ── */
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 24px 18px;
+        transition: padding 0.4s;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        min-width: 48px;
+        height: 48px;
+        padding: 0;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        white-space: nowrap;
+        width: 48px;
+      }
+
+      .floating-sidebar:hover .nav-logo {
+        width: auto;
+        padding: 0 16px;
+        gap: 12px;
+      }
+
+      .logo-img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        flex-shrink: 0;
+        display: block;
+      }
+
+      .logo-text {
+        font-family: "Outfit", sans-serif;
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: white;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0;
+        max-width: 0;
+        overflow: hidden;
+        transition:
+          opacity 0.3s ease,
+          max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: block;
+      }
+
+      .floating-sidebar:hover .logo-text {
+        opacity: 1;
+        max-width: 150px;
       }
 
       .floating-sidebar:hover .nav-logo {
@@ -739,7 +802,10 @@
     <div class="dash-wrapper">
       <!-- FLOATING SIDEBAR -->
       <aside class="floating-sidebar">
-        <div class="nav-logo"><i data-lucide="shield"></i></div>
+          <div class="nav-logo" onclick="window.location.href = '../index.html'">
+            <img src="../assets/Images/logo.png" alt="NGO Logo" class="logo-img" style="width: 28px; height: 28px; object-fit: contain;border-radius: 20px;">
+            <span class="logo-text">NGO</span>
+          </div>
         <div class="nav-items">
           <a href="UserDashboard.html" class="nav-btn">
             <div class="icon-box"><i data-lucide="layout-grid"></i></div>
@@ -1026,7 +1092,8 @@
                     font-family: &quot;Outfit&quot;, sans-serif;
                   "
                 >
-                  🌍 NGO Training
+                  <img src="../assets/Images/logo.png" alt="NGO Logo" style="height: 24px; vertical-align: middle; margin-right: 8px;">
+                  NGO Training
                 </h4>
                 <p>
                   Empowering individuals and organizations with conflict

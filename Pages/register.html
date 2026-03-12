@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="../assets/Images/logo1.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script>
@@ -46,13 +47,28 @@
       .register-card {
         width: 100%;
         max-width: 500px;
-        padding: 2.5rem 2rem;
-        border-radius: 24px;
+        padding: 3rem 2rem;
+        border-radius: 28px;
         background: var(--card);
         backdrop-filter: blur(14px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         text-align: center;
+      }
+
+      .logo-box {
+        cursor: pointer;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        transition: transform 0.3s ease;
+      }
+      .logo-box:hover {
+        transform: scale(1.05);
+      }
+      .logo-box img {
+        height: 60px;
+        object-fit: contain;
       }
 
       .register-card h2 {
@@ -164,8 +180,10 @@
     </div>
 
     <div class="register-card" style="position: relative">
-      <a
-        href="../index.html"
+      <div class="logo-box" onclick="window.location.href='../index.html'">
+        <img src="../assets/Images/logo.png" alt="NGO Logo" />
+      </div>
+      <a href="../index.html"
         style="
           position: absolute;
           top: 1.5rem;

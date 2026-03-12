@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="../assets/Images/logo1.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -136,26 +137,70 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 40px;
+        justify-content: flex-start;
+        padding-inline-start: 18px;
+      }
+
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Consistent alignment */
+        padding: 24px 18px; /* Consistent padding */
         transition: padding 0.4s;
         box-sizing: border-box;
       }
-      .floating-sidebar:hover .sidebar-header {
-        justify-content: flex-start;
-        padding-inline-start: 24px;
-      }
 
       .nav-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        flex-shrink: 0;
+        gap: 0; /* Default collapsed centered */
+        min-width: 48px;
+        height: 48px;
+        padding: 0;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         cursor: pointer;
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        white-space: nowrap;
+        width: 48px;
+      }
+
+      .floating-sidebar:hover .nav-logo {
+        width: auto;
+        padding: 0 16px;
+        gap: 12px; /* Gap only on hover */
+      }
+
+      .logo-img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        flex-shrink: 0;
+        display: block;
+      }
+
+      .logo-text {
+        font-family: "Outfit", sans-serif;
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: white;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0;
+        max-width: 0;
+        overflow: hidden;
+        transition:
+          opacity 0.3s ease,
+          max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: block;
+      }
+
+      .floating-sidebar:hover .logo-text {
+        opacity: 1;
+        max-width: 150px;
       }
 
       .mobile-close {
@@ -979,8 +1024,15 @@
           padding: 0 24px;
           margin-bottom: 40px;
         }
-        .sidebar-header:hover {
-          padding-inline-start: 24px;
+        
+        .floating-sidebar .nav-logo {
+          width: auto;
+          padding: 0 16px;
+          gap: 12px;
+        }
+        .floating-sidebar .logo-text {
+          opacity: 1;
+          max-width: 150px;
         }
 
         .bento-scroll {
@@ -1123,11 +1175,10 @@
       <!-- FLOATING / OFF-CANVAS SIDEBAR -->
       <aside class="floating-sidebar" id="sidebar">
         <div class="sidebar-header">
-          <div
-            class="nav-logo"
-            onclick="window.location.href = '../index.html'"
-          >
-            <i data-lucide="shield"></i>
+          <!-- Replace the existing .nav-logo div in your sidebar -->
+          <div class="nav-logo" onclick="window.location.href = '../index.html'">
+            <img src="../assets/Images/logo.png" alt="NGO Logo" class="logo-img" style="width: 28px; height: 28px; object-fit: contain;border-radius: 20px;">
+            <span class="logo-text">NGO</span>
           </div>
         </div>
 
@@ -1328,7 +1379,6 @@
           <div id="dash-content">
             <!-- Initial content will be loaded by script -->
           </div>
-
         </div>
       </main>
     </div>
@@ -1343,8 +1393,7 @@
           description:
             "Master techniques to de-escalate crisis situations in vulnerable regions. Gain actionable insights for high-stakes environments.",
           duration: "6 Weeks",
-          image:
-            "../assets/Images/course/01f27c063961fc7cc9c08fc54c1373b3.jpg",
+          image: "../assets/Images/course/01f27c063961fc7cc9c08fc54c1373b3.jpg",
         },
         {
           id: 2,
@@ -1353,8 +1402,7 @@
           description:
             "Learn the core basics of mediating community disputes effectively. Perfect for aspiring community leaders.",
           duration: "3 Weeks",
-          image:
-            "../assets/Images/course/0d3e2ca4b12354654337ab9907f31320.jpg",
+          image: "../assets/Images/course/0d3e2ca4b12354654337ab9907f31320.jpg",
         },
         {
           id: 3,
@@ -1363,8 +1411,7 @@
           description:
             "Bridge the gap between diverse cultural backgrounds safely and effectively in active zones.",
           duration: "4 Weeks",
-          image:
-            "../assets/Images/course/2f9632555bdb0a024a5ace2216d18e06.jpg",
+          image: "../assets/Images/course/2f9632555bdb0a024a5ace2216d18e06.jpg",
         },
         {
           id: 4,
@@ -1373,8 +1420,7 @@
           description:
             "Learn advanced negotiation principles for peace-keeping missions and organizational scaling.",
           duration: "8 Weeks",
-          image:
-            "../assets/Images/course/30f5ff011967496bb257f8c03360b616.jpg",
+          image: "../assets/Images/course/30f5ff011967496bb257f8c03360b616.jpg",
         },
         {
           id: 5,
@@ -1383,8 +1429,7 @@
           description:
             "Understand psychological impacts and learn how to appropriately support affected populations.",
           duration: "5 Weeks",
-          image:
-            "../assets/Images/course/6cc494b1f032da5fe77b286f6449e9be.jpg",
+          image: "../assets/Images/course/6cc494b1f032da5fe77b286f6449e9be.jpg",
         },
         {
           id: 6,
@@ -1393,8 +1438,7 @@
           description:
             "Empower local voices and build resilient communities from the ground up.",
           duration: "2 Weeks",
-          image:
-            "../assets/Images/course/9e0d012e9b61b82dbd38cb28888cc264.jpg",
+          image: "../assets/Images/course/9e0d012e9b61b82dbd38cb28888cc264.jpg",
         },
       ];
     </script>
