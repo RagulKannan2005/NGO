@@ -1014,9 +1014,18 @@
       }
 
       @media (max-width: 1024px) {
-        /* Show hamburger */
+        /* Show hamburger, hide desktop Get Started */
         .mobile-menu-btn {
           display: flex;
+        }
+        .nav-actions .btn-primary {
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .nav-actions {
+          gap: 10px;
         }
         /* Hide Get Started button */
         .nav-actions .btn-primary {
@@ -1140,12 +1149,6 @@
 
       /* Tablet — 768px */
       @media (max-width: 768px) {
-        .nav-actions .btn-primary {
-          display: none !important;
-        }
-        .nav-menu-btn {
-          display: block;
-        }
         .navbar-menu {
           padding-bottom: 30px;
         }

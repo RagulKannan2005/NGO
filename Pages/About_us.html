@@ -260,7 +260,7 @@
       }
 
       /* NAVBAR RESPONSIVE */
-      @media (max-width: 950px) {
+      @media (max-width: 1024px) {
         .navbar-menu {
           position: fixed;
           top: 70px;
@@ -306,9 +306,13 @@
           display: flex;
         }
         .nav-actions .btn-primary {
-          display: flex;
-          padding: 8px 16px;
-          font-size: 0.85rem;
+          display: none !important;
+        }
+        .nav-menu-btn {
+          display: block;
+        }
+        .nav-actions {
+          gap: 10px;
         }
       }
 
@@ -617,12 +621,6 @@
         }
       }
       @media (max-width: 768px) {
-        .nav-actions .btn-primary {
-          display: none !important;
-        }
-        .nav-menu-btn {
-          display: block;
-        }
         .navbar-menu {
           padding-bottom: 30px;
         }
